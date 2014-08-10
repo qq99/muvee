@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Raw file path:</strong>
+  <%= @video.raw_file_path %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @video.type %>
+</p>
+
+<p>
+  <strong>Episode:</strong>
+  <%= @video.episode %>
+</p>
+
+<p>
+  <strong>Season:</strong>
+  <%= @video.season %>
+</p>
+
+<p>
+  <strong>Duration:</strong>
+  <%= @video.duration %>
+</p>
+
+<p>
+  <strong>Left off at:</strong>
+  <%= @video.left_off_at %>
+</p>
+
+<p>
+  <strong>Series:</strong>
+  <%= @video.series_id %>
+</p>
+
+<%= link_to 'Edit', edit_video_path(@video) %> |
+<%= link_to 'Back', videos_path %>

@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  raw_file_path: MyString
+  type: 
+  episode: 1
+  season: 1
+  duration: 1
+  left_off_at: 1
+  series_id: 1
+
+two:
+  raw_file_path: MyString
+  type: 
+  episode: 1
+  season: 1
+  duration: 1
+  left_off_at: 1
+  series_id: 1
