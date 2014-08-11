@@ -7,12 +7,6 @@ class TvShow < Video
     standard: /([\w\-\.\_\s]*)S(\d+)(?:\D*)E(\d+)/i
   }.freeze
 
-  def filename_no_extension
-    return "" if raw_file_path.empty?
-
-    @filename_no_extension ||= File.basename(raw_file_path, File.extname(raw_file_path))
-  end
-
   private
 
   def guessit
