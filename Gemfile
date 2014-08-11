@@ -31,6 +31,8 @@ gem 'pry'
 gem 'uuid'
 gem 'mocha'
 
+gem 'timecop'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

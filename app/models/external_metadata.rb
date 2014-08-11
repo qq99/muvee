@@ -27,19 +27,20 @@ class ExternalMetadata < ActiveRecord::Base
       result = self.new
       result.endpoint = url
       result.save
+      result.update_column(:updated_at, nil)
     end
     result.fetch_data
     result
   end
 
   def fetch_data
-    should_fetch = !self.updated_at || (self.updated_at > 1.days.ago)
+    should_fetch = self.updated_at.blank? || (self.updated_at.present? && self.updated_at <= 1.days.ago)
     if should_fetch
       http_get = fetch(URI(self.endpoint))
       if http_get.response.kind_of? Net::HTTPSuccess
         self.raw_value = http_get.body.to_s.encode('UTF-8', {:invalid => :replace, :undef => :replace, :replace => '?'})
       end
-      save
+      self.save
     end
   end
 

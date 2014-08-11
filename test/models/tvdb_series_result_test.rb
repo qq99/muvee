@@ -12,6 +12,7 @@ class TvdbSeriesResultTest < ActiveSupport::TestCase
       result = TvdbSeriesResult.get(tvdb_series_id)
     end
 
+    result.reload
     assert_equal "American Dad!", result.data_from_xml[:Data][:Series][:SeriesName]
   end
 end
