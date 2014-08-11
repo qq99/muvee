@@ -1,8 +1,6 @@
 class ExternalMetadata < ActiveRecord::Base
   validates_uniqueness_of :endpoint
 
-  attr_accessor :endpoint, :raw_data, :created_at, :updated_at
-
   def fetch(uri_str, limit = 10)
     raise ArgumentError, 'too many HTTP redirects' if limit == 0
 

@@ -1,8 +1,6 @@
 class TvShow < Video
   before_create :guessit
 
-  attr_accessor :title, :episode, :season, :raw_file_path
-
   FORMATS = {
     standard: /([\w\-\.\_\s]*)S(\d+)(?:\D*)E(\d+)/i
   }.freeze
