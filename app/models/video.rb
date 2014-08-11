@@ -24,8 +24,7 @@ class Video < ActiveRecord::Base
     create_thumbnail (self.duration / 2).to_i
   end
 
-  def create_n_thumbnails(n_thumbnails)
-    # evenly spaced out throughout the video
+  def create_n_thumbnails(n_thumbnails) # evenly spaced out throughout the video
     return if self.duration == 0
 
     n_thumbnails.times do |i|
