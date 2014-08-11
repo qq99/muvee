@@ -37,7 +37,7 @@ class ExternalMetadata < ActiveRecord::Base
     if should_fetch
       http_get = fetch(URI(self.endpoint))
       if http_get.response.kind_of? Net::HTTPSuccess
-        self.raw_value = http_get.body.to_s
+        self.raw_value = http_get.body.to_s.encode('UTF-8', {:invalid => :replace, :undef => :replace, :replace => '?'})
       end
       save
     end
