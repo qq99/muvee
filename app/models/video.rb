@@ -2,6 +2,8 @@ class Video < ActiveRecord::Base
   has_many :thumbnails
   before_create :shellout_and_grab_duration
 
+  THUMBNAIL_PATH = "/public/thumbnails/"
+
   def determine_video_duration_in_seconds
 
   end
@@ -17,7 +19,22 @@ class Video < ActiveRecord::Base
     str.gsub(/[\.\_\-]/, ' ').titleize.squish.strip
   end
 
+  def create_thumbnail(at_seconds)
+    thumb_path = new_thumbnail_path
+    shellout_and_grab_thumbnail(at_seconds, thumb_path)
+    #TODO validate this worked
+    self.thumbnails.create(raw_file_path: thumb_path)
+  end
+
+  def new_thumbnail_path
+    Dir.getwd() + THUMBNAIL_PATH + UUID.generate(:compact) + ".jpg"
+  end
+
   private
+
+  def avconv_create_thumbnail_command(at_seconds, output_path)
+    "avconv -ss " + at_seconds.to_s.shellescape + " -i " + raw_file_path.shellescape + " -qscale 1 -vsync 1 -vframes 1 -y " + output_path.shellescape
+  end
 
   def avprobe_grab_duration_command
     "avprobe " + raw_file_path.shellescape + " 2>&1 | grep -Eo 'Duration: [0-9:.]*' | cut -c 11-"
@@ -31,5 +48,10 @@ class Video < ActiveRecord::Base
     else
       self.duration = 0
     end
+  end
+
+  def shellout_and_grab_thumbnail(at_seconds, output_path)
+    return if self.duration == 0
+    Kernel.system(avconv_create_thumbnail_command(at_seconds, output_path))
   end
 end
