@@ -19,7 +19,7 @@ class ExternalMetadata < ActiveRecord::Base
   end
 
   def self.get(*args)
-    escaped_args = args.map{|a| CGI.escape(a)}
+    escaped_args = args.map{|a| CGI.escape(a.to_s)}
     url = self.endpoint_url(*escaped_args)
 
     result = self.find_by_endpoint(url)
@@ -37,9 +37,13 @@ class ExternalMetadata < ActiveRecord::Base
     if should_fetch
       http_get = fetch(URI(self.endpoint))
       if http_get.response.kind_of? Net::HTTPSuccess
-        self.raw_value = http_get.body
+        self.raw_value = http_get.body.to_s
       end
       save
     end
+  end
+
+  def data_from_xml
+    @data ||= Hash.from_xml(self.raw_value).with_indifferent_access
   end
 end

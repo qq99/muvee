@@ -1,7 +1,9 @@
 class TvdbSeriesResult < ExternalMetadata
 
-  def self.endpoint(tvdb_series_id)
-    "http://thetvdb.com/api/#{TVDB_KEY}/series/#{series_id}/all/"
+  TVDB_KEY = "C0BAA9786923CE73" # not really sensitive data
+
+  def self.endpoint_url(tvdb_series_id)
+    "http://thetvdb.com/api/#{TVDB_KEY}/series/#{tvdb_series_id}/all/"
   end
 
 end

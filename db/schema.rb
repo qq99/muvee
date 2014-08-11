@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140811022159) do
+ActiveRecord::Schema.define(version: 20140811025452) do
 
   create_table "external_metadata", force: true do |t|
     t.integer  "video_id"
@@ -25,6 +25,13 @@ ActiveRecord::Schema.define(version: 20140811022159) do
   add_index "external_metadata", ["endpoint"], name: "index_external_metadata_on_endpoint", unique: true
 
   create_table "movies", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "series", force: true do |t|
+    t.string   "title"
+    t.integer  "tvdb_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
