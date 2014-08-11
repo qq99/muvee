@@ -39,6 +39,13 @@ class VideoTest < ActiveSupport::TestCase
     assert vid.thumbnails.last.raw_file_path.present?
   end
 
+  test "#create_n_thumbnails will create N thumbnails" do
+    vid = Video.create(raw_file_path: @bigBuck)
+    assert_difference "vid.thumbnails.length", 10 do
+      vid.create_n_thumbnails(10)
+    end
+  end
+
   test "will call #create_thumbnail after creation of video model" do
     Video.any_instance.expects(:create_thumbnail)
     vid = Video.create(raw_file_path: @bigBuck)

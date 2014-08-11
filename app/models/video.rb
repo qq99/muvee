@@ -7,10 +7,6 @@ class Video < ActiveRecord::Base
     "/public/thumbnails/"
   end
 
-  def determine_video_duration_in_seconds
-
-  end
-
   def filename_no_extension
     return "" if raw_file_path.empty?
 
@@ -26,6 +22,16 @@ class Video < ActiveRecord::Base
     return if self.duration == 0
 
     create_thumbnail (self.duration / 2).to_i
+  end
+
+  def create_n_thumbnails(n_thumbnails)
+    # evenly spaced out throughout the video
+    return if self.duration == 0
+
+    n_thumbnails.times do |i|
+      at_second = (self.duration * (i / n_thumbnails)).to_i
+      create_thumbnail(at_second)
+    end
   end
 
   def create_thumbnail(at_seconds)
