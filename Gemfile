@@ -29,6 +29,7 @@ gem 'spring',        group: :development
 gem 'rb-readline'
 gem 'pry'
 gem 'uuid'
+gem 'mocha'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
