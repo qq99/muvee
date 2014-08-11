@@ -18,6 +18,20 @@ class ExternalMetadata < ActiveRecord::Base
     end
   end
 
+  def self.get(*args)
+    escaped_args = args.map{|a| CGI.escape(a)}
+    url = self.endpoint_url(*escaped_args)
+
+    result = self.find_by_endpoint(url)
+    if !result
+      result = self.new
+      result.endpoint = url
+      result.save
+    end
+    result.fetch_data
+    result
+  end
+
   def fetch_data
     should_fetch = !self.updated_at || (self.updated_at > 1.days.ago)
     if should_fetch

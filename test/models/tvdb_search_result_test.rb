@@ -14,4 +14,10 @@ class TvdbSearchResultTest < ActiveSupport::TestCase
       2.times do TvdbSearchResult.get("American Dad") end
     end
   end
+
+  test "it will URL escape before submitting" do
+    TvdbSearchResult.expects(:endpoint_url).with("American+Dad")
+    TvdbSearchResult.any_instance.stubs(:fetch_data)
+    TvdbSearchResult.get("American Dad")
+  end
 end
