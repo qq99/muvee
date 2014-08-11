@@ -26,10 +26,10 @@ class ExternalMetadata < ActiveRecord::Base
     if !result
       result = self.new
       result.endpoint = url
-      result.save
-      result.update_column(:updated_at, nil)
     end
-    result.fetch_data
+    if fetched = result.fetch_data
+      result.save
+    end
     result
   end
 
@@ -40,8 +40,8 @@ class ExternalMetadata < ActiveRecord::Base
       if http_get.response.kind_of? Net::HTTPSuccess
         self.raw_value = http_get.body.to_s.encode('UTF-8', {:invalid => :replace, :undef => :replace, :replace => '?'})
       end
-      self.save
     end
+    return should_fetch
   end
 
   def data_from_xml

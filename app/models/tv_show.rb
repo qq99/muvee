@@ -9,15 +9,27 @@ class TvShow < Video
     standard: /([\w\-\.\_\s]*)S(\d+)(?:\D*)E(\d+)/i
   }.freeze
 
-  def series_search
-    @search_result ||= TvdbSearchResult.get(self.title)
-  end
-
   def series_metadata
     @series_metadata = series_search.data_from_xml[:Data][:Series]
   end
 
+  def metadata
+    @meta ||= episode_metadata.select{|e| e[:SeasonNumber].to_i == season && e[:EpisodeNumber].to_i == episode}.first
+  end
+
   private
+
+  def series_search
+    @series_search ||= TvdbSearchResult.get(self.title)
+  end
+
+  def episode_metadata_search
+    @episode_metadata_search ||= TvdbSeriesResult.get(series_metadata[:seriesid])
+  end
+
+  def episode_metadata
+    @episode_metadata ||= episode_metadata_search.data_from_xml[:Data][:Episode]
+  end
 
   def associate_with_series
     if series_metadata
