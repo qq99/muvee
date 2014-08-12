@@ -6,6 +6,14 @@ class Video < ActiveRecord::Base
 
   SERVABLE_FILETYPES = %w{.mp4 .webm}.freeze
 
+  def is_tv?
+    type == "TvShow"
+  end
+
+  def is_movie?
+    type == "Movie"
+  end
+
   def self.thumbnail_root_path
     "/public/thumbnails/"
   end
