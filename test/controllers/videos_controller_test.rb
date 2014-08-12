@@ -18,7 +18,7 @@ class VideosControllerTest < ActionController::TestCase
 
   test "should create video" do
     assert_difference('Video.count') do
-      post :create, video: { duration: @video.duration, episode: @video.episode, left_off_at: @video.left_off_at, raw_file_path: @video.raw_file_path, season: @video.season, series_id: @video.series_id, type: @video.type }
+      post :create, video: { duration: @video.duration, episode: @video.episode, left_off_at: @video.left_off_at, raw_file_path: "/foo/bar/baz.mp4", season: @video.season, series_id: @video.series_id, type: @video.type }
     end
 
     assert_redirected_to video_path(assigns(:video))
@@ -35,7 +35,7 @@ class VideosControllerTest < ActionController::TestCase
   end
 
   test "should update video" do
-    patch :update, id: @video, video: { duration: @video.duration, episode: @video.episode, left_off_at: @video.left_off_at, raw_file_path: @video.raw_file_path, season: @video.season, series_id: @video.series_id, type: @video.type }
+    patch :update, id: @video, video: { duration: @video.duration, episode: @video.episode, left_off_at: @video.left_off_at, raw_file_path: "/foo/bar/ease.mp4", season: @video.season, series_id: @video.series_id, type: @video.type }
     assert_redirected_to video_path(assigns(:video))
   end
 

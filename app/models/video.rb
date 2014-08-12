@@ -1,6 +1,7 @@
 class Video < ActiveRecord::Base
   has_many :thumbnails, dependent: :destroy
-  before_create :shellout_and_grab_duration
+  validates_uniqueness_of :raw_file_path
+  after_create :shellout_and_grab_duration
   after_create :create_initial_thumb
 
   SERVABLE_FILETYPES = %w{.mp4 .webm}.freeze
