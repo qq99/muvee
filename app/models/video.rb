@@ -3,6 +3,8 @@ class Video < ActiveRecord::Base
   before_create :shellout_and_grab_duration
   after_create :create_initial_thumb
 
+  SERVABLE_FILETYPES = %w{.mp4 .webm}.freeze
+
   def self.thumbnail_root_path
     "/public/thumbnails/"
   end

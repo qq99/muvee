@@ -21,6 +21,25 @@ class VideosController < ApplicationController
   def edit
   end
 
+  def generate
+    # TODO: make this service create from a user-defined endpoint
+    service = VideoCreationService.new({
+      tv: ['/media/sf_TV/'],
+      movies: []
+    })
+
+    @new_tv_shows, @failed_tv_shows, @new_movies, @failed_movies = service.generate()
+
+    respond_to do |format|
+      format.json { render json: {
+        new_tv_shows: @new_tv_shows,
+        failed_tv_shows: @failed_tv_shows,
+        new_movies: @new_movies,
+        failed_movies: @failed_movies
+      }, status: :ok}
+    end
+  end
+
   # POST /videos
   # POST /videos.json
   def create
