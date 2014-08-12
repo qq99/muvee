@@ -10,6 +10,7 @@ class VideosController < ApplicationController
   # GET /videos/1
   # GET /videos/1.json
   def show
+    render layout: 'fullscreen'
   end
 
   # GET /videos/new

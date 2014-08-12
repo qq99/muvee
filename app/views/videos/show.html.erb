@@ -2,7 +2,7 @@
   <div class="meta">
     <div class="title-information">
       <h1 class="title">
-        <% if @video.is_tv? %>
+        <% if @video.is_tv? && @video.series_id.present? %>
           <%= link_to @video.title, series_path(@video.series) %>
         <% else %>
           <%= @video.title %>

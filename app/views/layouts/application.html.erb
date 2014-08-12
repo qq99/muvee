@@ -4,9 +4,28 @@
   <title>MuvRails</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
   <%= csrf_meta_tags %>
 </head>
 <body>
+
+  <header class="main-navigation">
+    <ul class="top-nav-container">
+      <li>
+        <a class="home" href="/">
+          <i class="fa fa-home"></i>
+        </a>
+      </li>
+      <li <% if controller_name == 'videos'%>class="active" <% end %>>
+        <a href="/videos/list">All Videos</a>
+      </li>
+      <li <% if controller_name == 'tv' %>class="active" <% end %>>
+        <a href="/series/list">TV</a>
+      </li>
+    </ul>
+  </header>
 
 <%= yield %>
 
