@@ -1,0 +1,25 @@
+<a
+  class="video <% if video.thumbnails.present? %> has-thumbnails<% end %>"
+  data-id="<%= video.id %>"
+  href="<%= video_path(video) %>" class="video-link">
+  <div class="clearfix video-tile">
+    <div class="thumbnail-area">
+      <div class="thumbnails">
+        <% video.thumbnails.each_with_index do |thumb, i| %>
+          <img class="video-thumbnail <% if i>0 %>hidden<% end %>" src="<%= thumb.url %>" alt="">
+        <% end %>
+      </div>
+      <div class="duration">
+        <%= video.duration %>
+      </div>
+      <% if false #(video.left_off_at) { %>
+        <div class="watch-progress">
+          <span class="watched-bar" title="<%= video.left_off_at %> seconds of <%= Video.durationInSeconds(video) %> total seconds" style="width: <%= 100*video.left_off_at / Video.durationInSeconds(video) %>%"></span>
+        </div>
+      <% end %>
+    </div>
+    <h3 class="video-title"><%= video.episode_specific_metadata[:EpisodeName] || "No title available" %> - S<%= video.season %>E<%= video.episode %></h3>
+    <p class="video-overview"><%= video.episode_specific_metadata[:Overview] %></p>
+    <span class="hide"><%= video.raw_file_path %></span>
+  </div>
+</a>
