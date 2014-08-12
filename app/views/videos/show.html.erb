@@ -1,39 +1,23 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Raw file path:</strong>
-  <%= @video.raw_file_path %>
-</p>
-
-<p>
-  <strong>Type:</strong>
-  <%= @video.type %>
-</p>
-
-<p>
-  <strong>Episode:</strong>
-  <%= @video.episode %>
-</p>
-
-<p>
-  <strong>Season:</strong>
-  <%= @video.season %>
-</p>
-
-<p>
-  <strong>Duration:</strong>
-  <%= @video.duration %>
-</p>
-
-<p>
-  <strong>Left off at:</strong>
-  <%= @video.left_off_at %>
-</p>
-
-<p>
-  <strong>Series:</strong>
-  <%= @video.series_id %>
-</p>
-
-<%= link_to 'Edit', edit_video_path(@video) %> |
-<%= link_to 'Back', videos_path %>
+<div id="watch">
+  <div class="meta">
+    <div class="title-information">
+      <h1 class="title">
+        <%= @video.title %>
+      </h1>
+      <h3>
+        <%= @video.metadata[:EpisodeName].presence %>
+        <% if @video.season && @video.episode %>
+          <em class="smaller">S<%= @video.season %>E<%= @video.episode %></em>
+        <% end %>
+      </h3>
+    </div>
+    <div class="description">
+      <p>
+        <%= @video.metadata[:Overview].presence %>
+      </p>
+    </div>
+  </div>
+  <div class="video-container">
+    <video id="<%= @video.id %>" needs-src="/videos/stream/<%= @video.id %>" data-resume-from="video.left_off_at" autoplay controls></video>
+  </div>
+</div>

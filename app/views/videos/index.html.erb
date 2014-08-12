@@ -7,7 +7,7 @@
           <li class="poster">
             <div class="poster-innards">
               <% if (video.thumbnails.present?) %>
-                <a href="/videos/<%= video.id %>/watch" class="poster-link aspect16x8">
+                <a href="<%= video_path(video) %>" class="poster-link aspect16x8">
                   <img src="<%= video.thumbnails.first.url %>" class="video-thumbnail">
                 </a>
               <% end %>

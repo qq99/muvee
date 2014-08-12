@@ -45,6 +45,6 @@ class ExternalMetadata < ActiveRecord::Base
   end
 
   def data_from_xml
-    @data ||= Hash.from_xml(self.raw_value).with_indifferent_access
+    @data ||= Hash.from_xml(self.raw_value).try(:with_indifferent_access) || {}
   end
 end
