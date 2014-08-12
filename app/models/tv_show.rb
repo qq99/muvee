@@ -14,7 +14,14 @@ class TvShow < Video
     if series_tvdb_id = metadata[:seriesid]
       series_name = metadata[:SeriesName] || self.title
 
-      series = Series.find_by_tvdb_id(series_tvdb_id) || Series.create(tvdb_id: series_tvdb_id, title: series_name)
+      series = Series.find_by_tvdb_id(series_tvdb_id) || Series.create(
+        tvdb_id: series_tvdb_id,
+        title: series_name,
+        overview: metadata[:Overview],
+        tvdb_rating: metadata[:Rating],
+        tvdb_rating_count: metadata[:RatingCount],
+        status: metadata[:Status]
+      )
       series.tv_shows << self
       series.tvdb_series_result = episode_metadata_search
       series.save
