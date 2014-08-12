@@ -3,18 +3,21 @@ require 'test_helper'
 class TvShowTest < ActiveSupport::TestCase
   test 'can create' do
     TvShow.any_instance.stubs(:associate_with_series)
+    TvShow.any_instance.stubs(:extract_metadata)
     show = TvShow.create(raw_file_path: "/foo/bar")
     assert_equal "TvShow", show.type
   end
 
   test '#filename_no_extension strips out the filename correctly' do
     TvShow.any_instance.stubs(:associate_with_series)
+    TvShow.any_instance.stubs(:extract_metadata)
     show = TvShow.create(raw_file_path: "/foo/bar/filename.jpg")
     assert_equal "filename", show.filename_no_extension
   end
 
   test 'guesses something when no format matches' do
     TvShow.any_instance.stubs(:associate_with_series)
+    TvShow.any_instance.stubs(:extract_metadata)
     show = TvShow.create(raw_file_path: '/foo/bar/Maggie.Simpson.in.The.Longest.Daycare.HDTV.x264-2HD.mp4')
     assert_equal "Maggie Simpson In The Longest Daycare 2 Hd", show.title
 
@@ -24,6 +27,7 @@ class TvShowTest < ActiveSupport::TestCase
 
   test 'guesses standard format correctly on create' do
     TvShow.any_instance.stubs(:associate_with_series)
+    TvShow.any_instance.stubs(:extract_metadata)
     examples = [
       "/foo/bar/Show.Name.S01E02.Source.Quality.Etc-Group.mp4",
       "/foo/bar/Show Name - S01E02 - My Ep Name.mp4",
@@ -61,6 +65,7 @@ class TvShowTest < ActiveSupport::TestCase
     assert_equal "American Dad!", show.title
     assert_equal "American Dad!", Series.last.title
     assert Series.last.tvdb_id
+    assert Series.last.tvdb_series_result
   end
 
   test 'can get to episodic metadata' do

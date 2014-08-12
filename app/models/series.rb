@@ -2,6 +2,7 @@ class Series < ActiveRecord::Base
   include HasMetadata
 
   has_many :tv_shows
+  has_one :tvdb_series_result
 
   def banner_url
     series_metadata[:banner]

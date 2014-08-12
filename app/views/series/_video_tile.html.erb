@@ -18,8 +18,8 @@
         </div>
       <% end %>
     </div>
-    <h3 class="video-title"><%= video.episode_specific_metadata[:EpisodeName] || "No title available" %> - S<%= video.season %>E<%= video.episode %></h3>
-    <p class="video-overview"><%= video.episode_specific_metadata[:Overview] %></p>
+    <h3 class="video-title"><%= video.episode_name || "No title available" %> - S<%= video.season %>E<%= video.episode %></h3>
+    <p class="video-overview"><%= video.overview %></p>
     <span class="hide"><%= video.raw_file_path %></span>
   </div>
 </a>

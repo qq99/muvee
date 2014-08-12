@@ -4,17 +4,21 @@ class ExternalMetadata < ActiveRecord::Base
   def fetch(uri_str, limit = 5)
     raise ArgumentError, 'too many HTTP redirects' if limit == 0
 
-    response = Net::HTTP.get_response(URI(uri_str))
+    begin
+      response = Net::HTTP.get_response(URI(uri_str))
 
-    case response
-    when Net::HTTPSuccess then
-      response
-    when Net::HTTPRedirection then
-      location = response['location']
-      warn "redirected to #{location}"
-      fetch(location, limit - 1)
-    else
-      response.value
+      case response
+      when Net::HTTPSuccess then
+        response
+      when Net::HTTPRedirection then
+        location = response['location']
+        warn "redirected to #{location}"
+        fetch(location, limit - 1)
+      else
+        response.value
+      end
+    rescue
+      nil
     end
   end
 
@@ -37,7 +41,7 @@ class ExternalMetadata < ActiveRecord::Base
     should_fetch = self.updated_at.blank? || (self.updated_at.present? && self.updated_at <= 1.days.ago)
     if should_fetch
       http_get = fetch(URI(self.endpoint))
-      if http_get.response.kind_of? Net::HTTPSuccess
+      if http_get.present? && http_get.response.kind_of?(Net::HTTPSuccess)
         self.raw_value = http_get.body.to_s.encode('UTF-8', {:invalid => :replace, :undef => :replace, :replace => '?'})
       end
     end

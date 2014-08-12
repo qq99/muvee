@@ -9,7 +9,7 @@
         <% end %>
       </h1>
       <h3>
-        <%= @video.episode_specific_metadata[:EpisodeName].presence %>
+        <%= @video.episode_name.presence %>
         <% if @video.season && @video.episode %>
           <em class="smaller">S<%= @video.season %>E<%= @video.episode %></em>
         <% end %>
@@ -17,7 +17,7 @@
     </div>
     <div class="description">
       <p>
-        <%= @video.episode_specific_metadata[:Overview].presence %>
+        <%= @video.overview.presence %>
       </p>
     </div>
   </div>

@@ -3,7 +3,7 @@ module HasMetadata
     base.class_eval do
       # memoized hashes
       def metadata
-        @metadata ||= get_first_series_metadata
+        @metadata ||= get_first_series_metadata || {}
       end
 
       def all_episodes_metadata
@@ -20,7 +20,7 @@ module HasMetadata
       end
 
       def episode_metadata_search
-        @episode_metadata_search ||= TvdbSeriesResult.get(metadata[:seriesid])
+        @episode_metadata_search ||= self.try(:tvdb_series_result) || TvdbSeriesResult.get(metadata[:seriesid])
       end
 
 

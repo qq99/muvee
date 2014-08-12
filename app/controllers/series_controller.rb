@@ -2,7 +2,7 @@ class SeriesController < ApplicationController
   before_action :set_series, only: [:show]
 
   def index
-    @series = Series.all
+    @series = Series.all.preload(:tvdb_series_result)
   end
 
   def show

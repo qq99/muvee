@@ -4,23 +4,28 @@ class TvShow < Video
   belongs_to :series
   before_create :guessit
   after_create :associate_with_series
+  after_create :extract_metadata
 
   FORMATS = {
     standard: /([\w\-\.\_\s]*)S(\d+)(?:\D*)E(\d+)/i
   }.freeze
 
   def associate_with_series
-    if series_metadata
-      series_tvdb_id = series_metadata[:id]
-      series_name = series_metadata[:SeriesName] || self.title
+    if series_tvdb_id = metadata[:seriesid]
+      series_name = metadata[:SeriesName] || self.title
 
       series = Series.find_by_tvdb_id(series_tvdb_id) || Series.create(tvdb_id: series_tvdb_id, title: series_name)
       series.tv_shows << self
+      series.tvdb_series_result = episode_metadata_search
       series.save
-
-      self.title = series_name
-      self.save
     end
+  end
+
+  def extract_metadata
+    self.title = metadata[:SeriesName]
+    self.overview = episode_specific_metadata[:Overview]
+    self.episode_name = episode_specific_metadata[:EpisodeName]
+    self.save
   end
 
   def guessit
