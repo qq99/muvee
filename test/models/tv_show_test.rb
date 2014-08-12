@@ -60,13 +60,12 @@ class TvShowTest < ActiveSupport::TestCase
     show.reload
     assert_equal "American Dad!", show.title
     assert_equal "American Dad!", Series.last.title
-    assert_equal show.series_metadata[:seriesid].to_i, Series.last.tvdb_id
   end
 
   test 'can get to episodic metadata' do
     show = TvShow.create(raw_file_path: '/foo/bar/American.Dad.S05E10.HDTV.x264-LOL.mp4')
     show.reload
-    assert_equal "Family Affair", show.metadata[:EpisodeName]
-    assert_equal "When the Smiths try to plan a family game night, Roger is full of excuses about prior commitments. However, when he is caught in a lie, the Smiths feel stabbed in the back when they realize Roger has been cheating on them with other families. Stan, Francine, Hayley and Steve go on the offensive to teach Roger a lesson about monogamy until Roger has a breakthrough about why he isn't a one family kind-of-guy.", show.metadata[:Overview]
+    assert_equal "Family Affair", show.episode_specific_metadata[:EpisodeName]
+    assert_equal "When the Smiths try to plan a family game night, Roger is full of excuses about prior commitments. However, when he is caught in a lie, the Smiths feel stabbed in the back when they realize Roger has been cheating on them with other families. Stan, Francine, Hayley and Steve go on the offensive to teach Roger a lesson about monogamy until Roger has a breakthrough about why he isn't a one family kind-of-guy.", show.episode_specific_metadata[:Overview]
   end
 end

@@ -1,4 +1,6 @@
 class TvShow < Video
+  include HasMetadata
+
   belongs_to :series
   before_create :guessit
   after_create :associate_with_series
@@ -6,37 +8,6 @@ class TvShow < Video
   FORMATS = {
     standard: /([\w\-\.\_\s]*)S(\d+)(?:\D*)E(\d+)/i
   }.freeze
-
-  def get_first_series_metadata
-    results = series_search.data_from_xml.fetch(:Data, {}).try(:fetch, :Series, nil)
-    if results.kind_of? Array
-      return results.first
-    elsif results.kind_of? Hash
-      return results
-    end
-  end
-
-  def series_metadata
-    @series_metadata ||= get_first_series_metadata
-  end
-
-  def metadata
-    @meta ||= episode_metadata.select{|e| e[:SeasonNumber].to_i == season && e[:EpisodeNumber].to_i == episode}.first || {}
-  end
-
-  private
-
-  def series_search
-    @series_search ||= TvdbSearchResult.get(self.title)
-  end
-
-  def episode_metadata_search
-    @episode_metadata_search ||= TvdbSeriesResult.get(series_metadata[:seriesid])
-  end
-
-  def episode_metadata
-    @episode_metadata ||= episode_metadata_search.data_from_xml.fetch(:Data, {}).try(:fetch, :Episode, {})
-  end
 
   def associate_with_series
     if series_metadata.kind_of? Array

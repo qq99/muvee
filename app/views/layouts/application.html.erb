@@ -19,10 +19,10 @@
         </a>
       </li>
       <li <% if controller_name == 'videos'%>class="active" <% end %>>
-        <a href="/videos/list">All Videos</a>
+        <%= link_to "All Videos", videos_path %>
       </li>
       <li <% if controller_name == 'tv' %>class="active" <% end %>>
-        <a href="/series/list">TV</a>
+        <%= link_to "TV", series_index_path %>
       </li>
     </ul>
   </header>
