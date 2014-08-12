@@ -10,15 +10,9 @@ class TvShow < Video
   }.freeze
 
   def associate_with_series
-    if series_metadata.kind_of? Array
-      s_metadata = series_metadata.first
-    elsif series_metadata.kind_of? Hash
-      s_metadata = series_metadata
-    end
-
-    if s_metadata
-      series_tvdb_id = s_metadata[:seriesid]
-      series_name = s_metadata[:SeriesName] || self.title
+    if series_metadata
+      series_tvdb_id = series_metadata[:id]
+      series_name = series_metadata[:SeriesName] || self.title
 
       series = Series.find_by_tvdb_id(series_tvdb_id) || Series.create(tvdb_id: series_tvdb_id, title: series_name)
       series.tv_shows << self

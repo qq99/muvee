@@ -60,6 +60,7 @@ class TvShowTest < ActiveSupport::TestCase
     show.reload
     assert_equal "American Dad!", show.title
     assert_equal "American Dad!", Series.last.title
+    assert Series.last.tvdb_id
   end
 
   test 'can get to episodic metadata' do
