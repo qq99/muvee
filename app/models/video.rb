@@ -1,5 +1,5 @@
 class Video < ActiveRecord::Base
-  has_many :thumbnails
+  has_many :thumbnails, dependent: :destroy
   before_create :shellout_and_grab_duration
   after_create :create_initial_thumb
 

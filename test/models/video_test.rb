@@ -50,4 +50,13 @@ class VideoTest < ActiveSupport::TestCase
     Video.any_instance.expects(:create_thumbnail)
     vid = Video.create(raw_file_path: @bigBuck)
   end
+
+  test "will destroy thumbnails when video is destroyed" do
+    assert_difference "Thumbnail.all.length", 1 do
+      @vid = Video.create(raw_file_path: @bigBuck)
+    end
+    assert_difference "Thumbnail.all.length", -1 do
+      @vid.destroy
+    end
+  end
 end

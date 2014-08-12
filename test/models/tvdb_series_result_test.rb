@@ -5,14 +5,13 @@ class TvdbSeriesResultTest < ActiveSupport::TestCase
     search = TvdbSearchResult.get("American Dad")
     tvdb_series_id = search.data_from_xml[:Data][:Series][:seriesid]
 
-    result = nil
     assert_difference "TvdbSeriesResult.all.length", 1 do
-      result = TvdbSeriesResult.get(tvdb_series_id)
-      result = TvdbSeriesResult.get(tvdb_series_id)
-      result = TvdbSeriesResult.get(tvdb_series_id)
+      TvdbSeriesResult.get(tvdb_series_id)
+      TvdbSeriesResult.get(tvdb_series_id)
+      @result = TvdbSeriesResult.get(tvdb_series_id)
     end
 
-    result.reload
-    assert_equal "American Dad!", result.data_from_xml[:Data][:Series][:SeriesName]
+    @result.reload
+    assert_equal "American Dad!", @result.data_from_xml[:Data][:Series][:SeriesName]
   end
 end

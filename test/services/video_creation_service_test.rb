@@ -28,19 +28,19 @@ class VideoCreationServiceTest < ActiveSupport::TestCase
 
     TvShow.any_instance.expects(:associate_with_series)
 
-    results = nil
+
     assert_difference 'TvShow.all.length', 1 do
       assert_difference 'Thumbnail.all.length', 1 do
-        results = service.generate()
+        @results = service.generate()
       end
     end
 
-    assert_equal 4, results.length
-    assert_equal 1, results[0].length
-    assert_equal 0, results[1].length
-    assert_equal 0, results[2].length
-    assert_equal 0, results[3].length
-    assert_equal "Big Buck Bunny 320x180", results[0][0].title
+    assert_equal 4, @results.length
+    assert_equal 1, @results[0].length
+    assert_equal 0, @results[1].length
+    assert_equal 0, @results[2].length
+    assert_equal 0, @results[3].length
+    assert_equal "Big Buck Bunny 320x180", @results[0][0].title
   end
 
   test "service will append trailing slashes to any folder supplied to it without trailing slash" do
@@ -50,9 +50,8 @@ class VideoCreationServiceTest < ActiveSupport::TestCase
 
     TvShow.any_instance.expects(:associate_with_series)
 
-    results = nil
     assert_difference 'TvShow.all.length', 1 do
-      results = service.generate()
+      @results = service.generate()
     end
   end
 end
