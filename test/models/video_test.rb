@@ -55,6 +55,7 @@ class VideoTest < ActiveSupport::TestCase
     assert_difference "Thumbnail.all.length", 1 do
       @vid = Video.create(raw_file_path: @bigBuck)
     end
+    Thumbnail.any_instance.expects(:destroy_thumbnail_file).once
     assert_difference "Thumbnail.all.length", -1 do
       @vid.destroy
     end

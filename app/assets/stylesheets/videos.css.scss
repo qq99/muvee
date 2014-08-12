@@ -1,3 +1,483 @@
 // Place all the styles related to the Videos controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+video {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.clearfix {
+  &::after {
+    content: "";
+    display: block;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+    clear: both;
+  }
+}
+
+h1, h2, h3, h4, h5 {
+  margin-bottom: 0.5em;
+}
+p {
+  font-size: 1.3em;
+  color: #ccc;
+}
+h2, h3, h4, h5 {
+  font-weight: 300;
+}
+h1 {
+  font-size: 2.5em;
+}
+h2 {
+  font-size: 2em;
+}
+h3 {
+  font-size: 1.5em;
+}
+em {
+  font-style: italic;
+
+  color: rgb(188, 242, 255);
+}
+em.smaller {
+  font-size:0.75em;
+}
+
+.hide {
+  display: none;
+}
+.panel {
+  padding: 2em 2.5em;
+}
+
+.main-navigation {
+  position: fixed;
+  width: 100%;
+  z-index: 2000;
+  background: black;
+  padding-bottom: 1em;
+}
+
+.top-nav-container {
+  margin: 1.5em 3em 0em 3em;
+  list-style: none;
+  li {
+    display: block;
+    float: left;
+    font-size: 2em;
+    &.active {
+      background: rgba(50, 50, 50, 0.8);
+    }
+    a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      width: 100%;
+      height: 100%;
+      padding: 0.25em 0.5em;
+      outline: 0;
+      &:focus, &:hover {
+        background: green;
+      }
+    }
+  }
+}
+.with-header {
+  padding-top: 3em;
+}
+
+#watch {
+
+  a {
+    color: white;
+    &:visited, &:active {
+      color: white;
+    }
+  }
+  width: 100%;
+  height: 100%;
+  .title-information {
+    margin-bottom: 1em;
+  }
+  .description {
+    line-height: 1.75em;
+    text-align: justify;
+  }
+}
+
+.video-container {
+  background: black;
+  width: 100%;
+  height: 100%;
+  display: table;
+  video {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+a.back {
+  display: inline-block;
+  background: #222;
+  color: #ddd;
+  padding: 0 0.25em;
+  &:active, &:focus {
+    outline: 5px solid rgb(148, 221, 255);
+  }
+}
+
+.fa-heart-o {
+  color: #444;
+}
+.is-favourite {
+  color: rgb(255, 0, 92);
+}
+
+#series {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  .poster-button {
+    width: 15em;
+    float: none;
+  }
+  .series-overview {
+    height: 18em;
+    padding-right: 1em;
+    overflow-y: auto;
+  }
+  .series-information, .video-list {
+    position: absolute;
+    height: 100%;
+    top: 0;
+  }
+  .series-information {
+    overflow-y: hidden;
+    width: 40%;
+    left: 0;
+    padding: 3.5em;
+    background: rgba(0,0,0,0.9);
+    color: white;
+    h2 {
+      font-weight: 300;
+    }
+  }
+  .video-list {
+    overflow-y: scroll;
+    width: 60%;
+    left: 40%;
+  }
+  .video-list-container {
+    padding: 3em;
+  }
+  .video-tile {
+    color: #222;
+    font-size: 1.1em;
+    p {
+      color: #666;
+    }
+    padding-top: 2em;
+    border-top: 1px solid #999;
+  }
+  .duration {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgba(0,0,0,0.8);
+    padding: 0.25em 1em;
+  }
+  .thumbnail-area {
+    position: relative;
+    float: left;
+    margin-right: 2em;
+    width: 520px;
+  }
+  .thumbnails {
+    height: 100%;
+    width: 100%;
+  }
+  .video-thumbnail {
+    width: 100%;
+    height: auto;
+    &.hidden {
+      display: none;
+    }
+  }
+  .poster-buttons {
+    position: absolute;
+    font-size: 1.2em;
+    bottom: 2em;
+    width: auto;
+    border: 1px solid #333;
+  }
+  .featured-episode {
+    margin-top: -3em;
+    padding: 0 3em 0 3em;
+    .thumbnails {
+      outline: 1px solid #333;
+      box-shadow: 0px -10px 40px rgba(0, 0, 0, 0.5);
+    }
+    h1 {
+      font-weight: lighter;
+    }
+    .thumbnail-area {
+      width: 100%;
+      float: none;
+    }
+    .description-area {
+      padding-top: 1.5em;
+    }
+    .duration {
+      color: white;
+    }
+    a {
+      color: black;
+      &:focus, &:hover {
+        background: transparent;
+        .thumbnails {
+          outline: 5px solid #94ddff;
+        }
+      }
+    }
+    p {
+      color: #555;
+    }
+  }
+
+
+}
+
+.series-featured-image {
+  width: 100%;
+  height: 25em;
+  opacity: 0.8;
+}
+a.video {
+  display: block;
+  text-decoration: none;
+  margin-bottom: 2em;
+  &:visited {
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    margin-bottom: 2em;
+  }
+  &:focus, &:hover {
+    .video-tile {
+      .thumbnails {
+        outline: 5px solid rgb(148, 221, 255);
+      }
+    }
+  }
+}
+
+#all-videos {
+  background: black;
+}
+
+#all_series {
+  background: black;
+  .poster-container {
+    padding: 4em 8em;
+  }
+  .poster-buttons {
+    border: 1px solid #333;
+    border-top: 0;
+  }
+}
+
+.poster-link, .poster img { display: block; }
+.poster {
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  float: left;
+  width: 20em;
+  color: white;
+  padding: 1em;
+  font-size: 1.4em;
+  img {
+    width: 100%;
+    height: auto;
+    opacity: 0.8;
+  }
+}
+.poster-link:focus, .poster-link:hover {
+  img {
+    opacity: 1;
+    outline: 5px solid rgb(148, 221, 255);
+  }
+}
+
+button {
+  border: inherit;
+  background: transparent;
+  font-size: inherit;
+  color: inherit;
+  line-height: inherit;
+  cursor: pointer;
+  outline: 0;
+  &:focus {
+    outline: 0;
+  }
+}
+
+.fave-heart {
+  font-size: 2em;
+  padding: 10px;
+  text-shadow: 0px 0px 5px rgba(0,0,0,0.8);
+}
+
+.dropdown {
+  position: relative;
+}
+.dropdown-options {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 300%;
+  overflow-y: auto;
+  .dropdown-item {
+    display: block;
+    width: 100% !important;
+    height: 100%;
+  }
+}
+
+.poster-button {
+  cursor: pointer;
+  display: block;
+  float: left;
+  padding: 0.5em 1em;
+  color: #ddd;
+  border: 0;
+  height: 100%;
+  background-color: #222;
+  text-shadow: 1px 1px 0px black;
+  text-decoration: none;
+  &.btn-primary {
+    background: darken(green, 10%);
+    &:hover, &:focus {
+      background: green;
+    }
+  }
+  &:focus, &:hover {
+    background-color: #444;
+    box-shadow: inset 0px 0px 1px rgba(255, 255, 255, 0.55);
+    outline: 0;
+  }
+}
+
+.watch-progress {
+  width: 100%;
+  height: 15px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: black;
+  outline: 1px solid #333;
+  .watched-bar {
+    height: 100%;
+    width: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: green;
+  }
+}
+
+.meta {
+  position: relative;
+  width: 30em;
+  height: 100%;
+  background: black;
+  background: rgba(0,0,0,0.8);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  color: white;
+  line-height: 2.6em;
+  padding: 3.5em;
+  transition: -webkit-transform 0.5s ease-in;
+}
+.meta.hidden {
+  -webkit-transform: translateX(-100%);
+  -moz-transform: translateX(-100%);
+  -ms-transform: translateX(-100%);
+  transform: translateX(-100%);
+}
+
+.responsive-grid {
+  margin: 35px 0 0 0;
+  padding: 0;
+  list-style: none;
+  position: relative;
+  width: 100%;
+
+  li {
+    position: relative;
+    float: left;
+    overflow: hidden;
+    width: 25%;
+    width: calc(100% / 4);
+  }
+  @media screen and (max-width: 660px) {
+    li {
+      width: 100%;
+    }
+  }
+}
+
+.aspect16x9 {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  padding-top: 25px;
+  height: 0;
+  img, video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+}
+.aspect16x10 {
+  @extend .aspect16x9;
+  padding-bottom: 62.5%;
+}
+.aspect16x8 {
+  @extend .aspect16x9;
+  padding-bottom: 50%;
+}
+
+.poster-innards {
+  position: relative;
+  span {
+    text-shadow: 1px 1px 5px black;
+  }
+  .title {
+    position: absolute;
+    display: block;
+    bottom: 0em;
+    right: 0em;
+    padding: 0.25em 0.5em;
+    background: rgba(0,0,0,0.75);
+  }
+  .season {
+    position: absolute;
+    display: block;
+    top: 0em;
+    left: 0em;
+    padding: 0.25em 0.5em;
+    background: rgba(0,0,0,0.55);
+  }
+}

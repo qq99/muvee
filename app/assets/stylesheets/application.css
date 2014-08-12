@@ -13,3 +13,50 @@
  *= require_tree .
  *= require_self
  */
+
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Fira Sans Light'), local('FiraSans-Light'), url(/fonts/FiraSans-Light.woff) format('woff');
+}
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Fira Sans'), local('FiraSans'), url(/fonts/FiraSans-Regular.woff) format('woff');
+}
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: italic;
+  font-weight: 300;
+  src: local('Fira Sans Light Italic'), local('FiraSans-Italic'), url(/fonts/FiraSans-LightItalic.woff) format('woff');
+}
+
+#debug {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 2em;
+  background: white;
+  color: black;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  outline: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  font-family: 'Fira Sans', 'Open Sans', sans-serif;
+  font-size: 20px;
+}

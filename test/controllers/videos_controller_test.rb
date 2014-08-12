@@ -11,32 +11,9 @@ class VideosControllerTest < ActionController::TestCase
     assert_not_nil assigns(:videos)
   end
 
-  test "should get new" do
-    get :new
-    assert_response :success
-  end
-
-  test "should create video" do
-    assert_difference('Video.count') do
-      post :create, video: { duration: @video.duration, episode: @video.episode, left_off_at: @video.left_off_at, raw_file_path: "/foo/bar/baz.mp4", season: @video.season, series_id: @video.series_id, type: @video.type }
-    end
-
-    assert_redirected_to video_path(assigns(:video))
-  end
-
   test "should show video" do
     get :show, id: @video
     assert_response :success
-  end
-
-  test "should get edit" do
-    get :edit, id: @video
-    assert_response :success
-  end
-
-  test "should update video" do
-    patch :update, id: @video, video: { duration: @video.duration, episode: @video.episode, left_off_at: @video.left_off_at, raw_file_path: "/foo/bar/ease.mp4", season: @video.season, series_id: @video.series_id, type: @video.type }
-    assert_redirected_to video_path(assigns(:video))
   end
 
   test "should destroy video" do
