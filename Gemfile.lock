@@ -34,6 +34,8 @@ GEM
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     builder (3.2.2)
+    chronic_duration (0.10.5)
+      numerizer (~> 0.1.1)
     coderay (1.1.0)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -66,6 +68,7 @@ GEM
     mocha (1.1.0)
       metaclass (~> 0.0.1)
     multi_json (1.10.1)
+    numerizer (0.1.1)
     polyglot (0.3.5)
     pry (0.10.0)
       coderay (~> 1.1.0)
@@ -138,6 +141,7 @@ PLATFORMS
 DEPENDENCIES
   better_errors
   binding_of_caller
+  chronic_duration
   coffee-rails (~> 4.0.0)
   jbuilder (~> 2.0)
   jquery-rails

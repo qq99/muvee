@@ -30,7 +30,7 @@ gem 'rb-readline'
 gem 'pry'
 gem 'uuid'
 gem 'mocha'
-
+gem 'chronic_duration'
 gem 'timecop'
 
 group :development do

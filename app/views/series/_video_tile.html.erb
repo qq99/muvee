@@ -10,7 +10,7 @@
         <% end %>
       </div>
       <div class="duration">
-        <%= video.duration %>
+        <%= human_duration(video.duration) %>
       </div>
       <% if false #(video.left_off_at) { %>
         <div class="watch-progress">
