@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20140812035052) do
   create_table "external_metadata", force: true do |t|
     t.integer  "video_id"
     t.string   "type"
-    t.string   "raw_value"
+    t.text     "raw_value"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "endpoint"

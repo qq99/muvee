@@ -1,5 +1,6 @@
 class ExternalMetadata < ActiveRecord::Base
   validates_uniqueness_of :endpoint
+  serialize :raw_value
 
   def fetch(uri_str, limit = 5)
     raise ArgumentError, 'too many HTTP redirects' if limit == 0
@@ -42,13 +43,14 @@ class ExternalMetadata < ActiveRecord::Base
     if should_fetch
       http_get = fetch(URI(self.endpoint))
       if http_get.present? && http_get.response.kind_of?(Net::HTTPSuccess)
-        self.raw_value = http_get.body.to_s.encode('UTF-8', {:invalid => :replace, :undef => :replace, :replace => '?'})
+        self.raw_value = http_get.body.to_s#.encode('UTF-8', {:invalid => :replace, :undef => :replace, :replace => '?'})
+        self.raw_value = Hash.from_xml(self.raw_value).try(:with_indifferent_access) || {}
       end
     end
     return should_fetch
   end
 
-  def data_from_xml
-    @data ||= Hash.from_xml(self.raw_value).try(:with_indifferent_access) || {}
+  def data
+    self.raw_value || {}
   end
 end

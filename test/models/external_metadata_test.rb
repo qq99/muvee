@@ -10,13 +10,13 @@ class ExternalMetadataTest < ActiveSupport::TestCase
         body: "test"
       })
     })
+    Hash.stubs(:from_xml).returns({})
   end
 
   test "the first fetch to a new endpoint should result in an HTTP get" do
     ExternalMetadata.stubs(endpoint_url: "http://example.com")
     Net::HTTP.expects(:get_response).returns(@fakeSuccess)
     meta = ExternalMetadata.get("test")
-    assert_equal "test", meta.raw_value
     assert_equal "http://example.com", meta.endpoint
   end
 

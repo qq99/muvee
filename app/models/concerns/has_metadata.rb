@@ -7,11 +7,11 @@ module HasMetadata
       end
 
       def all_episodes_metadata
-        @all_episodes_metadata ||= episode_metadata_search.data_from_xml.fetch(:Data, {}).try(:fetch, :Episode, {})
+        @all_episodes_metadata ||= episode_metadata_search.data.fetch(:Data, {}).try(:fetch, :Episode, {})
       end
 
       def series_metadata
-        @series_metadata ||= episode_metadata_search.data_from_xml.fetch(:Data, {}).try(:fetch, :Series, {})
+        @series_metadata ||= episode_metadata_search.data.fetch(:Data, {}).try(:fetch, :Series, {})
       end
 
       # memoized searches:
@@ -33,7 +33,7 @@ module HasMetadata
       private
 
       def get_first_series_metadata
-        results = series_search.data_from_xml.fetch(:Data, {}).try(:fetch, :Series, nil)
+        results = series_search.data.fetch(:Data, {}).try(:fetch, :Series, nil)
         if results.kind_of? Array
           return results.first
         elsif results.kind_of? Hash
