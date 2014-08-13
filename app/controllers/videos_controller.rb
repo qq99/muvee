@@ -10,6 +10,8 @@ class VideosController < ApplicationController
   # GET /videos/1
   # GET /videos/1.json
   def show
+    @video.series.last_watched_video = @video
+    @video.series.save
     render layout: 'fullscreen'
   end
 

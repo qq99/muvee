@@ -37,8 +37,10 @@
   </div>
   <div class="video-list">
     <div class="series-featured-image" style="background:url(http://thetvdb.com/banners/<%= @series.series_metadata[:fanart] %>); background-size: cover;"></div>
-    <% if false # @series.last_watched_video %>
-
+    <% if @series.last_watched_video %>
+      <div class="featured-episode">
+        <%= render 'video_tile', video: @series.last_watched_video %>
+      </div>
     <% end %>
     <div class="video-list-container">
       <% @series.tv_shows.each do |show| %>

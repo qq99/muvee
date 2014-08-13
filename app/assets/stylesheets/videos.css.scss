@@ -206,6 +206,7 @@ a.back {
   .video-thumbnail {
     width: 100%;
     height: auto;
+    display: block;
     &.hidden {
       display: none;
     }
