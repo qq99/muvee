@@ -3,6 +3,9 @@ Rails.application.routes.draw do
     collection do
       get 'generate'
     end
+    member do
+      get 'stream'
+    end
   end
 
   resources :series

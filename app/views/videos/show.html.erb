@@ -22,6 +22,7 @@
     </div>
   </div>
   <div class="video-container">
-    <video id="<%= @video.id %>" needs-src="/videos/stream/<%= @video.id %>" data-resume-from="video.left_off_at" autoplay controls></video>
+    <video src="<%= stream_video_path(@video) %>" id="<%= @video.id %>" data-resume-from="video.left_off_at" autoplay controls>
+    </video>
   </div>
 </div>

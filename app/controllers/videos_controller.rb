@@ -1,5 +1,5 @@
 class VideosController < ApplicationController
-  before_action :set_video, only: [:show, :edit, :update, :destroy]
+  before_action :set_video, only: [:show, :edit, :update, :destroy, :stream]
 
   # GET /videos
   # GET /videos.json
@@ -81,6 +81,52 @@ class VideosController < ApplicationController
       format.html { redirect_to videos_url, notice: 'Video was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def stream
+    # video_path = @video.raw_file_path
+    # video_extension = File.extname(@video.raw_file_path)[1..-1]
+    # video_file = File.open(video_path) # TODO: check that it exists
+    # video_size = video_file.size
+    # video_begin = 0
+    # video_end = video_size - 1
+
+    # if request.headers["Range"]
+    #   status_code = :partial_content
+    #   match = request.headers['Range'].match(/bytes=(\d+)-(\d*)/)
+
+    #   r1 = match[1].to_i if match[1].present?
+    #   r2 = match[2].to_i if match[2] && match[2].present?
+    #   if r1 && (r1 >= 0) && (r1 < video_end)
+    #     video_begin = r1
+    #   end
+    #   if r2 && (r2 > video_begin) && (r2 <= video_end)
+    #     video_end = r2
+    #   end
+
+    #   response.headers["Accept-Ranges"] = "bytes"
+    #   response.headers['Content-Range'] = "bytes #{video_begin}-#{video_end}/#{video_size}"
+    # else
+    #   status_code = :ok
+    # end
+
+    # response.headers["Content-Length"] = (video_end.to_i - video_begin.to_i + 1).to_s
+    # response.headers["Cache-Control"] = "public, must-revalidate, max-age=0"
+    # response.headers["Pragma"] = "no-cache"
+    # response.headers["Connection"] = "keep-alive" # maybe
+    # #response.headers["Last-Modified"] = @video.updated_at.to_s
+    # response.headers["Content-Transfer-Encoding"] = "binary"
+    # # response.headers['Content-Duration'] = @video.duration.to_s
+    # # response.headers['X-Content-Duration'] = @video.duration.to_s
+
+    send_file @video.raw_file_path,
+      #filename: "muv-stream.mp4",
+      #type: Mime::Type.lookup_by_extension(video_extension),
+      type: 'video/mp4',
+      #status: status_code,
+      disposition: 'inline',
+      stream: true,
+      buffer_size: 4096
   end
 
   private
