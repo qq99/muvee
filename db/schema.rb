@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140813024654) do
+ActiveRecord::Schema.define(version: 20140814001048) do
 
   create_table "external_metadata", force: true do |t|
     t.integer  "video_id"
@@ -41,6 +41,9 @@ ActiveRecord::Schema.define(version: 20140813024654) do
     t.integer  "tvdb_rating_count"
     t.string   "status"
     t.integer  "last_watched_video_id"
+    t.string   "poster_path"
+    t.string   "banner_path"
+    t.string   "fanart_path"
   end
 
   create_table "thumbnails", force: true do |t|

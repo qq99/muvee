@@ -6,8 +6,8 @@
           <li class="poster">
             <div class="poster-innards">
               <a class="poster-link" href="<%= series_path(serie) %>">
-                <% if poster = serie.series_metadata[:poster].presence %>
-                  <img class="video-thumbnail" src="http://thetvdb.com/banners/<%= poster %>" alt="">
+                <% if poster_url = serie.poster_url %>
+                  <img class="video-thumbnail" src="<%= poster_url %>" alt="">
                 <% else %>
                   <img class="video-thumbnail" src="/images/no-poster.png" alt="">
                 <% end %>
