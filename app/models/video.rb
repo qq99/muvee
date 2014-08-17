@@ -10,6 +10,8 @@ class Video < ActiveRecord::Base
 
   SERVABLE_FILETYPES = %w{.mp4 .webm}.freeze
 
+  QUALITIES = /(1080p|720p)/i
+
   def is_tv?
     type == "TvShow"
   end

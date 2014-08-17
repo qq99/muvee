@@ -1,7 +1,17 @@
 class Movie < Video
   include DownloadFile
 
+  # before_create :guessit
+  # after_create :extract_metadata
+
   POSTER_FOLDER = Rails.root.join('public', 'posters')
+
+  FORMATS = {
+    name_and_year: %r{
+      ([\w\-\.\_\s]*)
+      [\ \_\.\[]{1}([\d]{4})[\ \_\.\[]?
+    }xi
+  }.freeze
 
   def metadata
     @metadata ||= OmdbSearchResult.get(self.title).raw_value || {}
@@ -25,5 +35,36 @@ class Movie < Video
       self.poster_path = output_filename
     end
     self.save
+  end
+
+  def filename_without_quality(filename)
+    matches = Video::QUALITIES.match(filename)
+    if matches.present?
+      quality = matches[0]
+      remaining_filename = filename.gsub(Video::QUALITIES, "")
+    else
+      quality = "Unknown"
+      remaining_filename = filename
+    end
+    [quality, remaining_filename]
+  end
+
+  def guessit
+    if filename_no_extension.empty?
+      self.title = "Unknown"
+    else
+      quality, remaining_filename = filename_without_quality(filename_no_extension)
+
+      Movie::FORMATS.each do |name, regex|
+        matches = regex.match(remaining_filename)
+        if matches.present?
+          self.title = pretty_title matches[1]
+        end
+      end
+
+      if !self.title.present?
+        self.title = pretty_title remaining_filename
+      end
+    end
   end
 end
