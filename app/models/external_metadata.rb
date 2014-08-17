@@ -1,27 +1,8 @@
 class ExternalMetadata < ActiveRecord::Base
+  include DownloadFile
+
   validates_uniqueness_of :endpoint
   serialize :raw_value
-
-  def fetch(uri_str, limit = 5)
-    raise ArgumentError, 'too many HTTP redirects' if limit == 0
-
-    begin
-      response = Net::HTTP.get_response(URI(uri_str))
-
-      case response
-      when Net::HTTPSuccess then
-        response
-      when Net::HTTPRedirection then
-        location = response['location']
-        warn "redirected to #{location}"
-        fetch(location, limit - 1)
-      else
-        response.value
-      end
-    rescue
-      nil
-    end
-  end
 
   def self.get(*args)
     escaped_args = args.map{|a| CGI.escape(a.to_s)}
