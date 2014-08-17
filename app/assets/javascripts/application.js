@@ -13,7 +13,7 @@
 //= require jquery
 //= require jquery.turbolinks
 //= require jquery_ujs
-//= require turbolinks
+//= require lodash
 //= require_tree .
 
 $(document).ready(function() {
@@ -23,3 +23,6 @@ $(document).ready(function() {
     }
   });
 });
+
+
+//= require turbolinks
