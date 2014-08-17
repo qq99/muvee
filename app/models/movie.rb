@@ -43,10 +43,15 @@ class Movie < Video
     else
       quality, remaining_filename = filename_without_quality(filename_no_extension)
 
+      self.quality = quality if quality.present?
+
       Movie::FORMATS.each do |name, regex|
         matches = regex.match(remaining_filename)
         if matches.present?
           self.title = pretty_title matches[1]
+          if matches[2].present?
+            self.year = matches[2].to_i
+          end
         end
       end
 

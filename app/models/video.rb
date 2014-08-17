@@ -40,7 +40,7 @@ class Video < ActiveRecord::Base
       quality = matches[0]
       remaining_filename = filename.gsub(Video::QUALITIES, "")
     else
-      quality = "Unknown"
+      quality = nil
       remaining_filename = filename
     end
     [quality, remaining_filename]

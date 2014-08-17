@@ -47,25 +47,37 @@ class MovieTest < ActiveSupport::TestCase
     movie = Movie.new(raw_file_path: "/foo/bar/Disconnect.2012.HDTV.XviD.spinzes.mp4")
     movie.guessit
     assert_equal "Disconnect", movie.title
+    assert_equal 2012, movie.year
+    assert_equal nil, movie.quality
 
     movie = Movie.new(raw_file_path: "/foo/bar/Frozen.2013.1080p.BluRay.x264.YIFY.mp4")
     movie.guessit
     assert_equal "Frozen", movie.title
+    assert_equal 2013, movie.year
+    assert_equal "1080p", movie.quality
 
     movie = Movie.new(raw_file_path: "/foo/bar/Glengarry.Glen.Ross.1992.720p.HDTV.x264.YIFY.mp4")
     movie.guessit
     assert_equal "Glengarry Glen Ross", movie.title
+    assert_equal 1992, movie.year
+    assert_equal "720p", movie.quality
 
     movie = Movie.new(raw_file_path: "/foo/bar/Stoker 2013.mp4")
     movie.guessit
     assert_equal "Stoker", movie.title
+    assert_equal 2013, movie.year
+    assert_equal nil, movie.quality
 
     movie = Movie.new(raw_file_path: "/foo/bar/The Nines[2007]DvDrip[Eng]-FXG.avi")
     movie.guessit
     assert_equal "The Nines", movie.title
+    assert_equal 2007, movie.year
+    assert_equal nil, movie.quality
 
     movie = Movie.new(raw_file_path: "/foo/bar/The.Amazing.Spiderman.2012.1080p.BrRip.x264.YIFY.mp4")
     movie.guessit
     assert_equal "The Amazing Spiderman", movie.title
+    assert_equal 2012, movie.year
+    assert_equal "1080p", movie.quality
   end
 end
