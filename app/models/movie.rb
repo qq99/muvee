@@ -37,18 +37,6 @@ class Movie < Video
     self.save
   end
 
-  def filename_without_quality(filename)
-    matches = Video::QUALITIES.match(filename)
-    if matches.present?
-      quality = matches[0]
-      remaining_filename = filename.gsub(Video::QUALITIES, "")
-    else
-      quality = "Unknown"
-      remaining_filename = filename
-    end
-    [quality, remaining_filename]
-  end
-
   def guessit
     if filename_no_extension.empty?
       self.title = "Unknown"

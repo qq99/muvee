@@ -39,8 +39,10 @@ class TvShow < Video
     if filename_no_extension.empty?
       self.title = "Unknown"
     else
+      quality, remaining_filename = filename_without_quality(filename_no_extension)
+
       TvShow::FORMATS.each do |name, regex|
-        matches = regex.match(filename_no_extension)
+        matches = regex.match(remaining_filename)
         if matches.present? && matches.length == 4
           self.title = pretty_title matches[1]
           self.season = matches[2].to_i
@@ -49,7 +51,7 @@ class TvShow < Video
       end
 
       if !self.title.present?
-        self.title = pretty_title filename_no_extension
+        self.title = pretty_title remaining_filename
       end
     end
   end
