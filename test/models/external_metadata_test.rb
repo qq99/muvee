@@ -11,6 +11,7 @@ class ExternalMetadataTest < ActiveSupport::TestCase
       })
     })
     Hash.stubs(:from_xml).returns({})
+    ExternalMetadata.any_instance.stubs(result_format: :xml)
   end
 
   test "the first fetch to a new endpoint should result in an HTTP get" do

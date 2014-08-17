@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class TvShowTest < ActiveSupport::TestCase
+  def setup
+    Series.any_instance.stubs(download_images: true)
+  end
+
   test 'can create' do
     TvShow.any_instance.stubs(:associate_with_series)
     TvShow.any_instance.stubs(:extract_metadata)
@@ -46,32 +50,40 @@ class TvShowTest < ActiveSupport::TestCase
   end
 
   test 'will create a new series if one does not exist' do
-    assert_difference 'Series.all.length', 1 do
-      TvShow.create(raw_file_path: '/foo/bar/Family.Guy.S11E21.HDTV.x264-LOL.mp4')
+    VCR.use_cassette 'family_guy' do
+      assert_difference 'Series.all.length', 1 do
+        TvShow.create(raw_file_path: '/foo/bar/Family.Guy.S11E21.HDTV.x264-LOL.mp4')
+      end
     end
   end
 
   test 'will not create duplicate new series' do
-    assert_difference 'Series.all.length', 1 do
-      TvShow.create(raw_file_path: '/foo/bar/Family.Guy.S11E21.HDTV.x264-LOL.mp4')
-      TvShow.create(raw_file_path: '/foo/bar/Family.Guy.S11E22.HDTV.x264-LOL.mp4')
-      TvShow.create(raw_file_path: '/foo/bar/Family.Guy.S11E23.HDTV.x264-LOL.mp4')
+    VCR.use_cassette 'family_guy' do
+      assert_difference 'Series.all.length', 1 do
+        TvShow.create(raw_file_path: '/foo/bar/Family.Guy.S11E21.HDTV.x264-LOL.mp4')
+        TvShow.create(raw_file_path: '/foo/bar/Family.Guy.S11E22.HDTV.x264-LOL.mp4')
+        TvShow.create(raw_file_path: '/foo/bar/Family.Guy.S11E23.HDTV.x264-LOL.mp4')
+      end
     end
   end
 
-  test 'will potentialy change the name of the tvshow to match the remote datasource recommendation' do
-    show = TvShow.create(raw_file_path: '/foo/bar/American.Dad.S11E21.HDTV.x264-LOL.mp4')
-    show.reload
-    assert_equal "American Dad!", show.title
-    assert_equal "American Dad!", Series.last.title
-    assert Series.last.tvdb_id
-    assert Series.last.tvdb_series_result
+  test 'will potentially change the name of the tvshow to match the remote datasource recommendation' do
+    VCR.use_cassette 'american_dad' do
+      show = TvShow.create(raw_file_path: '/foo/bar/American.Dad.S11E21.HDTV.x264-LOL.mp4')
+      show.reload
+      assert_equal "American Dad!", show.title
+      assert_equal "American Dad!", Series.last.title
+      assert Series.last.tvdb_id
+      assert Series.last.tvdb_series_result
+    end
   end
 
   test 'can get to episodic metadata' do
-    show = TvShow.create(raw_file_path: '/foo/bar/American.Dad.S05E10.HDTV.x264-LOL.mp4')
-    show.reload
-    assert_equal "Family Affair", show.episode_specific_metadata[:EpisodeName]
-    assert_equal "When the Smiths try to plan a family game night, Roger is full of excuses about prior commitments. However, when he is caught in a lie, the Smiths feel stabbed in the back when they realize Roger has been cheating on them with other families. Stan, Francine, Hayley and Steve go on the offensive to teach Roger a lesson about monogamy until Roger has a breakthrough about why he isn't a one family kind-of-guy.", show.episode_specific_metadata[:Overview]
+    VCR.use_cassette 'american_dad' do
+      show = TvShow.create(raw_file_path: '/foo/bar/American.Dad.S05E10.HDTV.x264-LOL.mp4')
+      show.reload
+      assert_equal "Family Affair", show.episode_specific_metadata[:EpisodeName]
+      assert_equal "When the Smiths try to plan a family game night, Roger is full of excuses about prior commitments. However, when he is caught in a lie, the Smiths feel stabbed in the back when they realize Roger has been cheating on them with other families. Stan, Francine, Hayley and Steve go on the offensive to teach Roger a lesson about monogamy until Roger has a breakthrough about why he isn't a one family kind-of-guy.", show.episode_specific_metadata[:Overview]
+    end
   end
 end

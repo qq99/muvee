@@ -37,9 +37,11 @@ gem 'mocha'
 gem 'chronic_duration'
 gem 'timecop'
 
-group :development do
+group :development, :test do
+  gem 'webmock'
   gem "better_errors"
   gem "binding_of_caller"
+  gem "vcr"
 end
 
 # Use ActiveModel has_secure_password
