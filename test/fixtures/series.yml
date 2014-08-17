@@ -5,5 +5,5 @@ example_series:
   tvdb_id: 1
 
 american_dad:
-  title: MyString
-  tvdb_id: 1
+  title: "American Dad!"
+  tvdb_id: 73141

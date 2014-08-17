@@ -1,5 +1,6 @@
 class Series < ActiveRecord::Base
   include HasMetadata
+  include DownloadFile
 
   after_create :download_images
   before_destroy :destroy_images
@@ -11,10 +12,6 @@ class Series < ActiveRecord::Base
   has_many :tv_shows
   has_one :tvdb_series_result
   has_one :last_watched_video, class_name: "Video", primary_key: "last_watched_video_id", foreign_key: "id"
-
-  def banner_url
-    series_metadata[:banner]
-  end
 
   def overview
     series_metadata[:Overview]
@@ -52,53 +49,33 @@ class Series < ActiveRecord::Base
   end
 
   def download_fanart
-    remote_filename = series_metadata[:fanart]
+    remote_filename = "http://thetvdb.com/banners/" + series_metadata[:fanart]
     output_filename = UUID.generate(:compact) + File.extname(remote_filename)
     output_path = FANART_FOLDER.join(output_filename)
 
-    if download_file_from_tvdb(remote_filename, output_path)
+    if download_file(remote_filename, output_path)
       self.fanart_path = output_filename
     end
   end
 
   def download_banner
-    remote_filename = series_metadata[:banner]
+    remote_filename = "http://thetvdb.com/banners/" + series_metadata[:banner]
     output_filename = UUID.generate(:compact) + File.extname(remote_filename)
     output_path = BANNER_FOLDER.join(output_filename)
 
-    if download_file_from_tvdb(remote_filename, output_path)
+    if download_file(remote_filename, output_path)
       self.banner_path = output_filename
     end
   end
 
   def download_poster
-    remote_filename = series_metadata[:poster]
+    remote_filename = "http://thetvdb.com/banners/" + series_metadata[:poster]
     output_filename = UUID.generate(:compact) + File.extname(remote_filename)
     output_path = POSTER_FOLDER.join(output_filename)
 
-    if download_file_from_tvdb(remote_filename, output_path)
+    if download_file(remote_filename, output_path)
       self.poster_path = output_filename
     end
-  end
-
-  def download_file_from_tvdb(remote_filename, output_filename)
-    return unless remote_filename.present? && output_filename.present?
-
-    begin
-      Net::HTTP.start("thetvdb.com") do |http|
-        f = open(output_filename, "wb")
-        response = http.get("/banners/#{remote_filename}")
-        begin
-          f.write(response.body)
-        ensure
-          f.close()
-        end
-      end
-    rescue Exception => e
-      Rails.logger.error "Could not download #{remote_filename}: #{e}"
-      return false
-    end
-    true
   end
 
   def destroy_images
