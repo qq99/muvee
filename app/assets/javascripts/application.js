@@ -16,6 +16,8 @@
 //= require lodash
 //= require_tree .
 
+window.$document = $(document);
+
 $(document).ready(function() {
   $.ajaxSetup({
     headers: {
