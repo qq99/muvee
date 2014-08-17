@@ -3,7 +3,7 @@ require 'test_helper'
 class VideosControllerTest < ActionController::TestCase
   setup do
     Video.any_instance.stubs(thumbnail_root_path: "/test/scratch/")
-    @video = videos(:one)
+    @video = videos(:american_dad_s01_e01)
   end
 
   teardown do

@@ -1,9 +1,5 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-example_series:
-  title: MyString
-  tvdb_id: 1
-
 american_dad:
   title: "American Dad!"
   tvdb_id: 73141
