@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     end
     member do
       get 'stream'
+      get 'thumbnails'
       post 'left_off_at'
     end
   end

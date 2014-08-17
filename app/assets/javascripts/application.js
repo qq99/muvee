@@ -14,17 +14,6 @@
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require lodash
+//= require ./bootstrap.js.coffee
 //= require_tree .
-
-window.$document = $(document);
-
-$(document).ready(function() {
-  $.ajaxSetup({
-    headers: {
-      'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-    }
-  });
-});
-
-
 //= require turbolinks

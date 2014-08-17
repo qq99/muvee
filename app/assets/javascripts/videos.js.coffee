@@ -27,7 +27,7 @@ $ ->
 
   hideMeta()
 
-  $document.on "keydown", (ev) ->
+  $(document).on "keydown", (ev) ->
     switch ev.which
       when 32 # space
         if video.paused
@@ -35,7 +35,7 @@ $ ->
         else
           video.pause()
 
-  $document.on "mousemove keydown", ->
+  $(document).on "mousemove keydown", ->
     showMeta()
     return
 

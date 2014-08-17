@@ -14,6 +14,10 @@ class Video < ActiveRecord::Base
     type == "Movie"
   end
 
+  def has_set_of_thumbnails?
+    self.thumbnails.length > 1
+  end
+
   def self.thumbnail_root_path
     "/public/thumbnails/"
   end
@@ -43,8 +47,10 @@ class Video < ActiveRecord::Base
   def create_n_thumbnails(n_thumbnails) # evenly spaced out throughout the video
     return if self.duration == 0
 
+    spacing = self.duration / (n_thumbnails + 2).to_f
+
     n_thumbnails.times do |i|
-      at_second = (self.duration * (i / n_thumbnails)).to_i
+      at_second = spacing + (i*spacing).to_i
       create_thumbnail(at_second)
     end
   end

@@ -9,14 +9,9 @@ one:
   left_off_at: 1
   series: example_series
 
-two:
-  raw_file_path: MyString
-  type: "TvShow"
-  episode: 1
-  season: 1
-  duration: 1
-  left_off_at: 1
-  series_id: 1
+big_buck_bunny:
+  type: "Movie"
+  duration: 596
 
 american_dad_s01_e01:
   title: "American Dad"

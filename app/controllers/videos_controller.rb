@@ -1,7 +1,7 @@
 class VideosController < ApplicationController
-  before_action :set_video, only: [:show, :edit, :update, :destroy, :stream, :left_off_at]
+  before_action :set_video, only: [:show, :edit, :update, :destroy, :stream, :left_off_at, :thumbnails]
 
-  respond_to :json, only: [:left_off_at]
+  respond_to :json, only: [:left_off_at, :thumbnails]
 
   # GET /videos
   # GET /videos.json
@@ -85,6 +85,7 @@ class VideosController < ApplicationController
     end
   end
 
+  # GEt /videos/1/stream
   def stream
     # video_path = @video.raw_file_path
     # video_extension = File.extname(@video.raw_file_path)[1..-1]
@@ -131,9 +132,22 @@ class VideosController < ApplicationController
       buffer_size: 4096
   end
 
+  # POST /videos/1/left_off_at.json
   def left_off_at
     @video.update_attribute(:left_off_at, params[:left_off_at])
     render json: {status: "ok"}
+  end
+
+  # GET /videos/1/thumbnails.json
+  def thumbnails
+    # builds thumbnails if they don't exist, returns them if they do
+    # all videos start with 1 thumbnail
+    if @video.thumbnails.count != 10
+      @video.thumbnails.destroy_all
+      @video.create_n_thumbnails(10)
+    end
+
+    render json: {thumbnails: @video.thumbnails.map{|t| t.url}}
   end
 
   private
