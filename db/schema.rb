@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140814001048) do
+ActiveRecord::Schema.define(version: 20140817182750) do
 
   create_table "external_metadata", force: true do |t|
     t.integer  "video_id"
@@ -82,6 +82,11 @@ ActiveRecord::Schema.define(version: 20140814001048) do
     t.string   "overview"
     t.string   "video"
     t.string   "episode_name"
+    t.datetime "released_on"
+    t.string   "language"
+    t.string   "country"
+    t.string   "awards"
+    t.string   "poster_path"
   end
 
 end
