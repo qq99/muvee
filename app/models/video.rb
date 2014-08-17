@@ -4,6 +4,10 @@ class Video < ActiveRecord::Base
   after_create :shellout_and_grab_duration
   after_create :create_initial_thumb
 
+  scope :latest, -> {order(season: :desc, episode: :desc)}
+  scope :release_order, -> {order(season: :asc, episode: :asc)}
+  scope :unwatched, -> {where(left_off_at: nil)}
+
   SERVABLE_FILETYPES = %w{.mp4 .webm}.freeze
 
   def is_tv?

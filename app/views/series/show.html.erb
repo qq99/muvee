@@ -15,11 +15,22 @@
         </button>
         <div class="dropdown-options">
           <a class="dropdown-item poster-button">All Seasons</a>
+          <% @seasons.each do |s| %>
+            <a href="" class="dropdown-item poster-button">Season <%= s %></a>
+          <% end %>
         </div>
       </div>
-      <% if true %>
-        <a href="#" class="poster-button">
+      <% if @sort == :latest %>
+        <a href="?sort=release_order" class="poster-button">
           <i class="fa fa-sort"></i> Sort: latest
+        </a>
+      <% elsif @sort == :release_order %>
+        <a href="?sort=unwatched" class="poster-button">
+          <i class="fa fa-sort"></i> Sort: release order
+        </a>
+      <% elsif @sort == :unwatched %>
+        <a href="?sort=latest" class="poster-button">
+          <i class="fa fa-sort"></i> Sort: unwatched
         </a>
       <% end %>
       <a href="#" class="poster-button js-favourite-toggle">
@@ -43,7 +54,7 @@
       </div>
     <% end %>
     <div class="video-list-container">
-      <% @series.tv_shows.each do |show| %>
+      <% @videos.each do |show| %>
         <%= render 'video_tile', video: show %>
       <% end %>
     </div>

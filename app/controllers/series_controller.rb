@@ -6,6 +6,9 @@ class SeriesController < ApplicationController
   end
 
   def show
+    @sort = params[:sort].try(:to_sym) || :latest
+    @videos = @series.tv_shows.send(@sort)
+    @seasons = @videos.map{|v| v.season}.uniq.sort
     render layout: 'fullscreen'
   end
 
