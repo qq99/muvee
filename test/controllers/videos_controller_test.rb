@@ -23,4 +23,10 @@ class VideosControllerTest < ActionController::TestCase
 
     assert_redirected_to videos_path
   end
+
+  test "POST to #left_off_at keeps track of the most recent time in seconds" do
+    post :left_off_at, id: @video, left_off_at: 20, format: :json
+
+    assert_equal 20, @video.reload.left_off_at
+  end
 end

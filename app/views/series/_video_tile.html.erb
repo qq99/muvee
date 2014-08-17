@@ -12,9 +12,9 @@
       <div class="duration">
         <%= human_duration(video.duration) %>
       </div>
-      <% if false #(video.left_off_at) { %>
+      <% if video.left_off_at_percent > 0 %>
         <div class="watch-progress">
-          <span class="watched-bar" title="<%= video.left_off_at %> seconds of <%= Video.durationInSeconds(video) %> total seconds" style="width: <%= 100*video.left_off_at / Video.durationInSeconds(video) %>%"></span>
+          <span class="watched-bar" title="<%= video.left_off_at %> seconds of <%= video.duration %> total seconds" style="width: <%= video.left_off_at_percent %>%"></span>
         </div>
       <% end %>
     </div>

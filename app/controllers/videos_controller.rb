@@ -1,5 +1,7 @@
 class VideosController < ApplicationController
-  before_action :set_video, only: [:show, :edit, :update, :destroy, :stream]
+  before_action :set_video, only: [:show, :edit, :update, :destroy, :stream, :left_off_at]
+
+  respond_to :json, only: [:left_off_at]
 
   # GET /videos
   # GET /videos.json
@@ -127,6 +129,11 @@ class VideosController < ApplicationController
       disposition: 'inline',
       stream: true,
       buffer_size: 4096
+  end
+
+  def left_off_at
+    @video.update_attribute(:left_off_at, params[:left_off_at])
+    render json: {status: "ok"}
   end
 
   private

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     end
     member do
       get 'stream'
+      post 'left_off_at'
     end
   end
 

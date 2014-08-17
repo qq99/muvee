@@ -2,16 +2,16 @@
 
 one:
   raw_file_path: MyString
-  type: 
+  type: "TvShow"
   episode: 1
   season: 1
   duration: 1
   left_off_at: 1
-  series_id: 1
+  series: example_series
 
 two:
   raw_file_path: MyString
-  type: 
+  type: "TvShow"
   episode: 1
   season: 1
   duration: 1
