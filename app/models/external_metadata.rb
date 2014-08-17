@@ -44,9 +44,9 @@ class ExternalMetadata < ActiveRecord::Base
       http_get = fetch(URI(self.endpoint))
       if http_get.present? && http_get.response.kind_of?(Net::HTTPSuccess)
         self.raw_value = http_get.body.to_s#.encode('UTF-8', {:invalid => :replace, :undef => :replace, :replace => '?'})
-        if self.result_format == :xml
+        if result_format == :xml
           self.raw_value = Hash.from_xml(self.raw_value).try(:with_indifferent_access) || {}
-        elsif self.result_format == :json
+        elsif result_format == :json
           self.raw_value = JSON.parse(self.raw_value).try(:with_indifferent_access) || {}
         end
       end
