@@ -42,3 +42,8 @@ american_dad_s01_e03:
   duration: 100
   left_off_at: 20
   series: american_dad
+
+true_grit:
+  raw_file_path: /foo/bar/True.Grit.mp4
+  title: True Grit
+  type: 'Movie'
