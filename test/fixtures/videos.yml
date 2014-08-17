@@ -17,3 +17,33 @@ two:
   duration: 1
   left_off_at: 1
   series_id: 1
+
+american_dad_s01_e01:
+  title: "American Dad"
+  type: "TvShow"
+  episode: 1
+  season: 1
+  overview: "Some stuffs"
+  duration: 100
+  left_off_at: 20
+  series: american_dad
+
+american_dad_s01_e02:
+  title: "American Dad"
+  type: "TvShow"
+  episode: 2
+  season: 1
+  overview: "Some stuffs"
+  duration: 100
+  left_off_at: 20
+  series: american_dad
+
+american_dad_s01_e03:
+  title: "American Dad"
+  type: "TvShow"
+  episode: 3
+  season: 1
+  overview: "Some stuffs"
+  duration: 100
+  left_off_at: 20
+  series: american_dad

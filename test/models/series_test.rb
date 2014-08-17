@@ -44,4 +44,16 @@ class SeriesTest < ActiveSupport::TestCase
 
     assert_equal "result.png", s.banner_path
   end
+
+  test "will properly create association to last watched TV show" do
+    s = series(:american_dad)
+    e = videos(:american_dad_s01_e01)
+
+    s.last_watched_video_id = e.id
+    s.save
+    s.reload
+    assert_equal e, s.last_watched_video
+    assert_equal e.id, s.last_watched_video.id
+    assert_equal e.id, s.last_watched_video_id
+  end
 end
