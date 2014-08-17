@@ -1,8 +1,8 @@
 class Movie < Video
   include DownloadFile
 
-  # before_create :guessit
-  # after_create :extract_metadata
+  before_create :guessit
+  after_create :extract_metadata
 
   POSTER_FOLDER = Rails.root.join('public', 'posters')
 
@@ -19,11 +19,12 @@ class Movie < Video
 
   def extract_metadata
     self.title = metadata[:Title]
-    self.released_on = Time.parse(metadata[:Released])
+    self.released_on = Time.parse(metadata[:Released]) if metadata[:Released]
     self.overview = metadata[:Plot]
     self.language = metadata[:Language]
     self.country = metadata[:Country]
     self.awards = metadata[:Awards]
+    self.save
   end
 
   def download_poster

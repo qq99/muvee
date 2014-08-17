@@ -9,9 +9,10 @@ class MovieTest < ActiveSupport::TestCase
     end
   end
 
-  test "will attempt to grab duration & create initial thumbnail on create" do
+  test "will attempt to grab duration & create initial thumbnail & extract metadata on create" do
     Movie.any_instance.expects(:create_initial_thumb).once
     Movie.any_instance.expects(:shellout_and_grab_duration).once
+    Movie.any_instance.expects(:extract_metadata).once
     Movie.create(raw_file_path: "/foo/bar/Truer.Grit.mp4")
   end
 
@@ -79,5 +80,11 @@ class MovieTest < ActiveSupport::TestCase
     assert_equal "The Amazing Spiderman", movie.title
     assert_equal 2012, movie.year
     assert_equal "1080p", movie.quality
+
+    movie = Movie.new(raw_file_path: "/foo/bar/Inside Job.mp4")
+    movie.guessit
+    assert_equal "Inside Job", movie.title
+    assert_equal nil, movie.year
+    assert_equal nil, movie.quality
   end
 end
