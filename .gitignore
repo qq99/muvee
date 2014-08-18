@@ -22,7 +22,7 @@ config/secrets.yml
 
 # unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
 .rvmrc
-public/thumbnails/*
-public/banners/*
-public/posters/*
-public/fanart/*
+public/thumbnails/*.jpg
+public/banners/*.jpg
+public/posters/*.jpg
+public/fanart/*.jpg
