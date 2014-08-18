@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 20140817195656) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "title"
-    t.string   "video"
+    t.string   "overview"
     t.string   "episode_name"
     t.datetime "released_on"
     t.string   "language"
