@@ -13,10 +13,10 @@ startSimpleSlideshow = (el) ->
 stopSimpleSlideshow = ->
   clearInterval(window.slideshow)
 
-$(document).on "focus mouseenter", ".video", (e) ->
+$(document).on "focus mouseenter", ".js-has-thumbnails", (e) ->
   startSimpleSlideshow(e.currentTarget)
 
-$(document).on "mouseleave blur", ".video", (e) ->
+$(document).on "mouseleave blur", ".js-has-thumbnails", (e) ->
   stopSimpleSlideshow()
 
 $(document).on "click", ".js-favourite-toggle", (e) ->
