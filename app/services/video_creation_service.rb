@@ -15,7 +15,26 @@ class VideoCreationService
   end
 
   def create_movies(folders)
-    return [[], []] # not implemented yet
+    files = []
+    folders.each do |folder|
+      folder = "#{folder}/" if folder[-1] != "/" # append trailing slash if not there
+      all_files_in_folder = Dir["#{folder}**/*.*"]
+      files.push(*all_files_in_folder)
+    end
+    files = eligible_files(files) # filter out non-acceptable formats
+
+    successes = []
+    failures = []
+    files.each do |filepath|
+      video = Movie.new(raw_file_path: filepath)
+      if video.save
+        successes << video
+      else
+        failures << video
+      end
+    end
+
+    return [successes, failures]
   end
 
   def create_tv_shows(folders)

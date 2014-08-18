@@ -3,18 +3,24 @@ class Movie < Video
 
   before_create :guessit
   after_create :extract_metadata
+  after_create :download_poster
+  before_destroy :destroy_images
 
   POSTER_FOLDER = Rails.root.join('public', 'posters')
 
   FORMATS = {
     name_and_year: %r{
       ([\w\-\.\_\s]*)
-      [\ \_\.\[]{1}([\d]{4})[\ \_\.\[]?
+      [\(\ \_\.\[]{1}([\d]{4})[\)\ \_\.\[]?
     }xi
   }.freeze
 
   def metadata
     @metadata ||= OmdbSearchResult.get(self.title).raw_value || {}
+  end
+
+  def poster_url
+    "/posters/#{poster_path}"
   end
 
   def extract_metadata
@@ -59,6 +65,14 @@ class Movie < Video
       if !self.title.present?
         self.title = pretty_title remaining_filename
       end
+    end
+  end
+
+  def destroy_images
+    begin
+      File.delete(POSTER_FOLDER.join(poster_path))
+    rescue Exception => e
+      Rails.logger.info "Series#destroy_images: #{e}"
     end
   end
 end

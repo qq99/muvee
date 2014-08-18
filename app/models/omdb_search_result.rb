@@ -5,7 +5,7 @@ class OmdbSearchResult < ExternalMetadata
   end
 
   def self.endpoint_url(series_name)
-    "http://www.omdbapi.com/?t=True%20Grit"
+    "http://www.omdbapi.com/?t=#{series_name}"
   end
 
 end
