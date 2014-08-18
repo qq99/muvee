@@ -37,11 +37,14 @@ gem 'mocha'
 gem 'chronic_duration'
 gem 'timecop'
 
-group :development, :test do
+group :test do
   gem 'webmock'
+  gem "vcr"
+end
+
+group :development, :test do
   gem "better_errors"
   gem "binding_of_caller"
-  gem "vcr"
 end
 
 # Use ActiveModel has_secure_password
@@ -55,4 +58,3 @@ gem 'unicorn'
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
-
