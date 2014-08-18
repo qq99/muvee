@@ -34,6 +34,7 @@ class Movie < Video
   end
 
   def download_poster
+    return if metadata[:Response] == "False"
     remote_filename = metadata[:Poster]
     output_filename = UUID.generate(:compact) + File.extname(remote_filename)
     output_path = POSTER_FOLDER.join(output_filename)
