@@ -1,0 +1,27 @@
+<div id="all_series" class="clearfix with-header">
+  <div class="panel">
+    <% if @movies.present? %>
+      <ul class="responsive-grid">
+        <% @movies.each do |movie| %>
+          <li class="poster">
+            <div class="poster-innards">
+              <a class="poster-link" href="<%= movies_path(movie) %>">
+                <% if poster_url = movie.poster_url %>
+                  <img class="video-thumbnail" src="<%= poster_url %>" alt="">
+                <% else %>
+                  <img class="video-thumbnail" src="/images/no-poster.png" alt="">
+                <% end %>
+              </a>
+              <button>
+                <i class="fa fa-heart is-favourite"></i>
+              </button>
+            </div>
+          </li>
+        <% end %>
+        <div class="clearfix"></div>
+      </div>
+    <% else %>
+      <div>No movies found.</div>
+    <% end %>
+  </div>
+</div>
