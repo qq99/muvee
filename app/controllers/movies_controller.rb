@@ -3,6 +3,7 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.all
+    render layout: 'fullscreen'
   end
 
   private

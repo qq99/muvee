@@ -3,9 +3,9 @@
     <% if @series.present? %>
       <ul class="responsive-grid">
         <% @series.each do |serie| %>
-          <li class="poster">
+          <li class="poster aspect10x7">
             <div class="poster-innards">
-              <a class="poster-link" href="<%= series_path(serie) %>">
+              <a class="poster-link aspected" href="<%= series_path(serie) %>">
                 <% if poster_url = serie.poster_url %>
                   <img class="video-thumbnail" src="<%= poster_url %>" alt="">
                 <% else %>

@@ -1,27 +1,48 @@
-<div id="all_series" class="clearfix with-header">
-  <div class="panel">
-    <% if @movies.present? %>
-      <ul class="responsive-grid">
-        <% @movies.each do |movie| %>
-          <li class="poster">
-            <div class="poster-innards">
-              <a class="poster-link" href="<%= movies_path(movie) %>">
-                <% if poster_url = movie.poster_url %>
-                  <img class="video-thumbnail" src="<%= poster_url %>" alt="">
-                <% else %>
-                  <img class="video-thumbnail" src="/images/no-poster.png" alt="">
-                <% end %>
-              </a>
-              <button>
-                <i class="fa fa-heart is-favourite"></i>
-              </button>
-            </div>
-          </li>
-        <% end %>
-        <div class="clearfix"></div>
-      </div>
-    <% else %>
-      <div>No movies found.</div>
-    <% end %>
+<div id="all_movies">
+  <div class="inline-movie-preview">
+    <div class="movie-images"></div>
+  </div>
+
+  <div class="movie-meta">
+    <h1 class="movie-title"></h1>
+    <p class="movie-overview"></p>
+  </div>
+
+  <div class="movies-index" class="clearfix">
+    <div class="panel">
+      <% if @movies.present? %>
+        <ul class="responsive-grid">
+          <% @movies.each do |movie| %>
+            <li
+              class="poster js-get-thumbnails <% if movie.has_set_of_thumbnails? %>has-thumbnails<% end %>"
+              data-thumbnail-path="<%= thumbnails_video_path(movie) %>"
+              >
+              <div class="poster-innards">
+                <a
+                  class="poster-link aspect-poster js-movie-tile"
+                  href="<%= video_path(movie) %>"
+                  data-title="<%= movie.title %>"
+                  data-overview="<%= movie.overview %>">
+                  <% if poster_url = movie.poster_url %>
+                    <img class="video-thumbnail has-aspect" src="<%= poster_url %>" alt="">
+                  <% else %>
+                    <img class="video-thumbnail has-aspect" src="/images/no-poster.png" alt="">
+                  <% end %>
+
+                  <div class="thumbnails hide">
+                    <% movie.thumbnails.each do |thumb| %>
+                      <img class="video-thumbnail hide" src="<%= thumb.url %>" alt="">
+                    <% end %>
+                  </div>
+                </a>
+              </div>
+            </li>
+          <% end %>
+          <div class="clearfix"></div>
+        </div>
+      <% else %>
+        <div>No movies found.</div>
+      <% end %>
+    </div>
   </div>
 </div>

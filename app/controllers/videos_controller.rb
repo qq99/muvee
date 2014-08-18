@@ -12,8 +12,10 @@ class VideosController < ApplicationController
   # GET /videos/1
   # GET /videos/1.json
   def show
-    @video.series.last_watched_video_id = @video.id
-    @video.series.save
+    if @video.is_tv?
+      @video.series.last_watched_video_id = @video.id
+      @video.series.save
+    end
     render layout: 'fullscreen'
   end
 
