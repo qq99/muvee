@@ -1,2 +1,19 @@
-muvee
-=====
+μv (aka muv aka muvee)
+===
+
+μv: (pronounced: mew-vee, somewhat like "movie")
+
+[Join in the developer chat](https://chat.echoplex.us/muv)
+
+Netflix, for your home.
+WIP
+
+Requires (and tested with):
+
+- ruby 2.1.2+
+- libav-tools
+  - avconv version 9.14-6:9.14-0ubuntu0.14.04.1
+  - avprobe version 9.14-6:9.14-0ubuntu0.14.04.1
+- node.js 0.10.25+
+- nginx version: nginx/1.4.6 (Ubuntu)
+  - globally available on your path
