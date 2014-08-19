@@ -19,10 +19,10 @@
 #
 # Even doing this, Nginx will still try to create the default error file, and
 # log a non-fatal error when it fails. After that things will work, however.
-error_log /home/anthony/github/muvee/tmp/error.log;
+error_log <%= @app_root %>/tmp/error.log;
 
 # The pidfile will be written to /var/run unless this is set.
-pid /home/anthony/github/muvee/tmp/muvee.pid;
+pid <%= @app_root %>/tmp/muvee.pid;
 
 worker_processes 1;
 
@@ -64,10 +64,10 @@ http {
     listen 8080;
     listen [::]:8080 default ipv6only=on;
 
-    access_log /home/anthony/github/muvee/tmp/access.log;
-    error_log /home/anthony/github/muvee/tmp/error.log;
+    access_log <%= @app_root %>/tmp/access.log;
+    error_log <%= @app_root %>/tmp/error.log;
 
-    root /home/anthony/github/muvee/public;
+    root <%= @app_root %>/public;
     index index.html index.htm;
 
     server_name localhost;
@@ -78,7 +78,7 @@ http {
     }
 
     location ~ ^/(fonts|fanart|banners|posters|thumbnails) {
-      root /home/anthony/github/muvee/public;
+      root <%= @app_root %>/public;
     }
 
     location ~ ^/videos/[0-9]*/stream {
