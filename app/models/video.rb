@@ -2,6 +2,7 @@ class Video < ActiveRecord::Base
   has_many :thumbnails, dependent: :destroy
   validates_uniqueness_of :raw_file_path
   after_create :shellout_and_grab_duration
+  after_create :guess_3d
   after_create :create_initial_thumb
 
   scope :latest, -> {order(season: :desc, episode: :desc)}
@@ -9,8 +10,16 @@ class Video < ActiveRecord::Base
   scope :unwatched, -> {where(left_off_at: nil)}
 
   SERVABLE_FILETYPES = %w{.mp4 .webm}.freeze
-
   QUALITIES = /(1080p|720p)/i
+  THREE_DIMENSIONAL = /(3d)/i
+  TYPES_OF_3D = {
+    side_by_side: /[\(\ \_\.\[](sbs)[\)\ \_\.\]]?/i,
+    top_and_bottom: /[\(\ \_\.\[](tab)[\)\ \_\.\]]?/i
+  }.freeze
+
+  def is_3d?
+    is_3d.present?
+  end
 
   def is_tv?
     type == "TvShow"
@@ -85,6 +94,20 @@ class Video < ActiveRecord::Base
   end
 
   private
+
+  def guess_3d
+    matches = THREE_DIMENSIONAL.match(self.raw_file_path)
+    if matches && matches[1].present?
+      self.is_3d = true
+      TYPES_OF_3D.each do |type, regex|
+        matches = regex.match(self.raw_file_path)
+        if matches && matches[1].present?
+          self.type_of_3d = type.to_s
+        end
+      end
+      self.save
+    end
+  end
 
   def avconv_create_thumbnail_command(at_seconds, output_path)
     "avconv -ss " + at_seconds.to_s.shellescape + " -i " + raw_file_path.shellescape + " -qscale 1 -vsync 1 -vframes 1 -y " + output_path.shellescape

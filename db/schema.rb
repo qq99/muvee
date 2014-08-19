@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140817195656) do
+ActiveRecord::Schema.define(version: 20140819043227) do
 
   create_table "external_metadata", force: true do |t|
     t.integer  "video_id"
@@ -88,6 +88,8 @@ ActiveRecord::Schema.define(version: 20140817195656) do
     t.string   "poster_path"
     t.integer  "year"
     t.string   "quality"
+    t.boolean  "is_3d"
+    t.string   "type_of_3d"
   end
 
 end

@@ -46,6 +46,28 @@ class VideoTest < ActiveSupport::TestCase
     end
   end
 
+  test "#guess_3d will properly alter the record if the filename hints at 3dness" do
+    vid = Video.create(raw_file_path: "/foo/bar/Spider.Man.2.2014.3d.sbs.mp4")
+    assert_equal true, vid.reload.is_3d?
+    assert_equal true, vid.is_3d
+    assert_equal "side_by_side", vid.type_of_3d
+
+    vid = Video.create(raw_file_path: "/foo/bar/Spider.Man.2.2014.SbS.3D.mp4")
+    assert_equal true, vid.reload.is_3d?
+    assert_equal true, vid.is_3d
+    assert_equal "side_by_side", vid.type_of_3d
+
+    vid = Video.create(raw_file_path: "/foo/bar/Spider.Man.2.2014.TAB.3D.mp4")
+    assert_equal true, vid.reload.is_3d?
+    assert_equal true, vid.is_3d
+    assert_equal "top_and_bottom", vid.type_of_3d
+
+    vid = Video.create(raw_file_path: "/foo/bar/Spider.Man.2.2014.3D.tab.mp4")
+    assert_equal true, vid.reload.is_3d?
+    assert_equal true, vid.is_3d
+    assert_equal "top_and_bottom", vid.type_of_3d
+  end
+
   test "will call #create_thumbnail after creation of video model" do
     Video.any_instance.expects(:create_thumbnail)
     vid = Video.create(raw_file_path: @bigBuck)
