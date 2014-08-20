@@ -13,15 +13,15 @@
   <header class="main-navigation">
     <ul class="top-nav-container">
       <li class="<% if controller_name == 'videos' && action_name == 'index' %>active<% end %>">
-        <a class="home" href="/">
+        <a class="top-nav-button home" href="/">
           <i class="fa fa-home"></i>
         </a>
       </li>
       <li <% if controller_name == 'movies' %>class="active" <% end %>>
-        <%= link_to "Movies", movies_path %>
+        <%= link_to "Movies", movies_path, class: 'top-nav-button' %>
       </li>
       <li <% if controller_name == 'series' %>class="active" <% end %>>
-        <%= link_to "TV", series_index_path %>
+        <%= link_to "TV", series_index_path, class: 'top-nav-button' %>
       </li>
     </ul>
   </header>

@@ -1,12 +1,10 @@
+@import 'colors';
+
 #watch {
   width: 100%;
   height: 100%;
-
-  a {
-    color: white;
-    &:visited, &:active {
-      color: white;
-    }
+  a:hover {
+    color: $radical-blue;
   }
 }
 
@@ -26,19 +24,38 @@
   opacity: 1;
   transition: all 0.5s ease-in-out;
   > * {
-    max-width: 40em;
+    max-width: 35em;
   }
 
   .title {
-    margin: 0.5em 0;
+    margin: 0.5em 0 0 0;
+    color: white;
+    a {
+      color: inherit;
+      &:visited {
+        color: inherit;
+      }
+    }
   }
   .title-information {
-    margin-bottom: 1em;
+    margin: 5em 0;
+    font-size: 1.2em;
   }
   .description {
-    text-align: justify;
+    margin-top:1.5em;
   }
 }
 .video-watch-meta.hidden {
   opacity: 0;
+}
+
+
+.meta-options {
+  button, a {
+    text-decoration: none;
+    color: white;
+    &:hover {
+      color: $radical-blue;
+    }
+  }
 }

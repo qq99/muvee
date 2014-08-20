@@ -59,7 +59,10 @@ $ ->
       $(".video-controls-unmute").addClass("hide")
       $(".video-controls-mute").removeClass("hide")
 
-
+  $("#restart").on "click", ->
+    $(this).blur()
+    video.currentTime = 0
+    video.play()
 
   $(".video-controls-mute").on "click", ->
     video.volume = 0

@@ -1,8 +1,4 @@
-// Place all the styles related to the Videos controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-
-$radical-blue: rgb(148, 221, 255);
+@import 'colors';
 
 video {
   max-height: 100%;
@@ -57,27 +53,28 @@ em.smaller {
   padding: 1.5em 3em;
 }
 
+a.top-nav-button {
+  font-size: 2em;
+  color: inherit;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0.25em 0.5em;
+  outline: 0;
+  &:focus, &:hover {
+    color: darken($radical-blue, 30%);
+  }
+}
+
 .top-nav-container {
   list-style: none;
   li {
     display: block;
     float: left;
-    font-size: 2em;
     color: white;
     &.active {
       background: rgba(255,255,255,0.1);
-    }
-    a {
-      color: inherit;
-      text-decoration: none;
-      display: block;
-      width: 100%;
-      height: 100%;
-      padding: 0.25em 0.5em;
-      outline: 0;
-      &:focus, &:hover {
-        color: darken($radical-blue, 30%);
-      }
     }
   }
 }
