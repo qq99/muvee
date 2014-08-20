@@ -1,3 +1,24 @@
+controlTimeout = null
+showControls = ->
+  $(".video-controls").show()
+  clearTimeout(controlTimeout)
+  controlTimeout = setTimeout ->
+    hideControls()
+  , 4000
+
+hideControls = ->
+  $(".video-controls").fadeOut()
+
+hideMeta = (ms = 2000) ->
+  $(".video-watch-meta").addClass("hidden");
+
+showMeta = ->
+  $(".video-watch-meta").removeClass("hidden")
+
+$(document).on "keydown mousemove", ->
+  clearTimeout(controlTimeout)
+  showControls()
+
 $(document).on "mozfullscreenchange webkitfullscreenchange fullscreenchange", (ev) ->
   is_fullscreen = document.mozFullScreen || document.webkitIsFullScreen
   if is_fullscreen
@@ -49,6 +70,23 @@ $ ->
     clickedRatio = (e.offsetX / $(e.currentTarget).width())
     video.volume = Math.max(0, Math.min(clickedRatio, 1))
 
+  $(".video-controls-stepback").on "click", (e) ->
+    video.currentTime = Math.max(0, video.currentTime - 30)
+
+  # TODO: leaky
+  $(document).on "keydown", (ev) ->
+    console.log ev.which
+    switch ev.which
+      when 32 # space
+        if video.paused
+          video.play()
+        else
+          video.pause()
+      when 37 # left arrow
+        video.currentTime = Math.max(0, video.currentTime - 10)
+      when 39
+        video.currentTime = Math.min(video.currentTime + 10, video.duration)
+
   $video.on "volumechange", ->
     muted = video.volume == 0
     $(".video-controls-volume").width("#{video.volume * 100}%")
@@ -84,36 +122,6 @@ $ ->
     document.msExitFullscreen?()
     document.exitFullscreen?()
 
-  controlTimeout = null
-  showControls = ->
-    $(".video-controls").show()
-    clearTimeout(controlTimeout)
-    controlTimeout = setTimeout ->
-      hideControls()
-    , 2000
 
-  hideControls = ->
-    $(".video-controls").fadeOut()
-
-  hideControls()
-
-  $(document).on "keydown mousemove", ->
-    clearTimeout(controlTimeout)
-    showControls()
-
-
-  hideMeta = (ms = 2000) ->
-    $(".video-watch-meta").addClass("hidden");
-
-  showMeta = ->
-    $(".video-watch-meta").removeClass("hidden")
-
-  $(document).on "keydown", (ev) ->
-    switch ev.which
-      when 32 # space
-        if video.paused
-          video.play()
-        else
-          video.pause()
 
   return
