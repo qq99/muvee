@@ -5,11 +5,11 @@
         <% @series.each do |serie| %>
           <li class="poster aspect10x7">
             <div class="poster-innards">
-              <a class="poster-link aspected" href="<%= series_path(serie) %>">
+              <a class="poster-link aspect-poster" href="<%= series_path(serie) %>">
                 <% if poster_url = serie.poster_url %>
-                  <img class="video-thumbnail" src="<%= poster_url %>" alt="">
+                  <img class="video-thumbnail has-aspect" src="<%= poster_url %>" alt="">
                 <% else %>
-                  <img class="video-thumbnail" src="/images/no-poster.png" alt="">
+                  <img class="video-thumbnail has-aspect" src="/images/no-poster.png" alt="">
                 <% end %>
               </a>
             </div>

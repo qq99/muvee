@@ -2,6 +2,8 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+$radical-blue: rgb(148, 221, 255);
+
 video {
   max-height: 100%;
   max-width: 100%;
@@ -52,21 +54,21 @@ em.smaller {
   width: 100%;
   z-index: 2000;
   background: black;
-  padding-bottom: 1em;
+  padding: 1.5em 3em;
 }
 
 .top-nav-container {
-  margin: 1.5em 3em 0em 3em;
   list-style: none;
   li {
     display: block;
     float: left;
     font-size: 2em;
+    color: white;
     &.active {
-      background: rgba(50, 50, 50, 0.8);
+      background: rgba(255,255,255,0.1);
     }
     a {
-      color: white;
+      color: inherit;
       text-decoration: none;
       display: block;
       width: 100%;
@@ -74,7 +76,7 @@ em.smaller {
       padding: 0.25em 0.5em;
       outline: 0;
       &:focus, &:hover {
-        background: green;
+        color: darken($radical-blue, 30%);
       }
     }
   }
@@ -104,7 +106,7 @@ a.back {
   color: #ddd;
   padding: 0 0.25em;
   &:active, &:focus {
-    outline: 5px solid rgb(148, 221, 255);
+    outline: 5px solid $radical-blue;
   }
 }
 
@@ -115,136 +117,10 @@ a.back {
   color: rgb(255, 0, 92);
 }
 
-#series {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  .poster-button {
-    width: 15em;
-    float: none;
-  }
-  .series-overview {
-    height: 18em;
-    padding-right: 1em;
-    overflow-y: auto;
-    margin-top: 1em;
-  }
-  .series-information, .video-list {
-    position: absolute;
-    height: 100%;
-    top: 0;
-  }
-  .series-information {
-    overflow-y: hidden;
-    width: 40%;
-    left: 0;
-    padding: 3.5em;
-    background: rgba(0,0,0,0.9);
-    color: white;
-    h2 {
-      font-weight: 300;
-    }
-  }
-  .video-list {
-    overflow-y: scroll;
-    width: 60%;
-    left: 40%;
-  }
-  .video-list-container {
-    padding: 3em;
-  }
-  .video-tile {
-    color: #222;
-    font-size: 1.1em;
-    p {
-      color: #666;
-    }
-    padding-top: 2em;
-    border-top: 1px solid #999;
-  }
-  .duration {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background: rgba(0,0,0,0.8);
-    padding: 0.25em 1em;
-    color: white;
-  }
-  .thumbnail-area {
-    position: relative;
-    float: left;
-    margin-right: 2em;
-    width: 520px;
-  }
-  .thumbnails {
-    height: 100%;
-    width: 100%;
-  }
-  .video-thumbnail {
-    width: 100%;
-    height: auto;
-    display: block;
-    &.hidden {
-      display: none;
-    }
-  }
-  .poster-buttons {
-    position: absolute;
-    font-size: 1.2em;
-    bottom: 2em;
-    width: auto;
-    border: 1px solid #333;
-  }
-  .featured-episode {
-    margin-top: -6em;
-    padding: 0 3em 0 3em;
-    .video-tile {
-      border-top: 0;
-      margin-top: 0;
-    }
-    .thumbnails {
-      outline: 1px solid #333;
-      box-shadow: 0px -10px 40px rgba(0, 0, 0, 0.5);
-    }
-    h1 {
-      font-weight: lighter;
-    }
-    .thumbnail-area {
-      width: 100%;
-      float: none;
-    }
-    .description-area {
-      padding-top: 1.5em;
-    }
-    .duration {
-      color: white;
-    }
-    a {
-      color: black;
-      &:focus, &:hover {
-        background: transparent;
-        .thumbnails {
-          outline: 5px solid #94ddff;
-        }
-      }
-    }
-    p {
-      color: #555;
-    }
-  }
-
-
-}
-
-.series-featured-image {
-  width: 100%;
-  height: 25em;
-  opacity: 0.8;
-}
 a.video {
   display: block;
   text-decoration: none;
-  margin-bottom: 2em;
+  margin-bottom: 1em;
   &:visited {
     text-decoration: none;
     display: block;
@@ -254,7 +130,7 @@ a.video {
   &:focus, &:hover {
     .video-tile {
       .thumbnails {
-        outline: 5px solid rgb(148, 221, 255);
+        outline: 5px solid $radical-blue;
       }
     }
   }
@@ -295,7 +171,7 @@ a.video {
 .poster-link:focus, .poster-link:hover {
   img {
     opacity: 1;
-    outline: 5px solid rgb(148, 221, 255);
+    outline: 5px solid $radical-blue;
   }
 }
 

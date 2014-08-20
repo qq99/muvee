@@ -1,3 +1,124 @@
-// Place all the styles related to the Series controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+#series {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  .poster-button {
+    width: 15em;
+    float: none;
+  }
+  .series-overview {
+    height: 18em;
+    padding-right: 1em;
+    overflow-y: auto;
+    margin-top: 1em;
+  }
+  .series-information, .video-list {
+    position: absolute;
+    height: 100%;
+    top: 0;
+  }
+  .series-information {
+    overflow-y: hidden;
+    width: 40%;
+    left: 0;
+    padding: 3.5em;
+    background: rgba(0,0,0,0.9);
+    color: white;
+    h2 {
+      font-weight: 300;
+    }
+  }
+  .video-list {
+    overflow-y: scroll;
+    width: 60%;
+    left: 40%;
+  }
+  .video-list-container {
+    padding: 3em;
+  }
+  .video-tile {
+    color: #222;
+    font-size: 1.1em;
+    p {
+      color: #666;
+    }
+  }
+  .duration {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgba(0,0,0,0.8);
+    padding: 0.25em 1em;
+    color: white;
+  }
+  .thumbnail-area {
+    position: relative;
+    float: left;
+    margin: 0 1.5em 1.5em 0;
+    width: 60%;
+  }
+  .thumbnails {
+    height: 100%;
+    width: 100%;
+  }
+  .video-thumbnail {
+    width: 100%;
+    height: auto;
+    display: block;
+    &.hidden {
+      display: none;
+    }
+  }
+  .poster-buttons {
+    position: absolute;
+    font-size: 1.2em;
+    bottom: 2em;
+    width: auto;
+    border: 1px solid #333;
+  }
+  .featured-episode {
+    margin-top: -6em;
+    padding: 0 3em 0 3em;
+    .video-tile {
+      border-top: 0;
+      margin-top: 0;
+    }
+    .thumbnails {
+      outline: 1px solid #333;
+      box-shadow: 0px -10px 40px rgba(0, 0, 0, 0.5);
+    }
+    h1 {
+      font-weight: lighter;
+    }
+    .thumbnail-area {
+      width: 100%;
+      float: none;
+    }
+    .description-area {
+      padding-top: 1.5em;
+    }
+    .duration {
+      color: white;
+    }
+    a {
+      color: black;
+      &:focus, &:hover {
+        background: transparent;
+        .thumbnails {
+          outline: 5px solid #94ddff;
+        }
+      }
+    }
+    p {
+      color: #555;
+    }
+  }
+
+
+}
+
+.series-featured-image {
+  width: 100%;
+  height: 25em;
+  opacity: 0.8;
+}
