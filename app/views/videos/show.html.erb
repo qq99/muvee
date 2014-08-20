@@ -1,6 +1,36 @@
 <div id="watch">
-  <div class="meta">
+
+  <div class="video-controls">
+    <div class="progressbar-container">
+      <div class="video-controls-progressbar">
+        <div class="video-controls-progress">
+
+        </div>
+      </div>
+    </div>
+
+    <div class="video-controls-group play-group">
+      <div class="video-controls-pause video-controls-button">
+        <i class="fa fa-pause"></i>
+      </div>
+      <div class="video-controls-play video-controls-button hide">
+        <i class="fa fa-play"></i>
+      </div>
+    </div>
+
+    <div class="video-controls-group fullscreen-group">
+      <div class="video-controls-fullscreen video-controls-button">
+        <i class="fa fa-arrows-alt"></i>
+      </div>
+      <div class="video-controls-unfullscreen video-controls-button hide">
+        <i class="fa fa-compress"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="video-watch-meta hidden">
     <div class="title-information">
+      <p>You're watching...</p>
       <h1 class="title">
         <% if @video.is_tv? && @video.series_id.present? %>
           <%= link_to @video.title, series_path(@video.series) %>
@@ -20,13 +50,16 @@
         <%= @video.overview.presence %>
       </p>
     </div>
+    <div class="meta-options">
+      <button id="restart">Restart</button>
+    </div>
   </div>
   <div class="video-container">
     <video src="<%= stream_video_path(@video) %>"
       id="<%= @video.id %>"
       data-resume-from="<%= @video.left_off_at %>"
       data-left-off-at-path="<%= left_off_at_video_path(@video) %>"
-      autoplay controls>
+      autoplay>
     </video>
   </div>
 </div>

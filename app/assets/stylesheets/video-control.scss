@@ -1,0 +1,62 @@
+$roundedness: 5px;
+
+#watch {
+  position: relative;
+}
+.video-controls {
+  position: absolute;
+  z-index: 200;
+  width: 80%;
+  left: 10%;
+  bottom: 10%;
+  height: 2em;
+  background: rgba(0,0,0,0.8);
+  border-radius: $roundedness;
+  padding: 0 0.5em;
+}
+
+// buttons
+.video-controls-group {
+  display: inline-block;
+  position: relative;
+  z-index: 10;
+}
+.video-controls-button {
+  font-size: 1.5em;
+  line-height: 1.5em;
+  color: white;
+  margin:0 0.5em;
+  display: inline-block;
+  cursor: pointer;
+}
+
+// progress bar
+.progressbar-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 10px 10em;
+  overflow: hidden;
+  border-radius: 10px;
+  z-index: 1;
+}
+.video-controls-progressbar {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: #333;
+}
+.video-controls-progress {
+  height: 100%;
+  width: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: green;
+  box-shadow: inset 2px 2px 1px rgba(255,255,255,0.3);
+}
+.video-controls-progressbar, .video-controls-progress {
+  border-radius: $roundedness;
+}
