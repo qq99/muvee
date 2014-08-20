@@ -20,16 +20,39 @@ $roundedness: 5px;
   display: inline-block;
   position: relative;
   z-index: 10;
+  height: 100%;
 }
 .video-controls-button {
   font-size: 1.5em;
   line-height: 1.5em;
   color: white;
-  margin:0 0.5em;
+  width: 1.5em;
+  text-align: center;
   display: inline-block;
   cursor: pointer;
+  max-height: 100%;
+}
+.volume-group, .fullscreen-group {
+  float: right;
 }
 
+// volume bar
+.volumebar-container {
+  width: 8em;
+  height: 100%;
+  padding: 10px 0;
+  overflow: hidden;
+  border-radius: 10px;
+  float: left;
+  border-radius: $roundedness;
+}
+.video-controls-volumebar {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: #333;
+  overflow: hidden;
+}
 // progress bar
 .progressbar-container {
   width: 100%;
@@ -37,9 +60,8 @@ $roundedness: 5px;
   position: absolute;
   left: 0;
   top: 0;
-  padding: 10px 10em;
+  padding: 10px 14em 10px 5em;
   overflow: hidden;
-  border-radius: 10px;
   z-index: 1;
 }
 .video-controls-progressbar {
@@ -47,8 +69,9 @@ $roundedness: 5px;
   height: 100%;
   position: relative;
   background: #333;
+  overflow: hidden;
 }
-.video-controls-progress {
+.video-controls-volume, .video-controls-progress {
   height: 100%;
   width: 0;
   position: absolute;
@@ -57,6 +80,10 @@ $roundedness: 5px;
   background: green;
   box-shadow: inset 2px 2px 1px rgba(255,255,255,0.3);
 }
-.video-controls-progressbar, .video-controls-progress {
+.video-controls-volumebar, .video-controls-volume, .video-controls-progressbar, .video-controls-progress {
   border-radius: $roundedness;
+}
+.video-controls-volume, .video-controls-progress {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }

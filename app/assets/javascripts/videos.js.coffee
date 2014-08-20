@@ -28,11 +28,6 @@ $ ->
     progress = video.currentTime / video.duration
     $progress.width("#{progress*100}%")
 
-  $(".video-controls-progressbar").on "click", (e) ->
-    clickedRatio = (e.offsetX / $(e.currentTarget).width())
-    video.currentTime = clickedRatio * video.duration
-
-
   $video.one "canplay", (e) ->
     $video[0].currentTime = last_time if last_time
 
@@ -45,6 +40,32 @@ $ ->
     $(".video-controls-play").addClass("hide")
     $(".video-controls-pause").removeClass("hide")
     hideMeta()
+
+  $(".video-controls-progressbar").on "click", (e) ->
+    clickedRatio = (e.offsetX / $(e.currentTarget).width())
+    video.currentTime = clickedRatio * video.duration
+
+  $(".video-controls-volumebar").on "click", (e) ->
+    clickedRatio = (e.offsetX / $(e.currentTarget).width())
+    video.volume = Math.max(0, Math.min(clickedRatio, 1))
+
+  $video.on "volumechange", ->
+    muted = video.volume == 0
+    $(".video-controls-volume").width("#{video.volume * 100}%")
+    if muted
+      $(".video-controls-mute").addClass("hide")
+      $(".video-controls-unmute").removeClass("hide")
+    else
+      $(".video-controls-unmute").addClass("hide")
+      $(".video-controls-mute").removeClass("hide")
+
+
+
+  $(".video-controls-mute").on "click", ->
+    video.volume = 0
+
+  $(".video-controls-unmute").on "click", ->
+    video.volume = 1
 
   $(".video-controls-play").on "click", -> video.play()
   $(".video-controls-pause").on "click", -> video.pause()
