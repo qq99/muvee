@@ -18,10 +18,24 @@
         </a>
       </li>
       <li <% if controller_name == 'movies' %>class="active" <% end %>>
-        <%= link_to "Movies", movies_path, class: 'top-nav-button' %>
+        <%= link_to movies_path, class: 'top-nav-button' do %>
+          <i class="fa fa-film"></i> Movies
+        <% end %>
       </li>
       <li <% if controller_name == 'series' %>class="active" <% end %>>
-        <%= link_to "TV", series_index_path, class: 'top-nav-button' %>
+        <%= link_to series_index_path, class: 'top-nav-button' do %>
+          <i class="fa fa-desktop"></i> TV
+        <% end %>
+      </li>
+      <li>
+        <a href="#" class="top-nav-button">
+          <i class="fa fa-random"></i> Shuffle
+        </a>
+      </li>
+      <li class="fr">
+        <a href="#" class="top-nav-button">
+          <i class="fa fa-cogs"></i>
+        </a>
       </li>
     </ul>
   </header>

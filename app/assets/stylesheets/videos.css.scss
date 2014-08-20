@@ -44,12 +44,16 @@ em.smaller {
 .hide {
   display: none;
 }
+.fr {
+  float: right;
+}
 
 .main-navigation {
   position: fixed;
   width: 100%;
   z-index: 2000;
   background: black;
+  background: rgba(0,0,0,0.90);
   padding: 1.5em 3em;
 }
 
@@ -68,10 +72,10 @@ a.top-nav-button {
 }
 
 .top-nav-container {
+  width: 100%;
   list-style: none;
   li {
-    display: block;
-    float: left;
+    display: inline-block;
     color: white;
     &.active {
       background: rgba(255,255,255,0.1);
