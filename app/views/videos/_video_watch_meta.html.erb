@@ -1,0 +1,34 @@
+<div class="video-watch-meta hidden">
+  <div class="meta-options">
+    <a class="home" href="/">
+      <i class="fa fa-home"></i> Bring me back home
+    </a>
+  </div>
+  <div class="title-information">
+
+    <p>You're watching...</p>
+    <h1 class="title">
+      <% if video.is_tv? && video.series_id.present? %>
+        <%= link_to video.title, series_path(video.series) %>
+      <% else %>
+        <%= video.title %>
+      <% end %>
+    </h1>
+    <h3>
+      <%= video.episode_name.presence %>
+      <% if video.season && video.episode %>
+        <em class="smaller">S<%= video.season %>E<%= video.episode %></em>
+      <% end %>
+    </h3>
+    <div class="description">
+      <p>
+        <%= video.overview.presence %>
+      </p>
+    </div>
+  </div>
+  <div class="meta-options">
+    <button id="restart">
+      <i class="fa fa-refresh"></i> Restart
+    </button>
+  </div>
+</div>
