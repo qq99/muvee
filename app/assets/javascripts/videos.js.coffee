@@ -29,11 +29,14 @@ $(document).on "mozfullscreenchange webkitfullscreenchange fullscreenchange", (e
     $(".video-controls-fullscreen").removeClass("hide")
 
 $ ->
+  # unbind, because turbolinks :(
+  $video?.off(".videoplayer")
+  $(document).off(".videoplayer")
+
   $video = $("video").first()
   video = $video[0]
   return if !video
 
-  videoId = $video.attr("id")
   left_off_at_path = $video.data("left-off-at-path")
   last_time = parseInt($video.data("resume-from"), 10)
 
@@ -44,38 +47,36 @@ $ ->
 
   # http://www.w3.org/TR/html5/embedded-content-0.html#mediaevents
   $progress = $(".video-controls-progress")
-  $video.on "timeupdate", (e) ->
+  $video.on "timeupdate.videoplayer", (e) ->
     throttledSetLeftOffAt(e)
     progress = video.currentTime / video.duration
     $progress.width("#{progress*100}%")
 
-  $video.one "canplay", (e) ->
+  $video.one "canplay.videoplayer", (e) ->
     $video[0].currentTime = last_time if last_time
 
-  $video.on "pause", (e) ->
+  $video.on "pause.videoplayer", (e) ->
     $(".video-controls-pause").addClass("hide")
     $(".video-controls-play").removeClass("hide")
     showMeta()
 
-  $video.on "play", (e) ->
+  $video.on "play.videoplayer", (e) ->
     $(".video-controls-play").addClass("hide")
     $(".video-controls-pause").removeClass("hide")
     hideMeta()
 
-  $(".video-controls-progressbar").on "click", (e) ->
+  $(".video-controls-progressbar").on "click.videoplayer", (e) ->
     clickedRatio = (e.offsetX / $(e.currentTarget).width())
     video.currentTime = clickedRatio * video.duration
 
-  $(".video-controls-volumebar").on "click", (e) ->
+  $(".video-controls-volumebar").on "click.videoplayer", (e) ->
     clickedRatio = (e.offsetX / $(e.currentTarget).width())
     video.volume = Math.max(0, Math.min(clickedRatio, 1))
 
-  $(".video-controls-stepback").on "click", (e) ->
+  $(".video-controls-stepback").on "click.videoplayer", (e) ->
     video.currentTime = Math.max(0, video.currentTime - 30)
 
-  # TODO: leaky
-  $(document).on "keydown", (ev) ->
-    console.log ev.which
+  $(document).on "keydown.videoplayer", (ev) ->
     switch ev.which
       when 32 # space
         if video.paused
@@ -87,7 +88,7 @@ $ ->
       when 39
         video.currentTime = Math.min(video.currentTime + 10, video.duration)
 
-  $video.on "volumechange", ->
+  $video.on "volumechange.videoplayer", ->
     muted = video.volume == 0
     $(".video-controls-volume").width("#{video.volume * 100}%")
     if muted
@@ -97,26 +98,26 @@ $ ->
       $(".video-controls-unmute").addClass("hide")
       $(".video-controls-mute").removeClass("hide")
 
-  $("#restart").on "click", ->
+  $("#restart").on "click.videoplayer", ->
     $(this).blur()
     video.currentTime = 0
     video.play()
 
-  $(".video-controls-mute").on "click", ->
+  $(".video-controls-mute").on "click.videoplayer", ->
     video.volume = 0
 
-  $(".video-controls-unmute").on "click", ->
+  $(".video-controls-unmute").on "click.videoplayer", ->
     video.volume = 1
 
-  $(".video-controls-play").on "click", -> video.play()
-  $(".video-controls-pause").on "click", -> video.pause()
-  $(".video-controls-fullscreen").on "click", ->
+  $(".video-controls-play").on "click.videoplayer", -> video.play()
+  $(".video-controls-pause").on "click.videoplayer", -> video.pause()
+  $(".video-controls-fullscreen").on "click.videoplayer", ->
     element = document.body
     element.webkitRequestFullscreen?(Element.ALLOW_KEYBOARD_INPUT)
     element.mozRequestFullScreen?()
     element.msRequestFullscreen?()
     element.requestFullscreen?()
-  $(".video-controls-unfullscreen").on "click", ->
+  $(".video-controls-unfullscreen").on "click.videoplayer", ->
     document.webkitExitFullscreen?()
     document.mozCancelFullscreen?()
     document.msExitFullscreen?()
