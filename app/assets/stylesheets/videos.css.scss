@@ -55,6 +55,11 @@ em.smaller {
   background: black;
   background: rgba(0,0,0,0.90);
   padding: 1.5em 3em;
+  top: 0;
+  transition: all 1s ease-in-out;
+  &.hidden {
+    top: -6em;
+  }
 }
 
 a.top-nav-button {

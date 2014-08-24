@@ -28,11 +28,12 @@
   }
 }
 
+$preview-height: 45%;
 .movies-index {
   position: absolute;
-  top: 50%;
+  top: 100% - $preview-height;
   left: 0;
-  height: 50%;
+  height: $preview-height;
   width: 70%;
   overflow-y: scroll;
   z-index: 3;
@@ -45,14 +46,15 @@
 
 .movie-meta {
   position: absolute;
-  top: 50%;
+  top: 100% - $preview-height;
   left: 70%;
-  height: 50%;
+  height: $preview-height;
   width: 30%;
   z-index: 2;
   right: 0;
   color: white;
   padding: 1.5em 3em;
+  overflow-y: auto;
 }
 
 .three-d {
