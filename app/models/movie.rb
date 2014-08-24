@@ -4,7 +4,6 @@ class Movie < Video
   before_create :guessit
   after_create :extract_metadata
   after_create :download_poster
-  after_create :examine_thumb_for_3d
   before_destroy :destroy_images
 
   POSTER_FOLDER = Rails.root.join('public', 'posters')
@@ -47,9 +46,13 @@ class Movie < Video
     self.save
   end
 
-  def examine_thumb_for_3d
-    self.is_3d = self.thumbnails.first.check_for_sbs_3d(overwrite: true)
-    self.save
+  def external_fanart
+    return if imdb_id.blank?
+    @fanart ||= FanartTvResult.get(imdb_id).data || {}
+  end
+
+  def imdb_id
+    self.metadata[:imdbID]
   end
 
   def guessit

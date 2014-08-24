@@ -23,7 +23,7 @@ class ThumbnailTest < ActiveSupport::TestCase
 
   test "sbs 3d detection will overwrite the original thumbnail if options are supplied" do
     thumb = Thumbnail.new(raw_file_path: @three_d_image)
-    File.expects(:copy).with(thumb.send(:scaled_path), thumb.send(:thumbnail_path))
+    FileUtils.expects(:copy).with(thumb.send(:scaled_path), thumb.send(:thumbnail_path))
     thumb.check_for_sbs_3d(overwrite: true)
   end
 end

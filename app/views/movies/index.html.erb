@@ -4,7 +4,10 @@
   </div>
 
   <div class="movie-meta panel">
-    <h1 class="movie-title"></h1>
+    <h1 class="movie-title">
+      <span class="title"></span>
+      <span class="three-d hide">3D</span>
+    </h1>
     <p class="movie-overview"></p>
   </div>
 
@@ -20,6 +23,7 @@
               <a
                 class="poster-link aspect-poster js-movie-tile"
                 href="<%= video_path(movie) %>"
+                data-3d="<%= movie.is_3d %>"
                 data-title="<%= movie.title %>"
                 data-overview="<%= movie.overview %>">
                 <% if poster_url = movie.poster_url %>
@@ -29,8 +33,12 @@
                 <% end %>
 
                 <div class="thumbnails hide">
-                  <% movie.thumbnails.each do |thumb| %>
-                    <img class="video-thumbnail hide" src="<%= thumb.url %>" alt="">
+                  <% if movie.external_fanart && movie.external_fanart[:moviebackground] %>
+                    <img class="video-thumbnail" src="<%= movie.external_fanart[:moviebackground].first[:url] %>">
+                  <% else %>
+                    <% movie.thumbnails.each do |thumb| %>
+                      <img class="video-thumbnail hide" src="<%= thumb.url %>" alt="">
+                    <% end %>
                   <% end %>
                 </div>
               </a>

@@ -1,6 +1,7 @@
 class Thumbnail < ActiveRecord::Base
   belongs_to :video
   before_destroy :destroy_thumbnail_file
+  after_create :postprocess_thumbnail
 
   THUMBNAIL_FOLDER = Rails.root.join('public', 'thumbnails')
 
@@ -27,20 +28,26 @@ class Thumbnail < ActiveRecord::Base
     result = %x{compare -metric RMSE #{lhs_output} #{rhs_output} #{diff_file} 2>&1}
 
     results = result.gsub(/[\(\)]/i, '').split(" ").map(&:to_f)
-    if results[1] > 0.10 # not 3D
+    if results[1] > 0.20 # not 3D
       false
     else
       result = MiniMagick::Image.open(lhs_output)
       result.scale "200%x100%"
       result.write scaled_path
       if opts[:overwrite]
-        File.copy(scaled_path, thumbnail_path)
+        FileUtils.copy(scaled_path, thumbnail_path)
       end
       true
     end
   end
 
   private
+
+  def postprocess_thumbnail
+    if self.video.is_3d?
+      self.check_for_sbs_3d(overwrite: true)
+    end
+  end
 
   def scaled_path
     Rails.root.join("tmp", "result.jpg")
