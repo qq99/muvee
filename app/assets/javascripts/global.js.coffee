@@ -21,7 +21,7 @@ $(document).on "blur", ".main-navigation", hideNav
 
 
 showNavOnMousemove = (ev) ->
-  if ev.pageY < 300
+  if ev.screenY < 300
     showNav()
   else
     hideNav()
