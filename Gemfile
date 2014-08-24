@@ -36,6 +36,7 @@ gem 'uuid'
 gem 'mocha'
 gem 'chronic_duration'
 gem 'timecop'
+gem 'mini_magick'
 
 group :test do
   gem 'webmock'
