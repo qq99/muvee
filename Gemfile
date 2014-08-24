@@ -37,6 +37,8 @@ gem 'mocha'
 gem 'chronic_duration'
 gem 'timecop'
 gem 'mini_magick'
+gem 'pHash'
+gem 'ffi'
 
 group :test do
   gem 'webmock'

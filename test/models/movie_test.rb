@@ -14,6 +14,7 @@ class MovieTest < ActiveSupport::TestCase
     Movie.any_instance.expects(:shellout_and_grab_duration).once
     Movie.any_instance.expects(:extract_metadata).once
     Movie.any_instance.expects(:download_poster).once
+    Movie.any_instance.expects(:examine_thumbnail_for_3d).once
     Movie.create(raw_file_path: "/foo/bar/Truer.Grit.mp4")
   end
 

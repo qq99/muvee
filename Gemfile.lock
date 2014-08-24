@@ -50,6 +50,7 @@ GEM
     debug_inspector (0.0.2)
     erubis (2.7.0)
     execjs (2.2.1)
+    ffi (1.9.3)
     font-awesome-rails (4.1.0.0)
       railties (>= 3.2, < 5.0)
     hike (1.2.3)
@@ -82,6 +83,8 @@ GEM
       metaclass (~> 0.0.1)
     multi_json (1.10.1)
     numerizer (0.1.1)
+    pHash (1.1.5)
+      ffi (~> 1.0)
     polyglot (0.3.5)
     pry (0.10.0)
       coderay (~> 1.1.0)
@@ -167,6 +170,7 @@ DEPENDENCIES
   binding_of_caller
   chronic_duration
   coffee-rails (~> 4.0.0)
+  ffi
   font-awesome-rails
   jbuilder (~> 2.0)
   jquery-rails
@@ -174,6 +178,7 @@ DEPENDENCIES
   lodash-rails
   mini_magick
   mocha
+  pHash
   pry
   rails (= 4.1.4)
   rb-readline

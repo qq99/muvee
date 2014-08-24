@@ -1,3 +1,5 @@
+require 'phash/image'
+
 class Thumbnail < ActiveRecord::Base
   belongs_to :video
   before_destroy :destroy_thumbnail_file
@@ -24,20 +26,17 @@ class Thumbnail < ActiveRecord::Base
     lhs.write lhs_output
     rhs.write rhs_output
 
-    diff_file = Rails.root.join("tmp", "diff.jpg")
-    result = %x{compare -metric RMSE #{lhs_output} #{rhs_output} #{diff_file} 2>&1}
-
-    results = result.gsub(/[\(\)]/i, '').split(" ").map(&:to_f)
-    if results[1] > 0.20 # not 3D
-      false
-    else
-      result = MiniMagick::Image.open(lhs_output)
-      result.scale "200%x100%"
-      result.write scaled_path
+    similarity = Phash::Image.new(lhs_output) % Phash::Image.new(rhs_output)
+    if similarity > 0.9 # 3D
       if opts[:overwrite]
+        result = MiniMagick::Image.open(lhs_output)
+        result.scale "200%x100%"
+        result.write scaled_path
         FileUtils.copy(scaled_path, thumbnail_path)
       end
       true
+    else
+      false
     end
   end
 

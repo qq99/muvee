@@ -19,6 +19,7 @@ Requires (and tested with):
 - nginx version: nginx/1.4.6 (Ubuntu)
   - globally available on your path
 - ImageMagick 6.7.7-10 2014-03-06 Q16
+- apt-get packages: libffi-dev libphash0 libphash0-dev
 
 Definitions
 ---

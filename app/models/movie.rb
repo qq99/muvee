@@ -4,6 +4,7 @@ class Movie < Video
   before_create :guessit
   after_create :extract_metadata
   after_create :download_poster
+  after_create :examine_thumbnail_for_3d
   before_destroy :destroy_images
 
   POSTER_FOLDER = Rails.root.join('public', 'posters')
@@ -85,5 +86,10 @@ class Movie < Video
     rescue Exception => e
       Rails.logger.info "Series#destroy_images: #{e}"
     end
+  end
+
+  def examine_thumbnail_for_3d
+    self.is_3d = self.thumbnails.first.check_for_sbs_3d(overwrite: true)
+    self.save
   end
 end
