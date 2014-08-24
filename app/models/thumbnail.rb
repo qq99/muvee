@@ -26,8 +26,15 @@ class Thumbnail < ActiveRecord::Base
     lhs.write lhs_output
     rhs.write rhs_output
 
-    similarity = Phash::Image.new(lhs_output) % Phash::Image.new(rhs_output)
-    if similarity > 0.9 # 3D
+    lhs_small = Rails.root.join("tmp", "lhs-small.jpg")
+    rhs_small = Rails.root.join("tmp", "rhs-small.jpg")
+    lhs.scale "10%x10%"
+    rhs.scale "10%x10%"
+    lhs.write lhs_small
+    rhs.write rhs_small
+
+    similarity = Phash::Image.new(lhs_small) % Phash::Image.new(rhs_small)
+    if similarity > 0.8 # 3D
       if opts[:overwrite]
         result = MiniMagick::Image.open(lhs_output)
         result.scale "200%x100%"

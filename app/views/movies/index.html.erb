@@ -1,26 +1,23 @@
 <div id="all_movies">
-  <div class="inline-movie-preview">
-    <div class="movie-images">
-      <%= render 'movie_thumbnails', movie: @movies.first %>
+  <% if @movies.present? %>
+    <div class="inline-movie-preview">
+      <div class="movie-images">
+        <%= render 'movie_thumbnails', movie: @movies.first %>
+      </div>
     </div>
-  </div>
 
-  <div class="movie-meta panel">
-    <h1 class="movie-title">
-      <span class="title"><%= @movies.first.title %></span>
-      <span class="three-d <% unless @movies.first.is_3d? %>hide<% end %>">3D</span>
-    </h1>
-    <p class="movie-overview"><%= @movies.first.overview %></p>
-  </div>
+    <div class="movie-meta panel">
+      <h1 class="movie-title">
+        <span class="title"><%= @movies.first.title %></span>
+        <span class="three-d <% unless @movies.first.is_3d? %>hide<% end %>">3D</span>
+      </h1>
+      <p class="movie-overview"><%= @movies.first.overview %></p>
+    </div>
 
-  <div class="movies-index panel" class="clearfix">
-    <% if @movies.present? %>
+    <div class="movies-index panel" class="clearfix">
       <ul class="responsive-grid">
         <% @movies.each do |movie| %>
-          <li
-            class="poster js-get-thumbnails <% if movie.has_set_of_thumbnails? %>has-thumbnails<% end %>"
-            data-thumbnail-path="<%= thumbnails_video_path(movie) %>"
-            >
+          <li class="poster">
             <div class="poster-innards">
               <a
                 class="poster-link aspect-poster js-movie-tile"
@@ -43,8 +40,8 @@
         <% end %>
         <div class="clearfix"></div>
       </div>
-    <% else %>
-      <div>No movies found.</div>
-    <% end %>
-  </div>
+    </div>
+  <% else %>
+    <div>No movies found.</div>
+  <% end %>
 </div>

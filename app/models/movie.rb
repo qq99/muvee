@@ -89,7 +89,7 @@ class Movie < Video
   end
 
   def examine_thumbnail_for_3d
-    self.is_3d = self.thumbnails.first.check_for_sbs_3d(overwrite: true)
+    self.is_3d = self.thumbnails.first.check_for_sbs_3d
     self.save
   end
 end
