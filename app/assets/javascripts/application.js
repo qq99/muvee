@@ -14,6 +14,7 @@
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require lodash
+//= require uri
 //= require ./bootstrap.js.coffee
 //= require_tree .
 //= require turbolinks

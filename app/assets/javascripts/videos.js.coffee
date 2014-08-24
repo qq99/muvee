@@ -29,6 +29,9 @@ $(document).on "mozfullscreenchange webkitfullscreenchange fullscreenchange", (e
     $(".video-controls-fullscreen").removeClass("hide")
 
 $ ->
+  uri = URI(document.location)
+  params = uri.search(true)
+
   # unbind, because turbolinks :(
   $video?.off(".videoplayer")
   $(document).off(".videoplayer")
@@ -38,7 +41,11 @@ $ ->
   return if !video
 
   left_off_at_path = $video.data("left-off-at-path")
-  last_time = parseInt($video.data("resume-from"), 10)
+  last_time = params.t || parseInt($video.data("resume-from"), 10)
+
+  if params.t
+    stripped = URI(document.location).query('').toString()
+    history.replaceState({}, null, stripped)
 
   setLeftOffAt = (e) ->
     $.post left_off_at_path,

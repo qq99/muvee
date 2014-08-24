@@ -23,7 +23,7 @@ class VideosController < ApplicationController
       episodic = @video.series.tv_shows.release_order
       index_of_current_episode = episodic.to_a.find_index{|vid| vid.id == @video.id}
       @previous_episode = episodic.at(index_of_current_episode - 1) if index_of_current_episode > 0
-      @next_episode = episodic.at(index_of_current_episode + 1) if index_of_current_episode >= episodic.length
+      @next_episode = episodic.at(index_of_current_episode + 1) if index_of_current_episode < (episodic.length - 1)
     end
     render layout: 'fullscreen'
   end
