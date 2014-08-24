@@ -1,0 +1,17 @@
+<div class="meta-options">
+  <% if previous_episode.present? %>
+    <%= link_to video_path(previous_episode, t: 0), class: "meta-option-button" do %>
+      <i class="fa fa-backward"></i>
+      Skip to previous episode
+    <% end %>
+  <% end %>
+  <button id="restart" class="meta-option-button">
+    <i class="fa fa-refresh"></i> Restart playback
+  </button>
+  <% if next_episode.present? %>
+    <%= link_to video_path(next_episode, t: 0), class: "meta-option-button" do %>
+      <i class="fa fa-forward"></i>
+      Skip to next episode
+    <% end %>
+  <% end %>
+</div>

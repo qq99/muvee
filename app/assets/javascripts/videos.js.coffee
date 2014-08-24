@@ -59,6 +59,15 @@ $ ->
     progress = video.currentTime / video.duration
     $progress.width("#{progress*100}%")
 
+    timeLeft = video.duration - video.currentTime
+    if timeLeft < 30
+      $(".video-upnext").removeClass("hide hidden")
+      $(".starting-in").text("Starting in #{parseInt(timeLeft, 10)} seconds")
+    else
+      $(".video-upnext").addClass("hide hidden")
+
+
+
   $video.one "canplay.videoplayer", (e) ->
     $video[0].currentTime = last_time if last_time
 
@@ -66,6 +75,9 @@ $ ->
     $(".video-controls-pause").addClass("hide")
     $(".video-controls-play").removeClass("hide")
     showMeta()
+    timeLeft = video.duration - video.currentTime
+    if timeLeft < 1
+      document.getElementById("next-episode-link").click()
 
   $video.on "play.videoplayer", (e) ->
     $(".video-controls-play").addClass("hide")

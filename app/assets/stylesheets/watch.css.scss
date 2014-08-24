@@ -8,7 +8,7 @@
   }
 }
 
-.video-upnext, .video-watch-meta {
+.video-watch-meta {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -37,7 +37,7 @@
     }
   }
   .title-information {
-    margin: 5em 0;
+    margin: 5em 0 2em 0;
     font-size: 1.2em;
   }
   .description {
@@ -45,6 +45,43 @@
   }
   &.hidden {
     opacity: 0;
+  }
+}
+
+.video-upnext {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 2em;
+  width: 25em;
+  background: rgba(0,0,0,0.9);
+  &.hidden {
+    opacity: 0;
+  }
+  h1 {
+    text-transform: uppercase;
+    color: $radical-blue;
+    font-size: 1em;
+    margin-bottom: 1em;
+    font-weight: normal;
+    font-style: italic;
+  }
+}
+.thumbnail-preview {
+  margin-top: 1em;
+  width: 100%;
+  height: auto;
+  position: relative;
+  img {
+    width: 100%;
+    height: auto;
+  }
+  .starting-in {
+    position: absolute;
+    bottom: 1em;
+    left: 1em;
+    text-shadow: 1px 1px 1px black;
+    color: white;
   }
 }
 

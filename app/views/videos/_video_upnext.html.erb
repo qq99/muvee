@@ -1,21 +1,7 @@
 <div class="video-upnext hidden hide">
-  <div class="meta-options">
-    <a class="home" href="/">
-      <i class="fa fa-home"></i> Bring me back home
-    </a>
-  </div>
   <div class="title-information">
+    <h1>Next Up</h1>
     <% if next_episode.present? %>
-      <p>Up next...</p>
-      <h1 class="title">
-        <%= link_to next_episode.title, series_path(next_episode.series) %>
-      </h1>
-      <h3>
-        <%= next_episode.episode_name.presence %>
-        <% if next_episode.season && next_episode.episode %>
-          <em class="smaller">S<%= next_episode.season %>E<%= next_episode.episode %></em>
-        <% end %>
-      </h3>
       <div class="description">
         <p>
           <%= next_episode.overview.presence %>
@@ -23,12 +9,12 @@
       </div>
     <% end %>
   </div>
-  <div class="meta-options">
-    <button id="restart">
-      <i class="fa fa-refresh"></i> Replay this episode
-    </button>
-    <% if next_episode.present? %>
-      <%= link_to "Watch next episode", video_path(next_episode) %>
-    <% end %>
-  </div>
+  <% if next_episode.present? %>
+    <div class="thumbnail-preview">
+      <%= link_to video_path(next_episode, t: 0), id: 'next-episode-link' do %>
+        <img class="video-thumbnail" src="<%= next_episode.thumbnails.first.url %>" alt="">
+      <% end %>
+      <span class="starting-in"></span>
+    </div>
+  <% end %>
 </div>
