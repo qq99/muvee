@@ -9,6 +9,7 @@ Netflix, for your home.
 WIP
 
 Requires (and tested with):
+---
 
 - ruby 2.1.2+
 - libav-tools
@@ -17,3 +18,9 @@ Requires (and tested with):
 - node.js 0.10.25+
 - nginx version: nginx/1.4.6 (Ubuntu)
   - globally available on your path
+- ImageMagick 6.7.7-10 2014-03-06 Q16
+
+Definitions
+---
+`sbs`: side-by-side (3D)
+`tab`: top-and-bottom (3D)

@@ -86,7 +86,11 @@ class Video < ActiveRecord::Base
     thumb_path = new_thumbnail_path
     shellout_and_grab_thumbnail(at_seconds, thumb_path)
     #TODO validate this worked
-    self.thumbnails.create(raw_file_path: thumb_path)
+    thumb = self.thumbnails.create(raw_file_path: thumb_path)
+    if self.is_3d?
+      thumb.check_for_sbs_3d(overwrite: true)
+      # thumb.check_for_tab_3d
+    end
   end
 
   def new_thumbnail_path

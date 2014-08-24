@@ -8,8 +8,6 @@ class Thumbnail < ActiveRecord::Base
     "/thumbnails/#{File.basename(raw_file_path)}"
   end
 
-  # valid options:
-  # - overwrite
   def check_for_sbs_3d(opts = {})
     lhs = MiniMagick::Image.open(thumbnail_path)
     rhs = MiniMagick::Image.open(thumbnail_path)

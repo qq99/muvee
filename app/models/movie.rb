@@ -4,6 +4,7 @@ class Movie < Video
   before_create :guessit
   after_create :extract_metadata
   after_create :download_poster
+  after_create :examine_thumb_for_3d
   before_destroy :destroy_images
 
   POSTER_FOLDER = Rails.root.join('public', 'posters')
@@ -36,12 +37,18 @@ class Movie < Video
   def download_poster
     return if metadata[:Response] == "False"
     remote_filename = metadata[:Poster]
+    return if remote_filename.blank?
     output_filename = UUID.generate(:compact) + File.extname(remote_filename)
     output_path = POSTER_FOLDER.join(output_filename)
 
     if download_file(remote_filename, output_path)
       self.poster_path = output_filename
     end
+    self.save
+  end
+
+  def examine_thumb_for_3d
+    self.is_3d = self.thumbnails.first.check_for_sbs_3d(overwrite: true)
     self.save
   end
 

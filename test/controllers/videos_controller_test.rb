@@ -13,7 +13,9 @@ class VideosControllerTest < ActionController::TestCase
   test "should get index" do
     get :index
     assert_response :success
-    assert_not_nil assigns(:videos)
+    assert_not_nil assigns(:series)
+    assert_not_nil assigns(:movies)
+    assert_not_nil assigns(:items)
   end
 
   test "should show video" do
