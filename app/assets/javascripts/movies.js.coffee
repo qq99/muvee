@@ -2,6 +2,7 @@ $(document).on "focus mouseenter", ".js-movie-tile", (ev) ->
   $target = $(ev.currentTarget)
   $(".movie-meta .movie-title .title").html($target.data("title"))
   $(".movie-meta .movie-overview").html($target.data("overview"))
+  $(".movie-meta .movie-quality").html($target.data("quality"))
   $(".inline-movie-preview .movie-images").html($target.find(".thumbnails").html())
 
   if $target.data("3d")
