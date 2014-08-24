@@ -8,9 +8,11 @@ class Thumbnail < ActiveRecord::Base
     "/thumbnails/#{File.basename(raw_file_path)}"
   end
 
-  def check_for_sbs_3d
-    lhs = MiniMagick::Image.open(self.raw_file_path)
-    rhs = MiniMagick::Image.open(self.raw_file_path)
+  # valid options:
+  # - overwrite
+  def check_for_sbs_3d(opts = {})
+    lhs = MiniMagick::Image.open(thumbnail_path)
+    rhs = MiniMagick::Image.open(thumbnail_path)
     w = lhs[:width]
     h = lhs[:height]
     half_w = (w/2).to_i
@@ -32,17 +34,27 @@ class Thumbnail < ActiveRecord::Base
     else
       result = MiniMagick::Image.open(lhs_output)
       result.scale "200%x100%"
-      result.write Rails.root.join("tmp", "result.jpg")
-      # use MiniMagick.scale 200%x100%
+      result.write scaled_path
+      if opts[:overwrite]
+        File.copy(scaled_path, thumbnail_path)
+      end
       true
     end
   end
 
   private
 
+  def scaled_path
+    Rails.root.join("tmp", "result.jpg")
+  end
+
+  def thumbnail_path
+    THUMBNAIL_FOLDER.join(self.raw_file_path)
+  end
+
   def destroy_thumbnail_file
     begin
-      File.delete(THUMBNAIL_FOLDER.join(raw_file_path))
+      File.delete(thumbnail_path)
     rescue Exception => e
       Rails.logger.info "Series#destroy_images: #{e}"
     end
