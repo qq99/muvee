@@ -9,21 +9,15 @@ class ImdbSearchResult < ExternalMetadata
   end
 
   def relevant_result(title)
-    best_results = nil
+    list = self.data[:title_popular] || self.data[:title_exact] || self.data[:title_substring] || self.data[:title_approximate]
 
-    if popular_titles = self.data[:title_popular]
-      best_results = by_ldistance(popular_titles, :title, title)
+    best_results = if list.any?
+      by_ldistance(list, :title, title) if list.any?
     else
-      if approximate_titles = self.data[:title_approx]
-        best_results = by_ldistance(approximate_titles, :title, title)
-      end
+      []
     end
 
-    if best_results.blank?
-      nil
-    else
-      best_results.first
-    end
+    best_results.first
   end
 
   def by_ldistance(list, field, ideal)

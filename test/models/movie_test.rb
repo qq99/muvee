@@ -1,14 +1,6 @@
 require 'test_helper'
 
 class MovieTest < ActiveSupport::TestCase
-  test "is possible to grab metadata for a movie" do
-    VCR.use_cassette "true_grit" do
-      movie = videos(:true_grit)
-      assert_equal movie.metadata[:Year], "2010"
-      assert_equal movie.metadata[:Language], "English"
-    end
-  end
-
   test "will attempt to grab duration & create initial thumbnail & extract metadata on create" do
     Movie.any_instance.expects(:create_initial_thumb).once
     Movie.any_instance.expects(:shellout_and_grab_duration).once
@@ -19,7 +11,7 @@ class MovieTest < ActiveSupport::TestCase
   end
 
   test "can download posters" do
-    VCR.use_cassette "true_grit_poster" do
+    VCR.use_cassette "download_posters_test" do
       movie = videos(:true_grit)
       movie.download_poster
       assert movie.reload.poster_path.present?
@@ -34,7 +26,7 @@ class MovieTest < ActiveSupport::TestCase
   end
 
   test "extract_metadata works" do
-    VCR.use_cassette "true_grit_poster" do
+    VCR.use_cassette "extract_metadata_test" do
       movie = videos(:true_grit)
       movie.extract_metadata
       assert_equal "True Grit", movie.title
@@ -88,5 +80,13 @@ class MovieTest < ActiveSupport::TestCase
     assert_equal "Inside Job", movie.title
     assert_equal nil, movie.year
     assert_equal nil, movie.quality
+
+    movie = Movie.new(raw_file_path: "/foo/bar/Khumba.2013.1080p.3D.HSBS.BluRay.x264.YIFY.mp4")
+    movie.guessit
+    assert_equal "Khumba", movie.title
+    assert_equal 2013, movie.year
+    assert_equal "1080p", movie.quality
+
+
   end
 end

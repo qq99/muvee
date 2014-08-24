@@ -17,7 +17,9 @@ class Movie < Video
   }.freeze
 
   def metadata
-    @metadata ||= OmdbSearchResult.get(title: self.title).data || {}
+    @imdb_id ||= ImdbSearchResult.get(self.title).relevant_result(self.title)[:id]
+    return {} if !@imdb_id
+    @metadata ||= OmdbSearchResult.get(@imdb_id).data || {}
   end
 
   def poster_url
@@ -26,7 +28,11 @@ class Movie < Video
 
   def extract_metadata
     self.title = metadata[:Title]
-    self.released_on = Time.parse(metadata[:Released]) if metadata[:Released]
+    begin
+      self.released_on = Time.parse(metadata[:Released]) if metadata[:Released]
+    rescue
+      self.released_on = nil
+    end
     self.overview = metadata[:Plot]
     self.language = metadata[:Language]
     self.country = metadata[:Country]

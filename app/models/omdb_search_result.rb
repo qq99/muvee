@@ -4,8 +4,8 @@ class OmdbSearchResult < ExternalMetadata
     :json
   end
 
-  def self.endpoint_url(title)
-    "http://www.omdbapi.com/?t=#{title}"
+  def self.endpoint_url(imdb_id)
+    "http://www.omdbapi.com/?i=#{imdb_id}"
   end
 
 end

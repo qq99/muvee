@@ -1,0 +1,106 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://www.imdb.com/xml/find?json=1&nr=1&q=True%20Grit&tt=on
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - www.imdb.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 24 Aug 2014 20:22:48 GMT
+      Server:
+      - HTTPDaemon
+      X-Frame-Options:
+      - SAMEORIGIN
+      Cache-Control:
+      - private
+      Content-Type:
+      - text/html; charset=iso-8859-1
+      Set-Cookie:
+      - uu=BCYojSu5EymG3SvTbqXG9IsPx4hIP5jPR4jKoi8wuvOnzAMFXvKX7cbG_QyWCqM8O2EMW6IU7r4vWu9IFE0pHXjqIRlhJEbMunX4bInUCgN2C5sAZlPeoJI9ml1XVDuJ2aSxkkzeZxWVLuHObki9Fs-SaVY0bmm38wXtw_mviKBztSk;expires=Thu,
+        30 Dec 2037 00:00:00 GMT;path=/;domain=.imdb.com
+      P3p:
+      - policyref="http://i.imdb.com/images/p3p.xml",CP="CAO DSP LAW CUR ADM IVAo
+        IVDo CONo OTPo OUR DELi PUBi OTRi BUS PHY ONL UNI PUR FIN COM NAV INT DEM
+        CNT STA HEA PRE LOC GOV OTC "
+      Vary:
+      - User-Agent
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |2
+
+        {
+        "title_popular": [{ "id":"tt1403865", "title":"True Grit", "name":"","title_description":"2010,     <a href='/name/nm0001053/'>Ethan Coen</a>...","episode_title":"","description":"2010,     <a href='/name/nm0001053/'>Ethan Coen</a>..."},{ "id":"tt0065126", "title":"True Grit", "name":"","title_description":"1969,     <a href='/name/nm0368871/'>Henry Hathaway</a>","episode_title":"","description":"1969,     <a href='/name/nm0368871/'>Henry Hathaway</a>"}],"title_exact": [{ "id":"tt0078422", "title":"True Grit", "name":"","title_description":"1978 TV movie,     <a href='/name/nm0373612/'>Richard T. Heffron</a>","episode_title":"","description":"1978 TV movie,     <a href='/name/nm0373612/'>Richard T. Heffron</a>"}],"title_substring": [{ "id":"tt0073636", "title":"Rooster Cogburn", "name":"","title_description":"1975,     <a href='/name/nm0587706/'>Stuart Millar</a>","episode_title":"","description":"1975,     <a href='/name/nm0587706/'>Stuart Millar</a>"},{ "id":"tt0799861", "title":"CMT: True Grit", "name":"","title_description":"2006 TV series","episode_title":"","description":"2006 TV series"},{ "id":"tt1454553", "title":"South 5: True Grit", "name":"","title_description":"2007 short,     <a href='/name/nm3496414/'>Bryan T. Johnson</a>","episode_title":"","description":"2007 short,     <a href='/name/nm3496414/'>Bryan T. Johnson</a>"}],"title_approx": [{ "id":"tt0348113", "title":"Starrcade", "name":"","title_description":"1988 TV movie","episode_title":"","description":"1988 TV movie"},{ "id":"tt1549129", "title":"True Grits", "name":"","title_description":"2006 short,     <a href='/name/nm0677399/'>Shawn Carter Peterson</a>","episode_title":"","description":"2006 short,     <a href='/name/nm0677399/'>Shawn Carter Peterson</a>"},{ "id":"tt2643720", "title":"Untrue Grit", "name":"","title_description":"????","episode_title":"","description":"????"},{ "id":"tt0368376", "title":"True Brit", "name":"","title_description":"2003,     <a href='/name/nm1273268/'>Kevin Ula Christie</a>","episode_title":"","description":"2003,     <a href='/name/nm1273268/'>Kevin Ula Christie</a>"},{ "id":"tt1176912", "title":"Rainbow Brite: The True Saturday Morning Story", "name":"","title_description":"2007 short,     <a href='/name/nm2901346/'>Tyler Spencer</a>","episode_title":"","description":"2007 short,     <a href='/name/nm2901346/'>Tyler Spencer</a>"},{ "id":"tt1384787", "title":"Rituales de Sangre: The True Story Behind the Matamoros Cult Killings", "name":"","title_description":"2008 video short","episode_title":"","description":"2008 video short"},{ "id":"tt1771019", "title":"True Grime: Crime Scene Clean Up", "name":"","title_description":"2011 TV series","episode_title":"","description":"2011 TV series"},{ "id":"tt0002543", "title":"A True Briton", "name":"","title_description":"1912 short,     <a href='/name/nm0294276/'>Theo Frenkel</a>","episode_title":"","description":"1912 short,     <a href='/name/nm0294276/'>Theo Frenkel</a>"},{ "id":"tt1715205", "title":"Critical Error =True", "name":"","title_description":"2010 short,     <a href='/name/nm1351910/'>Ben Slotover</a>","episode_title":"","description":"2010 short,     <a href='/name/nm1351910/'>Ben Slotover</a>"},{ "id":"tt0293926", "title":"The Shaming of the True", "name":"","title_description":"1930 short,     <a href='/name/nm0187317/'>Walter Creighton</a>","episode_title":"","description":"1930 short,     <a href='/name/nm0187317/'>Walter Creighton</a>"},{ "id":"tt1233259", "title":"Captain Thunder", "name":"","title_description":"2011,     <a href='/name/nm0379872/'>Antonio Hern&#xE1;ndez</a>","episode_title":"","description":"2011,     <a href='/name/nm0379872/'>Antonio Hern&#xE1;ndez</a>"},{ "id":"tt1437351", "title":"The Fugitive Chronicles", "name":"","title_description":"2009 TV series,     <a href='/name/nm1717925/'>Bart Layton</a>","episode_title":"","description":"2009 TV series,     <a href='/name/nm1717925/'>Bart Layton</a>"},{ "id":"tt0464831", "title":"True Spirit", "name":"","title_description":"2005,     <a href='/name/nm1015687/'>Martin Strange-Hansen</a>","episode_title":"","description":"2005,     <a href='/name/nm1015687/'>Martin Strange-Hansen</a>"},{ "id":"tt1353802", "title":"Memorial Stadium: True Illini Spirit", "name":"","title_description":"2008 documentary","episode_title":"","description":"2008 documentary"}]
+        }
+    http_version: 
+  recorded_at: Sun, 24 Aug 2014 20:22:49 GMT
+- request:
+    method: get
+    uri: http://www.omdbapi.com/?i=tt1403865
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - www.omdbapi.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private, max-age=299
+      Content-Type:
+      - text/html; charset=utf-8
+      Expires:
+      - Sun, 24 Aug 2014 20:27:54 GMT
+      Last-Modified:
+      - Sun, 24 Aug 2014 19:27:54 GMT
+      Vary:
+      - "*"
+      Server:
+      - Microsoft-IIS/7.5
+      X-Aspnet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Sun, 24 Aug 2014 20:22:55 GMT
+      Content-Length:
+      - '738'
+    body:
+      encoding: UTF-8
+      string: '{"Title":"True Grit","Year":"2010","Rated":"PG-13","Released":"22 Dec
+        2010","Runtime":"110 min","Genre":"Adventure, Drama, Western","Director":"Ethan
+        Coen, Joel Coen","Writer":"Joel Coen (screenplay), Ethan Coen (screenplay),
+        Charles Portis (novel)","Actors":"Jeff Bridges, Hailee Steinfeld, Matt Damon,
+        Josh Brolin","Plot":"A tough U.S. Marshal helps a stubborn young woman track
+        down her father''s murderer.","Language":"English","Country":"USA","Awards":"Nominated
+        for 10 Oscars. Another 41 wins & 115 nominations.","Poster":"http://ia.media-imdb.com/images/M/MV5BMjIxNjAzODQ0N15BMl5BanBnXkFtZTcwODY2MjMyNA@@._V1_SX300.jpg","Metascore":"80","imdbRating":"7.7","imdbVotes":"193,835","imdbID":"tt1403865","Type":"movie","Response":"True"}'
+    http_version: 
+  recorded_at: Sun, 24 Aug 2014 20:22:50 GMT
+recorded_with: VCR 2.9.2
