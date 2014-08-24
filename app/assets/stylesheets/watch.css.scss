@@ -8,8 +8,7 @@
   }
 }
 
-
-.video-watch-meta {
+.video-upnext, .video-watch-meta {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -44,11 +43,10 @@
   .description {
     margin-top:1.5em;
   }
+  &.hidden {
+    opacity: 0;
+  }
 }
-.video-watch-meta.hidden {
-  opacity: 0;
-}
-
 
 .meta-options {
   button, a {
@@ -58,4 +56,7 @@
       color: $radical-blue;
     }
   }
+}
+.meta-option-button {
+  display: block;
 }

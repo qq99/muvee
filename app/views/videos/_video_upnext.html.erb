@@ -1,0 +1,31 @@
+<div class="video-upnext hidden hide">
+  <div class="meta-options">
+    <a class="home" href="/">
+      <i class="fa fa-home"></i> Bring me back home
+    </a>
+  </div>
+  <div class="title-information">
+
+    <p>Up next...</p>
+    <h1 class="title">
+      <%= link_to next_episode.title, series_path(next_episode.series) %>
+    </h1>
+    <h3>
+      <%= next_episode.episode_name.presence %>
+      <% if next_episode.season && next_episode.episode %>
+        <em class="smaller">S<%= next_episode.season %>E<%= next_episode.episode %></em>
+      <% end %>
+    </h3>
+    <div class="description">
+      <p>
+        <%= next_episode.overview.presence %>
+      </p>
+    </div>
+  </div>
+  <div class="meta-options">
+    <button id="restart">
+      <i class="fa fa-refresh"></i> Replay this episode
+    </button>
+    <%= link_to "Watch next episode", video_path(next_episode) %>
+  </div>
+</div>
