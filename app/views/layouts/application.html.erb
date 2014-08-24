@@ -6,7 +6,6 @@
   </title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <link rel="import" href="assets/brick-dialog/brick-dialog.html">
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -42,36 +41,6 @@
   </header>
 
 <%= yield %>
-
-<brick-dialog id="global-options">
-  <footer vertical>
-    <button onclick="rescanLibrary()">Re-scan library</button>
-    <button onclick="$('#global-options')[0].hide()">Cancel</button>
-  </footer>
-</brick-dialog>
-
-<brick-dialog id="scan-results">
-  <header>Library Scan Complete</header>
-  <section>
-    <ul>
-      <li>
-        <span class="new-tv"></span> new TV shows
-      </li>
-      <li>
-        <span class="failed-tv"></span> TV shows couldn't be added
-      </li>
-      <li>
-        <span class="new-movies"></span> new movies
-      </li>
-      <li>
-        <span class="failed-movies"></span> movies couldn't be added
-      </li>
-    </ul>
-  </section>
-  <footer vertical>
-    <button>Ok</button>
-  </footer>
-</brick-dialog>
 
 </body>
 </html>

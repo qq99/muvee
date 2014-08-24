@@ -1,14 +1,16 @@
 <div id="all_movies">
   <div class="inline-movie-preview">
-    <div class="movie-images"></div>
+    <div class="movie-images">
+      <%= render 'movie_thumbnails', movie: @movies.first %>
+    </div>
   </div>
 
   <div class="movie-meta panel">
     <h1 class="movie-title">
-      <span class="title"></span>
-      <span class="three-d hide">3D</span>
+      <span class="title"><%= @movies.first.title %></span>
+      <span class="three-d <% unless @movies.first.is_3d? %>hide<% end %>">3D</span>
     </h1>
-    <p class="movie-overview"></p>
+    <p class="movie-overview"><%= @movies.first.overview %></p>
   </div>
 
   <div class="movies-index panel" class="clearfix">
@@ -23,7 +25,7 @@
               <a
                 class="poster-link aspect-poster js-movie-tile"
                 href="<%= video_path(movie) %>"
-                data-3d="<%= movie.is_3d %>"
+                data-3d="<%= movie.is_3d? %>"
                 data-title="<%= movie.title %>"
                 data-overview="<%= movie.overview %>">
                 <% if poster_url = movie.poster_url %>
@@ -33,13 +35,7 @@
                 <% end %>
 
                 <div class="thumbnails hide">
-                  <% if movie.external_fanart && movie.external_fanart[:moviebackground] %>
-                    <img class="video-thumbnail" src="<%= movie.external_fanart[:moviebackground].first[:url] %>">
-                  <% else %>
-                    <% movie.thumbnails.each do |thumb| %>
-                      <img class="video-thumbnail hide" src="<%= thumb.url %>" alt="">
-                    <% end %>
-                  <% end %>
+                  <%= render 'movie_thumbnails', movie: movie %>
                 </div>
               </a>
             </div>

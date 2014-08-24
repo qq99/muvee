@@ -20,16 +20,9 @@ $(document).on "focus", ".main-navigation", showNav
 $(document).on "blur", ".main-navigation", hideNav
 
 window.rescanLibrary = (ev) ->
-  document.getElementById("global-options").hide()
   operation = $.ajax({
     url: "/videos/generate.json"
   })
-  operation.done (data, textStatus, jqXHR) ->
-    $(".new-tv").text(data.new_tv_shows.length)
-    $(".failed-tv").text(data.failed_tv_shows.length)
-    $(".new-movies").text(data.new_movies.length)
-    $(".failed-movies").text(data.failed_movies.length)
-    document.getElementById("scan-results").show()
 
 showNavOnMousemove = (ev) ->
   if ev.screenY < 300

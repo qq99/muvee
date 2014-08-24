@@ -1,0 +1,7 @@
+<% if movie.external_fanart && movie.external_fanart[:moviebackground] %>
+  <img class="video-thumbnail" src="<%= movie.external_fanart[:moviebackground].first[:url] %>">
+<% else %>
+  <% movie.thumbnails.each do |thumb| %>
+    <img class="video-thumbnail hide" src="<%= thumb.url %>" alt="">
+  <% end %>
+<% end %>
