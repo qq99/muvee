@@ -17,7 +17,7 @@ class Movie < Video
   }.freeze
 
   def metadata
-    @metadata ||= OmdbSearchResult.get(self.title).raw_value || {}
+    @metadata ||= OmdbSearchResult.get(title: self.title).data || {}
   end
 
   def poster_url
