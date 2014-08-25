@@ -11,6 +11,7 @@ WIP
 Requires (and tested with):
 ---
 
+- postgresql-9.3 libpq-dev
 - ruby 2.1.2+
 - redis (for sidekiq)
   - sudo apt-get install redis

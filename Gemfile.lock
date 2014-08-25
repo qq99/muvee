@@ -89,6 +89,7 @@ GEM
     numerizer (0.1.1)
     pHash (1.1.5)
       ffi (~> 1.0)
+    pg (0.17.1)
     polyglot (0.3.5)
     pry (0.10.1)
       coderay (~> 1.1.0)
@@ -193,6 +194,7 @@ DEPENDENCIES
   mini_magick
   mocha
   pHash
+  pg
   pry
   rails (= 4.1.4)
   rb-readline
