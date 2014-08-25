@@ -12,6 +12,7 @@ class Video < ActiveRecord::Base
   QUALITIES = /(1080p|720p)/i
 
   # convert to webm:
+  # http://superuser.com/questions/556463/converting-video-to-webm-with-ffmpeg-avconv
   # avconv -i src.avi -c:v libvpx -qmin 0 -qmax 50 -b:v 1M -c:a libvorbis -q:a 4 output2.webm
 
   def is_3d?
