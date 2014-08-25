@@ -8,7 +8,20 @@
 Netflix, for your home.
 WIP
 
-Requires (and tested with):
+To install and use
+---
+1. `sudo apt-get install postgresql-9.3 libpq-dev libav-tools nodejs nginx imagemagick libffi-dev libphash0 libphash0-dev`
+2. `sudo ln -s /usr/bin/nodejs /usr/bin/node` because Ubuntu installs node in a different place than most
+3. `bundle install`
+4. `bundle exec database:create` (or manually create a postgres role and set up your `database.yml`)
+5. Make sure your `database.yml` is correct!
+6. `bundle exec rails s` in one terminal to start the server
+7. `bundle exec sidekiq` in another terminal to start the job worker
+8. `bundle exec rake nginx:restart` to start up nginx (disregard any error messages)
+9. Visit http://localhost:8080
+10. Visit http://localhost:8080/videos/generate.json and wait!
+
+Dependencies (and tested with):
 ---
 
 - postgresql-9.3 libpq-dev
