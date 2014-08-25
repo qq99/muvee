@@ -8,8 +8,11 @@ class Video < ActiveRecord::Base
   scope :release_order, -> {order(season: :asc, episode: :asc)}
   scope :unwatched, -> {where(left_off_at: nil)}
 
-  SERVABLE_FILETYPES = %w{.mp4 .webm}.freeze
+  SERVABLE_FILETYPES = %w{.m4v .mp4 .webm}.freeze
   QUALITIES = /(1080p|720p)/i
+
+  # convert to webm:
+  # avconv -i src.avi -c:v libvpx -qmin 0 -qmax 50 -b:v 1M -c:a libvorbis -q:a 4 output2.webm
 
   def is_3d?
     is_3d.present?
