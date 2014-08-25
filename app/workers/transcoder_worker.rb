@@ -2,13 +2,17 @@ class TranscoderWorker
   include Sidekiq::Worker
 
   def perform(klass, input_path, transcode_path, eventual_path)
+    klass = klass.constantize
+
     if File.exist?(eventual_path) # don't convert it again!
-      Video.create(raw_file_path: eventual_path)
+      puts "Video already transcoded and moved; creating"
+      klass.create(raw_file_path: eventual_path)
       return true
     end
     if File.exist?(transcode_path)
+      puts "Video already transcoded; moving and creating"
       move_transcoded_file(transcode_path, eventual_path)
-      Video.create(raw_file_path: eventual_path)
+      klass.create(raw_file_path: eventual_path)
       return true
     end
 
@@ -16,8 +20,9 @@ class TranscoderWorker
     %x(#{transcode_to_webm_command(input_path, transcode_path)})
 
     if File.exist? eventual_path
+      puts "Video transcoded successfully; moving and creating"
       move_transcoded_file(transcode_path, eventual_path)
-      Video.create(raw_file_path: eventual_path)
+      klass.create(raw_file_path: eventual_path)
       return true
     else
       raise "Conversion seems to have failed"

@@ -62,10 +62,9 @@ class VideoCreationService
     #   end
     # end
 
-    binding.pry
     needs_transcode.each do |path|
       filename = File.basename(path, File.extname(path))
-      transcode_and_create(Video, path, "/media/anthony/Slowsto/transcoded/#{filename}.webm", File.dirname(path) + "/#{filename}.webm")
+      transcode_and_create(TvShow, path, "/media/anthony/Slowsto/transcoded/#{filename}.webm", File.dirname(path) + "/#{filename}.webm")
     end
 
     return [successes, failures]
