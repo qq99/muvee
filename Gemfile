@@ -39,6 +39,7 @@ gem 'timecop'
 gem 'mini_magick'
 gem 'pHash'
 gem 'ffi'
+gem 'sidekiq'
 
 group :test do
   gem 'webmock'

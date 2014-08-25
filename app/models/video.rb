@@ -8,7 +8,9 @@ class Video < ActiveRecord::Base
   scope :release_order, -> {order(season: :asc, episode: :asc)}
   scope :unwatched, -> {where(left_off_at: nil)}
 
+  # https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats
   SERVABLE_FILETYPES = %w{.m4v .mkv .mp4 .webm}.freeze
+  UNSERVABLE_FILETYPES = %w{.avi}.freeze
   QUALITIES = /(1080p|720p)/i
 
   # convert to webm:
