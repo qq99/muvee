@@ -19,30 +19,18 @@ class VideoCreationService
   end
 
   def create_movies(folders)
-    files = []
-    folders.each do |folder|
-      folder = "#{folder}/" if folder[-1] != "/" # append trailing slash if not there
-      all_files_in_folder = Dir["#{folder}**/*.*"]
-      files.push(*all_files_in_folder)
-    end
-    files = eligible_files(files) # filter out non-acceptable formats
-
-    successes = []
-    failures = []
-    files.each do |filepath|
-      video = Movie.new(raw_file_path: filepath)
-      if video.save
-        successes << video
-      else
-        failures << video
-      end
-    end
-
-    return [successes, failures]
+    create_videos(Movie, folders)
   end
 
   def create_tv_shows(folders)
+    create_videos(TvShow, folders)
+  end
+
+  def create_videos(klass, folders)
     files = []
+    successes = []
+    failures = []
+
     folders.each do |folder|
       folder = "#{folder}/" if folder[-1] != "/" # append trailing slash if not there
       all_files_in_folder = Dir["#{folder}**/*.*"]
@@ -51,20 +39,17 @@ class VideoCreationService
     no_transcode = eligible_files(files) # filter out non-acceptable formats
     needs_transcode = files_to_transcode(files)
 
-    successes = []
-    failures = []
-    # no_transcode.each do |filepath|
-    #   video = TvShow.new(raw_file_path: filepath)
-    #   if video.save
-    #     successes << video
-    #   else
-    #     failures << video
-    #   end
-    # end
+    no_transcode.each do |filepath|
+      if create_video(klass, filepath)
+        successes << filepath
+      else
+        failures << filepath
+      end
+    end
 
     needs_transcode.each do |path|
       filename = File.basename(path, File.extname(path))
-      transcode_and_create(TvShow, path, "/media/anthony/Slowsto/transcoded/#{filename}.webm", File.dirname(path) + "/#{filename}.webm")
+      transcode_and_create(klass, path, "/media/anthony/Slowsto/transcoded/#{filename}.webm", File.dirname(path) + "/#{filename}.webm")
     end
 
     return [successes, failures]
@@ -72,6 +57,11 @@ class VideoCreationService
 
   def transcode_and_create(klass, input_path, transcode_path, eventual_path)
     TranscoderWorker.perform_async(klass, input_path, transcode_path, eventual_path)
+  end
+
+  def create_video(klass, filepath)
+    video = klass.new(raw_file_path: filepath)
+    return video.save
   end
 
 end

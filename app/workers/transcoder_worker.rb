@@ -1,5 +1,6 @@
 class TranscoderWorker
   include Sidekiq::Worker
+  sidekiq_options :queue => :transcode
 
   def perform(klass, input_path, transcode_path, eventual_path)
     klass = klass.constantize
