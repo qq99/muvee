@@ -7,8 +7,9 @@ class VideoTest < ActiveSupport::TestCase
     Video.any_instance.stubs(thumbnail_root_path: "/test/scratch/")
   end
 
-  def teardown
-    %x{rm #{Dir.getwd() + '/test/scratch/'}*.jpg}
+  def after_tests
+    Video.destroy_all
+    Thumbnail.destroy_all
   end
 
   test "avprobe_grab_duration_command composes a shell safe string" do
@@ -18,7 +19,7 @@ class VideoTest < ActiveSupport::TestCase
 
   test "avconv_create_thumbnail_command composes a shell safe string" do
     vid = Video.create(raw_file_path: "/foo/bar/this is a test.mp4")
-    assert_equal "avconv -ss 45 -i /foo/bar/this\\ is\\ a\\ test.mp4 -qscale 1 -vsync 1 -vframes 1 -y /foo/bar/this\\ is\\ baz.jpg", vid.send(:avconv_create_thumbnail_command, 45, "/foo/bar/this is baz.jpg")
+    assert_equal "avconv -loglevel quiet -ss 45 -i /foo/bar/this\\ is\\ a\\ test.mp4 -qscale 1 -vsync 1 -vframes 1 -y /foo/bar/this\\ is\\ baz.jpg", vid.send(:avconv_create_thumbnail_command, 45, "/foo/bar/this is baz.jpg")
   end
 
   test "sets duration to 0 for a file that does not exist" do
@@ -55,7 +56,7 @@ class VideoTest < ActiveSupport::TestCase
     assert_difference "Thumbnail.all.length", 1 do
       @vid = Video.create(raw_file_path: @bigBuck)
     end
-    Thumbnail.any_instance.expects(:destroy_thumbnail_file).once
+    Thumbnail.any_instance.expects(:destroy_thumbnail_file)
     assert_difference "Thumbnail.all.length", -1 do
       @vid.destroy
     end
