@@ -18,14 +18,26 @@ class VideosController < ApplicationController
   # GET /videos/1.json
   def show
     if @video.is_tv?
-      @video.series.last_watched_video_id = @video.id
-      @video.series.save
-      episodic = @video.series.tv_shows.release_order
-      index_of_current_episode = episodic.to_a.find_index{|vid| vid.id == @video.id}
-      @previous_episode = episodic.at(index_of_current_episode - 1) if index_of_current_episode > 0
-      @next_episode = episodic.at(index_of_current_episode + 1) if index_of_current_episode < (episodic.length - 1)
+      if @video.series.present?
+        @video.series.last_watched_video_id = @video.id
+        @video.series.save
+      end
+
+      if params[:shuffle].present?
+        @next_episode = TvShow.all.sample
+      else
+        episodic = @video.series.tv_shows.release_order
+        index_of_current_episode = episodic.to_a.find_index{|vid| vid.id == @video.id}
+        @previous_episode = episodic.at(index_of_current_episode - 1) if index_of_current_episode > 0
+        @next_episode = episodic.at(index_of_current_episode + 1) if index_of_current_episode < (episodic.length - 1)
+      end
     end
     render layout: 'fullscreen'
+  end
+
+  def shuffle
+    random_show = TvShow.all.sample
+    redirect_to video_path(random_show, shuffle: true)
   end
 
   # GET /videos/new
