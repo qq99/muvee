@@ -5,8 +5,8 @@ class VideoCreationService
   end
 
   def generate
-    new_tv_shows, failed_tv_shows = create_tv_shows(@sources[:tv])
-    new_movies, failed_movies = create_movies(@sources[:movies])
+    new_tv_shows, failed_tv_shows = create_videos(TvShow, @sources[:tv])
+    new_movies, failed_movies = create_videos(Movie, @sources[:movies])
     return [new_tv_shows, failed_tv_shows, new_movies, failed_movies]
   end
 
@@ -16,14 +16,6 @@ class VideoCreationService
 
   def files_to_transcode(files)
     files.select{|file| Video::UNSERVABLE_FILETYPES.include? File.extname(file) }
-  end
-
-  def create_movies(folders)
-    create_videos(Movie, folders)
-  end
-
-  def create_tv_shows(folders)
-    create_videos(TvShow, folders)
   end
 
   def create_videos(klass, folders)
