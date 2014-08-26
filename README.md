@@ -15,9 +15,8 @@ To install and use
 3. `bundle install`
 4. `bundle exec database:create` (or manually create a postgres role and set up your `database.yml`)
 5. Make sure your `database.yml` is correct!
-6. `bundle exec rails s` in one terminal to start the server
-7. `bundle exec sidekiq` in another terminal to start the job worker
 8. `bundle exec rake nginx:restart` to start up nginx (disregard any error messages)
+9. `bundle exec foreman start`
 9. Visit http://localhost:8080
 10. Visit http://localhost:8080/videos/generate.json and wait!
 
