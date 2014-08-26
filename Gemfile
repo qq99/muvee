@@ -40,6 +40,7 @@ gem 'mini_magick'
 gem 'pHash'
 gem 'ffi'
 gem 'sidekiq'
+#gem 'media', git: "git://github.com/qq99/media.git"
 
 group :test do
   gem 'webmock'

@@ -9,8 +9,8 @@ class Video < ActiveRecord::Base
   scope :unwatched, -> {where(left_off_at: nil)}
 
   # https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats
-  SERVABLE_FILETYPES = %w{.m4v .mkv .mp4 .webm}.freeze
-  UNSERVABLE_FILETYPES = %w{.avi}.freeze
+  SERVABLE_FILETYPES = %w{.m4v .mp4 .webm}.freeze
+  UNSERVABLE_FILETYPES = %w{.avi .mkv}.freeze
   QUALITIES = /(1080p|720p)/i
 
   # convert to webm:
