@@ -2,8 +2,12 @@ class MoviesController < ApplicationController
   before_action :set_movie, only: [:show]
 
   def index
-    @movies = Movie.all
+    @movies = Movie.local.all
 #    render layout: 'fullscreen'
+  end
+
+  def remote
+    @movies = Movie.remote.all
   end
 
   private

@@ -19,8 +19,11 @@ class ExternalMetadata < ActiveRecord::Base
     result
   end
 
+  def should_fetch
+    self.updated_at.blank? || (self.updated_at.present? && self.updated_at <= 1.days.ago)
+  end
+
   def fetch_data
-    should_fetch = self.updated_at.blank? || (self.updated_at.present? && self.updated_at <= 1.days.ago)
     if should_fetch
       http_get = fetch(URI(self.endpoint))
       if http_get.present? && http_get.response.kind_of?(Net::HTTPSuccess)

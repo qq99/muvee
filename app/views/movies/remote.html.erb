@@ -1,0 +1,49 @@
+<div id="all_movies">
+  <% if @movies.present? %>
+    <div class="inline-movie-preview">
+      <div class="movie-images">
+        <%= render 'movie_thumbnails', movie: @movies.first %>
+      </div>
+    </div>
+
+    <div class="movie-meta panel">
+      <h1 class="movie-title">
+        <span class="title"><%= @movies.first.title %></span>
+        <span class="three-d <% unless @movies.first.is_3d? %>hide<% end %>">3D</span>
+        <span class="movie-quality"><%= @movies.first.quality %></span>
+      </h1>
+      <p class="movie-overview"><%= @movies.first.overview %></p>
+    </div>
+
+    <div class="movies-index panel" class="clearfix">
+      <ul class="responsive-grid">
+        <% @movies.each do |movie| %>
+          <li class="poster">
+            <div class="poster-innards">
+              <a
+                class="poster-link aspect-poster js-movie-tile"
+                href="<%= video_path(movie) %>"
+                data-3d="<%= movie.is_3d? %>"
+                data-title="<%= movie.title %>"
+                data-quality="<%= movie.quality %>"
+                data-overview="<%= movie.overview %>">
+                <% if poster_url = movie.poster_url %>
+                  <img class="video-thumbnail has-aspect" src="<%= poster_url %>" alt="">
+                <% else %>
+                  <img class="video-thumbnail has-aspect" src="/images/no-poster.png" alt="">
+                <% end %>
+
+                <div class="thumbnails hide">
+                  <%= render 'movie_thumbnails', movie: movie %>
+                </div>
+              </a>
+            </div>
+          </li>
+        <% end %>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  <% else %>
+    <div>No movies found.</div>
+  <% end %>
+</div>

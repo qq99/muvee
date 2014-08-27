@@ -40,10 +40,11 @@ gem 'timecop'
 gem 'mini_magick'
 gem 'pHash'
 gem 'ffi'
+
 gem 'foreman'
 gem 'sidekiq'
 gem 'sidekiq-limit_fetch'
-#gem 'media', git: "git://github.com/qq99/media.git"
+gem "transmission_api", github: "qq99/TransmissionApi", branch: "master"
 
 group :test do
   gem 'webmock'
