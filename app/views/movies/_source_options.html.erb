@@ -1,0 +1,24 @@
+<% sources.each do |quality, source| %>
+  <div class="source">
+    <h1><%= quality %></h1>
+    <ul>
+      <% source.each_with_index do |source_info, i| %>
+        <% ratio = (source_info[:TorrentSeeds].to_f / source_info[:TorrentPeers].to_f).round(1) %>
+        <li>
+          <% if source.length > 1 %>
+            <p>
+              Option <%= i+1 %>
+            </p>
+          <% end %>
+          <p>
+            Size: <%= source_info[:Size] %>
+          </p>
+          <p>
+            Health: <%= source_info[:TorrentSeeds] %>/<%= source_info[:TorrentPeers] %>=<%= ratio %>
+          </p>
+          <button>Download</button>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

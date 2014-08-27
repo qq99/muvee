@@ -21,8 +21,8 @@
           <li class="poster">
             <div class="poster-innards">
               <a
-                class="poster-link aspect-poster js-movie-tile"
-                href="<%= video_path(movie) %>"
+                class="poster-link aspect-poster js-movie-tile js-find-sources"
+                href="<%= find_sources_movie_path(movie) %>"
                 data-3d="<%= movie.is_3d? %>"
                 data-title="<%= movie.title %>"
                 data-quality="<%= movie.quality %>"
@@ -35,6 +35,9 @@
 
                 <div class="thumbnails hide">
                   <%= render 'movie_thumbnails', movie: movie %>
+                </div>
+                <div class="js-sources-info inline-sources hide">
+
                 </div>
               </a>
             </div>
