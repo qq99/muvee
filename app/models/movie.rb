@@ -36,6 +36,7 @@ class Movie < Video
     rescue
       self.released_on = nil
     end
+    self.year = self.released_on.try(:year)
     self.overview = metadata[:Plot]
     self.language = metadata[:Language]
     self.country = metadata[:Country]
@@ -105,6 +106,8 @@ class Movie < Video
       end
     end
   end
+
+
 
   def destroy_images
     begin
