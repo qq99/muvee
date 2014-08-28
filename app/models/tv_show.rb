@@ -6,8 +6,10 @@ class TvShow < Video
   after_create :associate_with_series
   after_create :extract_metadata
 
+  # More formats available at https://github.com/midgetspy/Sick-Beard/blob/development/sickbeard/name_parser/regexes.py
   FORMATS = {
-    standard: /([\w\-\.\_\s]*)S(\d+)(?:\D*)E(\d+)/i
+    standard: /([\w\-\.\_\s]*)S(\d+)(?:\D*)E(\d+)/i,
+    fov_repeat: /([\w\-\.\_\s]*) - (\d+)(?:\D+)(\d+)/i
   }.freeze
 
   def associate_with_series
@@ -47,6 +49,7 @@ class TvShow < Video
           self.title = pretty_title matches[1]
           self.season = matches[2].to_i
           self.episode = matches[3].to_i
+          break
         end
       end
 

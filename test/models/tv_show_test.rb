@@ -49,6 +49,21 @@ class TvShowTest < ActiveSupport::TestCase
     end
   end
 
+  test 'guesses fov format correctly on create' do
+    TvShow.any_instance.stubs(:associate_with_series)
+    TvShow.any_instance.stubs(:extract_metadata)
+    show = TvShow.create(raw_file_path: "/foo/bar/Rick and Morty - 1x11 - Ricksy Business.webm")
+
+    assert_equal "Rick And Morty", show.title
+    assert_equal 1, show.season
+    assert_equal 11, show.episode
+
+    show = TvShow.create(raw_file_path: "/foo/bar/Rick and Morty - 1.11 - Ricksy_Business.webm")
+    assert_equal "Rick And Morty", show.title
+    assert_equal 1, show.season
+    assert_equal 11, show.episode
+  end
+
   test 'will create a new series if one does not exist' do
     VCR.use_cassette 'family_guy' do
       assert_difference 'Series.all.length', 1 do
