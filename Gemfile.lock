@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/qq99/TransmissionApi.git
-  revision: 55bca261128db79c659470f9beb506e059bb90df
+  revision: 31811484057b7fe4ed0e9456ea1c02d36b01255b
   branch: master
   specs:
     transmission_api (0.0.7)
@@ -68,9 +68,9 @@ GEM
     eventmachine (1.0.3)
     execjs (2.2.1)
     ffi (1.9.3)
-    font-awesome-rails (4.1.0.0)
+    font-awesome-rails (4.2.0.0)
       railties (>= 3.2, < 5.0)
-    foreman (0.74.0)
+    foreman (0.75.0)
       dotenv (~> 0.11.1)
       thor (~> 0.19.1)
     hike (1.2.3)
