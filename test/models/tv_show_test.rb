@@ -49,6 +49,16 @@ class TvShowTest < ActiveSupport::TestCase
     end
   end
 
+  test 'guesses format when rippers suck at naming files' do
+    TvShow.any_instance.stubs(:associate_with_series)
+    TvShow.any_instance.stubs(:extract_metadata)
+    show = TvShow.create(raw_file_path: "/foo/bar/TV/The Last Ship S01E02 HDTV x264-LOL[ettv]/the.last.ship.102.hdtv.lol.mp4")
+
+    assert_equal "The Last Ship", show.title
+    assert_equal 1, show.season
+    assert_equal 2, show.episode
+  end
+
   test 'guesses fov format correctly on create' do
     TvShow.any_instance.stubs(:associate_with_series)
     TvShow.any_instance.stubs(:extract_metadata)
