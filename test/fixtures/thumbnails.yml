@@ -1,9 +1,5 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  video_id: 1
-  raw_file_path: MyString
-
-two:
-  video_id: 1
-  raw_file_path: MyString
+some_pic:
+  raw_file_path: 'foobar.jpg'
+  video: american_dad_s01_e01

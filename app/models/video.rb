@@ -8,7 +8,9 @@ class Video < ActiveRecord::Base
   scope :release_order, -> {order(season: :asc, episode: :asc)}
   scope :unwatched, -> {where(left_off_at: nil)}
 
-  SERVABLE_FILETYPES = %w{.m4v .mkv .mp4 .webm}.freeze
+  # https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats
+  SERVABLE_FILETYPES = %w{.m4v .mp4 .webm}.freeze
+  UNSERVABLE_FILETYPES = %w{.avi .mkv}.freeze
   QUALITIES = /(1080p|720p)/i
 
   # convert to webm:
@@ -98,7 +100,7 @@ class Video < ActiveRecord::Base
   private
 
   def avconv_create_thumbnail_command(at_seconds, output_path)
-    "avconv -ss " + at_seconds.to_s.shellescape + " -i " + raw_file_path.shellescape + " -qscale 1 -vsync 1 -vframes 1 -y " + output_path.shellescape
+    "avconv -loglevel quiet -ss " + at_seconds.to_s.shellescape + " -i " + raw_file_path.shellescape + " -qscale 1 -vsync 1 -vframes 1 -y " + output_path.shellescape
   end
 
   def avprobe_grab_duration_command

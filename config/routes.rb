@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :videos do
     collection do
       get 'generate'
+      get 'shuffle'
     end
     member do
       get 'stream'

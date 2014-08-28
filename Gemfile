@@ -29,7 +29,8 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',        group: :development
-
+gem 'thin'
+gem 'pg'
 gem 'rb-readline'
 gem 'pry'
 gem 'uuid'
@@ -39,6 +40,10 @@ gem 'timecop'
 gem 'mini_magick'
 gem 'pHash'
 gem 'ffi'
+gem 'foreman'
+gem 'sidekiq'
+gem 'sidekiq-limit_fetch'
+#gem 'media', git: "git://github.com/qq99/media.git"
 
 group :test do
   gem 'webmock'

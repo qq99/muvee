@@ -13,17 +13,20 @@
 
 ActiveRecord::Schema.define(version: 20140819043227) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "external_metadata", force: true do |t|
     t.integer  "video_id"
     t.string   "type"
-    t.string   "raw_value"
+    t.text     "raw_value"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "endpoint"
     t.integer  "series_id"
   end
 
-  add_index "external_metadata", ["endpoint"], name: "index_external_metadata_on_endpoint", unique: true
+  add_index "external_metadata", ["endpoint"], name: "index_external_metadata_on_endpoint", unique: true, using: :btree
 
   create_table "movies", force: true do |t|
     t.datetime "created_at"
@@ -36,7 +39,7 @@ ActiveRecord::Schema.define(version: 20140819043227) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "tvdb_series_result_id"
-    t.string   "overview"
+    t.text     "overview"
     t.decimal  "tvdb_rating"
     t.integer  "tvdb_rating_count"
     t.string   "status"
@@ -79,7 +82,7 @@ ActiveRecord::Schema.define(version: 20140819043227) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "title"
-    t.string   "overview"
+    t.text     "overview"
     t.string   "episode_name"
     t.datetime "released_on"
     t.string   "language"

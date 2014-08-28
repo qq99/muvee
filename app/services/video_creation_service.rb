@@ -5,8 +5,8 @@ class VideoCreationService
   end
 
   def generate
-    new_tv_shows, failed_tv_shows = create_tv_shows(@sources[:tv])
-    new_movies, failed_movies = create_movies(@sources[:movies])
+    new_tv_shows, failed_tv_shows = create_videos(TvShow, @sources[:tv])
+    new_movies, failed_movies = create_videos(Movie, @sources[:movies])
     return [new_tv_shows, failed_tv_shows, new_movies, failed_movies]
   end
 
@@ -14,50 +14,46 @@ class VideoCreationService
     files.select{|file| Video::SERVABLE_FILETYPES.include? File.extname(file) }
   end
 
-  def create_movies(folders)
+  def files_to_transcode(files)
+    files.select{|file| Video::UNSERVABLE_FILETYPES.include? File.extname(file) }
+  end
+
+  def create_videos(klass, folders)
     files = []
+    successes = []
+    failures = []
+
     folders.each do |folder|
       folder = "#{folder}/" if folder[-1] != "/" # append trailing slash if not there
       all_files_in_folder = Dir["#{folder}**/*.*"]
       files.push(*all_files_in_folder)
     end
-    files = eligible_files(files) # filter out non-acceptable formats
+    no_transcode = eligible_files(files) # filter out non-acceptable formats
+    needs_transcode = files_to_transcode(files)
 
-    successes = []
-    failures = []
-    files.each do |filepath|
-      video = Movie.new(raw_file_path: filepath)
-      if video.save
-        successes << video
+    no_transcode.each do |filepath|
+      if create_video(klass, filepath)
+        successes << filepath
       else
-        failures << video
+        failures << filepath
       end
+    end
+
+    needs_transcode.each do |path|
+      filename = File.basename(path, File.extname(path))
+      transcode_and_create(klass, path, "/media/anthony/Slowsto/transcoded/#{filename}.webm", File.dirname(path) + "/#{filename}.webm")
     end
 
     return [successes, failures]
   end
 
-  def create_tv_shows(folders)
-    files = []
-    folders.each do |folder|
-      folder = "#{folder}/" if folder[-1] != "/" # append trailing slash if not there
-      all_files_in_folder = Dir["#{folder}**/*.*"]
-      files.push(*all_files_in_folder)
-    end
-    files = eligible_files(files) # filter out non-acceptable formats
+  def transcode_and_create(klass, input_path, transcode_path, eventual_path)
+    TranscoderWorker.perform_async(klass, input_path, transcode_path, eventual_path)
+  end
 
-    successes = []
-    failures = []
-    files.each do |filepath|
-      video = TvShow.new(raw_file_path: filepath)
-      if video.save
-        successes << video
-      else
-        failures << video
-      end
-    end
-
-    return [successes, failures]
+  def create_video(klass, filepath)
+    video = klass.new(raw_file_path: filepath)
+    return video.save
   end
 
 end
