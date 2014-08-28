@@ -1,6 +1,7 @@
 class Video < ActiveRecord::Base
   has_many :thumbnails, dependent: :destroy
-  validates_uniqueness_of :raw_file_path
+  validates_uniqueness_of :raw_file_path, allow_nil: true, allow_blank: true
+  validates_uniqueness_of :imdb_id, allow_nil: true, allow_blank: true
   after_create :shellout_and_grab_duration
   after_create :create_initial_thumb
 
@@ -37,8 +38,12 @@ class Video < ActiveRecord::Base
     "/public/thumbnails/"
   end
 
+  def file_not_yet_present?
+    raw_file_path.blank?
+  end
+
   def filename_no_extension
-    return "" if raw_file_path.empty?
+    return "" if file_not_yet_present?
 
     @filename_no_extension ||= File.basename(raw_file_path, File.extname(raw_file_path))
   end
@@ -66,12 +71,14 @@ class Video < ActiveRecord::Base
   end
 
   def create_initial_thumb
+    return if file_not_yet_present?
     return if self.duration == 0
 
     create_thumbnail (self.duration / 2).to_i
   end
 
   def create_n_thumbnails(n_thumbnails) # evenly spaced out throughout the video
+    return if file_not_yet_present?
     return if self.duration == 0
 
     spacing = self.duration / (n_thumbnails + 2).to_f
@@ -83,6 +90,8 @@ class Video < ActiveRecord::Base
   end
 
   def create_thumbnail(at_seconds)
+    return if file_not_yet_present?
+
     thumb_path = new_thumbnail_path
     shellout_and_grab_thumbnail(at_seconds, thumb_path)
     #TODO validate this worked
@@ -108,6 +117,7 @@ class Video < ActiveRecord::Base
   end
 
   def shellout_and_grab_duration
+    return if file_not_yet_present?
     result = %x(#{avprobe_grab_duration_command})
     if result.present? && result.length > 0
       hours, minutes, seconds = result.split(":")
@@ -118,6 +128,7 @@ class Video < ActiveRecord::Base
   end
 
   def shellout_and_grab_thumbnail(at_seconds, output_path)
+    return if file_not_yet_present?
     return if self.duration == 0
     %x(#{avconv_create_thumbnail_command(at_seconds, output_path)})
   end

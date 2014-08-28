@@ -4,7 +4,7 @@ class VideosController < ApplicationController
   respond_to :json, only: [:left_off_at, :thumbnails]
 
   def index
-    @movies = Movie.all
+    @movies = Movie.local.all
     @series = Series.all
     @items = @movies.to_a.concat @series.to_a
     @items.sort_by!{|item| -item.created_at.to_i} # newest first

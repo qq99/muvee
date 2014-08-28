@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140819043227) do
+ActiveRecord::Schema.define(version: 20140827041734) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,6 +93,8 @@ ActiveRecord::Schema.define(version: 20140819043227) do
     t.string   "quality"
     t.boolean  "is_3d"
     t.string   "type_of_3d"
+    t.string   "status"
+    t.string   "imdb_id"
   end
 
 end

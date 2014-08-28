@@ -7,6 +7,9 @@ class Movie < Video
   after_create :examine_thumbnail_for_3d
   before_destroy :destroy_images
 
+  scope :local, -> {where(status: "local")}
+  scope :remote, -> {where(status: "remote")}
+
   POSTER_FOLDER = Rails.root.join('public', 'posters')
 
   FORMATS = {
@@ -17,7 +20,7 @@ class Movie < Video
   }.freeze
 
   def metadata
-    @imdb_id ||= ImdbSearchResult.get(self.title).relevant_result(self.title)[:id]
+    @imdb_id ||= self.imdb_id || ImdbSearchResult.get(self.title).relevant_result(self.title)[:id]
     return {} if !@imdb_id
     @metadata ||= OmdbSearchResult.get(@imdb_id).data || {}
   end
@@ -33,6 +36,7 @@ class Movie < Video
     rescue
       self.released_on = nil
     end
+    self.year = self.released_on.try(:year)
     self.overview = metadata[:Plot]
     self.language = metadata[:Language]
     self.country = metadata[:Country]
@@ -54,12 +58,29 @@ class Movie < Video
   end
 
   def external_fanart
-    return if imdb_id.blank?
-    @fanart ||= FanartTvResult.get(imdb_id).data || {}
+    return if fetch_imdb_id.blank?
+    @fanart ||= FanartTvResult.get(fetch_imdb_id).data
+
+    img = nil
+    if backgrounds = @fanart[:moviebackground]
+      img = backgrounds.sample[:url]
+    end
+
+    if img.blank?
+      tmdb_find = TmdbFindResult.get(fetch_imdb_id).data
+      if result = tmdb_find[:movie_results].first
+        tmdb_id = result[:id]
+        images_result = TmdbImageResult.get(tmdb_id).data
+        backdrop = images_result[:backdrops].sample
+        image_path = backdrop.try(:[], :file_path)
+        img = "http://image.tmdb.org/t/p/original/#{image_path}" if image_path
+      end
+    end
+    img
   end
 
-  def imdb_id
-    self.metadata[:imdbID]
+  def fetch_imdb_id
+    self.imdb_id || self.metadata[:imdbID]
   end
 
   def guessit
@@ -86,6 +107,8 @@ class Movie < Video
     end
   end
 
+
+
   def destroy_images
     begin
       File.delete(POSTER_FOLDER.join(poster_path))
@@ -95,7 +118,11 @@ class Movie < Video
   end
 
   def examine_thumbnail_for_3d
-    self.is_3d = self.thumbnails.first.check_for_sbs_3d
-    self.save
+    thumb = self.thumbnails.first.presence
+    if thumb && thumb.check_for_sbs_3d
+      self.is_3d = true
+      self.type_of_3d = "sbs"
+      self.save
+    end
   end
 end

@@ -16,6 +16,9 @@ video {
   }
 }
 
+ul {
+  list-style-type: none;
+}
 p {
   font-size: 1.3em;
   color: #ccc;
@@ -275,7 +278,7 @@ button {
   position: relative;
   width: 100%;
 
-  li {
+  > li {
     position: relative;
     float: left;
     overflow: hidden;
@@ -351,5 +354,22 @@ button {
     left: 0em;
     padding: 0.25em 0.5em;
     background: rgba(0,0,0,0.55);
+  }
+}
+
+
+.inline-sources {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  height: 100%;
+  width: 100%;
+  font-size: 0.5em;
+  color: white;
+  background: rgba(0,0,0,0.9);
+  padding: 1em;
+  .source {
+    display: block;
   }
 }
