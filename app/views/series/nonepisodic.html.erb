@@ -1,13 +1,4 @@
-<% content_for :subnav do %>
-<ul class="top-nav-container subnav">
-  <li>
-    <%= link_to 'Series', series_index_path %>
-  </li>
-  <li>
-    <%= link_to 'Others', nonepisodic_series_index_path %>
-  </li>
-</ul>
-<% end %>
+<%= render 'subnav' %>
 
 <div id="all_series" class="clearfix with-header">
   <div class="panel">
