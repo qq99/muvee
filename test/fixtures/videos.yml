@@ -47,3 +47,10 @@ true_grit:
   raw_file_path: /foo/bar/True.Grit.mp4
   title: True Grit
   type: 'Movie'
+
+poorly_analyzed_american_dad:
+  type: "TvShow"
+  raw_file_path: /foo/bar/American.Dad.S11E22.HDTV.x264-LOL.mp4
+  title: American Dude
+  season: 20
+  episode: 500

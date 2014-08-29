@@ -108,6 +108,18 @@ class TvShowTest < ActiveSupport::TestCase
     end
   end
 
+  test 'reanalyze can re-guess and reassociate metadata given a bad initial guess and future engine improvements' do
+    VCR.use_cassette 'american_dad' do
+      show = videos(:poorly_analyzed_american_dad)
+      show.reanalyze
+      show.reload
+      assert_equal "American Dad!", show.title
+      assert_equal 11, show.season
+      assert_equal 22, show.episode
+      assert_equal "American Dad!", Series.last.title
+    end
+  end
+
   test 'can get to episodic metadata' do
     VCR.use_cassette 'american_dad' do
       show = TvShow.create(raw_file_path: '/foo/bar/American.Dad.S05E10.HDTV.x264-LOL.mp4')
