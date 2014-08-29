@@ -15,6 +15,22 @@ hideMeta = (ms = 2000) ->
 showMeta = ->
   $(".video-watch-meta").removeClass("hidden")
 
+secondsToHuman = (seconds) ->
+  hours = parseInt(seconds / (60*60), 10)
+  minutes = parseInt((seconds - (hours*60*60)) / 60, 10)
+  seconds = parseInt(seconds - (hours*60*60) - (minutes*60), 10)
+  [hours, minutes, seconds]
+
+toDuration = (hours, minutes, seconds) ->
+  h = hours.toString()
+  m = minutes.toString()
+  s = seconds.toString()
+  pad = "00"
+  dur =
+    pad.substring(0, 2 - h.length) + h + ":" +
+    pad.substring(0, 2 - m.length) + m + ":" +
+    pad.substring(0, 2 - s.length) + s
+
 $(document).on "keydown mousemove", ->
   clearTimeout(controlTimeout)
   showControls()
@@ -54,18 +70,23 @@ $ ->
 
   # http://www.w3.org/TR/html5/embedded-content-0.html#mediaevents
   $progress = $(".video-controls-progress")
-  $video.on "timeupdate.videoplayer", (e) ->
+  timeRemaining = $(".js-time-remaining")[0]
+  $video.on "timeupdate.videoplayer", _.throttle (e) ->
     throttledSetLeftOffAt(e)
     progress = video.currentTime / video.duration
     $progress.width("#{progress*100}%")
 
     timeLeft = video.duration - video.currentTime
+
     if timeLeft < 30
       $(".video-upnext").removeClass("hide hidden")
       $(".starting-in").text("Starting in #{parseInt(timeLeft, 10)} seconds")
     else
       $(".video-upnext").addClass("hide hidden")
 
+    [hours, minutes, seconds] = secondsToHuman(timeLeft)
+    timeRemaining.textContent = toDuration(hours, minutes, seconds)
+  , 250 # probably often enough
 
 
   $video.one "canplay.videoplayer", (e) ->

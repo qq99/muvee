@@ -10,4 +10,4 @@
 - [seldom, 3]
 - [transcode, 1]
 :limits:
-  transcode: 2
+  transcode: 8
