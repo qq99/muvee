@@ -1,5 +1,6 @@
 .modal {
   opacity: 0;
+  color: #555;
   visibility: hidden;
   transition: all 0.25s ease-in-out;
   position: fixed;
@@ -14,6 +15,12 @@
     .modal-box-contents {
       top: 0;
     }
+  }
+  .modal-header {
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    font-style: italic;
   }
   .modal-backdrop {
     background: rgba(0,0,0,0.7);
@@ -35,7 +42,19 @@
     margin-left: -50%;
     margin-top: -50%;
     background: white;
-    padding: 2em;
     top: -2em;
+    border-radius: 1rem;
+    overflow: hidden;
+  }
+  button {
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+    background: #efefef;
+    border: 0;
+    &:hover, &:focus {
+      background: #fafafa;
+      box-shadow: inset 0px 0px 1px #999;
+    }
   }
 }
