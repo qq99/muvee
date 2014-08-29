@@ -68,47 +68,7 @@ class VideosController < ApplicationController
     end
   end
 
-  # POST /videos
-  # POST /videos.json
-  def create
-    @video = Video.new(video_params)
-
-    respond_to do |format|
-      if @video.save
-        format.html { redirect_to @video, notice: 'Video was successfully created.' }
-        format.json { render :show, status: :created, location: @video }
-      else
-        format.html { render :new }
-        format.json { render json: @video.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /videos/1
-  # PATCH/PUT /videos/1.json
-  def update
-    respond_to do |format|
-      if @video.update(video_params)
-        format.html { redirect_to @video, notice: 'Video was successfully updated.' }
-        format.json { render :show, status: :ok, location: @video }
-      else
-        format.html { render :edit }
-        format.json { render json: @video.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /videos/1
-  # DELETE /videos/1.json
-  def destroy
-    @video.destroy
-    respond_to do |format|
-      format.html { redirect_to videos_url, notice: 'Video was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
-
-  # GEt /videos/1/stream
+  # GET /videos/1/stream
   def stream
     video_extension = File.extname(@video.raw_file_path)[1..-1]
 
@@ -119,6 +79,11 @@ class VideosController < ApplicationController
       disposition: 'inline',
       stream: true,
       buffer_size: 4096
+  end
+
+  # POST /videos/1/reanalyze
+  def reanalyze
+
   end
 
   # POST /videos/1/left_off_at.json
