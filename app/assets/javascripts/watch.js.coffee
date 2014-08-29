@@ -10,7 +10,7 @@ hideControls = ->
   $(".video-controls").fadeOut()
 
 hideMeta = (ms = 2000) ->
-  $(".video-watch-meta").addClass("hidden");
+  $(".video-watch-meta").addClass("hidden")
 
 showMeta = ->
   $(".video-watch-meta").removeClass("hidden")

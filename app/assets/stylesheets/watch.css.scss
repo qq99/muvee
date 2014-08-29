@@ -43,9 +43,6 @@
   .description {
     margin-top:1.5em;
   }
-  &.hidden {
-    opacity: 0;
-  }
 }
 
 .video-upnext {
@@ -55,9 +52,6 @@
   padding: 2em;
   width: 25em;
   background: rgba(0,0,0,0.9);
-  &.hidden {
-    opacity: 0;
-  }
   h1 {
     text-transform: uppercase;
     color: $radical-blue;
@@ -96,4 +90,9 @@
 }
 .meta-option-button {
   display: block;
+}
+
+.hidden {
+  opacity: 0;
+  visibility: hidden;
 }
