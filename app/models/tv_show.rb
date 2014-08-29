@@ -8,8 +8,8 @@ class TvShow < Video
 
   # More formats available at https://github.com/midgetspy/Sick-Beard/blob/development/sickbeard/name_parser/regexes.py
   FORMATS = {
-    standard: /([\w\-\.\_\s]*)S(\d+)(?:\D*)E(\d+)/i,
-    fov_repeat: /([\w\-\.\_\s]*) - (\d+)(?:\D+)(\d+)/i
+    standard: /([\w\-\.\_\(\) ]*)S(\d+)(?:\D*)E(\d+)/i,
+    fov_repeat: /([\w\-\.\(\) ]*) - (\d+)(?:\D+)(\d+)/i
   }.freeze
 
   def associate_with_series
@@ -42,20 +42,36 @@ class TvShow < Video
       self.title = "Unknown"
     else
       quality, remaining_filename = filename_without_quality(filename_no_extension)
+      containing_foldername = raw_file_path.split("/")[-2]
 
-      TvShow::FORMATS.each do |name, regex|
-        matches = regex.match(remaining_filename)
-        if matches.present? && matches.length == 4
-          self.title = pretty_title matches[1]
-          self.season = matches[2].to_i
-          self.episode = matches[3].to_i
-          break
-        end
+      if matches = guess_info_from_string(remaining_filename) || guess_info_from_string(containing_foldername)
+        self.title, self.season, self.episode = matches
       end
 
       if !self.title.present?
-        self.title = pretty_title remaining_filename
+        self.title = pretty_title(remaining_filename)
       end
     end
   end
+
+  def guess_info_from_string(from)
+    TvShow::FORMATS.each do |name, regex|
+      matches = regex.match(from)
+      if matches.present? && matches.length == 4
+        title = pretty_title matches[1]
+        season = matches[2].to_i
+        episode = matches[3].to_i
+        return [title, season, episode]
+      end
+    end
+    nil
+  end
+
+  def reanalyze
+    guessit
+    self.save
+    associate_with_series
+    extract_metadata
+  end
+
 end

@@ -49,7 +49,7 @@ class TvShowTest < ActiveSupport::TestCase
     end
   end
 
-  test 'guesses format when rippers suck at naming files' do
+  test 'guesses format when rippers suck at naming files (look at folder name)' do
     TvShow.any_instance.stubs(:associate_with_series)
     TvShow.any_instance.stubs(:extract_metadata)
     show = TvShow.create(raw_file_path: "/foo/bar/TV/The Last Ship S01E02 HDTV x264-LOL[ettv]/the.last.ship.102.hdtv.lol.mp4")
@@ -72,6 +72,11 @@ class TvShowTest < ActiveSupport::TestCase
     assert_equal "Rick And Morty", show.title
     assert_equal 1, show.season
     assert_equal 11, show.episode
+
+    show = TvShow.create(raw_file_path: "/foo/bar/Archer (2009) - 1x08 - The Rock.mp4")
+    assert_equal "Archer (2009)", show.title
+    assert_equal 1, show.season
+    assert_equal 8, show.episode
   end
 
   test 'will create a new series if one does not exist' do
