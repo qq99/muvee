@@ -25,7 +25,7 @@ class VideosController < ApplicationController
 
       if params[:shuffle].present?
         @next_episode = TvShow.all.sample
-      else
+      elsif @video.series.present?
         episodic = @video.series.tv_shows.release_order
         index_of_current_episode = episodic.to_a.find_index{|vid| vid.id == @video.id}
         @previous_episode = episodic.at(index_of_current_episode - 1) if index_of_current_episode > 0

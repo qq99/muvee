@@ -5,6 +5,10 @@ class SeriesController < ApplicationController
     @series = Series.all
   end
 
+  def nonepisodic
+    @shows = TvShow.where(series_id: nil).all
+  end
+
   def show
     @sort = params[:sort].try(:to_sym) || :latest
     @videos = @series.tv_shows.send(@sort)

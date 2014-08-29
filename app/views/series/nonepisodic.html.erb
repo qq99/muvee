@@ -1,0 +1,40 @@
+<% content_for :subnav do %>
+<ul class="top-nav-container subnav">
+  <li>
+    <%= link_to 'Series', series_index_path %>
+  </li>
+  <li>
+    <%= link_to 'Others', nonepisodic_series_index_path %>
+  </li>
+</ul>
+<% end %>
+
+<div id="all_series" class="clearfix with-header">
+  <div class="panel">
+    <% if @shows.present? %>
+      <ul class="responsive-grid">
+        <% @shows.each do |video| %>
+          <li class="poster">
+            <div class="poster-innards">
+              <% if (video.thumbnails.present?) %>
+                <a href="<%= video_path(video) %>" class="poster-link aspect16x8">
+                  <img src="<%= video.thumbnails.first.url %>" class="video-thumbnail">
+                </a>
+              <% end %>
+              <span class="title">
+                <%= video.title.presence || video.raw_file_path %>
+              </span>
+              <% if video.season && video.episode %>
+                <span class="season">
+                  S<%= video.season %>E<%= video.episode %>
+                </span>
+              <% end %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <div>No shows found.</div>
+    <% end %>
+  </div>
+</div>

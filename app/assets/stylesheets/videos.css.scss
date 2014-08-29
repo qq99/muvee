@@ -51,50 +51,6 @@ em.smaller {
   float: right;
 }
 
-.main-navigation {
-  position: fixed;
-  width: 100%;
-  z-index: 2000;
-  background: black;
-  background: rgba(0,0,0,0.90);
-  padding: 1.5em 3em;
-  top: 0;
-  transition: all 1s ease-in-out;
-  &.hidden {
-    top: -6em;
-  }
-}
-
-a.top-nav-button {
-  font-size: 2em;
-  color: inherit;
-  text-decoration: none;
-  display: block;
-  width: 100%;
-  height: 100%;
-  padding: 0.25em 0.5em;
-  outline: 0;
-  &:focus, &:hover {
-    color: darken($radical-blue, 30%);
-  }
-}
-
-.top-nav-container {
-  width: 100%;
-  list-style: none;
-  li {
-    display: inline-block;
-    color: white;
-    &.active {
-      background: rgba(255,255,255,0.1);
-    }
-  }
-}
-.with-header {
-  padding-top: 6em;
-}
-
-
 .video-container {
   background: black;
   width: 100%;

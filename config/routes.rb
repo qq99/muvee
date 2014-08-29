@@ -11,7 +11,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :series
+  resources :series do
+    collection do
+      get 'nonepisodic'
+    end
+  end
   resources :movies do
     collection do
       get 'remote'
