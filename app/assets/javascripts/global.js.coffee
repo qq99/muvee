@@ -33,7 +33,10 @@ showNavOnMousemove = (ev) ->
 $(document).on "mousemove", _.throttle(showNavOnMousemove, 100)
 $(document).on "click", "#showGlobalOptions", (ev) ->
   ev.preventDefault()
-  document.getElementById("global-options").show()
+  $("#global-options").addClass("show")
+
+$(document).on "click", ".js-close-modal", ->
+  $(".modal").removeClass("show")
 
 $ ->
   hideNav()
