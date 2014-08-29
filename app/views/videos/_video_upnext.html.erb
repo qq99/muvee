@@ -11,8 +11,10 @@
   </div>
   <% if next_episode.present? %>
     <div class="thumbnail-preview">
-      <%= link_to video_path(next_episode, t: 0), id: 'next-episode-link' do %>
-        <img class="video-thumbnail" src="<%= next_episode.thumbnails.first.url %>" alt="">
+      <% if next_episode.thumbnails.present? %>
+        <%= link_to video_path(next_episode, t: 0), id: 'next-episode-link' do %>
+          <img class="video-thumbnail" src="<%= next_episode.thumbnails.first.url %>" alt="">
+        <% end %>
       <% end %>
       <span class="starting-in"></span>
     </div>

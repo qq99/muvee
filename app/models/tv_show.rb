@@ -69,9 +69,11 @@ class TvShow < Video
 
   def reanalyze
     guessit
-    self.save
-    associate_with_series
-    extract_metadata
+    if self.changed?
+      self.save
+      associate_with_series
+      extract_metadata
+    end
   end
 
 end

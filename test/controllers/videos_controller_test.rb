@@ -23,14 +23,6 @@ class VideosControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should destroy video" do
-    assert_difference('Video.count', -1) do
-      delete :destroy, id: @video
-    end
-
-    assert_redirected_to videos_path
-  end
-
   test "POST to #left_off_at keeps track of the most recent time in seconds" do
     post :left_off_at, id: @video, left_off_at: 20, format: :json
 

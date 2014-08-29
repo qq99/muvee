@@ -81,7 +81,7 @@ class VideosController < ApplicationController
       buffer_size: 4096
   end
 
-  # POST /videos/1/reanalyze
+  # POST /videos/reanalyze
   def reanalyze
 
   end

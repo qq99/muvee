@@ -15,6 +15,7 @@ big_buck_bunny:
 
 american_dad_s01_e01:
   title: "American Dad"
+  raw_file_path: /foo/bar/American.Dad.S01E01.HDTV.x264-LOL.mp4
   type: "TvShow"
   episode: 1
   season: 1

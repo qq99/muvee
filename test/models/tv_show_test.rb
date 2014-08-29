@@ -120,6 +120,14 @@ class TvShowTest < ActiveSupport::TestCase
     end
   end
 
+  test 'reanalyze does not save the model or reassociate metadata/series if nothing changed' do
+    show = videos(:american_dad_s01_e01)
+    show.reanalyze
+    show.expects(:save).never
+    show.expects(:associate_with_series).never
+    show.expects(:extract_metadata).never
+  end
+
   test 'can get to episodic metadata' do
     VCR.use_cassette 'american_dad' do
       show = TvShow.create(raw_file_path: '/foo/bar/American.Dad.S05E10.HDTV.x264-LOL.mp4')
