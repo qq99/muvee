@@ -49,6 +49,16 @@ class TvShowTest < ActiveSupport::TestCase
     end
   end
 
+  test 'guesses standard repeat format correctly on create' do
+    TvShow.any_instance.stubs(:associate_with_series)
+    TvShow.any_instance.stubs(:extract_metadata)
+    show = TvShow.create(raw_file_path: "/foo/bar/Adventure Time S05E01-S05E02 Finn The Human + Jake The Dog (1920x1080) [Phr0stY].mkv")
+
+    assert_equal "Adventure Time", show.title
+    assert_equal 5, show.season
+    assert_equal 1, show.episode
+  end
+
   test 'guesses format when rippers suck at naming files (look at folder name)' do
     TvShow.any_instance.stubs(:associate_with_series)
     TvShow.any_instance.stubs(:extract_metadata)

@@ -8,6 +8,7 @@ class TvShow < Video
 
   # More formats available at https://github.com/midgetspy/Sick-Beard/blob/development/sickbeard/name_parser/regexes.py
   FORMATS = {
+    standard_repeat: /([\w\-\.\_\(\) ]*)S(\d+)(?:\D*)E(\d+)(?:.*)S(\d+)(?:\D*)E(\d+)/i,
     standard: /([\w\-\.\_\(\) ]*)S(\d+)(?:\D*)E(\d+)/i,
     fov_repeat: /([\w\-\.\(\) ]*) - (\d+)(?:\D+)(\d+)/i
   }.freeze
@@ -62,6 +63,14 @@ class TvShow < Video
         season = matches[2].to_i
         episode = matches[3].to_i
         return [title, season, episode]
+      end
+      if matches.present? && matches.length == 6
+        title = pretty_title matches[1]
+        season = matches[2].to_i
+        episode = matches[3].to_i
+        season2 = matches[4].to_i
+        episode2 = matches[5].to_i
+        return [title, season, episode, season2, episode2]
       end
     end
     nil
