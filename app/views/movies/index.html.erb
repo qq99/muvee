@@ -2,7 +2,12 @@
   <% if @movies.present? %>
     <div class="inline-movie-preview">
       <div class="movie-images">
-        <%= render 'movie_thumbnails', movie: @movies.first %>
+        <div class="featured-image">
+          <%= render 'movie_thumbnails', movie: @movies.first %>
+        </div>
+        <div class="slideshow-pool">
+
+        </div>
       </div>
     </div>
 
@@ -13,6 +18,7 @@
         <span class="movie-quality"><%= @movies.first.quality %></span>
       </h1>
       <p class="movie-overview"><%= @movies.first.overview %></p>
+      <p class="year"><%= @movies.first.year %></p>
     </div>
 
     <div class="movies-index panel" class="clearfix">
@@ -24,7 +30,9 @@
                 class="poster-link aspect-poster js-movie-tile"
                 href="<%= video_path(movie) %>"
                 data-3d="<%= movie.is_3d? %>"
+                data-fanart-path="<%= fanart_video_path(movie) %>"
                 data-title="<%= movie.title %>"
+                data-year="<%= movie.year %>"
                 data-quality="<%= movie.quality %>"
                 data-overview="<%= movie.overview %>">
                 <% if poster_url = movie.poster_url %>

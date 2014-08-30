@@ -1,0 +1,11 @@
+<div class="movie-thumbnails">
+  <% if movie.fanarts.present? %>
+    <% movie.fanarts.shuffle.each do |fanart| %>
+      <img class="video-thumbnail" src="<%= fanart.url %>">
+    <% end %>
+  <% else %>
+    <% movie.thumbnails.shuffle.each do |thumb| %>
+      <img class="video-thumbnail" src="<%= thumb.url %>" alt="">
+    <% end %>
+  <% end %>
+</div>
