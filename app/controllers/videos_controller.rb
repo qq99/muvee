@@ -83,8 +83,30 @@ class VideosController < ApplicationController
 
   # POST /videos/reanalyze
   def reanalyze
-    AnalyzerWorker.perform_async
-    render json: {status: "ok"}
+    if existing_jobs.include? "AnalyzerWorker"
+      already_working
+    else
+      AnalyzerWorker.perform_async({method: :reanalyze})
+      render json: {status: "ok"}
+    end
+  end
+
+  def redownload
+    if existing_jobs.include? "AnalyzerWorker"
+      already_working
+    else
+      AnalyzerWorker.perform_async({method: :redownload})
+      render json: {status: "ok"}
+    end
+  end
+
+  def redownload_missing
+    if existing_jobs.include? "AnalyzerWorker"
+      already_working
+    else
+      AnalyzerWorker.perform_async({method: :redownload_missing})
+      render json: {status: "ok"}
+    end
   end
 
   # POST /videos/1/left_off_at.json
@@ -111,8 +133,20 @@ class VideosController < ApplicationController
       @video = Video.find(params[:id])
     end
 
+    def already_working
+      render json: {status: "Please wait; this task is already running."}, status: 409
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def video_params
       params.require(:video).permit(:raw_file_path, :type, :episode, :season, :duration, :left_off_at, :series_id)
+    end
+
+    def existing_jobs
+      jobs = [Sidekiq::ScheduledSet.new.to_a, Sidekiq::RetrySet.new.to_a, Sidekiq::Queue.new("analyze").to_a, Sidekiq::Queue.new("transcode").to_a]
+      jobs = jobs.inject([]) {|set, el| set.concat el}
+      existing_jobs = jobs.map do |job|
+        job.display_class
+      end
     end
 end

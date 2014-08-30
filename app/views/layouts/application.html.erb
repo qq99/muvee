@@ -61,6 +61,35 @@
           Re-analyze media library
         </button>
       </div>
+      <div class="divider">
+        <button onclick="redownloadMissingImages()" class="js-close-modal">
+          Download missing posters and fanart
+        </button>
+      </div>
+      <div class="divider">
+        <button onclick="redownloadImages()" class="js-close-modal">
+          Re-download all posters and fanart
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="error modal">
+  <div class="modal-backdrop js-close-modal"></div>
+  <div class="modal-box">
+    <div class="modal-box-contents">
+      <div class="modal-header">
+        I'm afraid I can't let you do that.
+      </div>
+      <div class="modal-body">
+        <p class="error-text">
+          An error has occurred!
+        </p>
+      </div>
+      <div class="divider">
+        <button class="js-close-modal">Ok</button>
+      </div>
     </div>
   </div>
 </div>

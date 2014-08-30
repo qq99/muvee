@@ -4,6 +4,8 @@ Rails.application.routes.draw do
       get 'generate'
       get 'shuffle'
       get 'reanalyze'
+      get 'redownload'
+      get 'redownload_missing'
     end
     member do
       get 'stream'

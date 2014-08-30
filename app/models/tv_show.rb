@@ -85,4 +85,7 @@ class TvShow < Video
     end
   end
 
+  def redownload; end
+  def redownload_missing; end
+
 end

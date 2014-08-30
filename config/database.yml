@@ -30,7 +30,7 @@ development:
   encoding: unicode
   database: muvee
   host: localhost
-  pool: 5
+  pool: 30
   username: muvee
   password: password1
 
@@ -39,6 +39,6 @@ test:
   encoding: unicode
   database: muvee_test
   host: localhost
-  pool: 5
+  pool: 30
   username: muvee
   password: password1

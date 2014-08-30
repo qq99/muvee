@@ -6,8 +6,10 @@
 :timeout: 30
 :queues:
 - [often, 7]
+- [analyze, 1]
 - [default, 5]
 - [seldom, 3]
 - [transcode, 1]
 :limits:
   transcode: 8
+  analyze: 1

@@ -96,7 +96,11 @@ class Movie < Video
 
     @fanart_tv ||= FanartTvResult.get(fetch_imdb_id).data
     backgrounds = @fanart_tv[:moviebackground]
-    backgrounds.map{|b| b[:url]}
+    if backgrounds.present?
+      backgrounds.map{|b| b[:url]}
+    else
+      []
+    end
   end
 
   def fetch_imdb_id
@@ -124,6 +128,30 @@ class Movie < Video
       if !self.title.present?
         self.title = pretty_title remaining_filename
       end
+    end
+  end
+
+  def reanalyze
+    guessit
+    if self.changed?
+      self.save
+      extract_metadata
+      download_poster
+      download_fanart
+    end
+  end
+
+  def redownload
+    download_poster
+    download_fanart
+  end
+
+  def redownload_missing
+    if self.fanarts.empty?
+      download_fanart
+    end
+    if self.poster_path.blank?
+      download_poster
     end
   end
 
