@@ -5,6 +5,7 @@ class AnalyzerWorker
   def perform(opts)
     klasses = [TvShow, Movie]
     opts = Hash.try_convert(opts)
+    opts = opts.with_indifferent_access
 
     klasses.each do |klass|
       klass.all.each do |model_instance|
