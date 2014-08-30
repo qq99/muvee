@@ -40,6 +40,6 @@ class TranscoderWorker
   end
 
   def transcode_to_webm_command(input_path, output_path)
-    "avconv -i #{input_path.to_s.shellescape} -c:v libvpx -qmin 0 -qmax 50 -b:v 1M -c:a libvorbis -q:a 4 #{output_path.to_s.shellescape}"
+    "avconv -i #{input_path.to_s.shellescape} -loglevel quiet -c:v libvpx -qmin 0 -qmax 50 -b:v 1M -c:a libvorbis -q:a 4 #{output_path.to_s.shellescape}"
   end
 end
