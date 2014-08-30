@@ -46,6 +46,7 @@ american_dad_s01_e03:
 
 true_grit:
   raw_file_path: /foo/bar/True.Grit.mp4
+  imdb_id: tt1403865
   title: True Grit
   type: 'Movie'
 

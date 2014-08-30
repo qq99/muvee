@@ -1,0 +1,109 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/find/tt1403865?api_key=a533c4925884599fa704aaf5a9006983&external_source=imdb_id
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - api.themoviedb.org
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - public, max-age=10800
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Sat, 30 Aug 2014 19:22:40 GMT
+      Etag:
+      - '"e4e422149da7f1840e569ad76c00613f"'
+      Server:
+      - nginx
+      Status:
+      - 200 OK
+      X-Memc:
+      - HIT
+      X-Memc-Age:
+      - '94'
+      X-Memc-Expires:
+      - '10706'
+      X-Memc-Key:
+      - e64ed5d80c92029c686b5bdc01f313bf
+      Content-Length:
+      - '371'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"movie_results":[{"adult":false,"backdrop_path":"/wDPmggrApz7nxy4BAQk3rCLi3R6.jpg","id":44264,"original_title":"True
+        Grit","release_date":"2010-12-22","poster_path":"/qc7vaF5fIeTllAykdP3wldlMyRh.jpg","popularity":2.3682136683465,"title":"True
+        Grit","vote_average":6.8,"vote_count":435}],"person_results":[],"tv_results":[],"tv_episode_results":[],"tv_season_results":[]}'
+    http_version: 
+  recorded_at: Sat, 30 Aug 2014 19:22:41 GMT
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/movie/44264/images?api_key=a533c4925884599fa704aaf5a9006983&include_image_language=en,null&language=en
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - api.themoviedb.org
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - public, max-age=21600
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Sat, 30 Aug 2014 19:22:41 GMT
+      Etag:
+      - '"ec2e4a930ef9ef9812c4fbd36621db20"'
+      Server:
+      - nginx
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Memc:
+      - HIT
+      X-Memc-Age:
+      - '12376'
+      X-Memc-Expires:
+      - '9224'
+      X-Memc-Key:
+      - 5b84d7e71cdb30acee7f91a02b2ce01e
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"id":44264,"backdrops":[{"aspect_ratio":1.77777777777778,"file_path":"/wDPmggrApz7nxy4BAQk3rCLi3R6.jpg","height":1080,"iso_639_1":null,"vote_average":5.52123552123552,"vote_count":11,"width":1920},{"aspect_ratio":1.77777777777778,"file_path":"/pg3R5Sna0YKoGjlOjbMJkDEl6xs.jpg","height":1080,"iso_639_1":"xx","vote_average":5.44973544973545,"vote_count":9,"width":1920},{"aspect_ratio":1.77777777777778,"file_path":"/d9QGY8PvE3xZSPzegE8jT3dI4xA.jpg","height":1080,"iso_639_1":null,"vote_average":5.44312169312169,"vote_count":9,"width":1920},{"aspect_ratio":1.77777777777778,"file_path":"/lby28iy9lqNuT67tVpSIr8gRT71.jpg","height":1080,"iso_639_1":null,"vote_average":5.42989417989418,"vote_count":9,"width":1920},{"aspect_ratio":1.77777777777778,"file_path":"/QBKYb4UyOTekz49KdhAKsw3k1L.jpg","height":720,"iso_639_1":null,"vote_average":5.39906103286385,"vote_count":8,"width":1280},{"aspect_ratio":1.77777777777778,"file_path":"/AcMj8pWhuAOBEPgv9BrmeLGrAxA.jpg","height":1080,"iso_639_1":null,"vote_average":5.35714285714286,"vote_count":5,"width":1920},{"aspect_ratio":1.7753120665742,"file_path":"/oD141yDLpp1HtCMisklkA3slWAH.jpg","height":721,"iso_639_1":"xx","vote_average":5.32212885154062,"vote_count":5,"width":1280},{"aspect_ratio":1.77777777777778,"file_path":"/o429nkhBTyKONGA9MLPfvnmQZHd.jpg","height":1080,"iso_639_1":null,"vote_average":5.3125,"vote_count":1,"width":1920},{"aspect_ratio":1.77777777777778,"file_path":"/dAYduJokzm1T5Qp3MWlr5WkHBUI.jpg","height":1080,"iso_639_1":null,"vote_average":5.27417027417027,"vote_count":3,"width":1920},{"aspect_ratio":1.77777777777778,"file_path":"/pvl8gRwMPXv3LNlWekxI5Lcab3m.jpg","height":1080,"iso_639_1":null,"vote_average":5.27417027417027,"vote_count":3,"width":1920},{"aspect_ratio":1.77777777777778,"file_path":"/vT7rl4jpyDD7cgXjv2gLEpnoSHK.jpg","height":1080,"iso_639_1":null,"vote_average":5.26695526695527,"vote_count":3,"width":1920},{"aspect_ratio":1.77777777777778,"file_path":"/wI9zQsZhm7rv7mtuh5GT4zo3YsB.jpg","height":1080,"iso_639_1":null,"vote_average":5.26695526695527,"vote_count":3,"width":1920},{"aspect_ratio":1.77777777777778,"file_path":"/7a1nSs4S3jA6oEeOGQ3R9xKME09.jpg","height":1080,"iso_639_1":null,"vote_average":5.25170068027211,"vote_count":7,"width":1920}],"posters":[{"aspect_ratio":0.666666666666667,"file_path":"/qc7vaF5fIeTllAykdP3wldlMyRh.jpg","height":1500,"id":"4ea68ebc4f13c137cc00b4a7","iso_639_1":"en","vote_average":5.89487002530481,"vote_count":351,"width":1000},{"aspect_ratio":0.666666666666667,"file_path":"/j0JkZsvtzqtPG7Wqp2jP7DbdzGS.jpg","height":1500,"id":"4ed7be187b9aa111c9002156","iso_639_1":"en","vote_average":5.46398046398046,"vote_count":15,"width":1000},{"aspect_ratio":0.677222222222222,"file_path":"/k2A84Wf3vWALwowvEjHgfASMput.jpg","height":3600,"id":"50040ba619c2957709001f7d","iso_639_1":"en","vote_average":5.33471359558316,"vote_count":6,"width":2438},{"aspect_ratio":0.686111111111111,"file_path":"/sjGAEGplSTRzz7qcvrMQHjLA0I6.jpg","height":3600,"id":"50040a2d19c2954710001f56","iso_639_1":"en","vote_average":5.22388059701492,"vote_count":4,"width":2470},{"aspect_ratio":0.666666666666667,"file_path":"/2MuVxfaEzcdpOB8TIcNJXVDOeru.jpg","height":1500,"id":"501c52f8760ee31e8d0026eb","iso_639_1":"en","vote_average":5.21768707482993,"vote_count":7,"width":1000},{"aspect_ratio":0.685277777777778,"file_path":"/h1L1wuvji8CNw2qDgBBa2u7PubZ.jpg","height":3600,"id":"50040b5b760ee36e61006c0c","iso_639_1":"en","vote_average":5.19345238095238,"vote_count":1,"width":2467},{"aspect_ratio":0.651428571428571,"file_path":"/vfhaqvK6NrDwoFEikeXlx8xPw0b.jpg","height":1225,"id":"50040fcf760ee33420000260","iso_639_1":"en","vote_average":5.18759018759019,"vote_count":3,"width":798},{"aspect_ratio":0.685833333333333,"file_path":"/nr8Svs2AhNSKQlh3JoHCg5HgKsl.jpg","height":3600,"id":"50040eb619c295537a0024de","iso_639_1":null,"vote_average":5.17113095238095,"vote_count":1,"width":2469},{"aspect_ratio":0.686111111111111,"file_path":"/9vdvtaO3kkVJYwCa0mu6lKEwqKn.jpg","height":3600,"id":"50040e6d760ee3234e000214","iso_639_1":null,"vote_average":5.17113095238095,"vote_count":1,"width":2470},{"aspect_ratio":0.685833333333333,"file_path":"/7MouCPB4Qgr5TY90tDmEgxrEsWL.jpg","height":3600,"id":"50040efd760ee36e61006cc7","iso_639_1":null,"vote_average":5.17113095238095,"vote_count":1,"width":2469},{"aspect_ratio":0.685277777777778,"file_path":"/nvENC9WUqgBk5WzBjVIY6VNAgJB.jpg","height":3600,"id":"50040f44760ee32f57000246","iso_639_1":null,"vote_average":5.17113095238095,"vote_count":1,"width":2467},{"aspect_ratio":0.677222222222222,"file_path":"/8yxscpGyWSgmQsMTagKsa7Wc026.jpg","height":3600,"id":"50040fc7760ee3342000025d","iso_639_1":null,"vote_average":5.17113095238095,"vote_count":1,"width":2438},{"aspect_ratio":0.685277777777778,"file_path":"/fC3zhqRwUn4qhxLevijMRySuk0N.jpg","height":3600,"id":"50040b0e760ee3477c0002c0","iso_639_1":"en","vote_average":5.15873015873016,"vote_count":3,"width":2467},{"aspect_ratio":0.685833333333333,"file_path":"/bGMLmi6XoWSayhbryPZ0FUPoe6g.jpg","height":3600,"id":"50040993760ee3234e000129","iso_639_1":"en","vote_average":5.15873015873016,"vote_count":3,"width":2469},{"aspect_ratio":0.666666666666667,"file_path":"/jL1X5QAEYnjK4ooYJjllkWPdhO6.jpg","height":1500,"id":"4eacd4845e73d60adc0013a3","iso_639_1":"en","vote_average":5.15769944341373,"vote_count":14,"width":1000},{"aspect_ratio":0.685833333333333,"file_path":"/zb2fj709gw2ZCVYiKEBSfIRPY80.jpg","height":3600,"id":"50040a7f19c2954fd9001fd5","iso_639_1":"en","vote_average":5.15151515151515,"vote_count":3,"width":2469},{"aspect_ratio":0.677222222222222,"file_path":"/tItsyoaVG866P4XVgBHpzQGENBE.jpg","height":3600,"id":"50040be019c2954710001fa0","iso_639_1":"en","vote_average":5.13859275053305,"vote_count":4,"width":2438},{"aspect_ratio":0.685833333333333,"file_path":"/7WY9h9eASUQJoZvOGg0LDtrqmvU.jpg","height":3600,"id":"50040ac3760ee3478b0004d2","iso_639_1":"en","vote_average":5.13553113553114,"vote_count":2,"width":2469},{"aspect_ratio":0.686111111111111,"file_path":"/wIklrxKprdR8QX611aLRojqcmjD.jpg","height":3600,"id":"500409e5760ee3478b0004ad","iso_639_1":"en","vote_average":5.12987012987013,"vote_count":3,"width":2470},{"aspect_ratio":0.685833333333333,"file_path":"/s15zhCZY4NN2gBkvKiB3af6bDRu.jpg","height":3600,"id":"50040921760ee36e61006ba2","iso_639_1":"en","vote_average":5.12820512820513,"vote_count":2,"width":2469},{"aspect_ratio":0.699333333333333,"file_path":"/aeSPfJSr8wu3EkOWHVZwj1gAUtl.jpg","height":1500,"id":"4ea68eba4f13c137cc00b4a5","iso_639_1":"en","vote_average":3.88429752066116,"vote_count":58,"width":1049},{"aspect_ratio":0.67476383265857,"file_path":"/rNukvRigEvbOL3RE6h06vTGCUdY.jpg","height":1482,"id":"4ea68eb74f13c137cc00b4a1","iso_639_1":"en","vote_average":3.74014506464838,"vote_count":88,"width":1000},{"aspect_ratio":0.675219446320054,"file_path":"/8yh8yvyRuGhqryRNnXA95RTCUnC.jpg","height":1481,"id":"4ea68ea54f13c137cc00b489","iso_639_1":"en","vote_average":3.50793650793651,"vote_count":177,"width":1000},{"aspect_ratio":0.666666666666667,"file_path":"/3g8j5GS3nwC7tkcX0ayM6Slm9iL.jpg","height":1500,"id":"4ea68ebd4f13c137cc00b4a9","iso_639_1":"en","vote_average":3.47100745059929,"vote_count":231,"width":1000},{"aspect_ratio":0.666666666666667,"file_path":"/2enLyVJiNHmKyInonlrv6IBrpwH.jpg","height":1500,"id":"4ea68ebf4f13c137cc00b4ab","iso_639_1":"en","vote_average":3.45708020050125,"vote_count":241,"width":1000},{"aspect_ratio":0.666666666666667,"file_path":"/kqpaOWW8KAxX05pBh9Y7JLVU0DE.jpg","height":1500,"id":"4ea68ea24f13c137cc00b485","iso_639_1":"en","vote_average":3.16553287981859,"vote_count":252,"width":1000}]}'
+    http_version: 
+  recorded_at: Sat, 30 Aug 2014 19:22:41 GMT
+recorded_with: VCR 2.9.2

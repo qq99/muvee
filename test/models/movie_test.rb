@@ -18,6 +18,46 @@ class MovieTest < ActiveSupport::TestCase
     end
   end
 
+  test "#query_tmdb_fanart returns an array of URLs" do
+    VCR.use_cassette "query_tmdb_fanart" do
+      movie = videos(:true_grit)
+      assert_equal Array, movie.query_tmdb_fanart.class
+      assert_equal 13, movie.query_tmdb_fanart.length
+    end
+  end
+
+  test "#query_tmdb_fanart returns empty array if we don't know IMDB ID" do
+    movie = videos(:true_grit)
+    movie.stubs(:fetch_imdb_id).returns(nil)
+    assert_equal Array, movie.query_tmdb_fanart.class
+    assert_equal 0, movie.query_tmdb_fanart.length
+  end
+
+  test "#query_fanart_tv_fanart returns an array of URLs" do
+    VCR.use_cassette "query_fanart_tv_fanart" do
+      movie = videos(:true_grit)
+      assert_equal Array, movie.query_fanart_tv_fanart.class
+      assert_equal 1, movie.query_fanart_tv_fanart.length
+    end
+  end
+
+  test "#query_fanart_tv_fanart returns empty array if we don't know IMDB ID" do
+    movie = videos(:true_grit)
+    movie.stubs(:fetch_imdb_id).returns(nil)
+    assert_equal Array, movie.query_fanart_tv_fanart.class
+    assert_equal 0, movie.query_fanart_tv_fanart.length
+  end
+
+  test "#download_fanart will create fanart resources (that attempt to download)" do
+    Fanart.any_instance.stubs(:download_image_file).returns(true)
+    VCR.use_cassette "download_fanart" do
+      movie = videos(:true_grit)
+      assert_difference "movie.fanarts.length", 14 do
+        movie.download_fanart
+      end
+    end
+  end
+
   test "#is_movie?" do
     movie = videos(:true_grit)
     assert movie.is_movie?

@@ -1,5 +1,5 @@
-<% if movie.external_fanart %>
-  <img class="video-thumbnail" src="<%= movie.external_fanart %>">
+<% if movie.fanarts.present? %>
+  <img class="video-thumbnail" src="<%= movie.fanarts.sample.url %>">
 <% else %>
   <% movie.thumbnails.each do |thumb| %>
     <img class="video-thumbnail hide" src="<%= thumb.url %>" alt="">

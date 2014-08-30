@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140827041734) do
+ActiveRecord::Schema.define(version: 20140830185344) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,13 @@ ActiveRecord::Schema.define(version: 20140827041734) do
   end
 
   add_index "external_metadata", ["endpoint"], name: "index_external_metadata_on_endpoint", unique: true, using: :btree
+
+  create_table "fanarts", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "raw_file_path"
+    t.integer  "video_id"
+  end
 
   create_table "movies", force: true do |t|
     t.datetime "created_at"
@@ -95,6 +102,7 @@ ActiveRecord::Schema.define(version: 20140827041734) do
     t.string   "type_of_3d"
     t.string   "status"
     t.string   "imdb_id"
+    t.string   "transmission_id"
   end
 
 end

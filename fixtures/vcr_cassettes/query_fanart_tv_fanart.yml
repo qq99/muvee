@@ -1,0 +1,154 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://webservice.fanart.tv/v3/movies/tt1403865?api_key=3470f9905d5a82d9e91023bf3562a2eb
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - webservice.fanart.tv
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 30 Aug 2014 19:23:43 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d7947fadfea71c59307ba32c870f6eff71409426623574; expires=Mon, 23-Dec-2019
+        23:50:00 GMT; path=/; domain=.fanart.tv; HttpOnly
+      Vary:
+      - Accept-Encoding
+      X-Powered-By:
+      - PHP/5.4.24-1~dotdeb.1
+      Server:
+      - cloudflare-nginx
+      Cf-Ray:
+      - 16235d4d5ef9053a-YYZ
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+            "name": "True Grit",
+            "tmdb_id": "44264",
+            "imdb_id": "tt1403865",
+            "hdmovielogo": [
+                {
+                    "id": "13087",
+                    "url": "http://assets.fanart.tv/fanart/movies/44264/hdmovielogo/true-grit-50507229c9706.png",
+                    "lang": "en",
+                    "likes": "3"
+                },
+                {
+                    "id": "47258",
+                    "url": "http://assets.fanart.tv/fanart/movies/44264/hdmovielogo/true-grit-52162fcf1b19c.png",
+                    "lang": "en",
+                    "likes": "1"
+                },
+                {
+                    "id": "73692",
+                    "url": "http://assets.fanart.tv/fanart/movies/44264/hdmovielogo/true-grit-53998afa1741c.png",
+                    "lang": "es",
+                    "likes": "0"
+                }
+            ],
+            "movielogo": [
+                {
+                    "id": "3735",
+                    "url": "http://assets.fanart.tv/fanart/movies/44264/movielogo/true-grit-4faea01245a66.png",
+                    "lang": "en",
+                    "likes": "2"
+                },
+                {
+                    "id": "3734",
+                    "url": "http://assets.fanart.tv/fanart/movies/44264/movielogo/true-grit-4fae9ef5d4ecb.png",
+                    "lang": "en",
+                    "likes": "1"
+                }
+            ],
+            "moviebanner": [
+                {
+                    "id": "69653",
+                    "url": "http://assets.fanart.tv/fanart/movies/44264/moviebanner/true-grit-5346a2e7ee056.jpg",
+                    "lang": "en",
+                    "likes": "1"
+                },
+                {
+                    "id": "13088",
+                    "url": "http://assets.fanart.tv/fanart/movies/44264/moviebanner/true-grit-5050723c5834e.jpg",
+                    "lang": "en",
+                    "likes": "0"
+                }
+            ],
+            "moviethumb": [
+                {
+                    "id": "71048",
+                    "url": "http://assets.fanart.tv/fanart/movies/44264/moviethumb/true-grit-536244e67bb56.jpg",
+                    "lang": "en",
+                    "likes": "1"
+                },
+                {
+                    "id": "13089",
+                    "url": "http://assets.fanart.tv/fanart/movies/44264/moviethumb/true-grit-50507248b51dc.jpg",
+                    "lang": "en",
+                    "likes": "0"
+                }
+            ],
+            "moviedisc": [
+                {
+                    "id": "11607",
+                    "url": "http://assets.fanart.tv/fanart/movies/44264/moviedisc/true-grit-50435fb425f98.png",
+                    "lang": "en",
+                    "likes": "0",
+                    "disc": "1",
+                    "disc_type": "dvd"
+                }
+            ],
+            "hdmovieclearart": [
+                {
+                    "id": "18324",
+                    "url": "http://assets.fanart.tv/fanart/movies/44264/hdmovieclearart/true-grit-50a569d57d8ed.png",
+                    "lang": "en",
+                    "likes": "0"
+                }
+            ],
+            "moviebackground": [
+                {
+                    "id": "49854",
+                    "url": "http://assets.fanart.tv/fanart/movies/44264/moviebackground/true-grit-5228d9c9254fa.jpg",
+                    "lang": "en",
+                    "likes": "0"
+                }
+            ],
+            "movieposter": [
+                {
+                    "id": "50908",
+                    "url": "http://assets.fanart.tv/fanart/movies/44264/movieposter/true-grit-52329cd130835.jpg",
+                    "lang": "en",
+                    "likes": "0"
+                },
+                {
+                    "id": "50909",
+                    "url": "http://assets.fanart.tv/fanart/movies/44264/movieposter/true-grit-52329d01a6ab8.jpg",
+                    "lang": "en",
+                    "likes": "0"
+                }
+            ]
+        }
+    http_version: 
+  recorded_at: Sat, 30 Aug 2014 19:23:44 GMT
+recorded_with: VCR 2.9.2

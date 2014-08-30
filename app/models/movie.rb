@@ -20,7 +20,7 @@ class Movie < Video
   }.freeze
 
   def metadata
-    @imdb_id ||= self.imdb_id || ImdbSearchResult.get(self.title).relevant_result(self.title)[:id]
+    @imdb_id ||= imdb_id || ImdbSearchResult.get(title).relevant_result(title)[:id]
     return {} if !@imdb_id
     @metadata ||= OmdbSearchResult.get(@imdb_id).data || {}
   end
@@ -57,30 +57,50 @@ class Movie < Video
     self.save
   end
 
-  def external_fanart
-    return if fetch_imdb_id.blank?
-    @fanart ||= FanartTvResult.get(fetch_imdb_id).data
+  def download_fanart
+    backgrounds = query_fanart_tv_fanart + query_tmdb_fanart
+    backgrounds = backgrounds.compact.uniq.reject{|b| b.blank? }
+    return if backgrounds.length == 0
 
-    img = nil
-    if backgrounds = @fanart[:moviebackground]
-      img = backgrounds.sample[:url]
+    self.fanarts.destroy_all
+
+    backgrounds.each do |url|
+      self.fanarts.create(remote_location: url)
     end
+  end
 
-    if img.blank?
-      tmdb_find = TmdbFindResult.get(fetch_imdb_id).data
-      if result = tmdb_find[:movie_results].first
-        tmdb_id = result[:id]
-        images_result = TmdbImageResult.get(tmdb_id).data
-        backdrop = images_result[:backdrops].sample
-        image_path = backdrop.try(:[], :file_path)
-        img = "http://image.tmdb.org/t/p/original/#{image_path}" if image_path
+  def query_tmdb_fanart
+    return [] if fetch_imdb_id.blank?
+
+    @tmdb_find ||= TmdbFindResult.get(fetch_imdb_id).data
+    if result = @tmdb_find[:movie_results].first
+      tmdb_id = result[:id]
+      images_result = TmdbImageResult.get(tmdb_id).data
+      backgrounds = images_result[:backdrops]
+      backgrounds = backgrounds.map do |bg|
+        path = bg.try(:[], :file_path)
+        if path
+          "http://image.tmdb.org/t/p/original/#{path}"
+        else
+          nil
+        end
       end
+      backgrounds
+    else
+      []
     end
-    img
+  end
+
+  def query_fanart_tv_fanart
+    return [] if fetch_imdb_id.blank?
+
+    @fanart_tv ||= FanartTvResult.get(fetch_imdb_id).data
+    backgrounds = @fanart_tv[:moviebackground]
+    backgrounds.map{|b| b[:url]}
   end
 
   def fetch_imdb_id
-    self.imdb_id || self.metadata[:imdbID]
+    imdb_id || metadata[:imdbID]
   end
 
   def guessit
@@ -106,8 +126,6 @@ class Movie < Video
       end
     end
   end
-
-
 
   def destroy_images
     begin
