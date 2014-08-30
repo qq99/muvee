@@ -20,6 +20,7 @@ class TranscoderWorker
     # HEAVY WORK
     %x(#{transcode_to_webm_command(input_path, transcode_path)})
 
+    sleep 10 # let the file handle close
     if File.exist? eventual_path
       puts "Video transcoded successfully; moving and creating"
       move_transcoded_file(transcode_path, eventual_path)
