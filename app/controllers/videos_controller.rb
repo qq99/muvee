@@ -83,7 +83,8 @@ class VideosController < ApplicationController
 
   # POST /videos/reanalyze
   def reanalyze
-
+    AnalyzerWorker.perform_async
+    render json: {status: "ok"}
   end
 
   # POST /videos/1/left_off_at.json

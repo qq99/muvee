@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     collection do
       get 'generate'
       get 'shuffle'
+      get 'reanalyze'
     end
     member do
       get 'stream'

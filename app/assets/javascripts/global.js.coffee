@@ -24,6 +24,11 @@ window.rescanLibrary = (ev) ->
     url: "/videos/generate.json"
   })
 
+window.reanalyzeLibrary = (ev) ->
+  operation = $.ajax({
+    url: "/videos/reanalyze.json"
+  })
+
 showNavOnMousemove = (ev) ->
   if ev.screenY < 300
     showNav()
