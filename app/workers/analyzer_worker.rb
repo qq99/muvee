@@ -3,7 +3,11 @@ class AnalyzerWorker
 
   def perform
     TvShow.all.each do |tv_show|
-      tv_show.reanalyze
+      if File.exist? tv_show.raw_file_path
+        tv_show.reanalyze
+      else
+        tv_show.destroy
+      end
     end
   end
 end
