@@ -10,12 +10,15 @@ class SettingsController < ApplicationController
   end
 
   def welcome
+    if ApplicationConfiguration.count > 0
+      redirect_to settings_path
+    end
     @config = ApplicationConfiguration.first || ApplicationConfiguration.new
   end
 
   def create
     if ApplicationConfiguration.count > 0
-      throw "Already exists"
+      throw "ApplicationConfiguration already exists; we should never create another one"
     end
 
     @config = ApplicationConfiguration.new(config_params)
