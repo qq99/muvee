@@ -5,9 +5,19 @@
     <%= render 'video_upnext', next_episode: @next_episode, previous_episode: @previous_episode %>
   <% end %>
   <div class="video-back-button">
-    <button onclick="window.history.back()">
-      <i class="fa fa-arrow-circle-left"></i>
-    </button>
+    <% if @video.is_a?(TvShow) && @video.series.present? %>
+      <%= link_to @video.series do %>
+        <i class="fa fa-arrow-circle-left"></i>
+      <% end %>
+    <% elsif @video.is_a?(TvShow) && @video.series.blank? %>
+      <%= link_to nonepisodic_series_index_path do %>
+        <i class="fa fa-arrow-circle-left"></i>
+      <% end %>
+    <% elsif @video.is_a?(Movie) %>
+      <%= link_to movies_path do %>
+        <i class="fa fa-arrow-circle-left"></i>
+      <% end %>
+    <% end %>
   </div>
   <div class="video-container">
     <video src="<%= stream_video_path(@video) %>"

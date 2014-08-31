@@ -12,10 +12,13 @@ $roundedness: 5px;
   top: 5rem;
   left: 5rem;
   color: white;
+  a:visited {
+    color: inherit;
+  }
   font-size: 4em;
-  button {
+  a {
     padding: 5px;
-    text-shadow: 1px 1px 0px black;
+    text-shadow: 1px 1px 5px black;
   }
   &:hover, &:focus {
     color: $radical-blue;
