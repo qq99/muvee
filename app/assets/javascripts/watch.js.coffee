@@ -1,13 +1,13 @@
 controlTimeout = null
 showControls = ->
-  $(".video-controls").show()
+  $(".video-controls, .video-back-button").show()
   clearTimeout(controlTimeout)
   controlTimeout = setTimeout ->
     hideControls()
   , 4000
 
 hideControls = ->
-  $(".video-controls").fadeOut()
+  $(".video-controls, .video-back-button").fadeOut()
 
 hideMeta = (ms = 2000) ->
   $(".video-watch-meta").addClass("hidden")

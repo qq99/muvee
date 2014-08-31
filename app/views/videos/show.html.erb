@@ -4,6 +4,11 @@
   <% if @video.is_tv? %>
     <%= render 'video_upnext', next_episode: @next_episode, previous_episode: @previous_episode %>
   <% end %>
+  <div class="video-back-button">
+    <button onclick="window.history.back()">
+      <i class="fa fa-arrow-circle-left"></i>
+    </button>
+  </div>
   <div class="video-container">
     <video src="<%= stream_video_path(@video) %>"
       id="video"

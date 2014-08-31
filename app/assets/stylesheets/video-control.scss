@@ -1,8 +1,27 @@
+@import 'colors';
+
 $roundedness: 5px;
 
 #watch {
   position: relative;
 }
+
+.video-back-button {
+  display: none;
+  position: absolute;
+  top: 5rem;
+  left: 5rem;
+  color: white;
+  font-size: 4em;
+  button {
+    padding: 5px;
+    text-shadow: 1px 1px 0px black;
+  }
+  &:hover, &:focus {
+    color: $radical-blue;
+  }
+}
+
 .video-controls {
   position: absolute;
   z-index: 200;
