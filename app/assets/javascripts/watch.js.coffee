@@ -127,6 +127,10 @@ $ ->
         video.currentTime = Math.max(0, video.currentTime - 10)
       when 39
         video.currentTime = Math.min(video.currentTime + 10, video.duration)
+      when 189 # -
+        video.volume = Math.max(0, video.volume - 0.05)
+      when 187 # +
+        video.volume = Math.min(1.0, video.volume + 0.05)
 
   $video.on "volumechange.videoplayer", ->
     muted = video.volume == 0
