@@ -18,3 +18,4 @@
 //= require ./bootstrap.js.coffee
 //= require_tree .
 //= require turbolinks
+//= require nprogress
