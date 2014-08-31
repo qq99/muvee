@@ -52,7 +52,7 @@ em.smaller {
 }
 
 .video-container {
-  background: black;
+  background: $sleek-black;
   width: 100%;
   height: 100%;
   display: table;
@@ -108,12 +108,12 @@ a.video {
 }
 
 #all-videos {
-  background: black;
+  background: $sleek-black;
 }
 
 #all_series {
   min-height: 100%;
-  background: black;
+  background: $sleek-black;
   .poster-container {
     padding: 4em 8em;
   }

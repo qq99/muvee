@@ -5,7 +5,7 @@
   width: 100%;
   z-index: 2000;
   background: black;
-  background: rgba(0,0,0,0.90);
+  background: $sleek-transparent-black;
   padding: 1.5em 3em;
   top: 0;
   transition: all 1s ease-in-out;
@@ -48,6 +48,7 @@ a.top-nav-button {
   }
 
   &.subnav {
+    margin-top: 0.5rem;
     li {
       margin-right: 2em;
     }

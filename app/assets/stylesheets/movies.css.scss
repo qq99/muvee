@@ -1,3 +1,5 @@
+@import 'colors';
+
 #all_movies {
   background: black;
   position: absolute;
@@ -41,7 +43,7 @@ $preview-height: 45%;
 
 .movie-meta, .movies-index {
   background: black;
-  background: rgba(0,0,0,0.8);
+  background: $sleek-transparent-black;
 }
 
 .movie-meta {
@@ -58,7 +60,7 @@ $preview-height: 45%;
 }
 
 .three-d {
-  color: rgb(48, 181, 243);
+  color: $less-radical-blue;
 }
 .movie-quality {
   position: relative;
