@@ -51,7 +51,6 @@ class SettingsController < ApplicationController
       return item
     elsif item.is_a?(String)
       item.gsub(/\r/, '').split(/,|\n/).uniq.compact
-      binding.pry
     end
   end
 
