@@ -52,7 +52,7 @@ em.smaller {
 }
 
 .video-container {
-  background: $sleek-black;
+  background: black; // since movies will use pure black for their letterboxing
   width: 100%;
   height: 100%;
   display: table;
