@@ -1,0 +1,49 @@
+@import 'colors';
+
+#welcome-page {
+  background: #111;
+  min-height: 100%;
+  width: 100%;
+  textarea, input[type='text'] {
+    width: 100%;
+    font-size: 1em;
+    min-width: 100%;
+    max-width: 100%;
+    padding: 0.3em;
+  }
+  textarea {
+    min-height: 4em;
+  }
+  p {
+    margin: 0.5em;
+  }
+}
+
+.readable-page {
+  width: 50em;
+  padding: 2em;
+  margin: auto;
+  color: white;
+  ol {
+    margin: 2em;
+  }
+}
+
+.flashy-banner {
+  font-size: 5em;
+  font-weight: normal;
+  text-align: center;
+  color: $radical-blue;
+  text-shadow: 1px 1px 0px white;
+  margin-bottom: 0.5em;
+}
+
+span.note {
+  color: $radical-blue;
+}
+
+ol.steps {
+  li {
+    margin-bottom: 1em;
+  }
+}

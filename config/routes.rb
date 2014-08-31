@@ -15,6 +15,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :settings do
+    collection do
+      get 'welcome'
+    end
+  end
+
   resources :series do
     collection do
       get 'nonepisodic'

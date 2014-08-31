@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140830185344) do
+ActiveRecord::Schema.define(version: 20140831211930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "application_configurations", force: true do |t|
+    t.text     "tv_sources",       default: [],    array: true
+    t.text     "movie_sources",    default: [],    array: true
+    t.string   "transcode_folder"
+    t.boolean  "transcode_media",  default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "external_metadata", force: true do |t|
     t.integer  "video_id"

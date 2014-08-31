@@ -1,0 +1,61 @@
+<% if config.persisted? %>
+  <% url = setting_path(config) %>
+<% else %>
+  <% url = settings_path %>
+<% end %>
+<%= form_for config, url: url do |f| %>
+
+<% if config.errors.any? %>
+  <p>
+    There were errors in your configuration:
+  </p>
+  <ul>
+    <% config.errors.messages.each do |err| %>
+      <li><%= err.join(" ") %></li>
+    <% end %>
+  </ul>
+<% end %>
+<ol class="steps">
+  <li>
+    <%= f.label :tv_sources do %>
+      <p>
+        Where are your TV shows stored?
+      </p>
+      <%= f.text_area :tv_sources, value: config.tv_sources.map(&:strip).join(", "), placeholder: "Enter absolute paths separated by a comma, e.g., /home/yourself/TV/, /external/TvShows/" %>
+    <% end %>
+  </li>
+  <li>
+    <%= f.label :movie_sources do %>
+      <p>
+        Where are your movies stored?
+      </p>
+      <%= f.text_area :movie_sources, value: config.movie_sources.map(&:strip).join(", "), placeholder: "Enter absolute paths separated by a comma, e.g., /home/yourself/TV/, /external/TvShows/" %>
+    <% end %>
+  </li>
+  <li>
+    <%= f.label :transcode_media do %>
+      <p>
+        Do you want to transcode <span class="note">.mkv</span> and <span class="note">.avi</span> files into <span class="note">.webm</span> files?
+      </p>
+      <%= f.check_box :transcode_media %> Yes, transcode my media.
+      <p>
+        Your original media will not be destroyed.  After transcoding, the new file will be moved to the same directory as the old file.  This process is often slow (sometimes taking times up to or greater than the playtime of the video), but can often result in drastic compression.
+      </p>
+      <p>
+        Currently this is the only way for μv to make some media available to web browsers.
+      </p>
+      <p>
+      </p>
+    <% end %>
+  </li>
+  <li>
+    <%= f.label :transcode_folder do %>
+      <p>
+        Where should files mid-transcode be stored?  It's a good idea to specify this path to be somewhere you have a lot of space.
+      </p>
+      <%= f.text_field :transcode_folder, placeholder: "Enter an absolute path, e.g., /storage/transcoding/" %>
+    <% end %>
+  </li>
+  <%= f.button "Save", type: "Submit" %>
+</ol>
+<% end %>
