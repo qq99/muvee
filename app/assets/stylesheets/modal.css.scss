@@ -59,12 +59,17 @@
     border-radius: 1rem;
     overflow: hidden;
   }
-  button {
+  button, a {
+    display: block;
     width: 100%;
     text-align: center;
+    text-decoration: none;
     padding: 1rem;
     background: #efefef;
     border: 0;
+    &:visited {
+      color: inherit;
+    }
     &:hover, &:focus {
       background: lighten($radical-blue, 15%);
       box-shadow: inset 0px 0px 1px #999;
