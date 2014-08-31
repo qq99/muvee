@@ -50,7 +50,8 @@ class SettingsController < ApplicationController
     if item.is_a?(Array)
       return item
     elsif item.is_a?(String)
-      item.split(",").uniq.compact
+      item.gsub(/\r/, '').split(/,|\n/).uniq.compact
+      binding.pry
     end
   end
 
