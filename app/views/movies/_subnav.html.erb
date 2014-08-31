@@ -1,0 +1,19 @@
+<% content_for :subnav do %>
+<ul class="top-nav-container subnav">
+  <li>
+    <%= link_to 'All movies', movies_path %>
+  </li>
+  <li>
+    <%= link_to '2D', two_d_movies_path %>
+  </li>
+  <li>
+    <%= link_to '3D', three_d_movies_path %>
+  </li>
+  <li>
+    <%= link_to 'Newest', newest_movies_path %>
+  </li>
+  <li>
+    <%= link_to 'Discover', remote_movies_path %>
+  </li>
+</ul>
+<% end %>

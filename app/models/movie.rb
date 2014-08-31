@@ -132,6 +132,10 @@ class Movie < Video
   end
 
   def reanalyze
+    return if raw_file_path.empty? # this is only for local movies
+    self.status = "local"
+    self.save
+
     guessit
     if self.changed?
       self.save
