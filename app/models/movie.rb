@@ -20,14 +20,6 @@ class Movie < Video
     }xi
   }.freeze
 
-  def local?
-    status == 'local'
-  end
-
-  def remote?
-    status == 'remote'
-  end
-
   def metadata
     @imdb_id ||= imdb_id || ImdbSearchResult.get(title).relevant_result(title)[:id]
     return {} if !@imdb_id
