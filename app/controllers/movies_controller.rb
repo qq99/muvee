@@ -22,7 +22,6 @@ class MoviesController < ApplicationController
 
   def remote
     @query = params[:page].try(:to_i) || 0
-    YtsQueryService.query(@query)
     @movies = Movie.remote.order(created_at: :desc).all
   end
 
