@@ -22,7 +22,7 @@ To install and use
 3. `bundle install`
 4. `bundle exec database:create` (or manually create a postgres role and set up your `database.yml`)
 5. Make sure your `database.yml` is correct!
-8. `bundle exec rake nginx:restart` to start up nginx (disregard any error messages)
+8. `bundle exec rake nginx:restart` to start up nginx with the custom configuration required.  It will attempt to kill any instances of nginx the user can access (but should not be a problem if you're not doing this as root).  Disregard any error messages regarding logs.
 9. `bundle exec foreman start`
 10. Visit http://localhost:8080
 11. Set up your media paths
