@@ -2,9 +2,9 @@ class Movie < Video
   include DownloadFile
 
   before_create :guessit
+  after_commit :queue_download_job
   after_create :extract_metadata
   after_create :download_poster
-  after_create :download_fanart
   after_create :examine_thumbnail_for_3d
   before_destroy :destroy_images
 
@@ -149,6 +149,10 @@ class Movie < Video
   def redownload
     download_poster
     download_fanart
+  end
+
+  def queue_download_job
+    MovieArtDownloader.perform_async(self.id)
   end
 
   def redownload_missing
