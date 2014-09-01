@@ -9,7 +9,7 @@ class AnalyzerWorker
 
     klasses.each do |klass|
       klass.all.each do |model_instance|
-        if model_instance.status == 'local' && (!model_instance.raw_file_path || !File.exist?(model_instance.raw_file_path))
+        if model_instance.local? && (!model_instance.raw_file_path || !File.exist?(model_instance.raw_file_path))
           model_instance.destroy
         else
           model_instance.send(opts[:method].to_sym)
