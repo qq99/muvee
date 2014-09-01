@@ -2,60 +2,7 @@
 
 <div id="all_movies">
   <% if @movies.present? %>
-    <div class="inline-movie-preview">
-      <div class="movie-images">
-        <div class="featured-image">
-          <%= render 'movie_thumbnails', movie: @movies.first %>
-        </div>
-        <div class="slideshow-pool">
-
-        </div>
-      </div>
-    </div>
-
-    <div class="movie-meta panel">
-      <h1 class="movie-title">
-        <span class="title"><%= @movies.first.title %></span>
-        <span class="three-d <% unless @movies.first.is_3d? %>hide<% end %>">3D</span>
-        <span class="movie-quality"><%= @movies.first.quality %></span>
-      </h1>
-      <p class="movie-overview"><%= @movies.first.overview %></p>
-      <p class="movie-year"><%= @movies.first.year %></p>
-    </div>
-
-    <div class="movies-index panel" class="clearfix">
-      <ul class="responsive-grid">
-        <% @movies.each do |movie| %>
-          <li class="poster">
-            <div class="poster-innards">
-              <a
-                class="poster-link aspect-poster js-movie-tile js-find-sources"
-                href="<%= find_sources_movie_path(movie) %>"
-                data-3d="<%= movie.is_3d? %>"
-                data-fanart-path="<%= fanart_video_path(movie) %>"
-                data-title="<%= movie.title %>"
-                data-year="<%= movie.year %>"
-                data-quality="<%= movie.quality %>"
-                data-overview="<%= movie.overview %>">
-                <% if poster_url = movie.poster_url %>
-                  <img class="video-thumbnail has-aspect" src="<%= poster_url %>" alt="">
-                <% else %>
-                  <img class="video-thumbnail has-aspect" src="/images/no-poster.png" alt="">
-                <% end %>
-
-                <div class="thumbnails hide">
-                  <%= render 'movie_thumbnails', movie: movie %>
-                </div>
-                <div class="js-sources-info inline-sources hide">
-
-                </div>
-              </a>
-            </div>
-          </li>
-        <% end %>
-        <div class="clearfix"></div>
-      </div>
-    </div>
+    <%= render 'movies_list', movies: @movies %>
   <% else %>
     <div>No movies found.</div>
   <% end %>
