@@ -32,6 +32,7 @@ Rails.application.routes.draw do
       get '3D', as: 'three_d', action: 'three_d'
       get '2D', as: 'two_d', action: 'two_d'
       get 'newest'
+      get 'discover_more'
     end
     member do
       get 'find_sources'

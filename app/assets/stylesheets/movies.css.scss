@@ -41,7 +41,7 @@ $preview-height: 45%;
   z-index: 3;
 }
 
-.movie-meta, .movies-index {
+.movie-meta, .movies-index, .movie-actions {
   background: black;
   background: $sleek-transparent-black;
 }
@@ -75,4 +75,29 @@ $preview-height: 45%;
 }
 .slideshow-pool {
   display: none;
+}
+
+#remote_movies {
+  $remote-movie-preview-height: 60%;
+  .movies-index {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 70%;
+    overflow-y: scroll;
+    z-index: 3;
+  }
+  .movie-meta {
+    top: 0;
+    height: 50%;
+  }
+  .movie-actions {
+    padding: 2rem;
+    position: absolute;
+    top: 50%;
+    height: 50%;
+    left: 70%;
+    width: 30%;
+  }
 }

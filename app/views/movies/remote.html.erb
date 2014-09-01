@@ -1,6 +1,6 @@
 <%= render 'subnav' %>
 
-<div id="all_movies">
+<div id="remote_movies">
   <% if @movies.present? %>
     <%= render 'movie_meta', movies: @movies %>
     <div class="movies-index panel" class="clearfix">
@@ -8,6 +8,9 @@
       <div class="box-content">
         <%= link_to 'Find me more', remote_movies_path(page: @query + 1), class: 'action-button' %>
       </div>
+    </div>
+    <div class="movie-actions">
+      <%= link_to 'Discover more movies', discover_more_movies_path, class: 'action-button' %>
     </div>
   <% else %>
     <div>No movies found.</div>

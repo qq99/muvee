@@ -23,7 +23,12 @@ class MoviesController < ApplicationController
   def remote
     @query = params[:page].try(:to_i) || 0
     YtsQueryService.query(@query)
-    @movies = Movie.remote.all.shuffle
+    @movies = Movie.remote.order(created_at: :desc).all
+  end
+
+  def discover_more
+    YtsQueryService.find_more
+    redirect_to remote_movies_path
   end
 
   def find_sources

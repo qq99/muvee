@@ -16,12 +16,14 @@
 }
 
 a.action-button {
+  display: inline-block;
+  width: auto;
   padding: 1em;
   background: #333;
   color: white;
   text-decoration: none;
   &:visited {
-    color: inherit;
+    color: white;
   }
   &:focus, &:hover {
     color: $radical-blue;
