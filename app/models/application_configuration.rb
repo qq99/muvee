@@ -1,5 +1,6 @@
 class ApplicationConfiguration < ActiveRecord::Base
   validates :transcode_folder, presence: true, if: :transcode_media
+  validate :transcode_folder_exists?, if: :transcode_media
 
   before_validation :sanitize_media_sources
 
@@ -17,11 +18,11 @@ class ApplicationConfiguration < ActiveRecord::Base
         self.errors.add folder, "does not exist, or we don't have access to it"
       end
     end
-    # # check if each folder exists
-    #
-    # self.tv_sources = "{#{tv_sources.join(',')}}"
-    # self.movie_sources = "{#{movie_sources.join(',')}}"
   end
 
-  private
+  def transcode_folder_exists?
+    if !File.exists?(transcode_folder)
+      self.errors.add transcode_folder, "does not exist, or we don't have access to it"
+    end
+  end
 end
