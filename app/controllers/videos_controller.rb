@@ -50,10 +50,10 @@ class VideosController < ApplicationController
   end
 
   def generate
-    # TODO: make this service create from a user-defined endpoint
+    @config = ApplicationConfiguration.first
     service = VideoCreationService.new({
-      tv: ['/media/anthony/Slowsto/TV'],
-      movies: ['/media/anthony/Slowsto/Movies']
+      tv: @config.tv_sources,
+      movies: @config.movie_sources
     })
 
     @new_tv_shows, @failed_tv_shows, @new_movies, @failed_movies = service.generate()

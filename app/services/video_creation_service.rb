@@ -4,6 +4,16 @@ class VideoCreationService
     @sources = sources
   end
 
+  def should_transcode?
+    @config ||= ApplicationConfiguration.first
+    @config.transcode_media
+  end
+
+  def transcode_folder
+    @config ||= ApplicationConfiguration.first
+    @config.transcode_folder
+  end
+
   def generate
     new_tv_shows, failed_tv_shows = create_videos(TvShow, @sources[:tv])
     new_movies, failed_movies = create_videos(Movie, @sources[:movies])
@@ -39,9 +49,12 @@ class VideoCreationService
       end
     end
 
-    needs_transcode.each do |path|
-      filename = File.basename(path, File.extname(path))
-      transcode_and_create(klass, path, "/media/anthony/Slowsto/transcoded/#{filename}.webm", File.dirname(path) + "/#{filename}.webm")
+    if should_transcode?
+      needs_transcode.each do |path|
+        filename = File.basename(path, File.extname(path))
+        transcode_path = Path.join(transcode_folder, "#{filename}.webm")
+        transcode_and_create(klass, path, transcode_path.to_s, File.dirname(path) + "/#{filename}.webm")
+      end
     end
 
     return [successes, failures]
