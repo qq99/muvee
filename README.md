@@ -8,9 +8,11 @@
 Netflix, for your home.
 WIP
 
+[Pictures!](http://imgur.com/a/2wBvh)
+
 To install and use
 ---
-1. `sudo apt-get install postgresql-9.3 libpq-dev libav-tools nodejs nginx imagemagick libffi-dev libphash0 libphash0-dev`
+1. `sudo apt-get install postgresql-9.3 libpq-dev libav-tools nodejs nginx imagemagick libffi-dev libphash0 libphash0-dev redis`
 2. `sudo ln -s /usr/bin/nodejs /usr/bin/node` because Ubuntu installs node in a different place than most
 3. `bundle install`
 4. `bundle exec database:create` (or manually create a postgres role and set up your `database.yml`)
@@ -37,7 +39,15 @@ Dependencies (and tested with):
 - libffi-dev libphash0 libphash0-dev (for determining 3D-ness of movies)
   - `sudo apt-get install libffi-dev libphash0 libphash0-dev`
 
-Definitions
+Hotkeys
 ---
-`sbs`: side-by-side (3D)
-`tab`: top-and-bottom (3D)
+- `spacebar`: pause
+- `left arrow`: Jump 5s back in time
+- `right arrow`: Jump 5s forward in time
+- `-`: Decrease volume by 5%
+- `+`: Increase volume by 5%
+
+Definitions of terms
+---
+- `sbs`: side-by-side (3D)
+- `tab`: top-and-bottom (3D)
