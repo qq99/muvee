@@ -21,8 +21,9 @@ class MoviesController < ApplicationController
   end
 
   def remote
-    YtsQueryService.query(0)
-    @movies = Movie.remote.all
+    @query = params[:page].try(:to_i) || 0
+    YtsQueryService.query(@query)
+    @movies = Movie.remote.all.shuffle
   end
 
   def find_sources

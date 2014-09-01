@@ -1,0 +1,18 @@
+<div class="inline-movie-preview">
+  <div class="movie-images">
+    <div class="featured-image">
+      <%= render 'movie_thumbnails', movie: movies.first %>
+    </div>
+    <div class="slideshow-pool"></div>
+  </div>
+</div>
+
+<div class="movie-meta panel">
+  <h1 class="movie-title">
+    <span class="title"><%= movies.first.title %></span>
+    <span class="three-d <% unless movies.first.is_3d? %>hide<% end %>">3D</span>
+    <span class="movie-quality"><%= movies.first.quality %></span>
+  </h1>
+  <p class="movie-overview"><%= movies.first.overview %></p>
+  <p class="movie-year"><%= movies.first.year %></p>
+</div>

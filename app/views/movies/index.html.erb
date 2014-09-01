@@ -2,7 +2,10 @@
 
 <div id="all_movies">
   <% if @movies.present? %>
-    <%= render 'movies_list', movies: @movies %>
+    <%= render 'movie_meta', movies: @movies %>
+    <div class="movies-index panel" class="clearfix">
+      <%= render 'movies_list', movies: @movies %>
+    </div>
   <% else %>
     <div>No movies found.</div>
   <% end %>

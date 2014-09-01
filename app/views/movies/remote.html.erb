@@ -2,7 +2,13 @@
 
 <div id="all_movies">
   <% if @movies.present? %>
-    <%= render 'movies_list', movies: @movies %>
+    <%= render 'movie_meta', movies: @movies %>
+    <div class="movies-index panel" class="clearfix">
+      <%= render 'movies_list', movies: @movies %>
+      <div class="box-content">
+        <%= link_to 'Find me more', remote_movies_path(page: @query + 1), class: 'action-button' %>
+      </div>
+    </div>
   <% else %>
     <div>No movies found.</div>
   <% end %>

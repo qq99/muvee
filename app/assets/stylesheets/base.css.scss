@@ -14,3 +14,21 @@
     width: 100%;
   }
 }
+
+a.action-button {
+  padding: 1em;
+  background: #333;
+  color: white;
+  text-decoration: none;
+  &:visited {
+    color: inherit;
+  }
+  &:focus, &:hover {
+    color: $radical-blue;
+  }
+}
+
+
+.box-content {
+  padding: 1rem;
+}
