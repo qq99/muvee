@@ -19,8 +19,9 @@ To install and use
 5. Make sure your `database.yml` is correct!
 8. `bundle exec rake nginx:restart` to start up nginx (disregard any error messages)
 9. `bundle exec foreman start`
-9. Visit http://localhost:8080
-10. Visit http://localhost:8080/videos/generate.json and wait!
+10. Visit http://localhost:8080
+11. Set up your media paths
+12. If all is well, you can then click the gear and "Scan for new media".  Wait, and media items will begin to appear as you refresh
 
 Dependencies (and tested with):
 ---
