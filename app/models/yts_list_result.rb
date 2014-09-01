@@ -5,7 +5,7 @@ class YtsListResult < ExternalMetadata
   end
 
   def should_fetch
-    true
+    self.updated_at.blank? || (self.updated_at.present? && self.updated_at <= 60.minutes.ago)
   end
 
   def self.endpoint_url(page)

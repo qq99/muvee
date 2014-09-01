@@ -21,6 +21,7 @@ class MoviesController < ApplicationController
   end
 
   def remote
+    YtsQueryService.query(0)
     @movies = Movie.remote.all
   end
 

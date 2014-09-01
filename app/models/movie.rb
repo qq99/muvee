@@ -4,6 +4,7 @@ class Movie < Video
   before_create :guessit
   after_create :extract_metadata
   after_create :download_poster
+  after_create :download_fanart
   after_create :examine_thumbnail_for_3d
   before_destroy :destroy_images
 
