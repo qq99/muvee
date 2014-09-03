@@ -3,12 +3,8 @@
     <li class="poster">
       <div class="poster-innards">
         <a
-          class="poster-link aspect-poster js-movie-tile<% if movie.remote? %> js-find-sources<% end %>"
-          <% if movie.local? %>
-          href="<%= video_path(movie) %>"
-          <% elsif movie.remote? %>
-          href="<%= find_sources_movie_path(movie) %>"
-          <% end %>
+          class="poster-link aspect-poster js-movie-tile"
+          href="<%= movie_path(movie) %>"
           data-3d="<%= movie.is_3d? %>"
           data-fanart-path="<%= fanart_video_path(movie) %>"
           data-title="<%= movie.title %>"

@@ -101,3 +101,52 @@ $preview-height: 45%;
     width: 30%;
   }
 }
+
+.movie-information {
+  position: absolute;
+  top: 45%;
+  left: 0;
+  height: 55%;
+  width: 100%;
+  padding: 2rem 4rem;
+  background: transparentize($sleek-transparent-black, 0.1);
+  color: white;
+  p {
+    margin: 1em 0;
+  }
+  .movie-information-meta {
+    width: 50%;
+    height: 100%;
+    overflow-y: auto;
+  }
+  .movie-rating {
+    font-size: 0.9em;
+  }
+  a {
+    color: white;
+    &:visited {
+      color: white;
+    }
+    &:hover, &:focus {
+      color: $radical-blue;
+    }
+  }
+}
+
+#movie_show {
+  .movie-actions {
+    padding: 2rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: transparent;
+    width: 40%;
+  }
+  .duration {
+    display: none;
+  }
+}
+
+.fa-star, .fa-star-half-o {
+  color: gold;
+}

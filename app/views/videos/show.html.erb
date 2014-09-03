@@ -14,7 +14,7 @@
         <i class="fa fa-arrow-circle-left"></i>
       <% end %>
     <% elsif @video.is_a?(Movie) %>
-      <%= link_to movies_path do %>
+      <%= link_to movie_path(@video) do %>
         <i class="fa fa-arrow-circle-left"></i>
       <% end %>
     <% end %>

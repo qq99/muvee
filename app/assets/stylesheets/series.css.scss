@@ -61,14 +61,6 @@
     height: 100%;
     width: 100%;
   }
-  .video-thumbnail {
-    width: 100%;
-    height: auto;
-    display: block;
-    &.hidden {
-      display: none;
-    }
-  }
   .poster-buttons {
     position: absolute;
     font-size: 1.2em;
@@ -96,9 +88,6 @@
     }
     .description-area {
       padding-top: 1.5em;
-    }
-    .duration {
-      color: white;
     }
     a {
       color: black;

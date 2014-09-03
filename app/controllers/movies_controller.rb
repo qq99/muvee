@@ -5,6 +5,10 @@ class MoviesController < ApplicationController
     @movies = Movie.local.all.shuffle
   end
 
+  def show
+    
+  end
+
   def three_d
     @movies = Movie.local.where(is_3d: true).all
     render 'index'

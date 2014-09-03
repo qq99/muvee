@@ -1,0 +1,14 @@
+<%
+  full_stars, half_stars, empty_stars = of_N_stars(rating, rating_max, new_scale)
+%>
+<span class="user-vote-rating" title="<%= rating %>">
+  <% full_stars.times do %>
+    <i class="fa fa-star"></i>
+  <% end %>
+  <% half_stars.times do %>
+    <i class="fa fa-star-half-o"></i>
+  <% end %>
+  <% empty_stars.times do %>
+    <i class="fa fa-star-o"></i>
+  <% end %>
+</span>

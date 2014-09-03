@@ -107,6 +107,37 @@ a.video {
   }
 }
 
+.thumbnail-area {
+  position: relative;
+}
+.thumbnails {
+  position: relative;
+}
+
+.play-icon {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  i {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 5rem;
+    margin-top: -2.5rem;
+    transition: all 0.5s ease-in-out;
+  }
+}
+
+.video-thumbnail {
+  width: 100%;
+  height: auto;
+  display: block;
+  &.hidden {
+    display: none;
+  }
+}
+
 #all-videos {
   background: $sleek-black;
 }
