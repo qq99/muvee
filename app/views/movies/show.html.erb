@@ -54,9 +54,9 @@
                 <% @movie.thumbnails.each_with_index do |thumb, i| %>
                   <img class="video-thumbnail <% if i>0 %>hidden<% end %>" src="<%= thumb.url %>" alt="">
                 <% end %>
-                <div class="play-icon">
-                  <i class="fa fa-play-circle"></i>
-                </div>
+              </div>
+              <div class="play-icon">
+                <i class="fa fa-play-circle"></i>
               </div>
               <div class="duration">
                 <%= human_duration(@movie.duration) %>
