@@ -78,6 +78,20 @@ class MovieTest < ActiveSupport::TestCase
     end
   end
 
+  test "associate_with_genres works" do
+    VCR.use_cassette "extract_metadata_test" do
+      movie = videos(:true_grit)
+      assert_difference "Genre.count", 3 do
+        movie.associate_with_genres
+      end
+      assert_no_difference "Genre.count" do
+        movie.associate_with_genres
+      end
+
+      assert_equal 3, movie.genres.length
+    end
+  end
+
   test "#guessit" do
     movie = Movie.new(raw_file_path: "/foo/bar/Disconnect.2012.HDTV.XviD.spinzes.mp4")
     movie.guessit

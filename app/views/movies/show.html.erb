@@ -17,7 +17,11 @@
         <span class="three-d <% unless @movie.is_3d? %>hide<% end %>">3D</span>
         <span class="movie-quality"><%= @movie.quality %></span>
       </h1>
-      <span class="movie-genre"><%= @movie.metadata[:Genre] %></span>
+      <span class="movie-genre">
+        <% @movie.genres.each do |genre| %>
+          <%= genre.name %>
+        <% end %>
+      </span>
       &ndash;
       <span class="movie-duration"><%= @movie.metadata[:Runtime] %></span>
       &ndash;

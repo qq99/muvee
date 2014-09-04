@@ -37,6 +37,7 @@ Rails.application.routes.draw do
     end
     member do
       get 'find_sources'
+      get 'genre'
     end
   end
 

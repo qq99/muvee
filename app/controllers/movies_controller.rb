@@ -31,7 +31,10 @@ class MoviesController < ApplicationController
 
   def genres
     @genres = Genre.all
-    render 'genres'
+  end
+
+  def genre
+    @genre = Genre.find(params[:id])
   end
 
   def discover_more

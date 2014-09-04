@@ -12,7 +12,11 @@ class AnalyzerWorker
         if model_instance.local? && (!model_instance.raw_file_path || !File.exist?(model_instance.raw_file_path))
           model_instance.destroy
         else
-          model_instance.send(opts[:method].to_sym)
+          begin
+            model_instance.send(opts[:method].to_sym)
+          rescue ActiveRecord::RecordInvalid => invalid
+            Rails.logger.info "AnalyzerWorker:#{opts[:method]}:invalid_record: #{invalid}"
+          end
         end
       end
     end

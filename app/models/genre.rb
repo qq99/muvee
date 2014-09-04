@@ -6,13 +6,19 @@ class Genre < ActiveRecord::Base
   validates :name, presence: true, uniqueness: {case_sensitive: false}
 
   SAME_THINGS = {
-    "sci fi" => "Science Fiction"
+    "sci fi" => "Science Fiction",
+    "scifi" => "Science Fiction"
   }.freeze
 
-  def sanitize_name
-    self.name = name.strip.titleize
+  def self.normalized_name(name)
+    name = name.strip.titleize
     SAME_THINGS.each do |key, val|
-      self.name = val if name.downcase == key
+      name = val if name.downcase == key
     end
+    name
+  end
+
+  def sanitize_name
+    self.name = Genre.normalized_name(name)
   end
 end

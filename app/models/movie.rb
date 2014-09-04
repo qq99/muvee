@@ -113,8 +113,11 @@ class Movie < Video
     return unless metadata[:Genre].present?
 
     listed_genres = compute_genres(metadata[:Genre])
+    self.genres = []
     listed_genres.each do |genre_name|
-      self.genres << Genre.find_or_create_by(name: genre_name)
+      normalized = Genre.normalized_name(genre_name)
+      genre = Genre.find_by_name(normalized) || Genre.create(name: normalized)
+      self.genres << genre
     end
     self.save if listed_genres.any?
   end

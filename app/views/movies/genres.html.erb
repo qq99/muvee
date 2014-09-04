@@ -2,6 +2,10 @@
 
 <div id="all_movies_by_genre">
   <% @genres.each do |genre| %>
-    <h1><%= genre.name %></h1>
+    <% movies = genre.videos.movies %>
+    <% if movies.any? %>
+      <h1><%= genre.name %></h1>
+      <%= render 'movies_list', movies: movies %>
+    <% end %>
   <% end %>
 </div>
