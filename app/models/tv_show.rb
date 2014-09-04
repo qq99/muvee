@@ -4,6 +4,7 @@ class TvShow < Video
   belongs_to :series
   before_create :guessit
   after_create :associate_with_series
+  after_create :associate_with_genres
   after_create :extract_metadata
 
   # More formats available at https://github.com/midgetspy/Sick-Beard/blob/development/sickbeard/name_parser/regexes.py
@@ -29,6 +30,16 @@ class TvShow < Video
       series.tvdb_series_result = episode_metadata_search
       series.save
     end
+  end
+
+  def associate_with_genres
+    return if series_metadata[:Genre].blank?
+
+    listed_genres = compute_genres(series_metadata[:Genre])
+    listed_genres.each do |genre_name|
+      self.genres << Genre.find_or_create_by(name: genre_name)
+    end
+    self.save if listed_genres.any?
   end
 
   def extract_metadata
@@ -78,11 +89,9 @@ class TvShow < Video
 
   def reanalyze
     guessit
-    if self.changed?
-      self.save
-      associate_with_series
-      extract_metadata
-    end
+    associate_with_series
+    associate_with_genres
+    extract_metadata
   end
 
   def redownload; end

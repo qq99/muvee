@@ -22,8 +22,8 @@ class Movie < Video
   }.freeze
 
   def metadata
-    @imdb_id ||= imdb_id || ImdbSearchResult.get(title).relevant_result(title)[:id]
-    return {} if !@imdb_id
+    @imdb_id ||= imdb_id || ImdbSearchResult.get(title).relevant_result(title).try(:[], :id)
+    return {} if @imdb_id.blank?
     @metadata ||= OmdbSearchResult.get(@imdb_id).data || {}
   end
 
@@ -112,7 +112,7 @@ class Movie < Video
   def associate_with_genres
     return unless metadata[:Genre].present?
 
-    listed_genres = metadata[:Genre].split(/,|\|/).compact.uniq.map(&:strip).map(&:titleize)
+    listed_genres = compute_genres(metadata[:Genre])
     listed_genres.each do |genre_name|
       self.genres << Genre.find_or_create_by(name: genre_name)
     end
