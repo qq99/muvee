@@ -112,7 +112,7 @@ class Movie < Video
   def associate_with_genres
     return unless metadata[:Genre].present?
 
-    listed_genres = metadata[:Genre].split(/,|\|/).compact.uniq.map(&:titleize)
+    listed_genres = metadata[:Genre].split(/,|\|/).compact.uniq.map(&:strip).map(&:titleize)
     listed_genres.each do |genre_name|
       self.genres << Genre.find_or_create_by(name: genre_name)
     end

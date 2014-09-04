@@ -3,9 +3,9 @@ class Genre < ActiveRecord::Base
 
   validates_uniqueness_of :name, allow_blank: false
 
-  before_create :titleize_name
+  before_create :sanitize_name
 
-  def titleize_name
-    self.name = name.titleize
+  def sanitize_name
+    self.name = name.strip.titleize
   end
 end
