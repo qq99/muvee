@@ -1,9 +1,8 @@
 class Genre < ActiveRecord::Base
   has_and_belongs_to_many :videos
 
+  before_validation :sanitize_name
   validates :name, presence: true, uniqueness: {case_sensitive: false}
-
-  before_create :sanitize_name
 
   SAME_THINGS = {
     "sci fi" => "Science Fiction"
