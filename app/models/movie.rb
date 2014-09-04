@@ -2,8 +2,9 @@ class Movie < Video
   include DownloadFile
 
   before_create :guessit
-  after_commit :queue_download_job
+  after_commit :queue_download_job, on: :create
   after_create :extract_metadata
+  after_create :associate_with_genres
   after_create :download_poster
   after_create :examine_thumbnail_for_3d
   before_destroy :destroy_images
@@ -108,8 +109,18 @@ class Movie < Video
     imdb_id || metadata[:imdbID]
   end
 
+  def associate_with_genres
+    return unless metadata[:Genre].present?
+
+    listed_genres = metadata[:Genre].split(/,|\|/).compact.uniq.map(&:titleize)
+    listed_genres.each do |genre_name|
+      self.genres << Genre.find_or_create_by(name: genre_name)
+    end
+    self.save if listed_genres.any?
+  end
+
   def guessit
-    if filename_no_extension.empty?
+    if filename_no_extension.blank?
       self.title = "Unknown"
     else
       quality, remaining_filename = filename_without_quality(filename_no_extension)
@@ -133,17 +144,11 @@ class Movie < Video
   end
 
   def reanalyze
-    return if raw_file_path.empty? # this is only for local movies
+    return if raw_file_path.blank? # this is only for local movies
     self.status = "local"
-    self.save
-
     guessit
-    if self.changed?
-      self.save
-      extract_metadata
-      download_poster
-      download_fanart
-    end
+    extract_metadata
+    associate_with_genres
   end
 
   def redownload
@@ -156,7 +161,7 @@ class Movie < Video
   end
 
   def redownload_missing
-    if self.fanarts.empty?
+    if self.fanarts.blank?
       download_fanart
     end
     if self.poster_path.blank?

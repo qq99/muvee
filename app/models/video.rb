@@ -1,6 +1,7 @@
 class Video < ActiveRecord::Base
   has_many :thumbnails, dependent: :destroy
   has_many :fanarts, dependent: :destroy
+  has_and_belongs_to_many :genres
 
   validates_uniqueness_of :raw_file_path, allow_nil: true, allow_blank: true
   validates_uniqueness_of :imdb_id, allow_nil: true, allow_blank: true
