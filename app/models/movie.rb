@@ -174,7 +174,7 @@ class Movie < Video
   def destroy_poster
     begin
       File.delete(POSTER_FOLDER.join(poster_path))
-    rescue Exception => e
+    rescue => e
       Rails.logger.info "Movie#destroy_poster: #{e}"
     end
   end

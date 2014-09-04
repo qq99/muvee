@@ -33,7 +33,7 @@ class Fanart < ActiveRecord::Base
   def destroy_image_file
     begin
       File.delete(fanart_path)
-    rescue Exception => e
+    rescue => e
       Rails.logger.info "Series#destroy_images: #{e}"
     end
   end

@@ -83,7 +83,7 @@ class Series < ActiveRecord::Base
       File.delete(POSTER_FOLDER.join(poster_path))
       File.delete(BANNER_FOLDER.join(banner_path))
       File.delete(FANART_FOLDER.join(fanart_path))
-    rescue Exception => e
+    rescue => e
       Rails.logger.info "Series#destroy_images: #{e}"
     end
   end

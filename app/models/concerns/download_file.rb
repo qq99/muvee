@@ -11,7 +11,7 @@ module DownloadFile
       ensure
         f.close()
       end
-    rescue Exception => e
+    rescue => e
       Rails.logger.error "Could not download #{remote_path}: #{e}"
       return false
     end

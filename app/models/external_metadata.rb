@@ -31,7 +31,12 @@ class ExternalMetadata < ActiveRecord::Base
         if result_format == :xml
           self.raw_value = Hash.from_xml(self.raw_value).try(:with_indifferent_access) || {}
         elsif result_format == :json
-          self.raw_value = JSON.parse(self.raw_value).try(:with_indifferent_access) || {}
+          begin
+            self.raw_value = JSON.parse(self.raw_value).try(:with_indifferent_access) || {}
+          rescue => e
+            self.raw_value = {}
+            Rails.logger.info "ExternalMetadata#fetch_data for #{self.endpoint} failed: #{e}"
+          end
         end
       end
     end

@@ -66,7 +66,7 @@ class Thumbnail < ActiveRecord::Base
   def destroy_thumbnail_file
     begin
       File.delete(thumbnail_path)
-    rescue Exception => e
+    rescue => e
       Rails.logger.info "Series#destroy_images: #{e}"
     end
   end

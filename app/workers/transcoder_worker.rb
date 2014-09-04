@@ -35,7 +35,7 @@ class TranscoderWorker
     FileUtils.copy(transcode_path, eventual_path)
     begin
       File.delete(transcode_path)
-    rescue Exception => e
+    rescue => e
       Rails.logger.info "TranscoderWorker: deleting transcoded file: #{e}"
     end
   end
