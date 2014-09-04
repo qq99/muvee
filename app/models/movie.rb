@@ -7,7 +7,7 @@ class Movie < Video
   after_create :associate_with_genres
   after_create :download_poster
   after_create :examine_thumbnail_for_3d
-  before_destroy :destroy_images
+  before_destroy :destroy_poster
 
   scope :local, -> {where(status: "local")}
   scope :remote, -> {where(status: "remote")}
@@ -152,7 +152,9 @@ class Movie < Video
   end
 
   def redownload
+    destroy_poster
     download_poster
+    self.fanarts.destroy_all
     download_fanart
   end
 
@@ -169,11 +171,11 @@ class Movie < Video
     end
   end
 
-  def destroy_images
+  def destroy_poster
     begin
       File.delete(POSTER_FOLDER.join(poster_path))
     rescue Exception => e
-      Rails.logger.info "Series#destroy_images: #{e}"
+      Rails.logger.info "Movie#destroy_poster: #{e}"
     end
   end
 
