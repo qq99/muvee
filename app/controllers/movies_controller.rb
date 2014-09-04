@@ -6,7 +6,7 @@ class MoviesController < ApplicationController
   end
 
   def show
-    
+
   end
 
   def three_d
@@ -27,6 +27,11 @@ class MoviesController < ApplicationController
   def remote
     @query = params[:page].try(:to_i) || 0
     @movies = Movie.remote.order(created_at: :desc).all
+  end
+
+  def genres
+    @genres = Genre.all
+    render 'genres'
   end
 
   def discover_more

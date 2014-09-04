@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       get '2D', as: 'two_d', action: 'two_d'
       get 'newest'
       get 'discover_more'
+      get 'genres'
     end
     member do
       get 'find_sources'

@@ -1,13 +1,17 @@
 class Video < ActiveRecord::Base
   has_many :thumbnails, dependent: :destroy
   has_many :fanarts, dependent: :destroy
-  has_and_belongs_to_many :genres
+
+  has_many :genres_videos
+  has_many :genres, through: :genres_videos
 
   validates_uniqueness_of :raw_file_path, allow_nil: true, allow_blank: true
   validates_uniqueness_of :imdb_id, allow_nil: true, allow_blank: true
   after_create :shellout_and_grab_duration
   after_create :create_initial_thumb
 
+  scope :movies, -> {where(type: "Movie")}
+  scope :tv_shows, -> {where(type: "TvShow")}
   scope :latest, -> {order(season: :desc, episode: :desc)}
   scope :release_order, -> {order(season: :asc, episode: :asc)}
   scope :unwatched, -> {where(left_off_at: nil)}

@@ -1,0 +1,7 @@
+<%= render 'subnav' %>
+
+<div id="all_movies_by_genre">
+  <% @genres.each do |genre| %>
+    <h1><%= genre.name %></h1>
+  <% end %>
+</div>
