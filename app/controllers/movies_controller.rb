@@ -34,7 +34,10 @@ class MoviesController < ApplicationController
   end
 
   def genre
-    @genre = Genre.find(params[:id])
+    name = Genre.normalized_name(params[:type])
+    @genre = Genre.find_by(name: name)
+    @movies = @genre.videos.movies.all
+    render 'index'
   end
 
   def discover_more

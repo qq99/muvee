@@ -34,10 +34,10 @@ Rails.application.routes.draw do
       get 'newest'
       get 'discover_more'
       get 'genres'
+      get 'genres/:type', as: :by_genre, action: :genre
     end
     member do
       get 'find_sources'
-      get 'genre'
     end
   end
 
