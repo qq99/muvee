@@ -9,9 +9,6 @@ class Movie < Video
   after_create :examine_thumbnail_for_3d
   before_destroy :destroy_poster
 
-  scope :local, -> {where(status: "local")}
-  scope :remote, -> {where(status: "remote")}
-
   POSTER_FOLDER = Rails.root.join('public', 'posters')
 
   FORMATS = {

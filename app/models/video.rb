@@ -10,6 +10,8 @@ class Video < ActiveRecord::Base
   after_create :shellout_and_grab_duration
   after_create :create_initial_thumb
 
+  scope :local, -> {where(status: "local")}
+  scope :remote, -> {where(status: "remote")}
   scope :movies, -> {where(type: "Movie")}
   scope :tv_shows, -> {where(type: "TvShow")}
   scope :latest, -> {order(season: :desc, episode: :desc)}

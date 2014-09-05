@@ -36,7 +36,7 @@ class MoviesController < ApplicationController
   def genre
     name = Genre.normalized_name(params[:type])
     @genre = Genre.find_by(name: name)
-    @movies = @genre.videos.movies.all
+    @movies = @genre.videos.movies.local.all
     render 'index'
   end
 
