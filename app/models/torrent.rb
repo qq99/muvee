@@ -13,7 +13,7 @@ class Torrent < ActiveRecord::Base
     service.move_torrent({transmission_id: transmission_id, to: movie_folder})
   end
 
-  def percentage_done
+  def percentage
     service.percentage_done(transmission_id)
   end
 

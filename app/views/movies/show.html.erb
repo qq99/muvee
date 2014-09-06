@@ -105,9 +105,12 @@
                   <td class="italic ralign"><%= source["TorrentPeers"] %></td>
                 </tr>
               </table>
-              <% source_url = source["TorrentMagnetUrl"] || source["TorrentUrl"] %>
-              <% if @torrents.map(&:source).include?(source_url) %>
-                <div class="torrent-progress-meter">
+              <%
+                source_url = source["TorrentMagnetUrl"] || source["TorrentUrl"]
+                torrent = @torrents.find{ |t| t.source == source_url }
+              %>
+              <% if torrent.present? %>
+                <div class="torrent-progress-meter" data-torrent-progress-url="<%= status_torrent_path(torrent) %>">
                   <div class="torrent-progress"></div>
                   <span class="downloading">Downloading...</span>
                 </div>
