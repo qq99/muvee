@@ -18,9 +18,13 @@ class TorrentManagerService
   end
 
   def percentage_done(transmission_id)
-    torrent = client.all.find { |t| t["addedDate"] == transmission_id }
+    torrent = find(transmission_id)
     return 0 if torrent.blank?
     torrent["percentDone"] * 100.0
+  end
+
+  def find(transmission_id)
+    client.all.find { |t| t["addedDate"] == transmission_id }
   end
 
   def check_completion_status(transmission_id)
