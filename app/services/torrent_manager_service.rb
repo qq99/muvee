@@ -17,6 +17,12 @@ class TorrentManagerService
     Process.detach(transmission)
   end
 
+  def percentage_done(transmission_id)
+    torrent = client.all.find { |t| t["addedDate"] == transmission_id }
+    return 0 if torrent.blank?
+    torrent["percentDone"] * 100.0
+  end
+
   def check_completion_status(transmission_id)
     torrent = client.all.find { |t| t["addedDate"] == transmission_id }
     if torrent.blank?
@@ -71,6 +77,10 @@ class TorrentManagerService
     throw "New record does not have an added date" if full_result["addedDate"].blank?
 
     record.transmission_id = full_result["addedDate"]
+    if remote_video
+      record.video_id = remote_video.id
+      record.video_type = remote_video.class.name
+    end
 
     record.save
   end

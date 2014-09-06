@@ -38,6 +38,7 @@ Rails.application.routes.draw do
     end
     member do
       get 'find_sources'
+      post 'download'
     end
   end
 

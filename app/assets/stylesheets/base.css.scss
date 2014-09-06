@@ -19,10 +19,11 @@
   margin-right: 1em;
 }
 
-a.action-button {
+button.action-button, a.action-button {
   display: inline-block;
   width: auto;
-  padding: 1em;
+  padding: 0.5em 1em;
+  margin-top: 0.5em;
   background: #333;
   color: white;
   text-decoration: none;

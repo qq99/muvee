@@ -105,6 +105,18 @@
                   <td class="italic ralign"><%= source["TorrentPeers"] %></td>
                 </tr>
               </table>
+              <% source_url = source["TorrentMagnetUrl"] || source["TorrentUrl"] %>
+              <% if @torrents.map(&:source).include?(source_url) %>
+                <div class="torrent-progress-meter">
+                  <div class="torrent-progress"></div>
+                  <span class="downloading">Downloading...</span>
+                </div>
+              <% else %>
+                <%= form_tag download_movie_path(@movie), method: "post" do %>
+                  <%= hidden_field_tag :download_url, source_url %>
+                  <%= button_tag "Download", type: "submit", class: 'action-button' %>
+                <% end %>
+              <% end %>
             <% end %>
           </div>
         <% end %>

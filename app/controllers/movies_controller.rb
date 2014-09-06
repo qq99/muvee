@@ -1,5 +1,5 @@
 class MoviesController < ApplicationController
-  before_action :set_movie, only: [:show, :find_sources]
+  before_action :set_movie, only: [:show, :find_sources, :download]
 
   def index
     @movies = Movie.local.all.shuffle
@@ -8,6 +8,7 @@ class MoviesController < ApplicationController
   def show
     if @movie.remote?
       @sources = TorrentManagerService.find_sources(@movie)
+      @torrents = @movie.torrents.all
     end
   end
 
@@ -45,6 +46,12 @@ class MoviesController < ApplicationController
   def discover_more
     YtsQueryService.find_more
     redirect_to remote_movies_path
+  end
+
+  def download
+    service = TorrentManagerService.new
+    service.download_movie(params[:download_url], @movie)
+    redirect_to movie_path(@movie)
   end
 
   def find_sources

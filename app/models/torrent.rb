@@ -1,5 +1,7 @@
 class Torrent < ActiveRecord::Base
 
+  belongs_to :video
+
   def service
     @service ||= TorrentManagerService.new
   end
@@ -9,6 +11,10 @@ class Torrent < ActiveRecord::Base
     movie_folder = config.movie_sources.first
 
     service.move_torrent({transmission_id: transmission_id, to: movie_folder})
+  end
+
+  def percentage_done
+    service.percentage_done(transmission_id)
   end
 
   def move_to_tv_folder
