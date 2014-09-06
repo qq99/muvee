@@ -50,21 +50,11 @@ class VideosController < ApplicationController
   end
 
   def generate
-    @config = ApplicationConfiguration.first
-    service = VideoCreationService.new({
-      tv: @config.tv_sources,
-      movies: @config.movie_sources
-    })
-
-    @new_tv_shows, @failed_tv_shows, @new_movies, @failed_movies = service.generate()
-
-    respond_to do |format|
-      format.json { render json: {
-        new_tv_shows: @new_tv_shows,
-        failed_tv_shows: @failed_tv_shows,
-        new_movies: @new_movies,
-        failed_movies: @failed_movies
-      }, status: :ok}
+    if existing_jobs.include? "MediaScannerWorker"
+      already_working
+    else
+      MediaScannerWorker.perform_async
+      render json: {status: "ok"}
     end
   end
 

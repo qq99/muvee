@@ -18,7 +18,7 @@
           <% elsif item.class == Movie %>
             <li class="poster aspect10x7">
               <div class="poster-innards">
-                <a class="poster-link aspect-poster" href="<%= video_path(item) %>">
+                <a class="poster-link aspect-poster" href="<%= movie_path(item) %>">
                   <% if poster_url = item.poster_url %>
                     <img class="video-thumbnail has-aspect" src="<%= poster_url %>" alt="">
                   <% else %>
