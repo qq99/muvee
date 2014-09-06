@@ -6,7 +6,9 @@ class MoviesController < ApplicationController
   end
 
   def show
-
+    if @movie.remote?
+      @sources = TorrentManagerService.find_sources(@movie)
+    end
   end
 
   def three_d

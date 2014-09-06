@@ -81,6 +81,16 @@
             <%= link_to "Play", video_path(@movie, t: 0), class: 'action-button' %>
           <% end %>
         </div>
+      <% else %>
+        <% @sources.each do |quality, sources_for_quality| %>
+          <h3><%= quality %></h3>
+          <% sources_for_quality.each do |source| %>
+            <p>Size: <%= source["Size"] %></p>
+            <p>Health: <%= (source["TorrentSeeds"].to_f / source["TorrentPeers"].to_f).round(2) %></p>
+            <p>Seeds: <%= source["TorrentSeeds"] %></p>
+            <p>Peers: <%= source["TorrentPeers"] %></p>
+          <% end %>
+        <% end %>
       <% end %>
     </div>
   </div>
