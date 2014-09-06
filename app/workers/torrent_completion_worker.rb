@@ -7,6 +7,7 @@ class TorrentCompletionWorker
       if status == "missing"
         torrent.destroy
       elsif status == "complete"
+        Rails.logger.info "Torrent complete, moving"
         torrent.move_to_movie_folder
       end
     end

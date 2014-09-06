@@ -22,7 +22,7 @@ class TorrentManagerService
     if torrent.blank?
       return "missing"
     else
-      if torrent["isFinished"]
+      if torrent["percentDone"] == 1
         return "complete"
       else
         return "incomplete"
@@ -35,7 +35,7 @@ class TorrentManagerService
     if opts[:id]
       tid = opts[:id]
     else
-      tid = find_id_by_transmission_id(client, opts[:transmission_id])
+      tid = find_id_by_transmission_id(opts[:transmission_id])
     end
 
     client.move(tid, opts[:to])
