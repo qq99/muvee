@@ -64,7 +64,7 @@ class TorrentManagerService
     end
     tid = result["id"]
 
-    move_result = client.move(tid, start_path)
+    move_result = client.move(tid, @start_path)
 
     full_result = client.all.find { |t| t["id"] == tid } # has a timestamp we can use as an ID
     throw "Unable to find full result" if full_result.blank?

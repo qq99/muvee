@@ -45,6 +45,7 @@ gem 'ffi'
 gem 'foreman'
 gem 'sidekiq'
 gem 'sidekiq-limit_fetch'
+gem "sidekiq-cron", "~> 0.2.0"
 gem "transmission_api", github: "qq99/TransmissionApi", branch: "master"
 
 group :test do
