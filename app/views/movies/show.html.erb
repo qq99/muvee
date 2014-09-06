@@ -82,14 +82,31 @@
           <% end %>
         </div>
       <% else %>
+        <h2>Download this movie</h2>
         <% @sources.each do |quality, sources_for_quality| %>
-          <h3><%= quality %></h3>
-          <% sources_for_quality.each do |source| %>
-            <p>Size: <%= source["Size"] %></p>
-            <p>Health: <%= (source["TorrentSeeds"].to_f / source["TorrentPeers"].to_f).round(2) %></p>
-            <p>Seeds: <%= source["TorrentSeeds"] %></p>
-            <p>Peers: <%= source["TorrentPeers"] %></p>
-          <% end %>
+          <div class="torrent-source">
+            <h3><%= quality %></h3>
+            <% sources_for_quality.each do |source| %>
+              <table>
+                <tr>
+                  <td>Size</td>
+                  <td class="italic ralign"><%= source["Size"] %></td>
+                </tr>
+                <tr>
+                  <td>Ratio</td>
+                  <td class="italic ralign"><%= (source["TorrentSeeds"].to_f / source["TorrentPeers"].to_f).round(2) %></td>
+                </tr>
+                <tr>
+                  <td>Seeds</td>
+                  <td class="italic ralign"><%= source["TorrentSeeds"] %></td>
+                </tr>
+                <tr>
+                  <td>Peers</td>
+                  <td class="italic ralign"><%= source["TorrentPeers"] %></td>
+                </tr>
+              </table>
+            <% end %>
+          </div>
         <% end %>
       <% end %>
     </div>

@@ -150,3 +150,12 @@ $preview-height: 45%;
 .fa-star, .fa-star-half-o {
   color: gold;
 }
+
+.torrent-source {
+  float: left;
+  padding: 1em;
+  font-size: 1em;
+  h3 {
+    margin: 0.5em 0;
+  }
+}
