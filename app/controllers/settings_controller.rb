@@ -39,7 +39,7 @@ class SettingsController < ApplicationController
   end
 
   def config_params
-    config = params.require(:application_configuration).permit(:tv_sources, :movie_sources, :transcode_media, :transcode_folder)
+    config = params.require(:application_configuration).permit(:tv_sources, :movie_sources, :transcode_media, :transcode_folder, :torrent_start_path)
     config[:transcode_media] = false if config[:transcode_media].blank?
     config[:movie_sources] = arrayify(config[:movie_sources])
     config[:tv_sources] = arrayify(config[:tv_sources])

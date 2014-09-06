@@ -1,0 +1,14 @@
+class TorrentCompletionWorker
+  include Sidekiq::Worker
+
+  def perform
+    Torrent.all.each do |torrent|
+      status = torrent.completion_status
+      if status == "missing"
+        torrent.destroy
+      elsif status == "complete"
+        torrent.move_to_movie_folder
+      end
+    end
+  end
+end

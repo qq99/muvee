@@ -56,6 +56,14 @@
       <%= f.text_field :transcode_folder, placeholder: "Enter an absolute path, e.g., /storage/transcoding/" %>
     <% end %>
   </li>
+  <li>
+    <%= f.label :torrent_start_path do %>
+      <p>
+        Where should files reside while downloading?  It's a good idea to specify this path to be somewhere you have a lot of space.
+      </p>
+      <%= f.text_field :torrent_start_path, placeholder: "Enter an absolute path, e.g., /storage/torrents/" %>
+    <% end %>
+  </li>
   <%= f.button "Save", type: "Submit" %>
 </ol>
 <% end %>
