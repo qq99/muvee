@@ -20,4 +20,5 @@ $ ->
 
         operation.done (data, textStatus, jqXHR) ->
           $el.find(".torrent-progress").width(data.percentage + "%")
+          $el.find(".downloading").text(data.percentage + "%")
     , 2000
