@@ -1,8 +1,7 @@
-<a
-  class="js-get-thumbnails js-has-thumbnails video <% if video.has_set_of_thumbnails? %>has-thumbnails<% end %>"
-  data-thumbnail-path="<%= thumbnails_video_path(video) %>"
-  href="<%= video_path(video) %>" class="video-link">
-  <div class="clearfix video-tile">
+<div
+  class="clearfix video video-tile js-get-thumbnails js-has-thumbnails <% if video.has_set_of_thumbnails? %>has-thumbnails<% end %>"
+  data-thumbnail-path="<%= thumbnails_video_path(video) %>">
+  <a href="<%= video_path(video) %>" class="video-link">
     <div class="thumbnail-area">
       <div class="thumbnails">
         <% video.thumbnails.each_with_index do |thumb, i| %>
@@ -18,8 +17,9 @@
         </div>
       <% end %>
     </div>
-    <h3 class="video-title"><%= video.episode_name || "No title available" %> - S<%= video.season %>E<%= video.episode %></h3>
-    <p class="video-overview"><%= video.overview %></p>
-    <span class="hide"><%= video.raw_file_path %></span>
-  </div>
-</a>
+  </a>
+  <h5 class="season-and-episode">S<%= video.season %>E<%= video.episode %></h5>
+  <h3 class="video-title"><%= video.episode_name || "No title available" %></h3>
+  <p class="video-overview"><%= video.overview %></p>
+  <span class="hide"><%= video.raw_file_path %></span>
+</div>

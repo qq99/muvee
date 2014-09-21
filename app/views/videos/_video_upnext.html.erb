@@ -1,10 +1,10 @@
 <div class="video-upnext hidden hide">
   <div class="title-information">
     <h1>Next Up</h1>
-    <% if next_episode.present? %>
+    <% if next_episode.present? && next_episode.overview.present? %>
       <div class="description">
         <p>
-          <%= next_episode.overview.presence %>
+          <%= truncate(next_episode.overview, length: 125, separator: ' ') %>
         </p>
       </div>
     <% end %>

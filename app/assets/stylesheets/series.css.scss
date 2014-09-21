@@ -1,3 +1,5 @@
+@import "colors";
+
 #series {
   width: 100%;
   height: 100%;
@@ -39,8 +41,15 @@
   .video-tile {
     color: #222;
     font-size: 1.1em;
+    margin-bottom: 1em;
     p {
       color: #666;
+      font-size: 0.9em;
+    }
+    a:hover, a:focus {
+      .thumbnails {
+        outline: 5px solid $radical-blue;
+      }
     }
   }
   .duration {

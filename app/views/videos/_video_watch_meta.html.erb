@@ -20,11 +20,13 @@
         <em class="smaller">S<%= video.season %>E<%= video.episode %></em>
       <% end %>
     </h3>
-    <div class="description">
-      <p>
-        <%= video.overview.presence %>
-      </p>
-    </div>
+    <% if video.overview.present? %>
+      <div class="description">
+        <p>
+          <%= truncate(video.overview, length: 255, separator: ' ') %>
+        </p>
+      </div>
+    <% end %>
   </div>
   <%= render 'video_meta_options', next_episode: @next_episode, previous_episode: @previous_episode %>
 </div>

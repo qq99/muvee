@@ -88,25 +88,6 @@ a.back {
   color: rgb(255, 0, 92);
 }
 
-a.video {
-  display: block;
-  text-decoration: none;
-  margin-bottom: 1em;
-  &:visited {
-    text-decoration: none;
-    display: block;
-    width: 100%;
-    margin-bottom: 2em;
-  }
-  &:focus, &:hover {
-    .video-tile {
-      .thumbnails {
-        outline: 5px solid $radical-blue;
-      }
-    }
-  }
-}
-
 .thumbnail-area {
   position: relative;
 }
