@@ -13,6 +13,21 @@ class Torrent < ActiveRecord::Base
     service.move_torrent({transmission_id: transmission_id, to: movie_folder})
   end
 
+  def info
+    service.find(transmission_id).with_indifferent_access
+  end
+
+  def files_by_size
+    info[:files].sort_by{ |f| f[:length] }.reverse
+  end
+
+  def video_files
+    files_by_size.select do |file|
+      filename = file[:name]
+      Video::SERVABLE_FILETYPES.any? {|type| filename.include? type}
+    end
+  end
+
   def percentage
     service.percentage_done(transmission_id)
   end
