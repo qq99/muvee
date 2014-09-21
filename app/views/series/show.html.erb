@@ -55,7 +55,9 @@
     <% end %>
     <div class="video-list-container">
       <% @videos.each do |show| %>
-        <%= render 'video_tile', video: show %>
+        <% unless show == @series.last_watched_video %>
+          <%= render 'video_tile', video: show %>
+        <% end %>
       <% end %>
     </div>
   </div>
