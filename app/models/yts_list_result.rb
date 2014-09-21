@@ -9,7 +9,7 @@ class YtsListResult < ExternalMetadata
   end
 
   def self.endpoint_url(page)
-    "https://yts.re/api/list.json?limit=50&set=#{page}"
+    "https://yts.re/api/list.json?limit=20&set=#{page}"
   end
 
 end
