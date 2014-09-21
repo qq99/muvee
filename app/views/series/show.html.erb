@@ -10,13 +10,15 @@
     </h3>
     <div class="poster-buttons">
       <%= link_to "Shuffle", video_path(@videos.map(&:id).sample, shuffle: true, series_id: @series.id), class: "action-button" %>
-      <button data-modal="season-selector" class="action-button">
-        <% if @season %>
-          Season <%= @season %>
-        <% else %>
-          All Seasons
-        <% end %>
-      </button>
+      <% if @seasons.length > 1 %>
+        <button data-modal="season-selector" class="action-button">
+          <% if @season %>
+            Season <%= @season %>
+          <% else %>
+            All Seasons
+          <% end %>
+        </button>
+      <% end %>
       <button data-modal="series-sort-selector" class="action-button">
         <i class="fa fa-sort"></i>
         Sorting by: <%= @sort.to_s.titleize %>
