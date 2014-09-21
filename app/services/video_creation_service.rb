@@ -65,7 +65,7 @@ class VideoCreationService
   end
 
   def create_video(klass, filepath)
-    video = klass.new(raw_file_path: filepath)
+    video = klass.new(raw_file_path: filepath, status: 'local')
     return video.save
   end
 
