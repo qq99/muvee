@@ -8,7 +8,6 @@ class Video < ActiveRecord::Base
   has_many :torrents
 
   validates_uniqueness_of :raw_file_path, allow_nil: true, allow_blank: true
-  validates_uniqueness_of :imdb_id, allow_nil: true, allow_blank: true
   after_create :shellout_and_grab_duration
   after_create :create_initial_thumb
 

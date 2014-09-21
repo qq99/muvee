@@ -9,6 +9,7 @@ class MoviesController < ApplicationController
     if @movie.remote?
       @sources = TorrentManagerService.find_sources(@movie)
       @torrents = @movie.torrents.all
+      @existing_copies = Movie.local.where(imdb_id: @movie.fetch_imdb_id)
     end
   end
 

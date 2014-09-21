@@ -40,6 +40,7 @@ class Movie < Video
     self.language = metadata[:Language]
     self.country = metadata[:Country]
     self.awards = metadata[:Awards]
+    self.imdb_id = fetch_imdb_id
     self.save
   end
 
