@@ -58,7 +58,7 @@ class TorrentManagerService
   end
 
   def self.find_sources(remote_movie)
-    sources = YtsFindResult.get(remote_movie.fetch_imdb_id).data[:MovieList]
+    sources = YtsFindResult.get(remote_movie.fetch_imdb_id).data[:MovieList] || []
     sources.sort_by {|s| s[:Quality].to_i} # TODO this doesn't work
     sources.group_by do |source|
       source[:Quality]

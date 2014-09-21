@@ -97,46 +97,7 @@
             <% end %>
           </ul>
         <% end %>
-        <% @sources.each do |quality, sources_for_quality| %>
-          <div class="torrent-source">
-            <h3><%= quality %></h3>
-            <% sources_for_quality.each do |source| %>
-              <table>
-                <tr>
-                  <td>Size</td>
-                  <td class="italic ralign"><%= source["Size"] %></td>
-                </tr>
-                <tr>
-                  <td>Ratio</td>
-                  <td class="italic ralign"><%= (source["TorrentSeeds"].to_f / source["TorrentPeers"].to_f).round(2) %></td>
-                </tr>
-                <tr>
-                  <td>Seeds</td>
-                  <td class="italic ralign"><%= source["TorrentSeeds"] %></td>
-                </tr>
-                <tr>
-                  <td>Peers</td>
-                  <td class="italic ralign"><%= source["TorrentPeers"] %></td>
-                </tr>
-              </table>
-              <%
-                source_url = source["TorrentMagnetUrl"] || source["TorrentUrl"]
-                torrent = @torrents.find{ |t| t.source == source_url }
-              %>
-              <% if torrent.present? %>
-                <div class="torrent-progress-meter" data-torrent-progress-url="<%= status_torrent_path(torrent) %>">
-                  <div class="torrent-progress"></div>
-                  <span class="downloading">Downloading...</span>
-                </div>
-              <% else %>
-                <%= form_tag download_movie_path(@movie), method: "post" do %>
-                  <%= hidden_field_tag :download_url, source_url %>
-                  <%= button_tag "Download", type: "submit", class: 'action-button' %>
-                <% end %>
-              <% end %>
-            <% end %>
-          </div>
-        <% end %>
+        <%= render 'source_options', sources: @sources %>
       <% end %>
     </div>
   </div>
