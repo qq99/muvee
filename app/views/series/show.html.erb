@@ -9,34 +9,29 @@
       <%= @series.overview %>
     </h3>
     <div class="poster-buttons">
-      <%= link_to "Shuffle", video_path(@videos.map(&:id).sample, shuffle: true, series_id: @series.id), class: "poster-button" %>
-      <div class="dropdown poster-button">
-        <button data-modal="season-selector">
+      <%= link_to "Shuffle", video_path(@videos.map(&:id).sample, shuffle: true, series_id: @series.id), class: "action-button" %>
+      <button data-modal="season-selector" class="action-button">
+        <% if @season %>
+          Season <%= @season %>
+        <% else %>
           All Seasons
-        </button>
-      </div>
-      <% if @sort == :latest %>
-        <a href="?sort=release_order" class="poster-button">
-          <i class="fa fa-sort"></i> Sort: latest
-        </a>
-      <% elsif @sort == :release_order %>
-        <a href="?sort=unwatched" class="poster-button">
-          <i class="fa fa-sort"></i> Sort: release order
-        </a>
-      <% elsif @sort == :unwatched %>
-        <a href="?sort=latest" class="poster-button">
-          <i class="fa fa-sort"></i> Sort: unwatched
-        </a>
-      <% end %>
+        <% end %>
+      </button>
+      <button data-modal="series-sort-selector" class="action-button">
+        <i class="fa fa-sort"></i>
+        Sorting by: <%= @sort.to_s.titleize %>
+      </button>
       <div class="clearfix"></div>
     </div>
   </div>
   <div class="video-list">
     <div class="series-featured-image" style="background:url(<%= @series.fanart_url %>); background-size: cover;"></div>
     <% if @series.last_watched_video %>
-      <div class="featured-episode">
-        <%= render 'video_tile', video: @series.last_watched_video %>
-      </div>
+      <% if (@season && @series.last_watched_video.season == @season) || !@season %>
+        <div class="featured-episode">
+          <%= render 'video_tile', video: @series.last_watched_video %>
+        </div>
+      <% end %>
     <% end %>
     <div class="video-list-container">
       <% @videos.each do |show| %>
@@ -55,14 +50,24 @@
       <div class="modal-header">
         Filter by season
       </div>
-      <div class="divider">
-        <%= link_to "All Seasons", series_path(@series) %>
-      </div>
+      <%= link_to "All Seasons", series_path(@series, sort: @sort), class: 'divider' %>
       <% @seasons.each do |s| %>
-        <div class="divider">
-          <%= link_to "Season #{s}", series_path(@series, season: s) %>
-        </div>
+        <%= link_to "Season #{s}", series_path(@series, season: s, sort: @sort), class: 'divider' %>
       <% end %>
+    </div>
+  </div>
+</div>
+
+<div id="series-sort-selector" class="modal">
+  <div class="modal-backdrop js-close-modal"></div>
+  <div class="modal-box">
+    <div class="modal-box-contents">
+      <div class="modal-header">
+        Sort by
+      </div>
+      <%= link_to "Release order", series_path(@series, season: @season, sort: :release_order, class: 'divider') %>
+      <%= link_to "Unwatched", series_path(@series, season: @season, sort: :unwatched, class: 'divider') %>
+      <%= link_to "Latest", series_path(@series, season: @season, sort: :latest, class: 'divider') %>
     </div>
   </div>
 </div>

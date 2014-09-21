@@ -10,9 +10,15 @@ class SeriesController < ApplicationController
   end
 
   def show
+    @season = params[:season].present? ? params[:season].to_i : nil
     @sort = params[:sort].try(:to_sym) || :latest
-    @videos = @series.tv_shows.send(@sort)
-    @seasons = @videos.map{|v| v.season}.uniq.sort
+    @all_episodes = @series.tv_shows.send(@sort)
+    if @season
+      @videos = @all_episodes.where(season: @season)
+    else
+      @videos = @all_episodes
+    end
+    @seasons = @all_episodes.map{|v| v.season}.uniq.sort
     render layout: 'fullscreen'
   end
 

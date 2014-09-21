@@ -76,6 +76,12 @@
     bottom: 2em;
     width: auto;
     border: 1px solid #333;
+    .action-button {
+      width: 100%;
+      display: block;
+      text-align: center;
+      margin: 0;
+    }
   }
   .featured-episode {
     margin-top: -6em;
