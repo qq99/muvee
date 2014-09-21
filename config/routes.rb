@@ -35,6 +35,7 @@ Rails.application.routes.draw do
       get 'discover_more'
       get 'genres'
       get 'genres/:type', as: :by_genre, action: :genre
+      get 'movie_search', as: :movie_search, action: :movie_search
     end
     member do
       get 'find_sources'

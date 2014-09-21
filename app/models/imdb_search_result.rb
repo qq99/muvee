@@ -8,7 +8,7 @@ class ImdbSearchResult < ExternalMetadata
     "http://www.imdb.com/xml/find?json=1&nr=1&tt=on&q=#{title}"
   end
 
-  def relevant_result(title)
+  def best_results(title)
     list = self.data[:title_popular] || self.data[:title_exact] || self.data[:title_substring] || self.data[:title_approximate]
 
     best_results = if list && list.length > 0
@@ -16,8 +16,10 @@ class ImdbSearchResult < ExternalMetadata
     else
       []
     end
+  end
 
-    best_results.first
+  def relevant_result(title)
+    best_results(title).first
   end
 
   def by_ldistance(list, field, ideal)

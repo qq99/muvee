@@ -30,7 +30,7 @@ class MoviesController < ApplicationController
 
   def remote
     @query = params[:page].try(:to_i) || 0
-    @movies = Movie.remote.order(created_at: :desc).all
+    @movies = Movie.remote.order(created_at: :desc).limit(50).all
   end
 
   def genres
@@ -58,6 +58,25 @@ class MoviesController < ApplicationController
   def find_sources
     @sources = TorrentManagerService.find_sources(@movie)
     render partial: 'source_options', locals: {sources: @sources}
+  end
+
+  def movie_search
+    @query = params[:q]
+    query = ImdbSearchResult.get(@query)
+    results = query.best_results(@query)
+    @movies = []
+
+    results.each do |result|
+      movie = Movie.find_by_imdb_id(result[:id]) || Movie.create(
+        status: "remote",
+        title: result[:title],
+        imdb_id: result[:id]
+      )
+      @movies << movie
+    end
+    @movies.compact!
+
+    render 'remote'
   end
 
   private

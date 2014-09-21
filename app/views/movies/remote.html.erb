@@ -8,6 +8,12 @@
     </div>
     <div class="movie-actions">
       <%= link_to 'Discover more movies', discover_more_movies_path, class: 'action-button' %>
+
+      <%= form_tag movie_search_movies_path, method: "GET" do %>
+        <%= label_tag :q, "Search for a movie:" %>
+        <%= text_field_tag :q %>
+        <%= button_tag "Search", type: "submit", class: 'action-button' %>
+      <% end %>
     </div>
   <% else %>
     <div>No movies found.</div>
