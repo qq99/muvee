@@ -66,11 +66,16 @@ class TorrentManagerService
   end
 
   def download_movie(url, remote_video = nil)
+    already_exists = Torrent.find_by(source: url)
+    if already_exists
+      throw "Torrent for #{url} already exists."
+    end
+
     record = Torrent.new(source: url)
 
     result = client.create(url)
     if result.blank? || result["id"].blank?
-      throw "Failed to create torrent"
+      throw "Torrent client failed to start torrent"
     end
     tid = result["id"]
 
