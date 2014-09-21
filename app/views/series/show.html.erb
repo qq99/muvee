@@ -28,7 +28,7 @@
   </div>
   <div class="video-list">
     <div class="series-featured-image" style="background:url(<%= @series.fanart_url %>); background-size: cover;"></div>
-    <% if @series.last_watched_video %>
+    <% if @series.last_watched_video && @series.last_watched_video.left_off_at_percent < 95 %>
       <% if (@season && @series.last_watched_video.season == @season) || !@season %>
         <div class="featured-episode">
           <%= render 'video_tile', video: @series.last_watched_video %>
