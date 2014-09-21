@@ -11,15 +11,9 @@
     <div class="poster-buttons">
       <%= link_to "Shuffle", video_path(@videos.map(&:id).sample, shuffle: true, series_id: @series.id), class: "poster-button" %>
       <div class="dropdown poster-button">
-        <button class="dropdown-trigger">
+        <button data-modal="season-selector">
           All Seasons
         </button>
-        <div class="dropdown-options">
-          <a class="dropdown-item poster-button">All Seasons</a>
-          <% @seasons.each do |s| %>
-            <a href="" class="dropdown-item poster-button">Season <%= s %></a>
-          <% end %>
-        </div>
       </div>
       <% if @sort == :latest %>
         <a href="?sort=release_order" class="poster-button">
@@ -49,6 +43,25 @@
         <% unless show == @series.last_watched_video %>
           <%= render 'video_tile', video: show %>
         <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div id="season-selector" class="modal">
+  <div class="modal-backdrop js-close-modal"></div>
+  <div class="modal-box">
+    <div class="modal-box-contents">
+      <div class="modal-header">
+        Filter by season
+      </div>
+      <div class="divider">
+        <%= link_to "All Seasons", series_path(@series) %>
+      </div>
+      <% @seasons.each do |s| %>
+        <div class="divider">
+          <%= link_to "Season #{s}", series_path(@series, season: s) %>
+        </div>
       <% end %>
     </div>
   </div>

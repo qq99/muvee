@@ -19,3 +19,4 @@
 //= require_tree .
 //= require turbolinks
 //= require nprogress
+//= require twine.js.coffee

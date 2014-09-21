@@ -54,12 +54,23 @@ showNavOnMousemove = (ev) ->
     hideNav()
 
 $(document).on "mousemove", _.throttle(showNavOnMousemove, 100)
-$(document).on "click", "#showGlobalOptions", (ev) ->
-  ev.preventDefault()
-  $("#global-options").addClass("show")
 
 $(document).on "click", ".js-close-modal", ->
   $(".modal").removeClass("show")
 
+$(document).on "click", "[data-modal]", (ev) ->
+  ev.preventDefault()
+  modalId = $(ev.currentTarget).data("modal")
+  $("##{modalId}").addClass("show")
+
 $ ->
   hideNav()
+
+window.context = {}
+
+document.addEventListener 'page:before-partial-replace', (event) ->
+  nodes = event.data
+  Twine.unbind(node) for node in nodes
+  return
+$ ->
+  Twine.reset(context).bind().refresh()

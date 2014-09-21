@@ -15,7 +15,7 @@
     <% end %>
   </ul>
 <% end %>
-<ol class="steps">
+<ul class="steps">
   <li>
     <%= f.label :tv_sources do %>
       <p>
@@ -37,7 +37,7 @@
       <p>
         Do you want to transcode <span class="note">.mkv</span> and <span class="note">.avi</span> files into <span class="note">.webm</span> files?
       </p>
-      <%= f.check_box :transcode_media %> Yes, transcode my media.
+      <%= f.check_box :transcode_media, bind: "showTranscodeFolder" %> Yes, transcode my media.
       <p>
         Your original media will not be destroyed.  After transcoding, the new file will be moved to the same directory as the old file.  This process is often slow (sometimes taking times up to or greater than the playtime of the video), but can often result in drastic compression.
       </p>
@@ -48,7 +48,7 @@
       </p>
     <% end %>
   </li>
-  <li>
+  <li bind-show="showTranscodeFolder">
     <%= f.label :transcode_folder do %>
       <p>
         Where should files mid-transcode be stored?  It's a good idea to specify this path to be somewhere you have a lot of space.
@@ -65,5 +65,5 @@
     <% end %>
   </li>
   <%= f.button "Save", type: "Submit" %>
-</ol>
+</ul>
 <% end %>
