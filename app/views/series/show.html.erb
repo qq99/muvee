@@ -9,6 +9,7 @@
       <%= @series.overview %>
     </h3>
     <div class="poster-buttons">
+      <%= link_to "Shuffle", video_path(@videos.map(&:id).sample, shuffle: true, series_id: @series.id), class: "poster-button" %>
       <div class="dropdown poster-button">
         <button class="dropdown-trigger">
           All Seasons
@@ -33,16 +34,6 @@
           <i class="fa fa-sort"></i> Sort: unwatched
         </a>
       <% end %>
-      <a href="#" class="poster-button js-favourite-toggle">
-        <i class="fa fa-heart"></i>
-      </a>
-      <a href="#" class="poster-button">
-        <i class="fa fa-star-o"></i>
-        <i class="fa fa-star-o"></i>
-        <i class="fa fa-star-o"></i>
-        <i class="fa fa-star-o"></i>
-        <i class="fa fa-star-o"></i>
-      </a>
       <div class="clearfix"></div>
     </div>
   </div>

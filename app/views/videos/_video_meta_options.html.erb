@@ -9,7 +9,7 @@
     <i class="fa fa-refresh"></i> Restart playback
   </button>
   <% if next_episode.present? %>
-    <%= link_to video_path(next_episode, t: 0, shuffle: params[:shuffle].presence), class: "meta-option-button" do %>
+    <%= link_to video_path(next_episode, t: 0, shuffle: params[:shuffle].presence, series_id: params[:series_id].presence), class: "meta-option-button" do %>
       <i class="fa fa-forward"></i>
       Skip to next episode
     <% end %>

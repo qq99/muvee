@@ -24,7 +24,11 @@ class VideosController < ApplicationController
       end
 
       if params[:shuffle].present?
-        @next_episode = TvShow.all.sample
+        if params[:series_id].present?
+          @next_episode = Series.find(params[:series_id]).tv_shows.sample
+        else
+          @next_episode = TvShow.all.sample
+        end
       elsif @video.series.present?
         episodic = @video.series.tv_shows.release_order
         index_of_current_episode = episodic.to_a.find_index{|vid| vid.id == @video.id}
