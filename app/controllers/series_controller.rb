@@ -2,7 +2,7 @@ class SeriesController < ApplicationController
   before_action :set_series, only: [:show]
 
   def index
-    @series = Series.all
+    @series = Series.all.sort_by{|item| -item.updated_at.to_i} # newest updated first
   end
 
   def newest_episodes
