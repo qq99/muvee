@@ -1,14 +1,18 @@
 locked = false
 hidingNav = -1
+_hideNav = ->
+  $(".main-navigation").addClass("hidden")
+  navRequestedShown = false
+  locked = false
+
 hideNav = ->
   return if locked
   clearTimeout hidingNav
   locked = true
-  hidingNav = setTimeout ->
-    $(".main-navigation").addClass("hidden")
-    navRequestedShown = false
-    locked = false
-  , 5000
+  hidingNav = setTimeout _hideNav, 5000
+
+hideNavImmediately = ->
+  _hideNav()
 
 showNav = ->
   clearTimeout hidingNav
@@ -48,12 +52,12 @@ window.redownloadMissingImages = (ev) ->
   operation.fail onError
 
 showNavOnMousemove = (ev) ->
-  if ev.screenY < 300
+  if ev.screenY < 200
     showNav()
   else
-    hideNav()
+    hideNavImmediately()
 
-$(document).on "mousemove", _.throttle(showNavOnMousemove, 100)
+$(document).on "mousemove", _.throttle(showNavOnMousemove, 100, true)
 
 $(document).on "click", ".js-close-modal", ->
   $(".modal").removeClass("show")
