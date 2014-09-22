@@ -6,6 +6,13 @@ GIT
     transmission_api (0.0.7)
       httparty (= 0.9.0)
 
+GIT
+  remote: git://github.com/Shopify/turbograft.git
+  revision: 41c2efaca687db142e8dc75effddbcb149dfca63
+  specs:
+    turbograft (0.0.2)
+      coffee-rails
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -250,7 +257,7 @@ DEPENDENCIES
   thin
   timecop
   transmission_api!
-  turbolinks
+  turbograft!
   uglifier (>= 1.3.0)
   unicorn
   uuid

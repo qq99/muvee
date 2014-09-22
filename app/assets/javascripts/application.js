@@ -17,6 +17,6 @@
 //= require uri
 //= require ./bootstrap.js.coffee
 //= require_tree .
-//= require turbolinks
+//= require turbograft
 //= require nprogress
 //= require twine.js.coffee

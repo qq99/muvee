@@ -65,12 +65,3 @@ $(document).on "click", "[data-modal]", (ev) ->
 
 $ ->
   hideNav()
-
-window.context = {}
-
-document.addEventListener 'page:before-partial-replace', (event) ->
-  nodes = event.data
-  Twine.unbind(node) for node in nodes
-  return
-$ ->
-  Twine.reset(context).bind().refresh()

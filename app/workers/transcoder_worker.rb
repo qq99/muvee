@@ -6,12 +6,12 @@ class TranscoderWorker
     klass = klass.constantize
 
     if File.exist?(eventual_path) # don't convert it again!
-      puts "Video already transcoded and moved; creating"
+      Rails.logger.info "Video #{eventual_path} already transcoded; creating #{klass.to_s}, please review #{input_path}"
       klass.create(raw_file_path: eventual_path)
       return true
     end
     if File.exist?(transcode_path)
-      puts "Video already transcoded; moving and creating"
+      Rails.logger.info "Video #{eventual_path} already present in #{transcode_path}; moving and creating, please review #{input_path}"
       move_transcoded_file(transcode_path, eventual_path)
       klass.create(raw_file_path: eventual_path)
       return true
@@ -22,7 +22,7 @@ class TranscoderWorker
 
     sleep 10 # let the file handle close
     if File.exist? eventual_path
-      puts "Video transcoded successfully; moving and creating"
+      Rails.logger.info "Video #{eventual_path} already transcoded; moving and creating, please review #{input_path}"
       move_transcoded_file(transcode_path, eventual_path)
       klass.create(raw_file_path: eventual_path)
       return true
