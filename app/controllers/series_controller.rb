@@ -5,6 +5,11 @@ class SeriesController < ApplicationController
     @series = Series.all
   end
 
+  def newest_episodes
+    @shows = TvShow.all.sort_by{|item| -item.created_at.to_i} # newest first
+    render 'nonepisodic'
+  end
+
   def nonepisodic
     @shows = TvShow.where(series_id: nil).all
   end

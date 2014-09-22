@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   resources :series do
     collection do
       get 'nonepisodic'
+      get 'newest_episodes'
     end
   end
   resources :movies do
