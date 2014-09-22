@@ -153,7 +153,7 @@ a.back {
   }
 }
 .poster-link:focus, .poster-link:hover {
-  img {
+  > * {
     opacity: 1;
     outline: 5px solid $radical-blue;
   }

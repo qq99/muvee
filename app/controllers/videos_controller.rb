@@ -7,7 +7,7 @@ class VideosController < ApplicationController
     @movies = Movie.local.all
     @series = Series.all
     @items = @movies.to_a.concat @series.to_a
-    @items.sort_by!{|item| -item.created_at.to_i} # newest first
+    @items.sort_by!{|item| -item.updated_at.to_i} # newest first
   end
 
   def list

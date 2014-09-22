@@ -30,15 +30,15 @@ class Series < ActiveRecord::Base
   end
 
   def poster_url
-    "/posters/#{poster_path}"
+    "/posters/#{poster_path}" if poster_path.present?
   end
 
   def fanart_url
-    "/fanart/#{fanart_path}"
+    "/fanart/#{fanart_path}" if fanart_path.present?
   end
 
   def banner_url
-    "/banners/#{banner_path}"
+    "/banners/#{banner_path}" if banner_path.present?
   end
 
   def download_images

@@ -25,7 +25,7 @@ class Movie < Video
   end
 
   def poster_url
-    "/posters/#{poster_path}"
+    "/posters/#{poster_path}" if poster_path.present?
   end
 
   def extract_metadata

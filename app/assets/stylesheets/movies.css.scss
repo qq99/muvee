@@ -1,3 +1,4 @@
+@import 'base';
 @import 'colors';
 
 #all_movies {
@@ -188,5 +189,27 @@ $preview-height: 45%;
     z-index: 2;
     text-align: center;
     text-shadow: 1px 1px 1px #111;
+  }
+}
+
+
+.no-poster-available {
+  @extend .mbox;
+  background: #111;
+  border: 1px solid #333;
+  color: white;
+  padding: 1em;
+  text-align: center;
+  font-style: italic;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  &:hover, &:visited, &:focus {
+    color: white;
+  }
+  > span {
+    display: block;
+    width: 100%;
+    text-align: center;
   }
 }
