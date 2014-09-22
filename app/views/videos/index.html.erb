@@ -4,29 +4,9 @@
       <ul class="responsive-grid">
         <% @items.each do |item| %>
           <% if item.class == Series %>
-            <li class="poster aspect10x7">
-              <div class="poster-innards">
-                <a class="poster-link aspect-poster" href="<%= series_path(item) %>">
-                  <% if poster_url = item.poster_url %>
-                    <img class="video-thumbnail has-aspect" src="<%= poster_url %>" alt="">
-                  <% else %>
-                    <%= render 'shared/no_poster_available' %>
-                  <% end %>
-                </a>
-              </div>
-            </li>
+            <%= render 'shared/poster', show_path: series_path(item), poster_url: item.poster_url, item: item %>
           <% elsif item.class == Movie %>
-            <li class="poster aspect10x7">
-              <div class="poster-innards">
-                <a class="poster-link aspect-poster" href="<%= movie_path(item) %>">
-                  <% if poster_url = item.poster_url %>
-                    <img class="video-thumbnail has-aspect" src="<%= poster_url %>" alt="">
-                  <% else %>
-                    <%= render 'shared/no_poster_available' %>
-                  <% end %>
-                </a>
-              </div>
-            </li>
+            <%= render 'shared/poster', show_path: movie_path(item), poster_url: item.poster_url, item: item %>
           <% end %>
         <% end %>
         <div class="clearfix"></div>
