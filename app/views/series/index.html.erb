@@ -5,17 +5,7 @@
     <% if @series.present? %>
       <ul class="responsive-grid">
         <% @series.each do |serie| %>
-          <li class="poster aspect10x7">
-            <div class="poster-innards">
-              <a class="poster-link aspect-poster" href="<%= series_path(serie) %>">
-                <% if poster_url = serie.poster_url %>
-                  <img class="video-thumbnail has-aspect" src="<%= poster_url %>" alt="">
-                <% else %>
-                  <%= render 'shared/no_poster_available' %>
-                <% end %>
-              </a>
-            </div>
-          </li>
+          <%= render 'shared/poster', show_path: series_path(serie), poster_url: serie.poster_url %>
         <% end %>
         <div class="clearfix"></div>
       </div>

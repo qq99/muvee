@@ -8,7 +8,7 @@
     <h3 class="series-overview">
       <%= @series.overview %>
     </h3>
-    <div class="poster-buttons">
+    <div class="series-buttons">
       <%= link_to "Shuffle", video_path(@videos.map(&:id).sample, shuffle: true, series_id: @series.id), class: "action-button" %>
       <% if @seasons.length > 1 %>
         <button data-modal="season-selector" class="action-button">

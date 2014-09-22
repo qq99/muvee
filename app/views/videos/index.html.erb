@@ -4,9 +4,9 @@
       <ul class="responsive-grid">
         <% @items.each do |item| %>
           <% if item.class == Series %>
-            <%= render 'shared/poster', show_path: series_path(item), poster_url: item.poster_url, item: item %>
+            <%= render 'shared/poster', show_path: series_path(item), poster_url: item.poster_url %>
           <% elsif item.class == Movie %>
-            <%= render 'shared/poster', show_path: movie_path(item), poster_url: item.poster_url, item: item %>
+            <%= render 'shared/poster', show_path: movie_path(item), poster_url: item.poster_url %>
           <% end %>
         <% end %>
         <div class="clearfix"></div>
