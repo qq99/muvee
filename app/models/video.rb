@@ -125,7 +125,10 @@ class Video < ActiveRecord::Base
     Dir.getwd() + Video.thumbnail_root_path + UUID.generate(:compact) + ".jpg"
   end
 
-  def reanalyze; end
+  def reanalyze
+    shellout_and_grab_duration if duration.blank?
+    create_initial_thumb if thumbnails.length == 0
+  end
   def redownload_missing; end
   def redownload; end
 

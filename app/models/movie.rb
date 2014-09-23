@@ -146,6 +146,7 @@ class Movie < Video
 
   def reanalyze
     return if raw_file_path.blank? # this is only for local movies
+    super
     self.status = "local"
     guessit
     extract_metadata

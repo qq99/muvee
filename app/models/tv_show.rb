@@ -88,6 +88,7 @@ class TvShow < Video
   end
 
   def reanalyze
+    super
     guessit
     associate_with_series
     associate_with_genres
