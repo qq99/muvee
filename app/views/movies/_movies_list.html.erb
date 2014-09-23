@@ -5,6 +5,7 @@
         <a
           class="poster-link aspect-poster js-movie-tile"
           href="<%= movie_path(movie) %>"
+          data-refresh-key="movie<%= movie.id %>"
           data-3d="<%= movie.is_3d? %>"
           data-fanart-path="<%= fanart_video_path(movie) %>"
           data-title="<%= movie.title || 'Title Unknown' %>"
@@ -17,7 +18,7 @@
             <%= render 'shared/no_poster_available' %>
           <% end %>
 
-          <div class="thumbnails hide">
+          <div id="movie_thumbnails<%= movie.id %>" class="thumbnails hide" refresh="movie<%= movie.id %>">
             <%= render 'movie_thumbnails', movie: movie %>
           </div>
           <div class="js-sources-info inline-sources hide"></div>

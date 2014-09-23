@@ -1,5 +1,5 @@
 <% if movie.fanarts.present? %>
   <img src="<%= movie.fanarts.sample.url %>">
 <% elsif movie.thumbnails.present? %>
-  <img src="<%= movie.thumbnails.sample.url %>" alt="">
+  <img src="<%= movie.thumbnails.sample.url %>">
 <% end %>

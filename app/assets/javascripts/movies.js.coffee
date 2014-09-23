@@ -1,5 +1,19 @@
 movieSlideshow = null
 
+transition = ($source) ->
+  $(".featured-image img.hidden").remove()
+  $images = $source.find(".thumbnails img")
+  return if !$images.length
+
+  randomIndex = parseInt(Math.random()*$images.length, 10)
+  $randomImg = $($images[randomIndex]).clone()
+  $randomImg.attr("src", $randomImg.attr("data-src")).addClass("hidden")
+
+  $(".featured-image img").addClass("hidden")
+  $(".featured-image").append($randomImg)
+  _.defer ->
+    $randomImg.removeClass("hidden")
+
 $(document).on "focus mouseenter", ".js-movie-tile", (ev) ->
   clearInterval(movieSlideshow)
 
@@ -8,15 +22,20 @@ $(document).on "focus mouseenter", ".js-movie-tile", (ev) ->
   $(".movie-meta .movie-overview").html($target.data("overview"))
   $(".movie-meta .movie-quality").html($target.data("quality"))
   $(".movie-meta .movie-year").html($target.data("year"))
-  $(".inline-movie-preview .featured-image").html($target.find(".thumbnails").html())
 
-  operation = $.ajax
-    method: 'GET'
-    url: $target.data("fanart-path")
-    dataType: 'html'
+  transition($target)
 
-  operation.done (data, textStatus, jqXHR) ->
-    $(".inline-movie-preview .slideshow-pool").html(data)
+  if key = $target.data("refresh-key")
+    $target.data("refresh-key", "")
+    operation = $.ajax
+      method: 'GET'
+      url: $target.data("fanart-path")
+      dataType: 'html'
+
+    operation.done (data, textStatus, jqXHR) ->
+      Page.refresh
+        response: jqXHR
+        onlyKeys: [key]
 
   if $target.data("3d")
     $(".movie-meta .three-d").show()
@@ -26,17 +45,7 @@ $(document).on "focus mouseenter", ".js-movie-tile", (ev) ->
   $(".inline-movie-preview .movie-images img").first().removeClass("hide")
   $(".inline-movie-preview").addClass("active")
 
+
   movieSlideshow = setInterval ->
-    $images = $(".slideshow-pool img")
-    return if !$images.length
-
-    randomIndex = parseInt(Math.random()*$images.length, 10)
-    randomImg = $images[randomIndex]
-    console.log randomIndex
-
-    $(".featured-image img").remove()
-    $(".featured-image").html(randomImg)
+    transition($target)
   , 5000
-
-$ ->
-  $(".js-movie-tile").first().trigger("focus")

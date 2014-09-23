@@ -1,11 +1,11 @@
-<div class="movie-thumbnails">
+<div id="movie_thumbnails<%= movie.id %>" class="thumbnails hide" refresh="movie<%= movie.id %>">
   <% if movie.fanarts.present? %>
     <% movie.fanarts.shuffle.each do |fanart| %>
-      <img class="video-thumbnail" src="<%= fanart.url %>">
+      <img class="hidden" data-src="<%= fanart.url %>">
     <% end %>
   <% else %>
     <% movie.thumbnails.shuffle.each do |thumb| %>
-      <img class="video-thumbnail" src="<%= thumb.url %>" alt="">
+      <img class="hidden" data-src="<%= thumb.url %>" alt="">
     <% end %>
   <% end %>
 </div>
