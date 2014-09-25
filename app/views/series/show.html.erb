@@ -5,10 +5,19 @@
         <i class="fa fa-chevron-left"></i>
       </a> <%= @series.title  %>
     </h1>
-    <h3 class="series-overview">
-      <%= @series.overview %>
-    </h3>
+    <div id="series_overview" refresh="series_overview">
+      <h3 class="series-overview">
+        <%= @series.overview %>
+      </h3>
+    </div>
     <div class="series-buttons">
+      <input type="text" value="" bind="search" class="action-button">
+      <%= link_to "Find episode",
+        find_episode_series_path(@series),
+        class: "action-button",
+        "remote-method" => "GET",
+        "refresh-on-success" => "series_overview",
+        "bind-href" => "'#{find_episode_series_path(@series)}?series_episode=' + search" %>
       <%= link_to "Shuffle", video_path(@videos.map(&:id).sample, shuffle: true, series_id: @series.id), class: "action-button" %>
       <% if @seasons.length > 1 %>
         <button data-modal="season-selector" class="action-button">

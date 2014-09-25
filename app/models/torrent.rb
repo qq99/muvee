@@ -6,11 +6,26 @@ class Torrent < ActiveRecord::Base
     @service ||= TorrentManagerService.new
   end
 
+  def move_to_proper_folder
+    if video_type == "Movie"
+      move_to_movie_folder
+    elsif video_type == "TvShow"
+      move_to_tv_show_folder
+    end
+  end
+
   def move_to_movie_folder
     config = ApplicationConfiguration.first
-    movie_folder = config.movie_sources.first
+    folder = config.movie_sources.first
 
-    service.move_torrent({transmission_id: transmission_id, to: movie_folder})
+    service.move_torrent({transmission_id: transmission_id, to: folder})
+  end
+
+  def move_to_tv_show_folder
+    config = ApplicationConfiguration.first
+    folder = config.tv_sources.first
+
+    service.move_torrent({transmission_id: transmission_id, to: folder})
   end
 
   def info

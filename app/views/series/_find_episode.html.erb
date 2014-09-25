@@ -1,0 +1,39 @@
+<div id="series_overview" refresh="series_overview">
+  <% sources.each do |source| %>
+    <div class="torrent-source">
+      <table>
+        <tr>
+          <td>Title</td>
+          <td class="italic ralign"><%= source[:title] %></td>
+        </tr>
+        <tr>
+          <td>Ratio</td>
+          <td class="italic ralign"><%= (source[:seeders].to_f / source[:leechers].to_f).round(2) %></td>
+        </tr>
+        <tr>
+          <td>Seeds</td>
+          <td class="italic ralign"><%= source[:seeders] %></td>
+        </tr>
+        <tr>
+          <td>Peers</td>
+          <td class="italic ralign"><%= source[:leechers] %></td>
+        </tr>
+      </table>
+      <% if torrent = Torrent.find_by(source: source[:magnet_link]) %>
+        <div class="torrent-progress-meter" data-torrent-progress-url="<%= status_torrent_path(torrent) %>">
+          <div class="torrent-progress"></div>
+          <span class="downloading">Downloading...</span>
+        </div>
+      <% else %>
+        <%= form_tag download_series_path(@series), method: "post" do %>
+          <%= hidden_field_tag :download_url, source[:magnet_link] %>
+          <%= button_tag "Download", type: "submit", class: 'action-button' %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if sources.length == 0 %>
+    <p>No sources are available at this time :(</p>
+  <% end %>
+</div>

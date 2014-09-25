@@ -35,3 +35,54 @@ document.addEventListener 'page:before-partial-replace', (event) ->
 
 $(document).ajaxComplete ->
   Twine.refresh()
+
+$(document).on 'click', '[remote-method]', (event) ->
+  event.preventDefault()
+
+  $link = $(this)
+
+  requestType = $link.attr('remote-method')
+  httpRequestType = if requestType.toLowerCase() == 'get' then 'GET' else 'POST'
+
+  ajaxOptions =
+    type: httpRequestType
+    url: $link.attr('href')
+    dataType: 'html'
+    data:
+      '_method': requestType
+
+  remote = new Turbograft.Remote(ajaxOptions, $link.attr("refresh-on-success"), $link.attr("refresh-on-error"), $link.attr("full-refresh"))
+  remote.submit()
+
+window.Turbograft = {};
+class Turbograft.Remote
+  constructor: (@ajaxOptions = {}, @refreshOnSuccess, @refreshOnError, @fullRefresh = false) ->
+
+  submit: =>
+    operation = $.ajax @ajaxOptions
+
+    operation.done (results, status, xhr) =>
+      if redirect = xhr.getResponseHeader('X-Next-Redirect')
+        Page.visit(redirect, reload: true)
+        return
+
+      @ajaxOptions.done?.apply(null, arguments)
+
+      refreshKeys = if @refreshOnSuccess then @refreshOnSuccess.split(" ") else []
+      if @fullRefresh
+        Page.refresh
+          onlyKeys: refreshKeys
+      else if @refreshOnSuccess != "false"
+        Page.refresh
+          response: xhr
+          onlyKeys: refreshKeys
+
+    operation.fail (jqXHR, textStatus, errorThrown) =>
+      @ajaxOptions.fail?.apply(null, arguments)
+      if @refreshOnError != "false"
+        if @refreshOnError
+          Page.refresh
+            response: jqXHR
+            onlyKeys: @refreshOnError.split(" ")
+
+    return

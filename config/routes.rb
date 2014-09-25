@@ -26,6 +26,10 @@ Rails.application.routes.draw do
       get 'nonepisodic'
       get 'newest_episodes'
     end
+    member do
+      get 'find_episode'
+      post 'download'
+    end
   end
   resources :movies do
     collection do

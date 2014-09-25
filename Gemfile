@@ -41,6 +41,7 @@ gem 'timecop'
 gem 'mini_magick'
 gem 'pHash'
 gem 'ffi'
+gem 'thepiratebay'
 
 gem 'foreman'
 gem 'sidekiq'

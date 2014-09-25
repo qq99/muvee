@@ -1,5 +1,19 @@
 @import "colors";
 
+#series_overview {
+  height: 28rem;
+  padding-right: 1rem;
+  overflow-y: auto;
+  margin-top: 1rem;
+  .torrent-source {
+    float: none;
+    width: 100%;
+    table {
+      width: 100%;
+    }
+  }
+}
+
 #series {
   width: 100%;
   height: 100%;
@@ -7,12 +21,6 @@
   .poster-button {
     width: 15em;
     float: none;
-  }
-  .series-overview {
-    height: 18em;
-    padding-right: 1em;
-    overflow-y: auto;
-    margin-top: 1em;
   }
   .series-information, .video-list {
     position: absolute;

@@ -8,7 +8,7 @@ class TorrentCompletionWorker
         torrent.destroy
       elsif status == "complete"
         Rails.logger.info "Torrent complete, moving"
-        torrent.move_to_movie_folder
+        torrent.move_to_proper_folder
       end
     end
   end
