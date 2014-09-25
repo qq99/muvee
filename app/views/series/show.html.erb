@@ -41,12 +41,13 @@
       <% if (@season && @series.last_watched_video.season == @season) || !@season %>
         <div class="featured-episode">
           <%= render 'video_tile', video: @series.last_watched_video %>
+          <% featured_video_consumed = true %>
         </div>
       <% end %>
     <% end %>
     <div class="video-list-container">
       <% @videos.each do |show| %>
-        <% unless show == @series.last_watched_video %>
+        <% unless show == @series.last_watched_video && featured_video_consumed %>
           <%= render 'video_tile', video: show %>
         <% end %>
       <% end %>
