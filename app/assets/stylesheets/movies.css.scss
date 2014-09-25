@@ -3,6 +3,7 @@
 
 #all_movies {
   background: black;
+  background: $sleek-transparent-black;
   position: absolute;
   top: 0;
   left: 0;
@@ -218,5 +219,32 @@ $preview-height: 45%;
     display: block;
     width: 100%;
     text-align: center;
+  }
+}
+
+#all_movies_by_genre {
+  min-height: 100%;
+  min-width: 100%;
+  background: black;
+  background: $sleek-transparent-black;
+}
+.genres-box {
+  padding-top: 10em;
+  display: flex;
+  justify-content: center;
+  > div {
+    padding: 2em;
+  }
+  a {
+    color: white;
+    text-decoration: none;
+    font-style: italic;
+    font-weight: normal;
+    &:visited {
+      color: white;
+    }
+    &:hover, &:focus {
+      color: $radical-blue;
+    }
   }
 }

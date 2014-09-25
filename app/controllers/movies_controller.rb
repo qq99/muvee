@@ -34,7 +34,7 @@ class MoviesController < ApplicationController
   end
 
   def genres
-    @genres = Genre.all
+    @genres = Genre.all.sort_by(&:name).reject { |genre| genre.videos.local.length == 0 }
   end
 
   def genre
