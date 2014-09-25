@@ -6,10 +6,10 @@
           class="poster-link aspect-poster js-movie-tile"
           define='{
             is3d: <%= movie.is_3d? %>,
-            title: "<%= movie.title || 'Title unknown' %>",
-            overview: "<%= movie.overview || movie.raw_file_path %>",
-            year: "<%= movie.year %>",
-            quality: "<%= movie.quality %>"
+            title: "<%= escape_javascript(movie.title || 'Title unknown') %>",
+            overview: "<%= escape_javascript(movie.overview || movie.raw_file_path) %>",
+            year: "<%= escape_javascript(movie.year.to_s) %>",
+            quality: "<%= escape_javascript(movie.quality.to_s) %>"
           }'
           href="<%= movie_path(movie) %>"
           data-refresh-key="movie<%= movie.id %>"

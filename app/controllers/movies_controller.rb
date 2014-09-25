@@ -34,13 +34,13 @@ class MoviesController < ApplicationController
   end
 
   def genres
-    @genres = Genre.all.sort_by(&:name).reject { |genre| genre.videos.local.length == 0 }
+    @genres = Genre.all.sort_by(&:name).reject { |genre| genre.videos.length == 0 }
   end
 
   def genre
     name = Genre.normalized_name(params[:type])
     @genre = Genre.find_by(name: name)
-    @movies = @genre.videos.movies.local.all
+    @movies = @genre.videos.movies.all
     render 'index'
   end
 
