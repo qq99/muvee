@@ -16,12 +16,12 @@ transition = ($source) ->
 
 $(document).on "focus mouseenter", ".js-movie-tile", (ev) ->
   clearInterval(movieSlideshow)
+  target = ev.currentTarget
+  $target = $(target)
 
-  $target = $(ev.currentTarget)
-  $(".movie-meta .movie-title .title").html($target.data("title"))
-  $(".movie-meta .movie-overview").html($target.data("overview"))
-  $(".movie-meta .movie-quality").html($target.data("quality"))
-  $(".movie-meta .movie-year").html($target.data("year"))
+  ctx = Twine.context(target)
+  _.merge(window.context.movieMeta, ctx)
+  Twine.refresh()
 
   transition($target)
 
@@ -36,15 +36,6 @@ $(document).on "focus mouseenter", ".js-movie-tile", (ev) ->
       Page.refresh
         response: jqXHR
         onlyKeys: [key]
-
-  if $target.data("3d")
-    $(".movie-meta .three-d").show()
-  else
-    $(".movie-meta .three-d").hide()
-
-  $(".inline-movie-preview .movie-images img").first().removeClass("hide")
-  $(".inline-movie-preview").addClass("active")
-
 
   movieSlideshow = setInterval ->
     transition($target)

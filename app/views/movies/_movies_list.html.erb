@@ -1,17 +1,19 @@
 <ul class="responsive-grid">
   <% movies.each do |movie| %>
     <li class="poster aspect10x7">
-      <div class="poster-innards">
+      <div class="poster-innards" context="movieMeta<%= movie.id %>">
         <a
           class="poster-link aspect-poster js-movie-tile"
+          define='{
+            is3d: <%= movie.is_3d? %>,
+            title: "<%= movie.title || 'Title unknown' %>",
+            overview: "<%= movie.overview || movie.raw_file_path %>",
+            year: "<%= movie.year %>",
+            quality: "<%= movie.quality %>"
+          }'
           href="<%= movie_path(movie) %>"
           data-refresh-key="movie<%= movie.id %>"
-          data-3d="<%= movie.is_3d? %>"
-          data-fanart-path="<%= fanart_video_path(movie) %>"
-          data-title="<%= movie.title || 'Title Unknown' %>"
-          data-year="<%= movie.year %>"
-          data-quality="<%= movie.quality %>"
-          data-overview="<%= movie.overview || movie.raw_file_path %>">
+          data-fanart-path="<%= fanart_video_path(movie) %>">
           <% if poster_url = movie.poster_url %>
             <img class="video-thumbnail has-aspect" src="<%= poster_url %>" alt="">
           <% else %>

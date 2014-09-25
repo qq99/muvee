@@ -10,7 +10,7 @@ $ ->
       'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
 
 # Twine & Turbograft interop:
-context = {}
+window.context = {}
 
 reset = (nodes) ->
   if nodes
