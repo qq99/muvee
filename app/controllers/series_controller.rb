@@ -36,7 +36,7 @@ class SeriesController < ApplicationController
   def download
     service = TorrentManagerService.new
     service.download_tv_show(params[:download_url])
-    redirect_to series_index_path(@series)
+    redirect_to series_path(@series)
   end
 
   private
