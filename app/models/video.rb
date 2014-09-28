@@ -132,8 +132,6 @@ class Video < ActiveRecord::Base
   def redownload_missing; end
   def redownload; end
 
-  private
-
   def compute_genres(genre_string)
     genre_string.split(/,|\|/).compact.uniq.map(&:strip).map(&:titleize).reject(&:blank?)
   end

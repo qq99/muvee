@@ -43,6 +43,30 @@ class Torrent < ActiveRecord::Base
     end
   end
 
+  def set_video_to_local_after_complete
+    return if video.blank? || video.local?
+    return if video.is_tv? # we don't create a model for TV shows
+    config = ApplicationConfiguration.first
+    folders = config.movie_sources
+    search_for = files_by_size.first[:name]
+    true_path = find_file_in_folders(search_for, folders).first
+    video.raw_file_path = true_path
+    video.status = "local"
+    video.shellout_and_grab_duration
+    video.save
+  end
+
+  def find_file_in_folders(target, folders)
+    files = []
+    folders.each do |folder|
+      folder = "#{folder}/" if folder[-1] != "/" # append trailing slash if not there
+      all_files_in_folder = Dir["#{folder}**/*.*"]
+      files.push(*all_files_in_folder)
+    end
+
+    files.select { |f| f.include? target }
+  end
+
   def percentage
     service.percentage_done(transmission_id)
   end

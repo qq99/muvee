@@ -9,6 +9,8 @@ class TorrentCompletionWorker
       elsif status == "complete"
         Rails.logger.info "Torrent complete, moving"
         torrent.move_to_proper_folder
+        torrent.set_video_to_local_after_complete
+        torrent.destroy
       end
     end
   end
