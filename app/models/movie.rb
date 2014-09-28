@@ -148,7 +148,10 @@ class Movie < Video
     return if raw_file_path.blank? # this is only for local movies
     super
     self.status = "local"
-    guessit
+    unless imdb_id_is_accurate
+      guessit
+      self.imdb_id = nil
+    end
     extract_metadata
     associate_with_genres
   end
