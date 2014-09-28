@@ -19,9 +19,14 @@ class Movie < Video
   }.freeze
 
   def metadata
-    @imdb_id ||= imdb_id || ImdbSearchResult.get(title).relevant_result(title).try(:[], :id)
+    @imdb_id ||= search_imdb_for_id
     return {} if @imdb_id.blank?
     @metadata ||= OmdbSearchResult.get(@imdb_id).data || {}
+  end
+
+  def search_imdb_for_id
+    return imdb_id if imdb_id.present? && imdb_id_is_accurate
+    self.imdb_id = ImdbSearchResult.get(title).relevant_result(title).try(:[], :id)
   end
 
   def poster_url
@@ -148,12 +153,12 @@ class Movie < Video
     return if raw_file_path.blank? # this is only for local movies
     super
     self.status = "local"
-    unless imdb_id_is_accurate
-      guessit
-      self.imdb_id = nil
-    end
+    guessit unless imdb_id_is_accurate
     extract_metadata
     associate_with_genres
+    if imdb_id_changed?
+      redownload
+    end
   end
 
   def redownload
