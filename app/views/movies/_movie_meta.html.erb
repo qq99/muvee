@@ -10,7 +10,7 @@
 <div class="movie-meta panel" context="movieMeta">
   <h1 class="movie-title">
     <span class="title" bind="title"><%= movies.first.title %></span>
-    <span class="three-d">3D</span>
+    <span class="three-d" bind-show="is3d">3D</span>
     <span class="movie-quality" bind="quality"><%= movies.first.quality %></span>
   </h1>
   <p class="movie-overview" bind="overview"><%= movies.first.overview %></p>
