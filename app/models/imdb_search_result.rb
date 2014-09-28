@@ -19,7 +19,16 @@ class ImdbSearchResult < ExternalMetadata
   end
 
   def relevant_result(title)
-    best_results(title).first
+    full_results = best_results(title).first(10).map do |result|
+      OmdbSearchResult.get(result[:id]).data
+    end
+
+    # use vote count as a gauge of popularity / correctness of match
+    full_results_by_votes = full_results.sort_by do |result|
+      -(result[:imdbVotes] || 0).gsub(/\D/, '').to_f
+    end
+
+    full_results_by_votes.first.try(:[], :imdbID)
   end
 
   def by_ldistance(list, field, ideal)

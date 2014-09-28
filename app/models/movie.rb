@@ -26,7 +26,7 @@ class Movie < Video
 
   def search_imdb_for_id
     return imdb_id if imdb_id.present? && imdb_id_is_accurate
-    self.imdb_id = ImdbSearchResult.get(title).relevant_result(title).try(:[], :id)
+    self.imdb_id = ImdbSearchResult.get(title).relevant_result(title)
   end
 
   def poster_url
