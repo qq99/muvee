@@ -1,0 +1,270 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://www.imdb.com/xml/find?json=1&nr=1&q=The%20Amazing%20Spiderman&tt=on
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - www.imdb.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 29 Sep 2014 02:56:00 GMT
+      Server:
+      - HTTPDaemon
+      X-Frame-Options:
+      - SAMEORIGIN
+      Cache-Control:
+      - private
+      Content-Type:
+      - text/html; charset=iso-8859-1
+      Set-Cookie:
+      - uu=BCYsEkce6KOVA-Aj8FyD3XiFX4sfnQtu7wjAavSN-pBYJ9g20eX6k6AH9pDsMgPZW3Fp3WEZKcS1bZqYUV0DWpnasvAfM9AStMks2R9oWaywQNTbq8H-VQRWKL2MBw6ThJSoboln5Y3Wyy17gL3FR6di6pFk3ItEIDmrpMBh1c9_C_0;expires=Thu,
+        30 Dec 2037 00:00:00 GMT;path=/;domain=.imdb.com
+      P3p:
+      - policyref="http://i.imdb.com/images/p3p.xml",CP="CAO DSP LAW CUR ADM IVAo
+        IVDo CONo OTPo OUR DELi PUBi OTRi BUS PHY ONL UNI PUR FIN COM NAV INT DEM
+        CNT STA HEA PRE LOC GOV OTC "
+      Vary:
+      - User-Agent
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |2
+
+        {
+        "title_popular": [{ "id":"tt0316654", "title":"Spider-Man 2", "name":"","title_description":"2004,     <a href='/name/nm0000600/'>Sam Raimi</a>","episode_title":"","description":"2004,     <a href='/name/nm0000600/'>Sam Raimi</a>"},{ "id":"tt0948470", "title":"The Amazing Spider-Man", "name":"","title_description":"2012,     <a href='/name/nm1989536/'>Marc Webb</a>","episode_title":"","description":"2012,     <a href='/name/nm1989536/'>Marc Webb</a>"},{ "id":"tt1872181", "title":"The Amazing Spider-Man 2", "name":"","title_description":"2014,     <a href='/name/nm1989536/'>Marc Webb</a>","episode_title":"","description":"2014,     <a href='/name/nm1989536/'>Marc Webb</a>"}],"title_substring": [{ "id":"tt2233044", "title":"The Amazing Spiderman T4 Premiere Special", "name":"","title_description":"2012 TV documentary,     <a href='/name/nm1114381/'>Steve Kemsley</a>...","episode_title":"","description":"2012 TV documentary,     <a href='/name/nm1114381/'>Steve Kemsley</a>..."}],"title_approx": [{ "id":"tt0976192", "title":"The Spectacular Spider-Man", "name":"","title_description":"2008 TV series,     <a href='/name/nm0228492/'>Steve Ditko</a>...","episode_title":"","description":"2008 TV series,     <a href='/name/nm0228492/'>Steve Ditko</a>..."},{ "id":"tt0061301", "title":"Spider-Man", "name":"","title_description":"1967 TV series,     <a href='/name/nm0228492/'>Steve Ditko</a>...","episode_title":"","description":"1967 TV series,     <a href='/name/nm0228492/'>Steve Ditko</a>..."},{ "id":"tt2249079", "title":"The Amazing Spider-Man", "name":"","title_description":"2012 video game,     <a href='/name/nm0034229/'>Keith Arem</a>","episode_title":"","description":"2012 video game,     <a href='/name/nm0034229/'>Keith Arem</a>"},{ "id":"tt0076975", "title":"The Amazing Spider-Man", "name":"","title_description":"1977 TV series","episode_title":"","description":"1977 TV series"},{ "id":"tt0211194", "title":"The Amazing Adventures of Spider-Man", "name":"","title_description":"1999 short,     <a href='/name/nm0873857/'>Scott Trowbridge</a>","episode_title":"","description":"1999 short,     <a href='/name/nm0873857/'>Scott Trowbridge</a>"},{ "id":"tt3262076", "title":"The Amazing Spider-Man 2", "name":"","title_description":"2014 video game","episode_title":"","description":"2014 video game"},{ "id":"tt2250912", "title":"The Amazing Spider-Man 3", "name":"","title_description":"2018,     <a href='/name/nm1989536/'>Marc Webb</a>","episode_title":"","description":"2018,     <a href='/name/nm1989536/'>Marc Webb</a>"},{ "id":"tt0437316", "title":"Making the Amazing", "name":"","title_description":"2004 video documentary,     <a href='/name/nm1361273/'>Charles de Lauzirika</a>","episode_title":"","description":"2004 video documentary,     <a href='/name/nm1361273/'>Charles de Lauzirika</a>"},{ "id":"tt0360619", "title":"The Green Goblin&#x27;s Last Stand", "name":"","title_description":"1992 video,     <a href='/name/nm1146072/'>Dan Poole</a>","episode_title":"","description":"1992 video,     <a href='/name/nm1146072/'>Dan Poole</a>"},{ "id":"tt2387576", "title":"Rite of Passage: The Amazing Spider-Man Reborn", "name":"","title_description":"2012 documentary,     <a href='/name/nm1361273/'>Charles de Lauzirika</a>","episode_title":"","description":"2012 documentary,     <a href='/name/nm1361273/'>Charles de Lauzirika</a>"},{ "id":"tt2308947", "title":"The Amazing Spider-Man", "name":"","title_description":"1991 video game","episode_title":"","description":"1991 video game"},{ "id":"tt3769232", "title":"Amazing Spider-Man 2: Behind the Scenes", "name":"","title_description":"2014 short,     <a href='/name/nm2675160/'>Nathaniel Moher</a>","episode_title":"","description":"2014 short,     <a href='/name/nm2675160/'>Nathaniel Moher</a>"},{ "id":"tt3637130", "title":"Heroes and Villains: The World of the Amazing Spider-Man", "name":"","title_description":"2014 TV movie,     <a href='/name/nm0448588/'>J.M. Kenny</a>","episode_title":"","description":"2014 TV movie,     <a href='/name/nm0448588/'>J.M. Kenny</a>"},{ "id":"tt4060186", "title":"Something Sinister This Way Comes - The Amazing Spider-Man 2", "name":"","title_description":"2014","episode_title":"","description":"2014"},{ "id":"tt2990104", "title":"The Amazing Spider-Man 4", "name":"","title_description":"????","episode_title":"","description":"????"},{ "id":"tt1043783", "title":"The Amazing Spider-Man Interactive Adventures", "name":"","title_description":"2007 video game,     <a href='/name/nm0728317/'>Mark Risley</a>","episode_title":"","description":"2007 video game,     <a href='/name/nm0728317/'>Mark Risley</a>"}]
+        }
+    http_version: 
+  recorded_at: Mon, 29 Sep 2014 02:56:01 GMT
+- request:
+    method: get
+    uri: http://www.omdbapi.com/?i=tt0948470
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - www.omdbapi.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private, max-age=324
+      Content-Type:
+      - text/html; charset=utf-8
+      Expires:
+      - Mon, 29 Sep 2014 03:01:19 GMT
+      Last-Modified:
+      - Mon, 29 Sep 2014 02:01:19 GMT
+      Vary:
+      - "*"
+      Server:
+      - Microsoft-IIS/7.5
+      X-Aspnet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Mon, 29 Sep 2014 02:55:55 GMT
+      Content-Length:
+      - '948'
+    body:
+      encoding: UTF-8
+      string: '{"Title":"The Amazing Spider-Man","Year":"2012","Rated":"PG-13","Released":"03
+        Jul 2012","Runtime":"136 min","Genre":"Action, Adventure, Fantasy","Director":"Marc
+        Webb","Writer":"James Vanderbilt (screenplay), Alvin Sargent (screenplay),
+        Steve Kloves (screenplay), James Vanderbilt (story), Stan Lee (based on the
+        Marvel comic book by), Steve Ditko (based on the Marvel comic book by)","Actors":"Andrew
+        Garfield, Emma Stone, Rhys Ifans, Denis Leary","Plot":"Peter Parker finds
+        a clue that might help him understand why his parents disappeared when he
+        was young. His path puts him on a collision course with Dr. Curt Connors,
+        his father''s former partner.","Language":"English","Country":"USA","Awards":"4
+        wins & 29 nominations.","Poster":"http://ia.media-imdb.com/images/M/MV5BMjMyOTM4MDMxNV5BMl5BanBnXkFtZTcwNjIyNzExOA@@._V1_SX300.jpg","Metascore":"66","imdbRating":"7.1","imdbVotes":"338,048","imdbID":"tt0948470","Type":"movie","Response":"True"}'
+    http_version: 
+  recorded_at: Mon, 29 Sep 2014 02:56:02 GMT
+- request:
+    method: get
+    uri: http://www.omdbapi.com/?i=tt1872181
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - www.omdbapi.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private, max-age=205
+      Content-Type:
+      - text/html; charset=utf-8
+      Expires:
+      - Mon, 29 Sep 2014 02:59:21 GMT
+      Last-Modified:
+      - Mon, 29 Sep 2014 01:59:21 GMT
+      Vary:
+      - "*"
+      Server:
+      - Microsoft-IIS/7.5
+      X-Aspnet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Mon, 29 Sep 2014 02:55:55 GMT
+      Content-Length:
+      - '952'
+    body:
+      encoding: UTF-8
+      string: '{"Title":"The Amazing Spider-Man 2","Year":"2014","Rated":"PG-13","Released":"02
+        May 2014","Runtime":"142 min","Genre":"Action, Adventure, Fantasy","Director":"Marc
+        Webb","Writer":"Alex Kurtzman (screenplay), Roberto Orci (screenplay), Jeff
+        Pinkner (screenplay), Alex Kurtzman (screen story), Roberto Orci (screen story),
+        Jeff Pinkner (screen story), James Vanderbilt (screen story), Stan Lee (Marvel
+        comic book), Steve Ditko (Marvel comic book)","Actors":"Andrew Garfield, Emma
+        Stone, Jamie Foxx, Dane DeHaan","Plot":"When atrocities threaten New York,
+        Spider-Man must protect the citizens of New York and his loved ones before
+        New York''s heart befalls into tragedy.","Language":"English","Country":"USA","Awards":"8
+        nominations.","Poster":"http://ia.media-imdb.com/images/M/MV5BOTA5NDYxNTg0OV5BMl5BanBnXkFtZTgwODE5NzU1MTE@._V1_SX300.jpg","Metascore":"53","imdbRating":"7.1","imdbVotes":"184,363","imdbID":"tt1872181","Type":"movie","Response":"True"}'
+    http_version: 
+  recorded_at: Mon, 29 Sep 2014 02:56:02 GMT
+- request:
+    method: get
+    uri: http://www.omdbapi.com/?i=tt0316654
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - www.omdbapi.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private, max-age=543
+      Content-Type:
+      - text/html; charset=utf-8
+      Expires:
+      - Mon, 29 Sep 2014 03:04:59 GMT
+      Last-Modified:
+      - Mon, 29 Sep 2014 02:04:59 GMT
+      Vary:
+      - "*"
+      Server:
+      - Microsoft-IIS/7.5
+      X-Aspnet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Mon, 29 Sep 2014 02:55:55 GMT
+      Content-Length:
+      - '866'
+    body:
+      encoding: UTF-8
+      string: '{"Title":"Spider-Man 2","Year":"2004","Rated":"PG-13","Released":"30
+        Jun 2004","Runtime":"127 min","Genre":"Action, Adventure","Director":"Sam
+        Raimi","Writer":"Stan Lee (comic book), Steve Ditko (comic book), Alfred Gough
+        (screen story), Miles Millar (screen story), Michael Chabon (screen story),
+        Alvin Sargent (screenplay)","Actors":"Tobey Maguire, Kirsten Dunst, James
+        Franco, Alfred Molina","Plot":"Peter Parker is beset with troubles in his
+        failing personal life as he battles a brilliant scientist named Doctor Otto
+        Octavius.","Language":"English, Russian, Chinese","Country":"USA","Awards":"Won
+        1 Oscar. Another 18 wins & 43 nominations.","Poster":"http://ia.media-imdb.com/images/M/MV5BMjE0Njc1NDYzN15BMl5BanBnXkFtZTcwNjAxMzYyMQ@@._V1_SX300.jpg","Metascore":"83","imdbRating":"7.4","imdbVotes":"295,395","imdbID":"tt0316654","Type":"movie","Response":"True"}'
+    http_version: 
+  recorded_at: Mon, 29 Sep 2014 02:56:02 GMT
+- request:
+    method: get
+    uri: http://www.omdbapi.com/?i=tt2233044
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - www.omdbapi.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private, max-age=3558
+      Content-Type:
+      - text/html; charset=utf-8
+      Expires:
+      - Mon, 29 Sep 2014 03:55:15 GMT
+      Last-Modified:
+      - Mon, 29 Sep 2014 02:55:15 GMT
+      Vary:
+      - "*"
+      Server:
+      - Microsoft-IIS/7.5
+      X-Aspnet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Mon, 29 Sep 2014 02:55:56 GMT
+      Content-Length:
+      - '438'
+    body:
+      encoding: UTF-8
+      string: '{"Title":"The Amazing Spiderman T4 Premiere Special","Year":"2012","Rated":"N/A","Released":"30
+        Jun 2012","Runtime":"N/A","Genre":"Documentary","Director":"Steve Kemsley,
+        Steven Vinacour","Writer":"Steven Vinacour","Actors":"Nick Grimshaw, Julio
+        Leal","Plot":"N/A","Language":"English","Country":"UK","Awards":"N/A","Poster":"N/A","Metascore":"N/A","imdbRating":"5.7","imdbVotes":"6","imdbID":"tt2233044","Type":"movie","Response":"True"}'
+    http_version: 
+  recorded_at: Mon, 29 Sep 2014 02:56:03 GMT
+recorded_with: VCR 2.9.2

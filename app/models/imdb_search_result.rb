@@ -25,7 +25,7 @@ class ImdbSearchResult < ExternalMetadata
 
     # use vote count as a gauge of popularity / correctness of match
     full_results_by_votes = full_results.sort_by do |result|
-      -(result[:imdbVotes] || 0).gsub(/\D/, '').to_f
+      -(result[:imdbVotes] || "0").gsub(/\D/, '').to_f
     end
 
     full_results_by_votes.first.try(:[], :imdbID)
