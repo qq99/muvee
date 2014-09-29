@@ -8,7 +8,7 @@ class AnalyzerWorker
     opts = opts.with_indifferent_access
 
     klasses.each do |klass|
-      klass.all.each do |model_instance|
+      klass.local.all.each do |model_instance|
         if model_instance.local? && (!model_instance.raw_file_path || !File.exist?(model_instance.raw_file_path))
           model_instance.destroy
         else
