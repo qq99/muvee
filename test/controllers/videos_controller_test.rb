@@ -50,4 +50,10 @@ class VideosControllerTest < ActionController::TestCase
     assert_equal 10, video.reload.thumbnails.length
     assert_equal 10, JSON.parse(@response.body)["thumbnails"].length
   end
+
+  test "POST to #reanalyze_video will reanalyze the video" do
+    Video.any_instance.expects(:reanalyze).once
+    post :reanalyze_video, id: @video
+    assert_response :ok
+  end
 end

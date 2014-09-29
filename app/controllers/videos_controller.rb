@@ -99,6 +99,7 @@ class VideosController < ApplicationController
   # POST /videos/:id/reanalyze
   def reanalyze_video
     @video.reanalyze
+    render json: {status: "ok"}
   end
 
   def redownload
