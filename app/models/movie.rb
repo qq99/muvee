@@ -152,11 +152,12 @@ class Movie < Video
   def reanalyze
     return if raw_file_path.blank? # this is only for local movies
     super
+    old_imdb_id = imdb_id
     self.status = "local"
     guessit unless imdb_id_is_accurate
     extract_metadata
     associate_with_genres
-    if imdb_id_changed?
+    if imdb_id != old_imdb_id
       redownload
     end
   end

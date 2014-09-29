@@ -65,6 +65,57 @@ class MovieTest < ActiveSupport::TestCase
     refute show.is_movie?
   end
 
+  test "reanalyze calls Video::reanalyze" do
+    movie = videos(:true_grit)
+    Video.any_instance.expects(:reanalyze).once
+    movie.reanalyze
+  end
+
+  test "reanalyze sets the status of a video to local" do
+    movie = videos(:true_grit)
+    movie.update_attribute(:status, "remote")
+    movie.reanalyze
+    assert movie.local?
+  end
+
+  test "reanalyze attempts to guessit unless the imdb_id has been noted to be accurated" do
+    movie = videos(:true_grit)
+    Movie.any_instance.expects(:guessit).once
+    movie.reanalyze
+    movie.update_attribute(:imdb_id_is_accurate, true)
+    movie.reanalyze
+  end
+
+  test "reanalyze will extract metadata fields into the movie" do
+    VCR.use_cassette "extract_metadata_test" do
+      movie = videos(:true_grit)
+      movie.reanalyze
+      assert_equal "True Grit", movie.title
+      assert_equal Time.parse("22 Dec 2010"), movie.released_on
+      assert movie.overview.present?
+      assert_equal "English", movie.language
+      assert_equal "USA", movie.country
+      assert movie.awards.present?
+    end
+  end
+
+  test "reanalyze performs a few subtasks" do
+    movie = videos(:true_grit)
+    Movie.any_instance.expects(:guessit).once
+    Movie.any_instance.expects(:associate_with_genres).once
+    Movie.any_instance.expects(:extract_metadata).once
+    movie.reanalyze
+  end
+
+  test "reanalyze will attempt to redownload fanarts/videos/etc if the imdb_id changes" do
+    VCR.use_cassette "extract_metadata_test" do
+      movie = videos(:true_grit)
+      movie.update_attribute(:imdb_id, "wat")
+      Movie.any_instance.expects(:redownload).once
+      movie.reanalyze
+    end
+  end
+
   test "extract_metadata works" do
     VCR.use_cassette "extract_metadata_test" do
       movie = videos(:true_grit)
