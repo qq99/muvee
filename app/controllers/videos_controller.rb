@@ -1,5 +1,5 @@
 class VideosController < ApplicationController
-  before_action :set_video, only: [:show, :edit, :update, :destroy, :stream, :left_off_at, :thumbnails, :fanart]
+  before_action :set_video, only: [:show, :edit, :update, :destroy, :stream, :left_off_at, :thumbnails, :fanart, :reanalyze_video]
 
   respond_to :json, only: [:left_off_at, :thumbnails]
 
@@ -94,6 +94,11 @@ class VideosController < ApplicationController
       AnalyzerWorker.perform_async({method: :reanalyze})
       render json: {status: "ok"}
     end
+  end
+
+  # POST /videos/:id/reanalyze
+  def reanalyze_video
+    @video.reanalyze
   end
 
   def redownload

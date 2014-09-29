@@ -80,6 +80,7 @@
           <% else %>
             <%= link_to "Play", video_path(@movie, t: 0), class: 'action-button' %>
           <% end %>
+          <%= link_to "Re-analyze", reanalyze_video_path(@movie), class: 'action-button', "remote-method" => "POST" %>
         </div>
       <% else %>
         <h2>Download this movie</h2>

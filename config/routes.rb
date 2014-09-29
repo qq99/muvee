@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       get 'fanart'
       get 'thumbnails'
       post 'left_off_at'
+      post 'reanalyze' => 'videos#reanalyze_video'
     end
   end
 
