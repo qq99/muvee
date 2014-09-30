@@ -58,7 +58,7 @@ class Video < ActiveRecord::Base
   end
 
   def file_not_yet_present?
-    raw_file_path.blank? && !File.exists?(raw_file_path)
+    raw_file_path.blank?
   end
 
   def filename_no_extension
