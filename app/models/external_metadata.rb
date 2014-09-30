@@ -29,13 +29,18 @@ class ExternalMetadata < ActiveRecord::Base
       if http_get.present? && http_get.response.kind_of?(Net::HTTPSuccess)
         self.raw_value = http_get.body.to_s#.encode('UTF-8', {:invalid => :replace, :undef => :replace, :replace => '?'})
         if result_format == :xml
-          self.raw_value = Hash.from_xml(self.raw_value).try(:with_indifferent_access) || {}
+          begin
+            self.raw_value = Hash.from_xml(self.raw_value).try(:with_indifferent_access) || {}
+          rescue => e
+            self.raw_value = {}
+            Rails.logger.error "ExternalMetadata#fetch_data for #{self.endpoint} failed: #{e}"
+          end
         elsif result_format == :json
           begin
             self.raw_value = JSON.parse(self.raw_value).try(:with_indifferent_access) || {}
           rescue => e
             self.raw_value = {}
-            Rails.logger.info "ExternalMetadata#fetch_data for #{self.endpoint} failed: #{e}"
+            Rails.logger.error "ExternalMetadata#fetch_data for #{self.endpoint} failed: #{e}"
           end
         end
       end
