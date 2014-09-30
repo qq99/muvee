@@ -13,9 +13,7 @@ class TranscoderWorker
       return true
     end
     if File.exist?(transcode_path)
-      Rails.logger.info "Video #{eventual_path} already present in #{transcode_path}; moving and creating, please review #{input_path}"
-      move_transcoded_file(transcode_path, eventual_path)
-      klass.create(raw_file_path: eventual_path)
+      puts "Video #{eventual_path} already present in #{transcode_path}; please review"
       return true
     end
 
