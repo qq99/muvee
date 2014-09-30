@@ -32,6 +32,10 @@ $(document).on "click", ".js-favourite-toggle", (e) ->
       $icon.addClass("is-favourite")
       $icon.removeClass("fa-heart-o").addClass("fa-heart")
 
+$(document).on "keydown", "#series-search-input", (e) ->
+  if e.which == 13 # enter
+    $("#series-search-execute").click()
+
 $ ->
   $(".js-get-thumbnails:not(.has-thumbnails)").one "mouseenter focus", (e) ->
     $target = $(e.currentTarget)

@@ -11,10 +11,11 @@
       </h3>
     </div>
     <div class="series-buttons">
-      <input type="text" value="" bind="search" class="action-button">
+      <input id="series-search-input" type="text" value="" class="action-button" bind="search" placeholder="Find episode (e.g., S01E01)">
       <%= link_to "Find episode",
         find_episode_series_path(@series),
-        class: "action-button",
+        class: 'hide',
+        id: "series-search-execute",
         "remote-method" => "GET",
         "refresh-on-success" => "series_overview",
         "bind-href" => "'#{find_episode_series_path(@series)}?series_episode=' + search" %>
