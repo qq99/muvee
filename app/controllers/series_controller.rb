@@ -10,6 +10,11 @@ class SeriesController < ApplicationController
     render 'nonepisodic'
   end
 
+  def newest_unwatched
+    @shows = TvShow.all.sort_by{|item| -item.created_at.to_i}.reject{|item| item.left_off_at != nil}
+    render 'nonepisodic'
+  end
+
   def nonepisodic
     @shows = TvShow.where(series_id: nil).all
   end

@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     collection do
       get 'nonepisodic'
       get 'newest_episodes'
+      get 'newest_unwatched'
     end
     member do
       get 'find_episode'
