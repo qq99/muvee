@@ -9,7 +9,11 @@ class ImdbSearchResult < ExternalMetadata
   end
 
   def best_results(title)
-    list = (data[:title_popular] || []) + (data[:title_exact] || []) + (data[:title_substring] || []) + (data[:title_approximate] || [])
+    list = (data[:title_popular] || []) + (data[:title_exact] || []) + (data[:title_substring] || []) +
+    if !list # as a last resort
+      list = (data[:title_approximate] || []) + (data[:title_approx] || [])
+    end
+
 
     best_results = if list && list.length > 0
       by_ldistance(list, :title, title) if list.any?
