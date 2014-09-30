@@ -85,7 +85,7 @@ class Video < ActiveRecord::Base
   end
 
   def pretty_title(str)
-    str.gsub!(/(x264|hdtv)/i, '')
+    str.gsub!(/(x264|hdtv|x264-2HD)/i, '')
     str.gsub(/[\.\_\-]/, ' ').titleize.squish.strip
   end
 

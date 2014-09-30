@@ -23,10 +23,10 @@ class TvShowTest < ActiveSupport::TestCase
     TvShow.any_instance.stubs(:associate_with_series)
     TvShow.any_instance.stubs(:extract_metadata)
     show = TvShow.create(raw_file_path: '/foo/bar/Maggie.Simpson.in.The.Longest.Daycare.HDTV.x264-2HD.mp4')
-    assert_equal "Maggie Simpson In The Longest Daycare 2 Hd", show.title
+    assert_equal "Maggie Simpson In The Longest Daycare", show.title
 
     show = TvShow.create(raw_file_path: '/foo/bar/AdventureTimeWithFinnAndJake.HDTV.x264-2HD.mp4')
-    assert_equal "Adventure Time With Finn And Jake 2 Hd", show.title
+    assert_equal "Adventure Time With Finn And Jake", show.title
   end
 
   test 'guesses standard format correctly on create' do
@@ -87,6 +87,11 @@ class TvShowTest < ActiveSupport::TestCase
     assert_equal "Archer (2009)", show.title
     assert_equal 1, show.season
     assert_equal 8, show.episode
+
+    show = TvShow.create(raw_file_path: "/foo/bar/The Simpsons [21x15] Stealing First Base.mp4")
+    assert_equal "The Simpsons", show.title
+    assert_equal 21, show.season
+    assert_equal 15, show.episode
   end
 
   test 'will create a new series if one does not exist' do
