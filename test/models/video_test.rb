@@ -40,6 +40,12 @@ class VideoTest < ActiveSupport::TestCase
     assert vid.thumbnails.last.raw_file_path.present?
   end
 
+  test "#create_thumbnail will log an error if it could not create a thumbnail" do
+    vid = Video.create(raw_file_path: "/does/not/exist.mp4")
+    Rails.logger.expects(:error).once
+    vid.create_thumbnail(1)
+  end
+
   test "#create_n_thumbnails will create N thumbnails" do
     vid = Video.create(raw_file_path: @bigBuck)
     assert_difference "vid.thumbnails.length", 10 do

@@ -112,12 +112,15 @@ class Video < ActiveRecord::Base
     return if file_not_yet_present?
 
     thumb_path = new_thumbnail_path
-    shellout_and_grab_thumbnail(at_seconds, thumb_path)
-    #TODO validate this worked
-    thumb = self.thumbnails.create(raw_file_path: thumb_path)
-    if self.is_3d?
-      thumb.check_for_sbs_3d(overwrite: true)
-      # thumb.check_for_tab_3d
+    success = shellout_and_grab_thumbnail(at_seconds, thumb_path)
+    if success
+      thumb = self.thumbnails.create(raw_file_path: thumb_path)
+      if self.is_3d?
+        thumb.check_for_sbs_3d(overwrite: true)
+        # thumb.check_for_tab_3d
+      end
+    else
+      Rails.logger.error "Failed to create thumbnail for Video.id=#{id}"
     end
   end
 
@@ -158,6 +161,6 @@ class Video < ActiveRecord::Base
   def shellout_and_grab_thumbnail(at_seconds, output_path)
     return if file_not_yet_present?
     return if self.duration == 0
-    %x(#{avconv_create_thumbnail_command(at_seconds, output_path)})
+    system(avconv_create_thumbnail_command(at_seconds, output_path))
   end
 end
