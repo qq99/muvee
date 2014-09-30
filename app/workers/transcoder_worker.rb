@@ -8,11 +8,11 @@ class TranscoderWorker
     return if Sidekiq::Queue.new("transcode").to_a.length > 0
 
     if File.exist?(eventual_path) # don't convert it again!
-      Rails.logger.info "Video #{eventual_path} already transcoded; creating #{klass.to_s}, please review #{input_path}"
+      puts "Video #{eventual_path} already transcoded; creating #{klass.to_s}, please review #{input_path}"
       klass.create(raw_file_path: eventual_path)
       return true
     end
-    if File.exist?(transcode_path)
+    if File.exist?(transcode_path) # in process
       puts "Video #{eventual_path} already present in #{transcode_path}; please review"
       return true
     end
@@ -32,15 +32,14 @@ class TranscoderWorker
   end
 
   def move_transcoded_file(transcode_path, eventual_path)
-    FileUtils.copy(transcode_path, eventual_path)
     begin
-      File.delete(transcode_path)
+      FileUtils.mv(transcode_path, eventual_path)
     rescue => e
-      Rails.logger.info "TranscoderWorker: deleting transcoded file: #{e}"
+      Rails.logger.info "TranscoderWorker: moving file #{transcode_path} to #{eventual_path}: #{e}"
     end
   end
 
   def transcode_to_webm_command(input_path, output_path)
-    "avconv -i #{input_path.to_s.shellescape} -loglevel quiet -c:v libvpx -qmin 0 -qmax 50 -b:v 1M -c:a libvorbis -q:a 4 #{output_path.to_s.shellescape}"
+    "avconv -threads auto -i #{input_path.to_s.shellescape} -loglevel quiet -c:v libvpx -qmin 0 -qmax 50 -b:v 1M -c:a libvorbis -q:a 4 #{output_path.to_s.shellescape}"
   end
 end
