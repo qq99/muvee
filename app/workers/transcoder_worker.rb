@@ -5,6 +5,8 @@ class TranscoderWorker
   def perform(klass, input_path, transcode_path, eventual_path)
     klass = klass.constantize
 
+    return if Sidekiq::Queue.new("transcode").to_a.length > 0
+
     if File.exist?(eventual_path) # don't convert it again!
       Rails.logger.info "Video #{eventual_path} already transcoded; creating #{klass.to_s}, please review #{input_path}"
       klass.create(raw_file_path: eventual_path)
