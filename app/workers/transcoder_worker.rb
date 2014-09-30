@@ -18,16 +18,19 @@ class TranscoderWorker
     end
 
     # HEAVY WORK
-    %x(#{transcode_to_webm_command(input_path, transcode_path)})
+    success = system("#{transcode_to_webm_command(input_path, transcode_path)}")
 
     sleep 10 # let the file handle close
-    if File.exist? eventual_path
+    if success && File.exist?(eventual_path)
       Rails.logger.info "Video #{eventual_path} already transcoded; moving and creating, please review #{input_path}"
       move_transcoded_file(transcode_path, eventual_path)
       klass.create(raw_file_path: eventual_path)
       return true
     else
-      raise "Conversion seems to have failed"
+      File.delete(transcode_path) # clean up
+      puts "Conversion seems to have failed"
+      Rails.logger.error "Conversion seems to have failed"
+      return false
     end
   end
 
