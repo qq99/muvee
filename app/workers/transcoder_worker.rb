@@ -21,7 +21,7 @@ class TranscoderWorker
     success = system("#{transcode_to_webm_command(input_path, transcode_path)}")
 
     sleep 10 # let the file handle close
-    if success && File.exist?(eventual_path)
+    if success
       Rails.logger.info "Video #{eventual_path} already transcoded; moving and creating, please review #{input_path}"
       move_transcoded_file(transcode_path, eventual_path)
       klass.create(raw_file_path: eventual_path)
