@@ -11,7 +11,7 @@ class TvShow < Video
   FORMATS = {
     standard_repeat: /([\w\-\.\_\(\) ]*)S(\d+)(?:\D*)E(\d+)(?:.*)S(\d+)(?:\D*)E(\d+)/i,
     standard: /([\w\-\.\_\(\) ]*)S(\d+)(?:\D*)E(\d+)/i,
-    fov_repeat: /([\w\-\.\(\) ]*)\D+?(\d+)(?:\D+)(\d+)/i
+    fov_repeat: /([\w\-\.\(\) ]*)\D+?(\d+)(?:[x._])(\d+)/i
   }.freeze
 
   def associate_with_series

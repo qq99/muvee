@@ -23,10 +23,10 @@ class TvShowTest < ActiveSupport::TestCase
     TvShow.any_instance.stubs(:associate_with_series)
     TvShow.any_instance.stubs(:extract_metadata)
     show = TvShow.create(raw_file_path: '/foo/bar/Maggie.Simpson.in.The.Longest.Daycare.HDTV.x264-2HD.mp4')
-    assert_equal "Maggie Simpson In The Longest Daycare", show.title
+    assert_equal "Maggie Simpson In The Longest Daycare 2 Hd", show.title
 
     show = TvShow.create(raw_file_path: '/foo/bar/AdventureTimeWithFinnAndJake.HDTV.x264-2HD.mp4')
-    assert_equal "Adventure Time With Finn And Jake", show.title
+    assert_equal "Adventure Time With Finn And Jake 2 Hd", show.title
   end
 
   test 'guesses standard format correctly on create' do
@@ -72,11 +72,16 @@ class TvShowTest < ActiveSupport::TestCase
   test 'guesses fov format correctly on create' do
     TvShow.any_instance.stubs(:associate_with_series)
     TvShow.any_instance.stubs(:extract_metadata)
-    show = TvShow.create(raw_file_path: "/foo/bar/Rick and Morty - 1x11 - Ricksy Business.webm")
 
+    show = TvShow.create(raw_file_path: "/foo/bar/Rick and Morty - 1x11 - Ricksy Business.webm")
     assert_equal "Rick And Morty", show.title
     assert_equal 1, show.season
     assert_equal 11, show.episode
+
+    show = TvShow.create(raw_file_path: "/foo/bar/Rick and Morty - 1x06 - Rick Potion #9.webm")
+    assert_equal "Rick And Morty", show.title
+    assert_equal 1, show.season
+    assert_equal 06, show.episode
 
     show = TvShow.create(raw_file_path: "/foo/bar/Rick and Morty - 1.11 - Ricksy_Business.webm")
     assert_equal "Rick And Morty", show.title
