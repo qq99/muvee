@@ -25,8 +25,10 @@ class ExternalMetadata < ActiveRecord::Base
 
   def fetch_data
     if should_fetch
+      Rails.logger.info "Fetching #{self.endpoint}"
       http_get = fetch(URI(self.endpoint))
       if http_get.present? && http_get.response.kind_of?(Net::HTTPSuccess)
+        Rails.logger.info "Fetched #{self.endpoint}"
         self.raw_value = http_get.body.to_s#.encode('UTF-8', {:invalid => :replace, :undef => :replace, :replace => '?'})
         if result_format == :xml
           begin

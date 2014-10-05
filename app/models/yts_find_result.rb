@@ -5,7 +5,7 @@ class YtsFindResult < ExternalMetadata
   end
 
   def should_fetch
-    true
+    self.updated_at.blank? || (self.updated_at.present? && self.updated_at <= 2.hours.ago)
   end
 
   def self.endpoint_url(imdb_id)
