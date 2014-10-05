@@ -70,7 +70,8 @@ class MoviesController < ApplicationController
       movie = Movie.find_by_imdb_id(result[:id]) || Movie.create(
         status: "remote",
         title: result[:title],
-        imdb_id: result[:id]
+        imdb_id: result[:id],
+        imdb_id_is_accurate: true
       )
       @movies << movie
     end
