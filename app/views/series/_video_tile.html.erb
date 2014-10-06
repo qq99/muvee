@@ -25,7 +25,7 @@
       <% end %>
     </div>
   </a>
-  <h5 class="season-and-episode">S<%= video.season %>E<%= video.episode %></h5>
+  <h5 class="season-and-episode"><%= video.season_episode %></h5>
   <h3 class="video-title"><%= video.episode_name || "No title available" %></h3>
   <p class="video-overview"><%= video.overview %></p>
   <span class="hide"><%= video.raw_file_path %></span>

@@ -32,6 +32,10 @@ class TvShow < Video
     end
   end
 
+  def season_episode
+    "S" + season.to_s.rjust(2, '0') + "E" + episode.to_s.rjust(2, '0')
+  end
+
   def associate_with_genres
     return if series_metadata[:Genre].blank?
 
