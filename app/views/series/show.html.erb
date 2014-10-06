@@ -4,6 +4,7 @@
       <a href="<%= series_index_path %>" class="back">
         <i class="fa fa-chevron-left"></i>
       </a> <%= @series.title  %>
+
     </h1>
     <div id="series_overview" refresh="series_overview">
       <h3 class="series-overview">
@@ -11,7 +12,20 @@
       </h3>
     </div>
     <div class="series-buttons">
-      <input id="series-search-input" type="text" value="" class="action-button" bind="search" placeholder="Find episode (e.g., S01E01)">
+      <div class="prepend-label">
+        <label>Download</label>
+        <%= link_to "#{@next_episode}",
+          find_episode_series_path(@series),
+          "remote-method" => "GET",
+          "refresh-on-success" => "series_overview",
+          "href" => find_episode_series_path(@series, series_episode: @next_episode) %>
+        <%= link_to "#{@next_episode_of_next_season}",
+          find_episode_series_path(@series),
+          "remote-method" => "GET",
+          "refresh-on-success" => "series_overview",
+          "href" => find_episode_series_path(@series, series_episode: @next_episode_of_next_season) %>
+        <input id="series-search-input" type="text" value="" bind="search" placeholder="or search (e.g., S01E01)">
+      </div>
       <%= link_to "Find episode",
         find_episode_series_path(@series),
         class: 'hide',
@@ -19,21 +33,23 @@
         "remote-method" => "GET",
         "refresh-on-success" => "series_overview",
         "bind-href" => "'#{find_episode_series_path(@series)}?series_episode=' + search" %>
-      <%= link_to "Shuffle", video_path(@videos.map(&:id).sample, shuffle: true, series_id: @series.id), class: "action-button" %>
-      <% if @seasons.length > 1 %>
-        <button data-modal="season-selector" class="action-button">
-          <% if @season %>
-            Season <%= @season %>
-          <% else %>
-            All Seasons
-          <% end %>
-        </button>
-      <% end %>
-      <button data-modal="series-sort-selector" class="action-button">
-        <i class="fa fa-sort"></i>
-        Sorting by: <%= @sort.to_s.titleize %>
-      </button>
-      <div class="clearfix"></div>
+      <div class="prepend-label">
+        <label>Season</label>
+        <%= link_to "All", series_path(@series, sort: @sort), class: 'divider' %>
+        <% @seasons.each do |s| %>
+          <%= link_to "#{s}", series_path(@series, season: s, sort: @sort), class: 'divider' %>
+        <% end %>
+      </div>
+      <div class="prepend-label">
+        <label>Sort</label>
+        <%= link_to "Release order", series_path(@series, season: @season, sort: :release_order, class: 'divider') %>
+        <%= link_to "Unwatched", series_path(@series, season: @season, sort: :unwatched, class: 'divider') %>
+        <%= link_to "Latest", series_path(@series, season: @season, sort: :latest, class: 'divider') %>
+      </div>
+      <div class="prepend-label">
+        <label>Shuffle</label>
+        <%= link_to "All", video_path(@videos.map(&:id).sample, shuffle: true, series_id: @series.id) %>
+      </div>
     </div>
   </div>
   <div class="video-list">
@@ -52,35 +68,6 @@
           <%= render 'video_tile', video: show %>
         <% end %>
       <% end %>
-    </div>
-  </div>
-</div>
-
-<div id="season-selector" class="modal">
-  <div class="modal-backdrop js-close-modal"></div>
-  <div class="modal-box">
-    <div class="modal-box-contents">
-      <div class="modal-header">
-        Filter by season
-      </div>
-      <%= link_to "All Seasons", series_path(@series, sort: @sort), class: 'divider' %>
-      <% @seasons.each do |s| %>
-        <%= link_to "Season #{s}", series_path(@series, season: s, sort: @sort), class: 'divider' %>
-      <% end %>
-    </div>
-  </div>
-</div>
-
-<div id="series-sort-selector" class="modal">
-  <div class="modal-backdrop js-close-modal"></div>
-  <div class="modal-box">
-    <div class="modal-box-contents">
-      <div class="modal-header">
-        Sort by
-      </div>
-      <%= link_to "Release order", series_path(@series, season: @season, sort: :release_order, class: 'divider') %>
-      <%= link_to "Unwatched", series_path(@series, season: @season, sort: :unwatched, class: 'divider') %>
-      <%= link_to "Latest", series_path(@series, season: @season, sort: :latest, class: 'divider') %>
     </div>
   </div>
 </div>

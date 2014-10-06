@@ -28,6 +28,12 @@ class SeriesController < ApplicationController
     else
       @videos = @all_episodes
     end
+
+    by_season_and_episode = @all_episodes.sort_by{ |e| e.episode }.sort_by{ |e| e.season }
+    latest = by_season_and_episode.last
+    @next_episode = TvShow.format_season_and_episode(latest.season, latest.episode + 1)
+    @next_episode_of_next_season = TvShow.format_season_and_episode(latest.season + 1, 1)
+
     @seasons = @all_episodes.map{|v| v.season}.uniq.sort
     render layout: 'fullscreen'
   end

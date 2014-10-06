@@ -33,7 +33,12 @@ class TvShow < Video
   end
 
   def season_episode
-    "S" + season.to_s.rjust(2, '0') + "E" + episode.to_s.rjust(2, '0')
+    self.class.format_season_and_episode(season, episode)
+    #{}"S" + season.to_s.rjust(2, '0') + "E" + episode.to_s.rjust(2, '0')
+  end
+
+  def self.format_season_and_episode(s, e)
+    "S" + s.to_s.rjust(2, '0') + "E" + e.to_s.rjust(2, '0')
   end
 
   def associate_with_genres

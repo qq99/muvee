@@ -79,16 +79,40 @@
     width: 100%;
   }
   .series-buttons {
-    position: absolute;
-    font-size: 1.2em;
-    bottom: 2em;
-    width: auto;
-    border: 1px solid #333;
-    .action-button {
-      width: 100%;
-      display: block;
-      text-align: center;
-      margin: 0;
+    font-size: 1.1rem;
+    width: 100%;
+    a {
+      color: white;
+      text-decoration: none;
+      &:visited {
+        color: white;
+      }
+      &:hover, &:focus {
+        color: darken($radical-blue, 20%);
+      }
+    }
+  }
+  .prepend-label {
+    text-align: left;
+    border: 1px solid #222;
+    label {
+      padding: 0.5em 1em;
+      width: 7em;
+      padding-right: 2em;
+      display: inline-block;
+      color: #aaa;
+    }
+    a, input {
+      padding: 0.5em 0.25em;
+      color: white;
+      text-decoration: none;
+    }
+    input {
+      font-size: 1rem;
+      border: 0;
+      background: 0;
+      outline: 0;
+      display: inline-block;
     }
   }
   .featured-episode {
