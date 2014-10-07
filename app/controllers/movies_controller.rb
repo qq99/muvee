@@ -63,19 +63,21 @@ class MoviesController < ApplicationController
   def movie_search
     @query = params[:q]
     query = ImdbSearchResult.get(@query)
-    results = query.best_results(@query)
+    results = query.relevant_results(@query)
     @movies = []
 
     results.each do |result|
-      movie = Movie.find_by_imdb_id(result[:id]) || Movie.create(
+      movie = Movie.find_by(imdb_id: result[:imdbID])
+      movie ||= Movie.create(
         status: "remote",
-        title: result[:title],
-        imdb_id: result[:id],
+        title: result[:Title],
+        imdb_id: result[:imdbID],
         imdb_id_is_accurate: true
       )
       @movies << movie
     end
-    @movies.compact!
+    @movies = @movies.compact.reject{ |m| m.id.blank? }
+
 
     render 'remote'
   end
