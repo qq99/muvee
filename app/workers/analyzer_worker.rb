@@ -1,5 +1,6 @@
 class AnalyzerWorker
   include Sidekiq::Worker
+  sidekiq_options :retry => false
   sidekiq_options :queue => :analyze
 
   def perform(opts)
