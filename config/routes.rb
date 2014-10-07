@@ -49,7 +49,8 @@ Rails.application.routes.draw do
       get 'movie_search', as: :movie_search, action: :movie_search
     end
     member do
-      get 'find_sources'
+      get 'find_sources_via_yts'
+      get 'find_sources_via_pirate_bay'
       post 'download'
     end
   end

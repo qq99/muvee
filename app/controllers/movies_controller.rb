@@ -1,5 +1,6 @@
 class MoviesController < ApplicationController
-  before_action :set_movie, only: [:show, :find_sources, :download]
+  before_action :set_movie, only: [:show, :find_sources_via_yts, :download, :find_sources_via_pirate_bay]
+  before_action :set_existing_copies, only: [:show, :find_sources_via_yts, :find_sources_via_pirate_bay]
 
   def index
     @movies = Movie.local.all.shuffle
@@ -8,8 +9,7 @@ class MoviesController < ApplicationController
   def show
     if @movie.remote?
       @sources = TorrentManagerService.find_sources(@movie)
-      @torrents = @movie.torrents.all
-      @existing_copies = Movie.local.where(imdb_id: @movie.fetch_imdb_id)
+
     end
   end
 
@@ -55,9 +55,16 @@ class MoviesController < ApplicationController
     redirect_to movie_path(@movie)
   end
 
-  def find_sources
+  def find_sources_via_yts
+    @query = params[:q]
     @sources = TorrentManagerService.find_sources(@movie)
-    render partial: 'source_options', locals: {sources: @sources}
+    render partial: 'yts_sources', locals: {sources: @sources}
+  end
+
+  def find_sources_via_pirate_bay
+    @query = params[:q]
+    @results = ThePirateBay::Search.new(@query, 0, ThePirateBay::SortBy::Seeders, ThePirateBay::Category::Video).results
+    render partial: 'shared/pirate_bay_sources', locals: {sources: @results, video: @movie, download_path: download_movie_path(@movie)}
   end
 
   def movie_search
@@ -85,5 +92,10 @@ class MoviesController < ApplicationController
   private
     def set_movie
       @movie = Movie.find(params[:id])
+    end
+
+    def set_existing_copies
+      @torrents = @movie.torrents.all
+      @existing_copies = Movie.local.where(imdb_id: @movie.fetch_imdb_id)
     end
 end
