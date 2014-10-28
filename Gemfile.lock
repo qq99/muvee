@@ -8,9 +8,10 @@ GIT
 
 GIT
   remote: git://github.com/Shopify/turbograft.git
-  revision: 41c2efaca687db142e8dc75effddbcb149dfca63
+  revision: da18d0efb6bd49b3a4dd8f04bb219f9c3087f1c8
+  ref: da18d0efb6bd49b3a4dd8f04bb219f9c3087f1c8
   specs:
-    turbograft (0.0.2)
+    turbograft (0.0.7)
       coffee-rails
 
 GEM
