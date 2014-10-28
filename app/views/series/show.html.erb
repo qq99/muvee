@@ -24,15 +24,11 @@
           "remote-method" => "GET",
           "refresh-on-success" => "series_overview",
           "href" => find_episode_series_path(@series, series_episode: @next_episode_of_next_season) %>
-        <input id="series-search-input" type="text" value="" bind="search" placeholder="or search (e.g., S01E01)">
+
+        <%= form_tag find_episode_series_path(@series), class: "inline-block", "remote-form" => true, method: "POST", "refresh-on-success" => "series_overview" do %>
+          <input name="series_episode" type="text" value="" placeholder="or search (e.g., S01E01)">
+        <% end %>
       </div>
-      <%= link_to "Find episode",
-        find_episode_series_path(@series),
-        class: 'hide',
-        id: "series-search-execute",
-        "remote-method" => "GET",
-        "refresh-on-success" => "series_overview",
-        "bind-href" => "'#{find_episode_series_path(@series)}?series_episode=' + search" %>
       <div class="prepend-label">
         <label>Season</label>
         <%= link_to "All", series_path(@series, sort: @sort), class: 'divider' %>

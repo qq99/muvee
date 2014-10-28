@@ -34,6 +34,7 @@ Rails.application.routes.draw do
     end
     member do
       get 'find_episode'
+      post 'find_episode'
       post 'download'
     end
   end

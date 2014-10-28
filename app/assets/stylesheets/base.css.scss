@@ -1,5 +1,9 @@
 @import 'colors';
 
+.inline-block {
+  display: inline-block;
+}
+
 #nprogress {
   pointer-events: none;
   position: fixed;
