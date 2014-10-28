@@ -19,4 +19,4 @@
 //= require_tree .
 //= require turbograft
 //= require nprogress
-//= require twine.js.coffee
+//= require twine
