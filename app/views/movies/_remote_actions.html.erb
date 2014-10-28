@@ -1,6 +1,16 @@
 <%= link_to 'Discover more movies', discover_more_movies_path, class: 'action-button' %>
-<%= form_tag movie_search_movies_path, method: "GET" do %>
-  <%= label_tag :q, "Search for a movie:" %>
+<%= form_tag movie_search_movies_path, method: "POST", "remote-form" => true, "refresh-on-success" => "movies-index-panel n-remote-results" do %>
+  <h2><%= label_tag :q, "Search for a movie:" %></h2>
   <%= text_field_tag :q %>
   <%= button_tag "Search", type: "submit", class: 'action-button' %>
 <% end %>
+
+<div id="n-remote-results" refresh="n-remote-results">
+  <% if @query.present? %>
+    <p>
+      <%= @movies.present? ? "#{@movies.length} results found for" : "No results found for" %>
+      <em><%= @query %></em>
+    </p>
+    <% else %>
+  <% end %>
+</div>

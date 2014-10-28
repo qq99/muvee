@@ -29,7 +29,6 @@ class MoviesController < ApplicationController
   end
 
   def remote
-    @query = params[:page].try(:to_i) || 0
     @movies = Movie.remote.order(created_at: :desc).limit(50).all
   end
 
@@ -84,7 +83,6 @@ class MoviesController < ApplicationController
       @movies << movie
     end
     @movies = @movies.compact.reject{ |m| m.id.blank? }
-
 
     render 'remote'
   end
