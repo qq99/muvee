@@ -40,7 +40,8 @@ class SeriesController < ApplicationController
 
   def find_episode
     series_episode = params[:series_episode]
-    @results = ThePirateBay::Search.new(@series.title + " " + series_episode, 0, ThePirateBay::SortBy::Seeders, ThePirateBay::Category::Video).results
+    @query = @series.title + " " + series_episode
+    @results = ThePirateBay::Search.new(@query, 0, ThePirateBay::SortBy::Seeders, ThePirateBay::Category::Video).results
     render partial: 'find_episode', locals: {sources: @results, download_path: download_series_path(@series) }
   end
 
