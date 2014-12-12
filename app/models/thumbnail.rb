@@ -1,4 +1,4 @@
-require 'phash/image'
+#require 'phash/image' # temporarily disabled
 
 class Thumbnail < ActiveRecord::Base
   belongs_to :video
@@ -12,6 +12,7 @@ class Thumbnail < ActiveRecord::Base
   end
 
   def check_for_sbs_3d(opts = {})
+    return false # temporarily disabled
     lhs = MiniMagick::Image.open(thumbnail_path)
     rhs = MiniMagick::Image.open(thumbnail_path)
     w = lhs[:width]

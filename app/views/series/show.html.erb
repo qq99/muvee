@@ -16,12 +16,12 @@
         <label>Download</label>
         <%= link_to "#{@next_episode}",
           find_episode_series_path(@series),
-          "remote-method" => "GET",
+          "tg-remote" => "GET",
           "refresh-on-success" => "series_overview",
           "href" => find_episode_series_path(@series, series_episode: @next_episode) %>
         <%= link_to "#{@next_episode_of_next_season}",
           find_episode_series_path(@series),
-          "remote-method" => "GET",
+          "tg-remote" => "GET",
           "refresh-on-success" => "series_overview",
           "href" => find_episode_series_path(@series, series_episode: @next_episode_of_next_season) %>
 

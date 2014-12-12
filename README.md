@@ -17,17 +17,18 @@ WIP
 
 To install and use
 ---
-1. `sudo apt-get install postgresql-9.3 libpq-dev libav-tools nodejs nginx imagemagick libffi-dev libphash0 libphash0-dev redis`
-2. `sudo ln -s /usr/bin/nodejs /usr/bin/node` because Ubuntu installs node in a different place than most
-3. `bundle install`
-4. `bundle exec database:create` (or manually create a postgres role and set up your `database.yml`)
-5. Make sure your `database.yml` is correct!
-8. `bundle exec rake nginx:restart` to start up nginx with the custom configuration required.  It will attempt to kill any instances of nginx the user can access (but should not be a problem if you're not doing this as root).  Disregard any error messages regarding logs.
-9. `bundle exec foreman start`
-10. Visit http://localhost:8080
-11. Set up your media paths
-12. If all is well, you can then click the gear and "Scan for new media".  Wait, and media items will begin to appear as you refresh
-13. Set your TV to `Just scan` mode or similar (see your TV's documentation) so that edges aren't clipped
+1. `sudo apt-get install postgresql-9.3 libpq-dev libav-tools nginx imagemagick libffi-dev libphash0 libphash0-dev redis`
+2. `bundle install`
+3. `bundle exec rake database:create` (or manually create a postgres role and set up your `database.yml`, e.g., `psql -c "create role muvee with createdb login password 'password1'"`)
+4. `bundle exec rake db:create` (different than above!) then `bundle exec rake db:migrate`
+5. If the last step failed to migrate, try `bundle exec rake db:reset`
+6. Make sure your `database.yml` is correct!
+7. `bundle exec rake nginx:restart` to start up nginx with the custom configuration required.  It will attempt to kill any instances of nginx the user can access (but should not be a problem if you're not doing this as root).  Disregard any error messages regarding logs.
+8. `bundle exec foreman start` (or if you want to run rails separately from sidekiq, `bundle exec rails s` and `bundle exec sidekiq`)
+9. Visit http://localhost:8080
+10. Set up your media paths
+11. If all is well, you can then click the gear and "Scan for new media".  Wait, and media items will begin to appear as you refresh
+12. Set your TV to `Just scan` mode or similar (see your TV's documentation) so that edges aren't clipped
 
 Dependencies (and tested with):
 ---

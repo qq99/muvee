@@ -81,7 +81,7 @@
             <% else %>
               <%= link_to "Play", video_path(@movie, t: 0), class: 'action-button' %>
             <% end %>
-            <%= link_to "Re-analyze", reanalyze_video_path(@movie), class: 'action-button', "remote-method" => "POST" %>
+            <%= link_to "Re-analyze", reanalyze_video_path(@movie), class: 'action-button', "tg-remote" => "POST" %>
           </div>
         <% else %>
           <h2>Download this movie</h2>
@@ -100,10 +100,10 @@
             </ul>
           <% end %>
           <div id="yts-sources" refresh="yts-sources">
-            <%= link_to "Search YTS", find_sources_via_yts_movie_path(@movie, q: @movie.title), "remote-method" => "GET", "refresh-on-success" => "yts-sources", class: "yts-logo tracker-logo" %>
+            <%= link_to "Search YTS", find_sources_via_yts_movie_path(@movie, q: @movie.title), "tg-remote" => "GET", "refresh-on-success" => "yts-sources", class: "yts-logo tracker-logo" %>
           </div>
           <div id="tbp-sources" refresh="tbp-sources">
-            <%= link_to "Search the Pirate Bay", find_sources_via_pirate_bay_movie_path(@movie, q: @movie.title), "remote-method" => "GET", "refresh-on-success" => "tbp-sources", class: "tbp-logo tracker-logo" %>
+            <%= link_to "Search the Pirate Bay", find_sources_via_pirate_bay_movie_path(@movie, q: @movie.title), "tg-remote" => "GET", "refresh-on-success" => "tbp-sources", class: "tbp-logo tracker-logo" %>
           </div>
         <% end %>
       </div>
