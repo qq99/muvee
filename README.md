@@ -15,9 +15,9 @@ WIP
 
 [Pictures!](http://imgur.com/a/2wBvh)
 
-To install and use
+To install and use on Linux
 ---
-1. `sudo apt-get install postgresql-9.3 libpq-dev libav-tools nginx imagemagick libffi-dev libphash0 libphash0-dev redis`
+1. `sudo apt-get install postgresql-9.3 libpq-dev libav-tools nginx imagemagick libffi-dev libphash0 libphash0-dev redis` or if on OSX, `brew install postgresql redis nginx libav`
 2. `bundle install`
 3. `bundle exec rake database:create` (or manually create a postgres role and set up your `database.yml`, e.g., `psql -c "create role muvee with createdb login password 'password1'"`)
 4. `bundle exec rake db:create` (different than above!) then `bundle exec rake db:migrate`
