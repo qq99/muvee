@@ -4,10 +4,10 @@
 <div class="movies-index--full">
   <div class="window-box">
     <div id="movies-index-panel" refresh="movies-index-panel" class="movies-index panel clearfix">
+      <%= render 'remote_actions' %>
       <% if @movies.present? %>
         <%= render 'movies_list', movies: @movies %>
       <% end %>
-      <%= render 'remote_actions' %>
     </div>
     <%= render 'movie_meta', movies: @movies %>
   </div>

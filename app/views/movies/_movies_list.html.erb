@@ -6,6 +6,7 @@
           class="poster-link aspect-poster js-movie-tile"
           define='{
             is3d: <%= movie.is_3d? %>,
+            imageErrored: false,
             title: "<%= escape_javascript(movie.title || 'Title unknown') %>",
             overview: "<%= escape_javascript(movie.overview || movie.raw_file_path) %>",
             year: "<%= escape_javascript(movie.year.to_s) %>",
@@ -15,7 +16,10 @@
           data-refresh-key="movie<%= movie.id %>"
           data-fanart-path="<%= fanart_video_path(movie) %>">
           <% if poster_url = movie.poster_url %>
-            <img class="video-thumbnail has-aspect" src="<%= poster_url %>" alt="">
+            <img class="video-thumbnail has-aspect" src="<%= poster_url %>" onerror="Twine.context(this).imageErrored = true; Twine.refresh()" bind-show="!imageErrored" alt="">
+            <div class="hide" bind-show="imageErrored">
+              <%= render 'shared/no_poster_available' %>
+            </div>
           <% else %>
             <%= render 'shared/no_poster_available' %>
           <% end %>
