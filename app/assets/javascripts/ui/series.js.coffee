@@ -19,20 +19,7 @@ $(document).on "focus mouseenter", ".js-has-thumbnails", (e) ->
 $(document).on "mouseleave blur", ".js-has-thumbnails", (e) ->
   stopSimpleSlideshow()
 
-$(document).on "click", ".js-favourite-toggle", (e) ->
-  e.preventDefault()
-  $link = $(e.currentTarget)
-  $icon = $link.find("i")
-  if $icon.hasClass 'is-favourite'
-    io.socket.delete $link.data("href"), ->
-      $icon.removeClass("is-favourite")
-      $icon.removeClass("fa-heart").addClass("fa-heart-o")
-  else
-    io.socket.post $link.data("href"), ->
-      $icon.addClass("is-favourite")
-      $icon.removeClass("fa-heart-o").addClass("fa-heart")
-
-$ ->
+document.addEventListener 'page:change', ->
   $(".js-get-thumbnails:not(.has-thumbnails)").one "mouseenter focus", (e) ->
     $target = $(e.currentTarget)
     $container = $target.find(".thumbnails")

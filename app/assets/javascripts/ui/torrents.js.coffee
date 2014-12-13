@@ -4,7 +4,7 @@
 
 torrentStatusInterval = null
 
-$ ->
+document.addEventListener 'page:change', ->
   clearInterval torrentStatusInterval
 
   $torrentProgress = $(".torrent-progress-meter")
