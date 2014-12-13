@@ -29,6 +29,7 @@ class MoviesController < ApplicationController
   end
 
   def remote
+    @genres = Genre.all.sort_by(&:name).reject { |genre| genre.videos.length == 0 }
     @movies = Movie.remote.order(created_at: :desc).limit(50).all
   end
 

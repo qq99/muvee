@@ -37,7 +37,14 @@
   margin-right: 1em;
 }
 
-button.action-button, a.action-button, input.action-button {
+.hide {
+  display: none !important;
+}
+.fr {
+  float: right;
+}
+
+.action-button {
   display: inline-block;
   width: auto;
   padding: 0.5em 1em;
@@ -101,7 +108,12 @@ button.action-button, a.action-button, input.action-button {
   overflow-y: auto;
 }
 
+.fl {
+  float: left;
+}
+
 .responsive-grid {
+  clear: both;
   margin-top: -1em;
   padding: 0;
   list-style: none;
@@ -119,6 +131,12 @@ button.action-button, a.action-button, input.action-button {
     li {
       width: 100%;
     }
+  }
+}
+.responsive-grid-2x {
+  li {
+    width: 100% / 2;
+    width: calc(100% / 2);
   }
 }
 .responsive-grid-6x {
