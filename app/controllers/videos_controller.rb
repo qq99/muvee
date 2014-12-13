@@ -6,6 +6,9 @@ class VideosController < ApplicationController
   def index
     @movies = Movie.local.all
     @series = Series.all
+    @n_movies = Movie.local.count
+    @n_series = Series.count
+    @n_shows = TvShow.count
     @items = @movies.to_a.concat @series.to_a
     @items.sort_by!{|item| -item.updated_at.to_i} # newest first
   end
