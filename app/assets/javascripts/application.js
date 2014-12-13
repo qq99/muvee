@@ -16,7 +16,7 @@
 //= require lodash
 //= require uri
 //= require turbograft
-//= require ./bootstrap.js.coffee
-//= require_tree .
+//= require ./ui/bootstrap.js.coffee
+//= require_tree ./ui
 //= require nprogress
 //= require twine
