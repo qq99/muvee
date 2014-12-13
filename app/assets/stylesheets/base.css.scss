@@ -1,4 +1,4 @@
-@import 'colors';
+@import 'variables';
 
 .inline-block {
   display: inline-block;
@@ -77,4 +77,53 @@ button.action-button, a.action-button, input.action-button {
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.panel {
+  padding: 1em !important;
+}
+
+.window-box {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.scrolling-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.responsive-grid {
+  margin-top: -1em;
+  padding: 0;
+  list-style: none;
+  position: relative;
+  width: 100%;
+
+  > li {
+    position: relative;
+    float: left;
+    overflow: hidden;
+    width: 25%;
+    width: calc(100% / 4);
+  }
+  @media screen and (max-width: 660px) {
+    li {
+      width: 100%;
+    }
+  }
+}
+.responsive-grid-6x {
+  li {
+    width: 100% / 6;
+    width: calc(100% / 6);
+  }
 }

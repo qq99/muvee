@@ -1,4 +1,4 @@
-@import 'colors';
+@import 'variables';
 
 #watch {
   width: 100%;
@@ -47,6 +47,7 @@
 
 .video-upnext {
   position: absolute;
+  z-index: 2;
   top: 0;
   right: 0;
   padding: 2em;

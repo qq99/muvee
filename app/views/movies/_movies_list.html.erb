@@ -1,4 +1,4 @@
-<ul class="responsive-grid">
+<ul class="responsive-grid responsive-grid-6x">
   <% movies.each do |movie| %>
     <li class="poster aspect10x7">
       <div class="poster-innards" context="movieMeta<%= movie.id %>">
@@ -19,11 +19,6 @@
           <% else %>
             <%= render 'shared/no_poster_available' %>
           <% end %>
-
-          <div id="movie_thumbnails<%= movie.id %>" class="thumbnails hide" refresh="movie<%= movie.id %>">
-            <%= render 'movie_thumbnails', movie: movie %>
-          </div>
-          <div class="js-sources-info inline-sources hide"></div>
         </a>
       </div>
     </li>

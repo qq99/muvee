@@ -44,7 +44,7 @@ $(document).on "mozfullscreenchange webkitfullscreenchange fullscreenchange", (e
     $(".video-controls-unfullscreen").addClass("hide")
     $(".video-controls-fullscreen").removeClass("hide")
 
-$ ->
+document.addEventListener 'page:change', ->
   uri = URI(document.location)
   params = uri.search(true)
 
@@ -78,7 +78,7 @@ $ ->
 
     timeLeft = video.duration - video.currentTime
 
-    if timeLeft < 30
+    if timeLeft < 15
       $(".video-upnext").removeClass("hide hidden")
       $(".starting-in").text("Starting in #{parseInt(timeLeft, 10)} seconds")
     else

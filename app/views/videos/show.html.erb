@@ -2,7 +2,7 @@
   <%= render 'video_controls' %>
   <%= render 'video_watch_meta', video: @video, next_episode: @next_episode, previous_episode: @previous_episode %>
   <% if @video.is_tv? %>
-    <%= render 'video_upnext', next_episode: @next_episode, previous_episode: @previous_episode %>
+    <%= render 'video_upnext', next_episode: @next_episode, previous_episode: @previous_episode if @next_episode %>
   <% end %>
   <div class="video-back-button">
     <% if @video.is_a?(TvShow) && @video.series.present? %>

@@ -11,7 +11,7 @@ class SeriesController < ApplicationController
   end
 
   def newest_unwatched
-    @shows = TvShow.all.sort_by{|item| -item.created_at.to_i}.reject{|item| item.left_off_at != nil}
+    @shows = TvShow.all.sort_by{|item| -item.created_at.to_i}.reject{|item| item.left_off_at != nil}.take(6*6)
     render 'nonepisodic'
   end
 

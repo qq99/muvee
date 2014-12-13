@@ -11,12 +11,10 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery.turbolinks
-//= require jquery_ujs
 //= require lodash
 //= require uri
 //= require turbograft
+//= require twine
 //= require ./ui/bootstrap.js.coffee
 //= require_tree ./ui
 //= require nprogress
-//= require twine

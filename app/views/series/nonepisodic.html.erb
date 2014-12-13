@@ -1,31 +1,33 @@
 <%= render 'subnav' %>
 
-<div id="all_series" class="clearfix">
-  <div class="panel">
-    <% if @shows.present? %>
-      <ul class="responsive-grid">
-        <% @shows.each do |video| %>
-          <li class="poster">
-            <div class="poster-innards">
-              <% if (video.thumbnails.present?) %>
-                <a href="<%= video_path(video) %>" class="poster-link aspect16x8">
-                  <img src="<%= video.thumbnails.first.url %>" class="video-thumbnail">
-                </a>
-              <% end %>
-              <span class="title">
-                <%= video.title.presence || video.raw_file_path %>
-              </span>
-              <% if video.season && video.episode %>
-                <span class="season">
-                  <%= video.season_episode %>
+<div class="movies-index--full movies-bg">
+  <div class="window-box">
+    <div class="panel scrolling-panel">
+      <% if @shows.present? %>
+        <ul class="responsive-grid responsive-grid-6x">
+          <% @shows.each do |video| %>
+            <li class="poster">
+              <div class="poster-innards">
+                <% if (video.thumbnails.present?) %>
+                  <a href="<%= video_path(video) %>" class="poster-link aspect16x8">
+                    <img src="<%= video.thumbnails.first.url %>" class="video-thumbnail">
+                  </a>
+                <% end %>
+                <span class="title">
+                  <%= video.title.presence || video.raw_file_path %>
                 </span>
-              <% end %>
-            </div>
-          </li>
-        <% end %>
-      </ul>
-    <% else %>
-      <div>No shows found.</div>
-    <% end %>
+                <% if video.season && video.episode %>
+                  <span class="season">
+                    <%= video.season_episode %>
+                  </span>
+                <% end %>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <div>No shows found.</div>
+      <% end %>
+    </div>
   </div>
 </div>

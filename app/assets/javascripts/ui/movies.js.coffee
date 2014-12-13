@@ -1,42 +1,50 @@
 movieSlideshow = null
 
 transition = ($source) ->
-  $(".featured-image img.hidden").remove()
-  $images = $source.find(".thumbnails img")
-  return if !$images.length
+  $(".featured-image .movie-background.hidden").remove()
+  $images = $(".slideshow-pool .movie-background")
+  return if $images.length == 0
 
   randomIndex = parseInt(Math.random()*$images.length, 10)
   $randomImg = $($images[randomIndex]).clone()
-  $randomImg.attr("src", $randomImg.attr("data-src")).addClass("hidden")
+  src = $randomImg.attr("data-src")
+  $randomImg.attr("style", "background: url(#{src})").addClass("hidden") if src
 
-  $(".featured-image img").addClass("hidden")
+
   $(".featured-image").append($randomImg)
+  $(".featured-image .movie-background").addClass("hidden")
   _.defer ->
     $randomImg.removeClass("hidden")
 
+# get metadata
+$(document).on "focus mouseenter", ".js-movie-tile", (ev) ->
+  target = ev.currentTarget
+  ctx = Twine.context(target)
+  _.merge(window.context.movieMeta, ctx)
+  Twine.refresh()
+
+# get movie images, queue up slideshow
 $(document).on "focus mouseenter", ".js-movie-tile", (ev) ->
   clearInterval(movieSlideshow)
   target = ev.currentTarget
   $target = $(target)
 
-  ctx = Twine.context(target)
-  _.merge(window.context.movieMeta, ctx)
-  Twine.refresh()
-
-  transition($target)
-
   if key = $target.data("refresh-key")
-    $target.data("refresh-key", "")
     operation = $.ajax
       method: 'GET'
       url: $target.data("fanart-path")
       dataType: 'html'
-
-    operation.done (data, textStatus, jqXHR) ->
+    .done (data, textStatus, jqXHR) ->
       Page.refresh
         response: jqXHR
-        onlyKeys: [key]
+        onlyKeys: ['slideshow-pool']
+      _.defer ->
+        movieSlideshow = setInterval ->
+          transition()
+        , 5000
+        transition()
 
-  movieSlideshow = setInterval ->
-    transition($target)
-  , 5000
+document.addEventListener 'page:change', ->
+  clearInterval(movieSlideshow)
+  _.defer -> $(".js-movie-tile").first().trigger("focus")
+  transition() # for movies#show

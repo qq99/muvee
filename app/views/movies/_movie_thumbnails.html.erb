@@ -1,5 +1,5 @@
 <% if movie.fanarts.present? %>
-  <img src="<%= movie.fanarts.sample.url %>">
+  <div class="mbox movie-background" style="background: url(<%= movie.fanarts.sample.url %>)"></div>
 <% elsif movie.thumbnails.present? %>
-  <img src="<%= movie.thumbnails.sample.url %>">
+  <div class="mbox movie-background" style="background: url(<%= movie.thumbnails.sample.url %>)"></div>
 <% end %>

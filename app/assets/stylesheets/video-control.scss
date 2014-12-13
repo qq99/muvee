@@ -1,4 +1,4 @@
-@import 'colors';
+@import 'variables';
 
 $roundedness: 5px;
 
@@ -12,6 +12,7 @@ $roundedness: 5px;
   top: 5rem;
   left: 5rem;
   color: white;
+  z-index: 2;
   a:visited {
     color: inherit;
   }

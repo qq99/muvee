@@ -1,16 +1,18 @@
 <%= render 'subnav' %>
 
-<div id="all_series" class="clearfix">
-  <div class="panel">
-    <% if @series.present? %>
-      <ul class="responsive-grid">
-        <% @series.each do |serie| %>
-          <%= render 'shared/poster', show_path: series_path(serie), poster_url: serie.poster_url %>
-        <% end %>
-        <div class="clearfix"></div>
-      </div>
-    <% else %>
-      <div>No series found.</div>
-    <% end %>
+<div class="movies-index--full movies-bg clearfix">
+  <div class="window-box">
+    <div class="panel scrolling-panel">
+      <% if @series.present? %>
+        <ul class="responsive-grid responsive-grid-6x">
+          <% @series.each do |serie| %>
+            <%= render 'shared/poster', show_path: series_path(serie), poster_url: serie.poster_url %>
+          <% end %>
+          <div class="clearfix"></div>
+        </div>
+      <% else %>
+        <div>No series found.</div>
+      <% end %>
+    </div>
   </div>
 </div>

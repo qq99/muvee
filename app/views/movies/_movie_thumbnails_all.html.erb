@@ -1,11 +1,11 @@
-<div id="movie_thumbnails<%= movie.id %>" class="thumbnails hide" refresh="movie<%= movie.id %>">
+<div class="slideshow-pool" id="slideshow-pool" refresh="slideshow-pool">
   <% if movie.fanarts.present? %>
     <% movie.fanarts.shuffle.each do |fanart| %>
-      <img class="hidden" data-src="<%= fanart.url %>">
+      <div class="hidden mbox movie-background" data-src="<%= fanart.url %>"></div>
     <% end %>
   <% else %>
     <% movie.thumbnails.shuffle.each do |thumb| %>
-      <img class="hidden" data-src="<%= thumb.url %>" alt="">
+      <div class="hidden mbox movie-background" data-src="<%= thumb.url %>"></div>
     <% end %>
   <% end %>
 </div>

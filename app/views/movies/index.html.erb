@@ -1,12 +1,15 @@
 <%= render 'subnav' %>
+<%= render 'movie_slideshow' %>
 
-<div id="all_movies">
-  <% if @movies.present? %>
-    <%= render 'movie_meta', movies: @movies %>
-    <div class="movies-index panel" class="clearfix">
-      <%= render 'movies_list', movies: @movies %>
-    </div>
-  <% else %>
-    <div>No movies found.</div>
-  <% end %>
+<div class="movies-index--full">
+  <div class="window-box">
+    <% if @movies.present? %>
+      <%= render 'movie_meta', movies: @movies %>
+      <div class="movies-index panel clearfix">
+        <%= render 'movies_list', movies: @movies %>
+      </div>
+    <% else %>
+      <div class="empty-state">No movies found.</div>
+    <% end %>
+  </div>
 </div>
