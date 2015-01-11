@@ -21,11 +21,11 @@ class VideoCreationService
   end
 
   def eligible_files(files)
-    files.select{|file| Video::SERVABLE_FILETYPES.include? File.extname(file) }
+    files.select{|file| Video::SERVABLE_CONTAINERS.include? File.extname(file) }
   end
 
   def files_to_transcode(files)
-    files.select{|file| Video::UNSERVABLE_FILETYPES.include? File.extname(file) }
+    files.select{|file| Video::UNSERVABLE_CONTAINERS.include? File.extname(file) }
   end
 
   def create_videos(klass, folders)
@@ -56,7 +56,7 @@ class VideoCreationService
     if should_transcode?
       needs_transcode.each do |path|
         filename = File.basename(path, File.extname(path))
-        transcode_path = Pathname.new(transcode_folder).join("#{filename}.webm")
+        transcode_path = Pathname.new(transcode_folder).join(filename)
         transcode_and_create(klass, path, transcode_path.to_s, File.dirname(path) + "/#{filename}.webm")
       end
     end

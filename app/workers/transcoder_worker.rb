@@ -7,6 +7,13 @@ class TranscoderWorker
 
     return if Sidekiq::Queue.new("transcode").to_a.length > 0
 
+    if Video::SERVABLE_MP4_VIDEO_CODECS.include?(Video.get_video_encoding(input_path))
+      transcode_path = transcode_path + ".mp4"
+    else
+      transcode_path = transcode_path + ".webm"
+    end
+
+
     if File.exist?(eventual_path) # don't convert it again!
       puts "Video #{eventual_path} already transcoded; creating #{klass.to_s}, please review #{input_path}"
       klass.create(raw_file_path: eventual_path)
@@ -18,7 +25,11 @@ class TranscoderWorker
     end
 
     # HEAVY WORK
-    success = system("#{transcode_to_webm_command(input_path, transcode_path)}")
+    if Video::SERVABLE_MP4_VIDEO_CODECS.include?(Video.get_video_encoding(input_path))
+      success = system("#{transcode_keep_codec_command(input_path, transcode_path)}")
+    else
+      success = system("#{transcode_to_webm_command(input_path, transcode_path)}")
+    end
 
     sleep 10 # let the file handle close
     if success
@@ -44,5 +55,9 @@ class TranscoderWorker
 
   def transcode_to_webm_command(input_path, output_path)
     "avconv -threads auto -i #{input_path.to_s.shellescape} -loglevel quiet -c:v libvpx -qmin 0 -qmax 50 -b:v 1M -c:a libvorbis -q:a 4 #{output_path.to_s.shellescape}"
+  end
+
+  def transcode_keep_codec_command(input_path, output_path)
+    "avconv -threads auto -i #{input_path.to_s.shellescape} -loglevel quiet -codec copy #{output_path.to_s.shellescape}"
   end
 end

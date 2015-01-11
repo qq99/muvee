@@ -39,7 +39,7 @@ class Torrent < ActiveRecord::Base
   def video_files
     files_by_size.select do |file|
       filename = file[:name]
-      Video::SERVABLE_FILETYPES.any? {|type| filename.include? type}
+      Video::SERVABLE_CONTAINERS.any? {|type| filename.include? type}
     end
   end
 

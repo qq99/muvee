@@ -19,6 +19,5 @@ class TranscoderWorkerTest < ActiveSupport::TestCase
     assert_difference "Video.all.length", 1 do
       worker.perform(Video, @bigBuck, @bigBuckWebm)
     end
-    binding.pry
   end
 end

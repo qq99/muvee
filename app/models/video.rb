@@ -21,8 +21,12 @@ class Video < ActiveRecord::Base
   scope :unwatched, -> {where(left_off_at: nil)}
 
   # https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats
-  SERVABLE_FILETYPES = %w{.m4v .mp4 .webm}.freeze
-  UNSERVABLE_FILETYPES = %w{.avi .mkv}.freeze
+  SERVABLE_CONTAINERS = %w{.m4v .mp4 .webm}.freeze
+  UNSERVABLE_CONTAINERS = %w{.avi .mkv}.freeze
+
+  SERVABLE_MP4_VIDEO_CODECS = %w{h264 mp4}.freeze
+  SERVABLE_WEBM_VIDEO_CODECS = %w{libvpx vp8 vorbis}.freeze # may not be the proper names of said codecs as returned by avprobe
+
   QUALITIES = /(1080p|720p)/i
 
   # convert to webm:
@@ -145,6 +149,17 @@ class Video < ActiveRecord::Base
 
   def avprobe_grab_duration_command
     "avprobe " + raw_file_path.shellescape + " 2>&1 | grep -Eo 'Duration: [0-9:.]*' | cut -c 11-"
+  end
+
+  def encoding
+    self.class.get_video_encoding(raw_file_path)
+  end
+
+  def self.get_video_encoding(path)
+    command = "avprobe " + path.shellescape + " 2>&1 | grep -Eo 'Video: [a-zA-Z0-9]*' | cut -c 8-"
+    result = %x(#{command})
+    type = result.strip.downcase
+    type
   end
 
   def shellout_and_grab_duration
