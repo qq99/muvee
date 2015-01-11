@@ -36,7 +36,8 @@ class EztvSearchResult < ExternalMetadata
           magnet_link: magnet_link
         }
       end
-      results = results.sort_by{|entry| Ldistance.compute(entry[:title], query)}
+      # results = results.sort_by{|entry| Ldistance.compute(entry[:title], query)}
+      results
     rescue
       []
     end

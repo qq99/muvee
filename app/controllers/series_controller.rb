@@ -6,12 +6,12 @@ class SeriesController < ApplicationController
   end
 
   def newest_episodes
-    @shows = TvShow.all.sort_by{|item| -item.created_at.to_i} # newest first
+    @shows = TvShow.all.limit(50).sort_by{|item| -item.created_at.to_i} # newest first
     render 'nonepisodic'
   end
 
   def newest_unwatched
-    @shows = TvShow.all.sort_by{|item| -item.created_at.to_i}.reject{|item| item.left_off_at != nil}.take(6*6)
+    @shows = TvShow.all.limit(50).sort_by{|item| -item.created_at.to_i}.reject{|item| item.left_off_at != nil}.take(6*6)
     render 'nonepisodic'
   end
 
@@ -41,7 +41,7 @@ class SeriesController < ApplicationController
   def find_episode
     series_episode = params[:series_episode]
     @query = @series.title + " " + series_episode
-    @results = EztvSearchResult.search(@query)
+    @results = EztvSearchResult.search(@query).first(20)
     render partial: 'find_episode', locals: {sources: @results, download_path: download_series_path(@series) }
   end
 
