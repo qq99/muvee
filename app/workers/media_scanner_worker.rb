@@ -1,6 +1,7 @@
 class MediaScannerWorker
   include Sidekiq::Worker
   sidekiq_options :retry => false
+  sidekiq_options :queue => :scan
 
   def perform
     config = ApplicationConfiguration.first

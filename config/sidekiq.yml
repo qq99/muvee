@@ -5,9 +5,11 @@
 # Set timeout to 8 on Heroku, longer if you manage your own systems.
 :timeout: 30
 :queues:
+- [scan, 1]
 - [analyze, 2]
 - [default, 5]
 - [transcode, 2]
 :limits:
   transcode: 8
   analyze: 2
+  scan: 1
