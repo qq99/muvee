@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140928015604) do
+ActiveRecord::Schema.define(version: 20150111165854) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "application_configurations", force: true do |t|
+  create_table "application_configurations", force: :cascade do |t|
     t.text     "tv_sources",            default: [],    array: true
     t.text     "movie_sources",         default: [],    array: true
     t.string   "transcode_folder"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20140928015604) do
     t.text     "torrent_complete_path"
   end
 
-  create_table "external_metadata", force: true do |t|
+  create_table "external_metadata", force: :cascade do |t|
     t.integer  "video_id"
     t.string   "type"
     t.text     "raw_value"
@@ -39,30 +39,30 @@ ActiveRecord::Schema.define(version: 20140928015604) do
 
   add_index "external_metadata", ["endpoint"], name: "index_external_metadata_on_endpoint", unique: true, using: :btree
 
-  create_table "fanarts", force: true do |t|
+  create_table "fanarts", force: :cascade do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "raw_file_path"
     t.integer  "video_id"
   end
 
-  create_table "genres", force: true do |t|
+  create_table "genres", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "genres_videos", id: false, force: true do |t|
+  create_table "genres_videos", id: false, force: :cascade do |t|
     t.integer "genre_id"
     t.integer "video_id"
   end
 
-  create_table "movies", force: true do |t|
+  create_table "movies", force: :cascade do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "series", force: true do |t|
+  create_table "series", force: :cascade do |t|
     t.string   "title"
     t.integer  "tvdb_id"
     t.datetime "created_at"
@@ -78,14 +78,14 @@ ActiveRecord::Schema.define(version: 20140928015604) do
     t.string   "fanart_path"
   end
 
-  create_table "thumbnails", force: true do |t|
+  create_table "thumbnails", force: :cascade do |t|
     t.integer  "video_id"
     t.string   "raw_file_path"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "torrents", force: true do |t|
+  create_table "torrents", force: :cascade do |t|
     t.text     "source",          null: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -94,22 +94,22 @@ ActiveRecord::Schema.define(version: 20140928015604) do
     t.string   "video_type"
   end
 
-  create_table "tv_shows", force: true do |t|
+  create_table "tv_shows", force: :cascade do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "tvdb_search_results", force: true do |t|
+  create_table "tvdb_search_results", force: :cascade do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "tvdb_series_results", force: true do |t|
+  create_table "tvdb_series_results", force: :cascade do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "videos", force: true do |t|
+  create_table "videos", force: :cascade do |t|
     t.string   "raw_file_path"
     t.string   "type"
     t.integer  "episode"
@@ -136,5 +136,7 @@ ActiveRecord::Schema.define(version: 20140928015604) do
     t.string   "transmission_id"
     t.boolean  "imdb_id_is_accurate"
   end
+
+  add_index "videos", ["raw_file_path"], name: "index_videos_on_raw_file_path", unique: true, using: :btree
 
 end
