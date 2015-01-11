@@ -17,6 +17,7 @@
       <%= form_tag download_path, method: "post" do %>
       <%= hidden_field_tag :download_url, source[:magnet_link] %>
       <%= button_tag "Download", type: "submit", class: 'action-button' %>
+      <a class="action-button" href="<%= source[:magnet_link] %>">Magnet Link</a>
       <% end %>
     <% end %>
   </div>
