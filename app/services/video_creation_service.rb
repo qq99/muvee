@@ -42,9 +42,13 @@ class VideoCreationService
     needs_transcode = files_to_transcode(files)
 
     no_transcode.each do |filepath|
-      if create_video(klass, filepath)
-        successes << filepath
-      else
+      begin
+        if create_video(klass, filepath)
+          successes << filepath
+        else
+          failures << filepath
+        end
+      rescue
         failures << filepath
       end
     end
