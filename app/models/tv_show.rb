@@ -18,14 +18,18 @@ class TvShow < Video
     if series_tvdb_id = metadata[:seriesid]
       series_name = metadata[:SeriesName] || self.title
 
-      series = Series.find_by_tvdb_id(series_tvdb_id) || Series.create(
-        tvdb_id: series_tvdb_id,
-        title: series_name,
-        overview: metadata[:Overview],
-        tvdb_rating: metadata[:Rating],
-        tvdb_rating_count: metadata[:RatingCount],
-        status: metadata[:Status]
-      )
+      series = Series.find_by_tvdb_id(series_tvdb_id)
+
+      if series.blank?
+        series = Series.create(
+          tvdb_id: series_tvdb_id,
+          title: series_name,
+          overview: metadata[:Overview],
+          tvdb_rating: metadata[:Rating],
+          tvdb_rating_count: metadata[:RatingCount],
+          status: metadata[:Status]
+        )
+      end
       series.tv_shows << self
       series.tvdb_series_result = episode_metadata_search
       series.save
@@ -43,6 +47,8 @@ class TvShow < Video
 
   def associate_with_genres
     return if series_metadata[:Genre].blank?
+
+    self.genres.destroy_all
 
     listed_genres = compute_genres(series_metadata[:Genre])
     listed_genres.each do |genre_name|

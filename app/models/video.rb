@@ -24,7 +24,8 @@ class Video < ActiveRecord::Base
   SERVABLE_CONTAINERS = %w{.m4v .mp4 .webm}.freeze
   UNSERVABLE_CONTAINERS = %w{.avi .mkv}.freeze
 
-  SERVABLE_MP4_VIDEO_CODECS = %w{h264 mp4}.freeze
+  SERVABLE_MP4_VIDEO_CODECS = %w{h264 mpeg4 mp4 aac}.freeze
+  SERVABLE_MP4_AUDIO_CODECS = %w{libvorbis}.freeze
   SERVABLE_WEBM_VIDEO_CODECS = %w{libvpx vp8 vorbis}.freeze # may not be the proper names of said codecs as returned by avprobe
 
   QUALITIES = /(1080p|720p)/i
@@ -133,8 +134,8 @@ class Video < ActiveRecord::Base
   end
 
   def reanalyze
-    shellout_and_grab_duration if duration.blank?
-    create_initial_thumb if thumbnails.length == 0
+    shellout_and_grab_duration if duration.blank? || duration == 0
+    create_initial_thumb if thumbnails.blank?
   end
   def redownload_missing; end
   def redownload; end
@@ -151,12 +152,23 @@ class Video < ActiveRecord::Base
     "avprobe " + raw_file_path.shellescape + " 2>&1 | grep -Eo 'Duration: [0-9:.]*' | cut -c 11-"
   end
 
-  def encoding
+  def video_encoding
     self.class.get_video_encoding(raw_file_path)
   end
 
   def self.get_video_encoding(path)
     command = "avprobe " + path.shellescape + " 2>&1 | grep -Eo 'Video: [a-zA-Z0-9]*' | cut -c 8-"
+    result = %x(#{command})
+    type = result.strip.downcase
+    type
+  end
+
+  def audio_encoding
+    self.class.get_audio_encoding(raw_file_path)
+  end
+
+  def self.get_audio_encoding(path)
+    command = "avprobe " + path.shellescape + " 2>&1 | grep -Eo 'Audio: [a-zA-Z0-9]*' | cut -c 8-"
     result = %x(#{command})
     type = result.strip.downcase
     type

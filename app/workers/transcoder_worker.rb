@@ -5,12 +5,20 @@ class TranscoderWorker
   def perform(klass, input_path, transcode_path, eventual_path)
     klass = klass.constantize
 
-    return if Sidekiq::Queue.new("transcode").to_a.length > 0
+    #return if Sidekiq::Queue.new("transcode").to_a.length > 0
 
     if Video::SERVABLE_MP4_VIDEO_CODECS.include?(Video.get_video_encoding(input_path))
       transcode_path = transcode_path + ".mp4"
+      video_codec = "copy"
     else
       transcode_path = transcode_path + ".webm"
+      video_codec = "libvpx"
+    end
+
+    if Video::SERVABLE_MP4_AUDIO_CODECS.include?(Video.get_audio_encoding(input_path))
+      audio_codec = "copy"
+    else
+      audio_codec = "libvorbis"
     end
 
 
@@ -25,16 +33,13 @@ class TranscoderWorker
     end
 
     # HEAVY WORK
-    if Video::SERVABLE_MP4_VIDEO_CODECS.include?(Video.get_video_encoding(input_path))
-      success = system("#{transcode_keep_codec_command(input_path, transcode_path)}")
-    else
-      success = system("#{transcode_to_webm_command(input_path, transcode_path)}")
-    end
+    success = system("#{transcode_specify_codec_command(input_path, transcode_path, video_codec, audio_codec)}")
 
     sleep 10 # let the file handle close
     if success
       Rails.logger.info "Video #{eventual_path} already transcoded; moving and creating, please review #{input_path}"
       move_transcoded_file(transcode_path, eventual_path)
+      sleep 5 # let the file handle close (?)
       klass.create(raw_file_path: eventual_path)
       return true
     else
@@ -53,11 +58,19 @@ class TranscoderWorker
     end
   end
 
-  def transcode_to_webm_command(input_path, output_path)
-    "avconv -threads auto -i #{input_path.to_s.shellescape} -loglevel quiet -c:v libvpx -qmin 0 -qmax 50 -b:v 1M -c:a libvorbis -q:a 4 #{output_path.to_s.shellescape}"
-  end
+  def transcode_specify_codec_command(input_path, output_path, video_codec, audio_codec)
+    video_params = if video_codec != "copy"
+      " -qmin 0 -qmax 50 -b:v 1M"
+    else
+      ""
+    end
 
-  def transcode_keep_codec_command(input_path, output_path)
-    "avconv -threads auto -i #{input_path.to_s.shellescape} -loglevel quiet -codec copy #{output_path.to_s.shellescape}"
+    audio_params = if audio_codec != "copy"
+      " -q:a 4"
+    else
+      ""
+    end
+
+    "avconv -threads auto -i #{input_path.to_s.shellescape} -loglevel quiet -c:v #{video_codec}#{video_params} -c:a #{audio_codec}#{audio_params} #{output_path.to_s.shellescape}"
   end
 end
