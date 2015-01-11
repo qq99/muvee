@@ -9,6 +9,8 @@
         <%= render 'movies_list', movies: @movies %>
       <% end %>
     </div>
-    <%= render 'movie_meta', movies: @movies %>
+    <% if @movies.present? %>
+      <%= render 'movie_meta', movies: @movies %>
+    <% end %>
   </div>
 </div>
