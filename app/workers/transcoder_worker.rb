@@ -2,10 +2,20 @@ class TranscoderWorker
   include Sidekiq::Worker
   sidekiq_options :queue => :transcode
 
-  def perform(klass, input_path, transcode_path, eventual_path)
+  def transcode_folder
+    @config ||= ApplicationConfiguration.first
+    @config.transcode_folder
+  end
+
+  def perform(klass, input_path)
     klass = klass.constantize
 
+    filename = File.basename(input_path, File.extname(input_path))
+    transcode_path = Pathname.new(transcode_folder).join(filename).to_s
+    eventual_path = File.dirname(input_path) + "/#{filename}"
+
     #return if Sidekiq::Queue.new("transcode").to_a.length > 0
+    webm_path = eventual_path + ".webm"
 
     if Video::SERVABLE_MP4_VIDEO_CODECS.include?(Video.get_video_encoding(input_path))
       transcode_path = transcode_path + ".mp4"
@@ -23,8 +33,7 @@ class TranscoderWorker
       audio_codec = "libvorbis"
     end
 
-
-    if File.exist?(eventual_path) # don't convert it again!
+    if File.exist?(eventual_path) || File.exist?(webm_path) # don't convert it again! webm stuff is legacy and should be removed!
       puts "Video #{eventual_path} already transcoded; creating #{klass.to_s}, please review #{input_path}"
       klass.create(raw_file_path: eventual_path)
       return true
