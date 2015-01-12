@@ -6,8 +6,9 @@ class MediaScannerWorker
   def clean_missing
     klasses = [TvShow, Movie]
     klasses.each do |klass|
-      klass.local.all.each do |model_instance|
-        if model_instance.local? && (!model_instance.raw_file_path || !File.exist?(model_instance.raw_file_path))
+      klass.all.each do |model_instance|
+        if (model_instance.raw_file_path.present? && !File.exist?(model_instance.raw_file_path)) ||
+          (model_instance.local? && (model_instance.raw_file_path.blank? || !File.exist?(model_instance.raw_file_path)))
           model_instance.destroy
         end
       end
