@@ -9,9 +9,11 @@ class TranscoderWorker
 
     if Video::SERVABLE_MP4_VIDEO_CODECS.include?(Video.get_video_encoding(input_path))
       transcode_path = transcode_path + ".mp4"
+      eventual_path = eventual_path + ".mp4"
       video_codec = "copy"
     else
       transcode_path = transcode_path + ".webm"
+      eventual_path = eventual_path + ".webm"
       video_codec = "libvpx"
     end
 

@@ -57,7 +57,7 @@ class VideoCreationService
       needs_transcode.each do |path|
         filename = File.basename(path, File.extname(path))
         transcode_path = Pathname.new(transcode_folder).join(filename)
-        transcode_and_create(klass, path, transcode_path.to_s, File.dirname(path) + "/#{filename}.webm")
+        transcode_and_create(klass, path, transcode_path.to_s, File.dirname(path) + "/#{filename}")
       end
     end
 
