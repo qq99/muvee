@@ -24,8 +24,8 @@ class Video < ActiveRecord::Base
   SERVABLE_CONTAINERS = %w{.m4v .mp4 .webm}.freeze
   UNSERVABLE_CONTAINERS = %w{.avi .mkv}.freeze
 
-  SERVABLE_MP4_VIDEO_CODECS = %w{h264 mpeg4 mp4 aac}.freeze
-  SERVABLE_MP4_AUDIO_CODECS = %w{libvorbis}.freeze
+  SERVABLE_MP4_VIDEO_CODECS = %w{h264}.freeze
+  SERVABLE_MP4_AUDIO_CODECS = %w{libvorbis mp3 mpeg3 aac}.freeze
   SERVABLE_WEBM_VIDEO_CODECS = %w{libvpx vp8 vorbis}.freeze # may not be the proper names of said codecs as returned by avprobe
 
   QUALITIES = /(1080p|720p)/i
