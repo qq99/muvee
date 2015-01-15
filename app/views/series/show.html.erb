@@ -25,7 +25,7 @@
           "refresh-on-success" => "series_overview",
           "href" => find_episode_series_path(@series, series_episode: @next_episode_of_next_season) %>
 
-        <%= form_tag find_episode_series_path(@series), class: "inline-block", "remote-form" => true, method: "POST", "refresh-on-success" => "series_overview" do %>
+        <%= form_tag find_episode_series_path(@series), class: "inline-block", "tg-remote" => true, method: "POST", "refresh-on-success" => "series_overview" do %>
           <input name="series_episode" type="text" value="" placeholder="or search (e.g., S01E01)">
         <% end %>
       </div>
