@@ -82,10 +82,7 @@ class VideosController < ApplicationController
   # => [array of absolute paths to the image]
   def fanart
     respond_to do |format|
-      format.json { render json: @video.fanarts }
-      format.html do
-        render partial: 'movies/movie_thumbnails_all', locals: {movie: @video }, layout: false
-      end
+      format.json { render json: @video.fanarts.map{|f| f.url} }
     end
   end
 
