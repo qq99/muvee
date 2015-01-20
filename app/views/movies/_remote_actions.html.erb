@@ -2,10 +2,9 @@
   <ul class="responsive-grid responsive-grid-2x">
     <li class="movie-actions__section" define="{findClicked: false}">
       <h3>Discover more movies</h3>
-      <%= link_to 'Sure, find me some', discover_more_movies_path,
-        class: 'action-button',
-        "bind-show" => "!findClicked",
-        "bind-event-click" => "findClicked = true" %>
+      <span bind-event-click="findClicked = true" bind-show="!findClicked">
+        <%= link_to 'Sure, find me some', discover_more_movies_path, class: 'action-button' %>
+      </span>
       <div class="action-button hide" bind-show="findClicked">Finding...</div>
     </li>
     <li class="movie-actions__section">
