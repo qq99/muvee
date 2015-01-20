@@ -21,17 +21,24 @@ class TranscoderWorker
       transcode_path = transcode_path + ".mp4"
       eventual_path = eventual_path + ".mp4"
       video_codec = "copy"
+      if Video::SERVABLE_MP4_AUDIO_CODECS.include?(Video.get_audio_encoding(input_path))
+        audio_codec = "copy"
+      else
+        audio_codec = "libvorbis"
+      end
     else
       transcode_path = transcode_path + ".webm"
       eventual_path = eventual_path + ".webm"
       video_codec = "libvpx"
+      audio_codec = "libvorbis"
+
+      if Video::SERVABLE_WEBM_AUDIO_CODECS.include?(Video.get_audio_encoding(input_path))
+        audio_codec = "copy"
+      else
+        audio_codec = "libvorbis"
+      end
     end
 
-    if Video::SERVABLE_MP4_AUDIO_CODECS.include?(Video.get_audio_encoding(input_path))
-      audio_codec = "copy"
-    else
-      audio_codec = "libvorbis"
-    end
 
     if File.exist?(eventual_path) || File.exist?(webm_path) # don't convert it again! webm stuff is legacy and should be removed!
       puts "Video #{eventual_path} already transcoded; creating #{klass.to_s}, please review #{input_path}"
@@ -44,7 +51,9 @@ class TranscoderWorker
     end
 
     # HEAVY WORK
-    success = system("#{transcode_specify_codec_command(input_path, transcode_path, video_codec, audio_codec)}")
+    cmd = transcode_specify_codec_command(input_path, transcode_path, video_codec, audio_codec)
+    puts "Transcoding #{input_path} with #{cmd}"
+    success = system("#{cmd}")
 
     sleep 10 # let the file handle close
     if success
@@ -55,7 +64,7 @@ class TranscoderWorker
       return true
     else
       File.delete(transcode_path) # clean up
-      puts "Conversion seems to have failed"
+      puts "Conversion seems to have failed: #{success}"
       Rails.logger.error "Conversion seems to have failed"
       return false
     end

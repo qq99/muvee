@@ -27,6 +27,7 @@ class Video < ActiveRecord::Base
   SERVABLE_MP4_VIDEO_CODECS = %w{h264}.freeze
   SERVABLE_MP4_AUDIO_CODECS = %w{libvorbis mp3 mpeg3 aac}.freeze
   SERVABLE_WEBM_VIDEO_CODECS = %w{libvpx vp8 vorbis}.freeze # may not be the proper names of said codecs as returned by avprobe
+  SERVABLE_WEBM_AUDIO_CODECS = %w{libvorbis}.freeze
 
   QUALITIES = /(1080p|720p)/i
 
