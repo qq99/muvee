@@ -21,7 +21,7 @@ class Movie < Video
   def metadata
     @imdb_id ||= search_imdb_for_id
     return {} if @imdb_id.blank?
-    @metadata ||= OmdbSearchResult.get(@imdb_id).data || {}
+    @metadata ||= (OmdbSearchResult.get(@imdb_id).data || {})
   end
 
   def search_imdb_for_id

@@ -20,7 +20,7 @@ class ExternalMetadata < ActiveRecord::Base
   end
 
   def should_fetch
-    self.updated_at.blank? || (self.updated_at.present? && self.updated_at <= 1.days.ago)
+    self.updated_at.blank? || (self.updated_at.present? && self.updated_at <= 30.days.ago)
   end
 
   def fetch_data
