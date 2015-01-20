@@ -62,6 +62,16 @@ $preview-height: 45%;
   color: white;
   padding: 1.5em 3em;
   overflow-y: auto;
+  h1 {
+    line-height: 1em;
+  }
+  p {
+    margin: 0.5em 0;
+  }
+  .movie-year {
+    font-size: 1em;
+    color: white;
+  }
 }
 
 .three-d {

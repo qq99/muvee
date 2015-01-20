@@ -24,6 +24,10 @@ class Movie < Video
     @metadata ||= (OmdbSearchResult.get(@imdb_id).data || {})
   end
 
+  def released_on_human
+    released_on.strftime("%Y %b %-d")
+  end
+
   def search_imdb_for_id
     return imdb_id if imdb_id.present? && imdb_id_is_accurate
     self.imdb_id = ImdbSearchResult.get(title).relevant_result(title)

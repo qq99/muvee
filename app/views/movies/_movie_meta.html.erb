@@ -4,6 +4,6 @@
     <span class="three-d" bind-show="is3d">3D</span>
     <span class="movie-quality" bind="quality"><%= movies.first.quality %></span>
   </h1>
+  <p class="movie-year" bind="year"><%= movies.first.released_on_human %></p>
   <p class="movie-overview" bind="overview"><%= movies.first.overview %></p>
-  <p class="movie-year" bind="year"><%= movies.first.year %></p>
 </div>
