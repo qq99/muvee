@@ -1,5 +1,11 @@
 <%= render 'subnav' %>
-<%= render 'movie_slideshow' %>
+<div class="inline-movie-preview">
+  <div class="featured-image js-auto-slideshow">
+    <% @movie.fanarts.shuffle.each do |art| %>
+      <div class="movie-background hidden" data-background-url="<%= art.url %>"></div>
+    <% end %>
+  </div>
+</div>
 
 <div id="movie_show">
 
