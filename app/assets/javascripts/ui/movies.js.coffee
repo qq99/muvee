@@ -1,3 +1,7 @@
+setBackground = ($node, url = '') ->
+  url ||= $node.data("background-url")
+  $node.attr("style", "background-image: url(#{url})")
+
 getNewBackground = (ev) ->
   target = ev.currentTarget
   $target = $(target)
@@ -13,10 +17,12 @@ getNewBackground = (ev) ->
       $img = $("<img></img>")
         .attr("class", "movie-background hidden")
         .one("load", (ev) ->
-          $(".featured-image .movie-background").addClass("hidden")
-          $(".featured-image").append($img)
+          $slide = $("<div class='movie-background hidden'></div>")
+          setBackground($slide, src)
+          $(".featured-image.movies-index .movie-background").addClass("hidden")
+          $(".featured-image.movies-index").append($slide)
           _.defer ->
-            $img.removeClass("hidden")
+            $slide.removeClass("hidden")
         )
         .attr("src", src)
 
@@ -32,8 +38,6 @@ $(document).on "focus mouseenter", ".js-movie-tile", (ev) ->
 
 
 # movie#show
-setBackground = ($node) ->
-  $node.attr("style", "background-image: url(#{$node.data("background-url")})")
 
 transition = ($slideshow) ->
   $next = $slideshow.find(".movie-background:not(.hidden)").next()
