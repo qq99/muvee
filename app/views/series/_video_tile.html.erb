@@ -28,7 +28,7 @@
   <h5 class="season-and-episode"><%= video.season_episode %></h5>
   <h3 class="video-title"><%= video.episode_name || "No title available" %></h3>
   <p class="video-overview"><%= video.overview %></p>
-  <span><%= video.raw_file_path %></span>
+  <span class="hide"><%= video.raw_file_path %></span>
   <p>
     <%= link_to 'Reanalyze', reanalyze_video_path(video), 'tg-remote' => 'POST' %>
   </p>
