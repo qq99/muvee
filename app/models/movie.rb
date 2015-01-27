@@ -25,7 +25,11 @@ class Movie < Video
   end
 
   def released_on_human
-    released_on.strftime("%Y %b %-d")
+    if released_on
+      released_on.strftime("%Y %b %-d")
+    else
+      ''
+    end
   end
 
   def search_imdb_for_id
