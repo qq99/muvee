@@ -2,20 +2,24 @@ class SeriesController < ApplicationController
   before_action :set_series, only: [:show, :find_episode, :download]
 
   def index
+    @section = :series
     @series = Series.all.sort_by{|item| -item.updated_at.to_i} # newest updated first
   end
 
   def newest_episodes
+    @section = :newest
     @shows = TvShow.all.limit(50).sort_by{|item| -item.created_at.to_i} # newest first
     render 'nonepisodic'
   end
 
   def newest_unwatched
+    @section = :newest_unwatched
     @shows = TvShow.all.limit(50).sort_by{|item| -item.created_at.to_i}.reject{|item| item.left_off_at != nil}.take(6*6)
     render 'nonepisodic'
   end
 
   def nonepisodic
+    @section = :nonepisodic
     @shows = TvShow.where(series_id: nil).all
   end
 

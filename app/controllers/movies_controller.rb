@@ -3,41 +3,45 @@ class MoviesController < ApplicationController
   before_action :set_existing_copies, only: [:show, :find_sources_via_yts, :find_sources_via_pirate_bay]
 
   def index
+    @section = :all
     @movies = Movie.local.all.shuffle
   end
 
   def show
-    if @movie.remote?
-      @sources = TorrentManagerService.find_sources(@movie)
 
-    end
   end
 
   def three_d
+    @section = :threed
     @movies = Movie.local.where(is_3d: true).all
     render 'index'
   end
 
   def two_d
+    @section = :twod
     @movies = Movie.local.where(is_3d: false).all
     render 'index'
   end
 
   def newest
+    @section = :newest
     @movies = Movie.local.order(created_at: :desc).all
     render 'index'
   end
 
   def remote
+    @section = :discover
     @genres = Genre.all.sort_by(&:name).reject { |genre| genre.videos.length == 0 }
     @movies = Movie.remote.order(created_at: :desc).limit(50).all
   end
 
   def genres
+    @section = :genres
     @genres = Genre.all.sort_by(&:name).reject { |genre| genre.videos.length == 0 }
   end
 
   def genre
+    @section = :genres
     name = Genre.normalized_name(params[:type])
     @genre = Genre.find_by(name: name)
     @movies = @genre.videos.movies.all

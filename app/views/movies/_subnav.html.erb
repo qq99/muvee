@@ -1,22 +1,22 @@
 <% content_for :subnav do %>
 <ul class="top-nav-container subnav">
   <li>
-    <%= link_to 'All movies', movies_path %>
+    <%= link_to 'All movies', movies_path, class: @section == :all ? 'active' : '' %>
   </li>
   <li>
-    <%= link_to '2D', two_d_movies_path %>
+    <%= link_to '2D', two_d_movies_path, class: @section == :twod ? 'active' : '' %>
   </li>
   <li>
-    <%= link_to '3D', three_d_movies_path %>
+    <%= link_to '3D', three_d_movies_path, class: @section == :threed ? 'active' : '' %>
   </li>
   <li>
-    <%= link_to 'Newest', newest_movies_path %>
+    <%= link_to 'Newest', newest_movies_path, class: @section == :newest ? 'active' : '' %>
   </li>
   <li>
-    <%= link_to 'Genres', genres_movies_path %>
+    <%= link_to 'Genres', genres_movies_path, class: @section == :genres ? 'active' : '' %>
   </li>
   <li>
-    <%= link_to 'Discover', remote_movies_path %>
+    <%= link_to 'Discover', remote_movies_path, class: @section == :discover ? 'active' : '' %>
   </li>
 </ul>
 <% end %>

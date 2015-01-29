@@ -34,6 +34,7 @@ class Movie < Video
 
   def search_imdb_for_id
     return imdb_id if imdb_id.present? && imdb_id_is_accurate
+    Rails.logger.info "[search_imdb_for_id] Searching IMDB for an ID for: #{title}"
     self.imdb_id = ImdbSearchResult.get(title).relevant_result(title)
   end
 
