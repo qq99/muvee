@@ -10,6 +10,8 @@ Rails.application.routes.draw do
       get 'reanalyze'
       get 'redownload'
       get 'redownload_missing'
+      post 'dim_lights'
+      post 'brighten_lights'
     end
     member do
       get 'stream'

@@ -30,6 +30,25 @@ To install and use on Linux
 11. If all is well, you can then click the gear and "Scan for new media".  Wait, and media items will begin to appear as you refresh
 12. Set your TV to `Just scan` mode or similar (see your TV's documentation) so that edges aren't clipped
 
+Integration with Hue lights
+---
+
+If you haven't played with the Ruby `hue` gem yet, you'll need to create a group with the API (easiest in `bundle exec rails console`):
+
+```ruby
+client = Hue::Client.new
+light = client.lights.first
+light.on! # or light.off!, you will need to hit the button on your bridge, then try these commands again until it works
+group = client.group
+group.lights = client.lights # or a specific subset of the lights you want to control
+group.name = "Default Group"
+group.create!
+```
+
+At the moment, `muvee` uses `client.groups.first` as the set of lights it will dim and brighten throughout playback.  This will hopefully change as the project grows and matures to be configurable from within the UI.
+
+With this set up in place, your group will brighten when playback is paused or stopped, and dim when playback is in progress.
+
 Dependencies (and tested with):
 ---
 

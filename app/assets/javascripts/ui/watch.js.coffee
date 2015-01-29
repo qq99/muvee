@@ -1,4 +1,11 @@
 controlTimeout = null
+
+brightenLights = ->
+  $.post("/videos/brighten_lights")
+
+dimLights = ->
+  $.post("/videos/dim_lights")
+
 showControls = ->
   $(".video-controls, .video-back-button").removeClass('hide')
   clearTimeout(controlTimeout)
@@ -99,11 +106,14 @@ document.addEventListener 'page:change', ->
     timeLeft = video.duration - video.currentTime
     if timeLeft < 1
       document.getElementById("next-episode-link").click()
+    else
+      brightenLights()
 
   $video.on "play.videoplayer", (e) ->
     $(".video-controls-play").addClass("hide")
     $(".video-controls-pause").removeClass("hide")
     hideMeta()
+    dimLights()
 
   $(".video-controls-progressbar").on "click.videoplayer", (e) ->
     clickedRatio = (e.offsetX / $(e.currentTarget).width())
