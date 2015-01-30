@@ -13,8 +13,8 @@ class EztvSearchResult < ExternalMetadata
       request.add_field(':scheme', 'https')
       request.add_field(':version', 'HTTP/1.1')
       request.add_field(':accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8')
-      request.add_field('origin', 'https://eztv.it')
-      request.add_field('referer', 'https://eztv.it/search/')
+      request.add_field('origin', 'https://eztv.ch')
+      request.add_field('referer', 'https://eztv.ch/search/')
       result = http.request(request)
     # rescue
       # nil
@@ -45,7 +45,7 @@ class EztvSearchResult < ExternalMetadata
   end
 
   def self.endpoint_url
-    "https://eztv.it/search/"
+    "https://eztv.ch/search/"
   end
 
 end
