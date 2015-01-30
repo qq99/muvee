@@ -1,5 +1,5 @@
 class MoviesController < ApplicationController
-  before_action :set_movie, only: [:show, :find_sources_via_yts, :download, :find_sources_via_pirate_bay]
+  before_action :set_movie, only: [:show, :find_sources_via_yts, :destroy, :download, :find_sources_via_pirate_bay]
   before_action :set_existing_copies, only: [:show, :find_sources_via_yts, :find_sources_via_pirate_bay]
 
   def index
@@ -90,6 +90,12 @@ class MoviesController < ApplicationController
     @movies = @movies.compact.reject{ |m| m.id.blank? }
 
     render 'remote'
+  end
+
+  def destroy
+    @movie.delete_file!
+    @movie.destroy
+    redirect_to movies_path
   end
 
   private

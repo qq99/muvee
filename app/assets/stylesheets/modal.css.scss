@@ -59,8 +59,10 @@
     border-radius: 1rem;
     overflow: hidden;
   }
-  button, a {
+  button, input[type='submit'], a {
+    cursor: pointer;
     display: block;
+    font-size: 1rem;
     width: 100%;
     text-align: center;
     text-decoration: none;
@@ -69,7 +71,7 @@
     border: 0;
     color: inherit;
     &:visited {
-      color: inherit;
+      color: inherit !important;
     }
     &:hover, &:focus {
       background: lighten($radical-blue, 15%);
