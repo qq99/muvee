@@ -17,6 +17,14 @@ GIT
       playful
       thor
 
+GIT
+  remote: git://github.com/qq99/thepiratebay.git
+  revision: b73bec7b9dd4b7d8566e9993d6621d902138d105
+  branch: master
+  specs:
+    thepiratebay (0.2.1)
+      nokogiri
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -264,8 +272,6 @@ GEM
       sprockets (>= 2.8, < 4.0)
     sqlite3 (1.3.10)
     systemu (2.6.4)
-    thepiratebay (0.2.0)
-      nokogiri
     thin (1.6.3)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0)
@@ -331,7 +337,7 @@ DEPENDENCIES
   sinatra
   spring
   sqlite3
-  thepiratebay
+  thepiratebay!
   thin
   timecop
   transmission_api!

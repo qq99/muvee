@@ -44,7 +44,7 @@ gem 'timecop'
 gem 'mini_magick'
 #gem 'pHash'
 gem 'ffi'
-gem 'thepiratebay'
+gem 'thepiratebay', github: "qq99/thepiratebay", branch: "master"
 gem 'hue', github: "qq99/hue", branch: "master"
 
 gem 'foreman'
