@@ -1,6 +1,8 @@
 class VideoCreationService
 
-  def initialize(sources = {tv: [], movies: []})
+  def initialize(sources)
+    default = {tv: [], movies: []}
+    sources = default.merge!(sources)
     @sources = sources
   end
 

@@ -6,6 +6,12 @@ class VideoCreationServiceTest < ActiveSupport::TestCase
     @bigBuck = Dir.getwd() + "/test/fixtures/BigBuckBunny_320x180.mp4"
     Video.any_instance.stubs(thumbnail_root_path: "/test/scratch/")
 
+    ApplicationConfiguration.destroy_all
+    ApplicationConfiguration.create(
+      transcode_media: false,
+      torrent_start_path: Dir.getwd() + "/tmp/torrents"
+    )
+
     @fakeSuccess = stub({
       response: Net::HTTPSuccess,
       value: stub({
@@ -19,28 +25,20 @@ class VideoCreationServiceTest < ActiveSupport::TestCase
 
   def teardown
     %x{rm #{Dir.getwd() + '/test/scratch/'}*.jpg}
+
+    ApplicationConfiguration.destroy_all
   end
 
-  test "the service will create models for everything passed into its constructor, and try to associate each with a series" do
+  test "the service will create models for each type" do
     service = VideoCreationService.new({
-      tv: [Dir.getwd() + '/test/fixtures/']
+      tv: [Dir.getwd() + '/test/fixtures/'],
+      movies: [Dir.getwd() + '/test/fixtures/']
     })
 
-    TvShow.any_instance.expects(:associate_with_series)
+    TvShow.expects(:new).once
+    Movie.expects(:new).once
 
-
-    assert_difference 'TvShow.all.length', 1 do
-      assert_difference 'Thumbnail.all.length', 1 do
-        @results = service.generate()
-      end
-    end
-
-    assert_equal 4, @results.length
-    assert_equal 1, @results[0].length
-    assert_equal 0, @results[1].length
-    assert_equal 0, @results[2].length
-    assert_equal 0, @results[3].length
-    assert_equal "Big Buck Bunny 320x180", @results[0][0].title
+    @results = service.generate()
   end
 
   test "service will append trailing slashes to any folder supplied to it without trailing slash" do

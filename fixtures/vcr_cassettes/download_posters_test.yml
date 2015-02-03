@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 24 Aug 2014 20:25:46 GMT
+      - Tue, 03 Feb 2015 03:20:58 GMT
       Server:
       - HTTPDaemon
       X-Frame-Options:
@@ -31,7 +31,7 @@ http_interactions:
       Content-Type:
       - text/html; charset=iso-8859-1
       Set-Cookie:
-      - uu=BCYpojJIRM_VaWwi0-UufFv1JHEIaz7x39xwtW8y00ovHUxiJE7y0OsGKrnN6YRhTOe5-d7oy8uFYwvcZLeFApSBTOQfqHZHHhCIgiuh_xU3TYRTFwo7cWcgWPDtxZEQLatXjH5ZCHdJegJvPHLbJGVtNwSPWKW4vZ3lwugVz5xhZ1k;expires=Thu,
+      - uu=BCYqYt5ywCP-PPBAUfKgaEuUuFpKjw-U_JrzpxpOlVbPnJLkQrjQW9RJqPctCA7Kc8toKcP3C40pobKRiNS6QGmtX4DZTx2KzocbnRs7OVBg3f3UjtuoKrJEXxX0IoY_LWS52y2djj5EpK4ULkS3ruDckTqamcL2K11sisMDk1uAV1k;expires=Thu,
         30 Dec 2037 00:00:00 GMT;path=/;domain=.imdb.com
       P3p:
       - policyref="http://i.imdb.com/images/p3p.xml",CP="CAO DSP LAW CUR ADM IVAo
@@ -42,14 +42,14 @@ http_interactions:
       Transfer-Encoding:
       - chunked
     body:
-      encoding: UTF-8
+      encoding: ASCII-8BIT
       string: |2
 
         {
-        "title_popular": [{ "id":"tt1403865", "title":"True Grit", "name":"","title_description":"2010,     <a href='/name/nm0001053/'>Ethan Coen</a>...","episode_title":"","description":"2010,     <a href='/name/nm0001053/'>Ethan Coen</a>..."},{ "id":"tt0065126", "title":"True Grit", "name":"","title_description":"1969,     <a href='/name/nm0368871/'>Henry Hathaway</a>","episode_title":"","description":"1969,     <a href='/name/nm0368871/'>Henry Hathaway</a>"}],"title_exact": [{ "id":"tt0078422", "title":"True Grit", "name":"","title_description":"1978 TV movie,     <a href='/name/nm0373612/'>Richard T. Heffron</a>","episode_title":"","description":"1978 TV movie,     <a href='/name/nm0373612/'>Richard T. Heffron</a>"}],"title_substring": [{ "id":"tt0073636", "title":"Rooster Cogburn", "name":"","title_description":"1975,     <a href='/name/nm0587706/'>Stuart Millar</a>","episode_title":"","description":"1975,     <a href='/name/nm0587706/'>Stuart Millar</a>"},{ "id":"tt0799861", "title":"CMT: True Grit", "name":"","title_description":"2006 TV series","episode_title":"","description":"2006 TV series"},{ "id":"tt1454553", "title":"South 5: True Grit", "name":"","title_description":"2007 short,     <a href='/name/nm3496414/'>Bryan T. Johnson</a>","episode_title":"","description":"2007 short,     <a href='/name/nm3496414/'>Bryan T. Johnson</a>"}],"title_approx": [{ "id":"tt0348113", "title":"Starrcade", "name":"","title_description":"1988 TV movie","episode_title":"","description":"1988 TV movie"},{ "id":"tt1549129", "title":"True Grits", "name":"","title_description":"2006 short,     <a href='/name/nm0677399/'>Shawn Carter Peterson</a>","episode_title":"","description":"2006 short,     <a href='/name/nm0677399/'>Shawn Carter Peterson</a>"},{ "id":"tt2643720", "title":"Untrue Grit", "name":"","title_description":"????","episode_title":"","description":"????"},{ "id":"tt0368376", "title":"True Brit", "name":"","title_description":"2003,     <a href='/name/nm1273268/'>Kevin Ula Christie</a>","episode_title":"","description":"2003,     <a href='/name/nm1273268/'>Kevin Ula Christie</a>"},{ "id":"tt1176912", "title":"Rainbow Brite: The True Saturday Morning Story", "name":"","title_description":"2007 short,     <a href='/name/nm2901346/'>Tyler Spencer</a>","episode_title":"","description":"2007 short,     <a href='/name/nm2901346/'>Tyler Spencer</a>"},{ "id":"tt1384787", "title":"Rituales de Sangre: The True Story Behind the Matamoros Cult Killings", "name":"","title_description":"2008 video short","episode_title":"","description":"2008 video short"},{ "id":"tt1771019", "title":"True Grime: Crime Scene Clean Up", "name":"","title_description":"2011 TV series","episode_title":"","description":"2011 TV series"},{ "id":"tt0002543", "title":"A True Briton", "name":"","title_description":"1912 short,     <a href='/name/nm0294276/'>Theo Frenkel</a>","episode_title":"","description":"1912 short,     <a href='/name/nm0294276/'>Theo Frenkel</a>"},{ "id":"tt1715205", "title":"Critical Error =True", "name":"","title_description":"2010 short,     <a href='/name/nm1351910/'>Ben Slotover</a>","episode_title":"","description":"2010 short,     <a href='/name/nm1351910/'>Ben Slotover</a>"},{ "id":"tt0293926", "title":"The Shaming of the True", "name":"","title_description":"1930 short,     <a href='/name/nm0187317/'>Walter Creighton</a>","episode_title":"","description":"1930 short,     <a href='/name/nm0187317/'>Walter Creighton</a>"},{ "id":"tt1233259", "title":"Captain Thunder", "name":"","title_description":"2011,     <a href='/name/nm0379872/'>Antonio Hern&#xE1;ndez</a>","episode_title":"","description":"2011,     <a href='/name/nm0379872/'>Antonio Hern&#xE1;ndez</a>"},{ "id":"tt1437351", "title":"The Fugitive Chronicles", "name":"","title_description":"2009 TV series,     <a href='/name/nm1717925/'>Bart Layton</a>","episode_title":"","description":"2009 TV series,     <a href='/name/nm1717925/'>Bart Layton</a>"},{ "id":"tt0464831", "title":"True Spirit", "name":"","title_description":"2005,     <a href='/name/nm1015687/'>Martin Strange-Hansen</a>","episode_title":"","description":"2005,     <a href='/name/nm1015687/'>Martin Strange-Hansen</a>"},{ "id":"tt1353802", "title":"Memorial Stadium: True Illini Spirit", "name":"","title_description":"2008 documentary","episode_title":"","description":"2008 documentary"}]
+        "title_popular": [{ "id":"tt1403865", "title":"True Grit", "name":"","title_description":"2010,     <a href='/name/nm0001053/'>Ethan Coen</a>...","episode_title":"","description":"2010,     <a href='/name/nm0001053/'>Ethan Coen</a>..."},{ "id":"tt0065126", "title":"True Grit", "name":"","title_description":"1969,     <a href='/name/nm0368871/'>Henry Hathaway</a>","episode_title":"","description":"1969,     <a href='/name/nm0368871/'>Henry Hathaway</a>"}],"title_exact": [{ "id":"tt0078422", "title":"True Grit", "name":"","title_description":"1978 TV movie,     <a href='/name/nm0373612/'>Richard T. Heffron</a>","episode_title":"","description":"1978 TV movie,     <a href='/name/nm0373612/'>Richard T. Heffron</a>"}],"title_substring": [{ "id":"tt0073636", "title":"Rooster Cogburn", "name":"","title_description":"1975,     <a href='/name/nm0587706/'>Stuart Millar</a>","episode_title":"","description":"1975,     <a href='/name/nm0587706/'>Stuart Millar</a>"},{ "id":"tt0799861", "title":"CMT: True Grit", "name":"","title_description":"2006 TV series","episode_title":"","description":"2006 TV series"},{ "id":"tt1454553", "title":"South 5: True Grit", "name":"","title_description":"2007 short,     <a href='/name/nm3496414/'>Bryan T. Johnson</a>","episode_title":"","description":"2007 short,     <a href='/name/nm3496414/'>Bryan T. Johnson</a>"}],"title_approx": [{ "id":"tt0348113", "title":"Starrcade", "name":"","title_description":"1988 TV movie","episode_title":"","description":"1988 TV movie"},{ "id":"tt1549129", "title":"True Grits", "name":"","title_description":"2006 short,     <a href='/name/nm0677399/'>Shawn Carter Peterson</a>","episode_title":"","description":"2006 short,     <a href='/name/nm0677399/'>Shawn Carter Peterson</a>"},{ "id":"tt2643720", "title":"Untrue Grit", "name":"","title_description":"????","episode_title":"","description":"????"},{ "id":"tt0368376", "title":"True Brit", "name":"","title_description":"2003,     <a href='/name/nm1273268/'>Kevin Ula Christie</a>","episode_title":"","description":"2003,     <a href='/name/nm1273268/'>Kevin Ula Christie</a>"},{ "id":"tt1176912", "title":"Rainbow Brite: The True Saturday Morning Story", "name":"","title_description":"2007 short,     <a href='/name/nm2901346/'>Tyler Spencer</a>","episode_title":"","description":"2007 short,     <a href='/name/nm2901346/'>Tyler Spencer</a>"},{ "id":"tt1384787", "title":"Rituales de Sangre: The True Story Behind the Matamoros Cult Killings", "name":"","title_description":"2008 video short","episode_title":"","description":"2008 video short"},{ "id":"tt1771019", "title":"True Grime: Crime Scene Clean Up", "name":"","title_description":"2011 TV series","episode_title":"","description":"2011 TV series"},{ "id":"tt1819756", "title":"Hansel and Gretel: The True Story", "name":"","title_description":"2010 short,     <a href='/name/nm1715872/'>Goce Cvetanovski</a>","episode_title":"","description":"2010 short,     <a href='/name/nm1715872/'>Goce Cvetanovski</a>"},{ "id":"tt0002543", "title":"A True Briton", "name":"","title_description":"1912 short,     <a href='/name/nm0294276/'>Theo Frenkel</a>","episode_title":"","description":"1912 short,     <a href='/name/nm0294276/'>Theo Frenkel</a>"},{ "id":"tt1715205", "title":"Critical Error =True", "name":"","title_description":"2010 short,     <a href='/name/nm1351910/'>Ben Slotover</a>","episode_title":"","description":"2010 short,     <a href='/name/nm1351910/'>Ben Slotover</a>"},{ "id":"tt0293926", "title":"The Shaming of the True", "name":"","title_description":"1930 short,     <a href='/name/nm0187317/'>Walter Creighton</a>","episode_title":"","description":"1930 short,     <a href='/name/nm0187317/'>Walter Creighton</a>"},{ "id":"tt1233259", "title":"Captain Thunder", "name":"","title_description":"2011,     <a href='/name/nm0379872/'>Antonio Hern&#xE1;ndez</a>","episode_title":"","description":"2011,     <a href='/name/nm0379872/'>Antonio Hern&#xE1;ndez</a>"},{ "id":"tt1437351", "title":"The Fugitive Chronicles", "name":"","title_description":"2009 TV series,     <a href='/name/nm1717925/'>Bart Layton</a>","episode_title":"","description":"2009 TV series,     <a href='/name/nm1717925/'>Bart Layton</a>"},{ "id":"tt0464831", "title":"True Spirit", "name":"","title_description":"2005,     <a href='/name/nm1015687/'>Martin Strange-Hansen</a>","episode_title":"","description":"2005,     <a href='/name/nm1015687/'>Martin Strange-Hansen</a>"}]
         }
     http_version: 
-  recorded_at: Sun, 24 Aug 2014 20:25:46 GMT
+  recorded_at: Tue, 03 Feb 2015 03:21:00 GMT
 - request:
     method: get
     uri: http://www.omdbapi.com/?i=tt1403865
@@ -71,13 +71,13 @@ http_interactions:
       message: OK
     headers:
       Cache-Control:
-      - private, max-age=122
+      - private, max-age=1165
       Content-Type:
       - text/html; charset=utf-8
       Expires:
-      - Sun, 24 Aug 2014 20:27:54 GMT
+      - Tue, 03 Feb 2015 03:40:37 GMT
       Last-Modified:
-      - Sun, 24 Aug 2014 19:27:54 GMT
+      - Tue, 03 Feb 2015 02:40:37 GMT
       Vary:
       - "*"
       Server:
@@ -89,7 +89,7 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       Date:
-      - Sun, 24 Aug 2014 20:25:51 GMT
+      - Tue, 03 Feb 2015 03:21:10 GMT
       Content-Length:
       - '738'
     body:
@@ -100,9 +100,490 @@ http_interactions:
         Charles Portis (novel)","Actors":"Jeff Bridges, Hailee Steinfeld, Matt Damon,
         Josh Brolin","Plot":"A tough U.S. Marshal helps a stubborn young woman track
         down her father''s murderer.","Language":"English","Country":"USA","Awards":"Nominated
-        for 10 Oscars. Another 41 wins & 115 nominations.","Poster":"http://ia.media-imdb.com/images/M/MV5BMjIxNjAzODQ0N15BMl5BanBnXkFtZTcwODY2MjMyNA@@._V1_SX300.jpg","Metascore":"80","imdbRating":"7.7","imdbVotes":"193,835","imdbID":"tt1403865","Type":"movie","Response":"True"}'
+        for 10 Oscars. Another 48 wins & 123 nominations.","Poster":"http://ia.media-imdb.com/images/M/MV5BMjIxNjAzODQ0N15BMl5BanBnXkFtZTcwODY2MjMyNA@@._V1_SX300.jpg","Metascore":"80","imdbRating":"7.7","imdbVotes":"204,985","imdbID":"tt1403865","Type":"movie","Response":"True"}'
     http_version: 
-  recorded_at: Sun, 24 Aug 2014 20:25:47 GMT
+  recorded_at: Tue, 03 Feb 2015 03:21:00 GMT
+- request:
+    method: get
+    uri: http://www.omdbapi.com/?i=tt0065126
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - www.omdbapi.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private, max-age=410
+      Content-Type:
+      - text/html; charset=utf-8
+      Expires:
+      - Tue, 03 Feb 2015 03:28:02 GMT
+      Last-Modified:
+      - Tue, 03 Feb 2015 02:28:02 GMT
+      Vary:
+      - "*"
+      Server:
+      - Microsoft-IIS/7.5
+      X-Aspnet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Tue, 03 Feb 2015 03:21:10 GMT
+      Content-Length:
+      - '745'
+    body:
+      encoding: UTF-8
+      string: '{"Title":"True Grit","Year":"1969","Rated":"N/A","Released":"11 Jun
+        1969","Runtime":"128 min","Genre":"Adventure, Western, Drama","Director":"Henry
+        Hathaway","Writer":"Charles Portis (novel), Marguerite Roberts (screenplay)","Actors":"John
+        Wayne, Glen Campbell, Kim Darby, Jeremy Slate","Plot":"A drunken, hard-nosed
+        U.S. Marshal and a Texas Ranger help a stubborn young woman track down her
+        father''s murderer in Indian territory.","Language":"English","Country":"USA","Awards":"Won
+        1 Oscar. Another 7 wins & 5 nominations.","Poster":"http://ia.media-imdb.com/images/M/MV5BMTYwNTE3NDYzOV5BMl5BanBnXkFtZTcwNTU5MzY0MQ@@._V1_SX300.jpg","Metascore":"N/A","imdbRating":"7.4","imdbVotes":"29,150","imdbID":"tt0065126","Type":"movie","Response":"True"}'
+    http_version: 
+  recorded_at: Tue, 03 Feb 2015 03:21:01 GMT
+- request:
+    method: get
+    uri: http://www.omdbapi.com/?i=tt0078422
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - www.omdbapi.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private, max-age=3579
+      Content-Type:
+      - text/html; charset=utf-8
+      Expires:
+      - Tue, 03 Feb 2015 04:20:51 GMT
+      Last-Modified:
+      - Tue, 03 Feb 2015 03:20:51 GMT
+      Vary:
+      - "*"
+      Server:
+      - Microsoft-IIS/7.5
+      X-Aspnet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Tue, 03 Feb 2015 03:21:11 GMT
+      Content-Length:
+      - '718'
+    body:
+      encoding: UTF-8
+      string: '{"Title":"True Grit","Year":"1978","Rated":"N/A","Released":"19 May
+        1978","Runtime":"100 min","Genre":"Western","Director":"Richard T. Heffron","Writer":"Charles
+        Portis (characters), Sandor Stern","Actors":"Warren Oates, Lisa Pelikan, Lee
+        Meriwether, James Stephens","Plot":"The further adventures of ''True Grit''
+        Rooster Cogburn which has him battling injustice in his own unorthodox way
+        while contending with a teenage girl bent on reforming him.","Language":"English","Country":"USA","Awards":"N/A","Poster":"http://ia.media-imdb.com/images/M/MV5BMTIyMjYzODk1OF5BMl5BanBnXkFtZTcwNjg3MjkyMQ@@._V1_SX300.jpg","Metascore":"N/A","imdbRating":"6.3","imdbVotes":"139","imdbID":"tt0078422","Type":"movie","Response":"True"}'
+    http_version: 
+  recorded_at: Tue, 03 Feb 2015 03:21:01 GMT
+- request:
+    method: get
+    uri: http://www.omdbapi.com/?i=tt1549129
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - www.omdbapi.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private, max-age=3580
+      Content-Type:
+      - text/html; charset=utf-8
+      Expires:
+      - Tue, 03 Feb 2015 04:20:52 GMT
+      Last-Modified:
+      - Tue, 03 Feb 2015 03:20:52 GMT
+      Vary:
+      - "*"
+      Server:
+      - Microsoft-IIS/7.5
+      X-Aspnet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Tue, 03 Feb 2015 03:21:11 GMT
+      Content-Length:
+      - '443'
+    body:
+      encoding: UTF-8
+      string: '{"Title":"True Grits","Year":"2006","Rated":"N/A","Released":"N/A","Runtime":"8
+        min","Genre":"Short, Comedy","Director":"Shawn Carter Peterson","Writer":"Blaine
+        Teamer","Actors":"Rinabeth Apostol, Philippe Chang, Tonya Pinkins, Victoria
+        Gabrielle Platt","Plot":"N/A","Language":"English","Country":"USA","Awards":"N/A","Poster":"N/A","Metascore":"N/A","imdbRating":"N/A","imdbVotes":"N/A","imdbID":"tt1549129","Type":"movie","Response":"True"}'
+    http_version: 
+  recorded_at: Tue, 03 Feb 2015 03:21:01 GMT
+- request:
+    method: get
+    uri: http://www.omdbapi.com/?i=tt0368376
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - www.omdbapi.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private, max-age=3582
+      Content-Type:
+      - text/html; charset=utf-8
+      Expires:
+      - Tue, 03 Feb 2015 04:20:56 GMT
+      Last-Modified:
+      - Tue, 03 Feb 2015 03:20:56 GMT
+      Vary:
+      - "*"
+      Server:
+      - Microsoft-IIS/7.5
+      X-Aspnet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Tue, 03 Feb 2015 03:21:12 GMT
+      Content-Length:
+      - '557'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJUaXRsZSI6IlRydWUgQnJpdCIsIlllYXIiOiIyMDAzIiwiUmF0ZWQiOiJO
+        L0EiLCJSZWxlYXNlZCI6IjA1IE9jdCAyMDAzIiwiUnVudGltZSI6Ijk2IG1p
+        biIsIkdlbnJlIjoiQWN0aW9uLCBDb21lZHksIERyYW1hIiwiRGlyZWN0b3Ii
+        OiJLZXZpbiBVbGEgQ2hyaXN0aWUiLCJXcml0ZXIiOiJLZXZpbiBVbGEgQ2hy
+        aXN0aWUiLCJBY3RvcnMiOiJab8OrIE5hdGhlbnNvbiwgS2V2aW4gVWxhIENo
+        cmlzdGllLCBGcmVkZGllIENyb3NzLCBEYXZpZCBMZWEiLCJQbG90IjoiQSBj
+        b2NrbmV5IGdpcmwgYW5kIGhlciBzb2NjZXIgdGVhbSBvZiB0aHVncyBjb25m
+        cm9udCBhbiBJbmRpYW4gcGxheWVyIHdobyBzaGUgaGFkIHByZXZpb3VseSBo
+        YWQgYSBmbGluZyB3aXRoLiIsIkxhbmd1YWdlIjoiRW5nbGlzaCIsIkNvdW50
+        cnkiOiJVSywgVVNBIiwiQXdhcmRzIjoiTi9BIiwiUG9zdGVyIjoiTi9BIiwi
+        TWV0YXNjb3JlIjoiTi9BIiwiaW1kYlJhdGluZyI6IjMuOCIsImltZGJWb3Rl
+        cyI6IjE0IiwiaW1kYklEIjoidHQwMzY4Mzc2IiwiVHlwZSI6Im1vdmllIiwi
+        UmVzcG9uc2UiOiJUcnVlIn0=
+    http_version: 
+  recorded_at: Tue, 03 Feb 2015 03:21:04 GMT
+- request:
+    method: get
+    uri: http://www.omdbapi.com/?i=tt2643720
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - www.omdbapi.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private, max-age=3586
+      Content-Type:
+      - text/html; charset=utf-8
+      Expires:
+      - Tue, 03 Feb 2015 04:21:00 GMT
+      Last-Modified:
+      - Tue, 03 Feb 2015 03:21:00 GMT
+      Vary:
+      - "*"
+      Server:
+      - Microsoft-IIS/7.5
+      X-Aspnet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Tue, 03 Feb 2015 03:21:12 GMT
+      Content-Length:
+      - '478'
+    body:
+      encoding: UTF-8
+      string: '{"Title":"Untrue Grit","Year":"2014","Rated":"N/A","Released":"N/A","Runtime":"N/A","Genre":"Western","Director":"N/A","Writer":"Andrea
+        Portes","Actors":"N/A","Plot":"Untrue Grit, created and written by Andrea
+        Portes. Gun- toting, wisecracking teenager KODY WILKES, refuses to ''know
+        her place'' as a girl...","Language":"N/A","Country":"N/A","Awards":"N/A","Poster":"N/A","Metascore":"N/A","imdbRating":"N/A","imdbVotes":"N/A","imdbID":"tt2643720","Type":"N/A","Response":"True"}'
+    http_version: 
+  recorded_at: Tue, 03 Feb 2015 03:21:04 GMT
+- request:
+    method: get
+    uri: http://www.omdbapi.com/?i=tt0464831
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - www.omdbapi.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private, max-age=3591
+      Content-Type:
+      - text/html; charset=utf-8
+      Expires:
+      - Tue, 03 Feb 2015 04:21:05 GMT
+      Last-Modified:
+      - Tue, 03 Feb 2015 03:21:05 GMT
+      Vary:
+      - "*"
+      Server:
+      - Microsoft-IIS/7.5
+      X-Aspnet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Tue, 03 Feb 2015 03:21:12 GMT
+      Content-Length:
+      - '461'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJUaXRsZSI6IlRydWUgU3Bpcml0IiwiWWVhciI6IjIwMDUiLCJSYXRlZCI6
+        Ik4vQSIsIlJlbGVhc2VkIjoiMTYgRGVjIDIwMDUiLCJSdW50aW1lIjoiOTAg
+        bWluIiwiR2VucmUiOiJDb21lZHkiLCJEaXJlY3RvciI6Ik1hcnRpbiBTdHJh
+        bmdlLUhhbnNlbiIsIldyaXRlciI6IkZsZW1taW5nIEtsZW0sIE1hcnRpbiBT
+        dHJhbmdlLUhhbnNlbiIsIkFjdG9ycyI6IktlbiBWZWRzZWdhYXJkLCBTb2Zp
+        ZSBHcsOlYsO4bCwgSmVzcGVyIEFzaG9sdCwgRWxsZW4gSGlsbGluZ3PDuCIs
+        IlBsb3QiOiJOL0EiLCJMYW5ndWFnZSI6IkRhbmlzaCIsIkNvdW50cnkiOiJE
+        ZW5tYXJrIiwiQXdhcmRzIjoiTi9BIiwiUG9zdGVyIjoiTi9BIiwiTWV0YXNj
+        b3JlIjoiTi9BIiwiaW1kYlJhdGluZyI6IjMuOSIsImltZGJWb3RlcyI6Ijcz
+        IiwiaW1kYklEIjoidHQwNDY0ODMxIiwiVHlwZSI6Im1vdmllIiwiUmVzcG9u
+        c2UiOiJUcnVlIn0=
+    http_version: 
+  recorded_at: Tue, 03 Feb 2015 03:21:05 GMT
+- request:
+    method: get
+    uri: http://www.omdbapi.com/?i=tt0799861
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - www.omdbapi.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private, max-age=3589
+      Content-Type:
+      - text/html; charset=utf-8
+      Expires:
+      - Tue, 03 Feb 2015 04:21:02 GMT
+      Last-Modified:
+      - Tue, 03 Feb 2015 03:21:02 GMT
+      Vary:
+      - "*"
+      Server:
+      - Microsoft-IIS/7.5
+      X-Aspnet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Tue, 03 Feb 2015 03:21:12 GMT
+      Content-Length:
+      - '409'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJUaXRsZSI6IkNNVDogVHJ1ZSBHcml0IiwiWWVhciI6IjIwMDbigJMiLCJS
+        YXRlZCI6Ik4vQSIsIlJlbGVhc2VkIjoiMjAgRmViIDIwMDYiLCJSdW50aW1l
+        IjoiNjAgbWluIiwiR2VucmUiOiJOL0EiLCJEaXJlY3RvciI6Ik4vQSIsIldy
+        aXRlciI6Ik4vQSIsIkFjdG9ycyI6IkpvaG4gQmFybGV0dGEsIEJvYiBDb2xh
+        Y2VsbG8sIE1pY2hhZWwgRGVhdmVyLCBEZW5uaXMgTGVCbGFuYyIsIlBsb3Qi
+        OiJOL0EiLCJMYW5ndWFnZSI6IkVuZ2xpc2giLCJDb3VudHJ5IjoiVVNBIiwi
+        QXdhcmRzIjoiTi9BIiwiUG9zdGVyIjoiTi9BIiwiTWV0YXNjb3JlIjoiTi9B
+        IiwiaW1kYlJhdGluZyI6Ik4vQSIsImltZGJWb3RlcyI6Ik4vQSIsImltZGJJ
+        RCI6InR0MDc5OTg2MSIsIlR5cGUiOiJzZXJpZXMiLCJSZXNwb25zZSI6IlRy
+        dWUifQ==
+    http_version: 
+  recorded_at: Tue, 03 Feb 2015 03:21:05 GMT
+- request:
+    method: get
+    uri: http://www.omdbapi.com/?i=tt0002543
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - www.omdbapi.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private, max-age=3590
+      Content-Type:
+      - text/html; charset=utf-8
+      Expires:
+      - Tue, 03 Feb 2015 04:21:04 GMT
+      Last-Modified:
+      - Tue, 03 Feb 2015 03:21:04 GMT
+      Vary:
+      - "*"
+      Server:
+      - Microsoft-IIS/7.5
+      X-Aspnet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Tue, 03 Feb 2015 03:21:12 GMT
+      Content-Length:
+      - '453'
+    body:
+      encoding: UTF-8
+      string: '{"Title":"A True Briton","Year":"1912","Rated":"N/A","Released":"01
+        Feb 1912","Runtime":"19 min","Genre":"Short, Drama, War","Director":"Theo
+        Frenkel","Writer":"N/A","Actors":"Theo Frenkel","Plot":"An old schoolmaster
+        is shot by Boers for persuading pupils to wave the Union Jack.","Language":"N/A","Country":"UK","Awards":"N/A","Poster":"N/A","Metascore":"N/A","imdbRating":"N/A","imdbVotes":"N/A","imdbID":"tt0002543","Type":"movie","Response":"True"}'
+    http_version: 
+  recorded_at: Tue, 03 Feb 2015 03:21:05 GMT
+- request:
+    method: get
+    uri: http://www.omdbapi.com/?i=tt1454553
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - www.omdbapi.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private, max-age=3590
+      Content-Type:
+      - text/html; charset=utf-8
+      Expires:
+      - Tue, 03 Feb 2015 04:21:04 GMT
+      Last-Modified:
+      - Tue, 03 Feb 2015 03:21:04 GMT
+      Vary:
+      - "*"
+      Server:
+      - Microsoft-IIS/7.5
+      X-Aspnet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Tue, 03 Feb 2015 03:21:13 GMT
+      Content-Length:
+      - '522'
+    body:
+      encoding: UTF-8
+      string: '{"Title":"South 5: True Grit","Year":"2007","Rated":"N/A","Released":"10
+        May 2007","Runtime":"5 min","Genre":"Short, Action, Comedy","Director":"Bryan
+        T. Johnson","Writer":"Bryan T. Johnson","Actors":"Chris Martin, Mitch Robinson,
+        Doug Thayer, Kyle Price","Plot":"The South 5 team is back, and this time they''re
+        striking at the heart of Tacoma.","Language":"English","Country":"USA","Awards":"N/A","Poster":"N/A","Metascore":"N/A","imdbRating":"N/A","imdbVotes":"N/A","imdbID":"tt1454553","Type":"movie","Response":"True"}'
+    http_version: 
+  recorded_at: Tue, 03 Feb 2015 03:21:05 GMT
 - request:
     method: get
     uri: http://ia.media-imdb.com/images/M/MV5BMjIxNjAzODQ0N15BMl5BanBnXkFtZTcwODY2MjMyNA@@._V1_SX300.jpg
@@ -132,11 +613,11 @@ http_interactions:
       Last-Modified:
       - Fri, 17 Dec 2010 00:22:14 GMT
       Cache-Control:
-      - public, max-age=630458166
+      - public, max-age=630352196
       Expires:
-      - Wed, 16 Aug 2034 19:41:53 GMT
+      - Wed, 24 Jan 2035 21:11:00 GMT
       Date:
-      - Sun, 24 Aug 2014 20:25:47 GMT
+      - Tue, 03 Feb 2015 03:21:04 GMT
       Connection:
       - keep-alive
     body:
@@ -1137,5 +1618,5 @@ http_interactions:
         49j2EBnRvpBG/W2NSlXdsU2UPvcex7BYjyxbw5b7YwQBvYcr8uePY9hjPHSE
         6wkcuWM2AFrchcWx7HsIDC03Cb7+G3LCak2VbUrbHsew0I//2Q==
     http_version: 
-  recorded_at: Sun, 24 Aug 2014 20:25:47 GMT
-recorded_with: VCR 2.9.2
+  recorded_at: Tue, 03 Feb 2015 03:21:06 GMT
+recorded_with: VCR 2.9.3

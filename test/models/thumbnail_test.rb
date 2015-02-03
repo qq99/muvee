@@ -12,16 +12,19 @@ class ThumbnailTest < ActiveSupport::TestCase
   end
 
   test "sbs 3d detection" do
+    skip
     thumb = Thumbnail.new(raw_file_path: @two_d_image)
     refute thumb.check_for_sbs_3d
   end
 
   test "sbs 3d detection matches sbs screenshots" do
+    skip
     thumb = Thumbnail.new(raw_file_path: @three_d_image)
     assert thumb.check_for_sbs_3d
   end
 
   test "sbs 3d detection will overwrite the original thumbnail if options are supplied" do
+    skip
     thumb = Thumbnail.new(raw_file_path: @three_d_image)
     FileUtils.expects(:copy).with(thumb.send(:scaled_path), thumb.send(:thumbnail_path))
     thumb.check_for_sbs_3d(overwrite: true)

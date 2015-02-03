@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 29 Sep 2014 02:56:00 GMT
+      - Tue, 03 Feb 2015 03:21:36 GMT
       Server:
       - HTTPDaemon
       X-Frame-Options:
@@ -31,7 +31,7 @@ http_interactions:
       Content-Type:
       - text/html; charset=iso-8859-1
       Set-Cookie:
-      - uu=BCYsEkce6KOVA-Aj8FyD3XiFX4sfnQtu7wjAavSN-pBYJ9g20eX6k6AH9pDsMgPZW3Fp3WEZKcS1bZqYUV0DWpnasvAfM9AStMks2R9oWaywQNTbq8H-VQRWKL2MBw6ThJSoboln5Y3Wyy17gL3FR6di6pFk3ItEIDmrpMBh1c9_C_0;expires=Thu,
+      - uu=BCYnjckrD9-BZYgJIZ_KjoeXL76nXCdUks4jxVFVPK4uV6hV2ICsgy28q-B7Hcq0V0I54XSONwSd_dwAGcaXahiI0pV3ler-oNJwDW4wuvSntp9WyHD5iuSC5LC3SBQDF_3EQ_CtktsjsBtSGB7KD9brM_4GZVV15DdfCYoeBZx253E;expires=Thu,
         30 Dec 2037 00:00:00 GMT;path=/;domain=.imdb.com
       P3p:
       - policyref="http://i.imdb.com/images/p3p.xml",CP="CAO DSP LAW CUR ADM IVAo
@@ -42,14 +42,14 @@ http_interactions:
       Transfer-Encoding:
       - chunked
     body:
-      encoding: UTF-8
+      encoding: ASCII-8BIT
       string: |2
 
         {
-        "title_popular": [{ "id":"tt0316654", "title":"Spider-Man 2", "name":"","title_description":"2004,     <a href='/name/nm0000600/'>Sam Raimi</a>","episode_title":"","description":"2004,     <a href='/name/nm0000600/'>Sam Raimi</a>"},{ "id":"tt0948470", "title":"The Amazing Spider-Man", "name":"","title_description":"2012,     <a href='/name/nm1989536/'>Marc Webb</a>","episode_title":"","description":"2012,     <a href='/name/nm1989536/'>Marc Webb</a>"},{ "id":"tt1872181", "title":"The Amazing Spider-Man 2", "name":"","title_description":"2014,     <a href='/name/nm1989536/'>Marc Webb</a>","episode_title":"","description":"2014,     <a href='/name/nm1989536/'>Marc Webb</a>"}],"title_substring": [{ "id":"tt2233044", "title":"The Amazing Spiderman T4 Premiere Special", "name":"","title_description":"2012 TV documentary,     <a href='/name/nm1114381/'>Steve Kemsley</a>...","episode_title":"","description":"2012 TV documentary,     <a href='/name/nm1114381/'>Steve Kemsley</a>..."}],"title_approx": [{ "id":"tt0976192", "title":"The Spectacular Spider-Man", "name":"","title_description":"2008 TV series,     <a href='/name/nm0228492/'>Steve Ditko</a>...","episode_title":"","description":"2008 TV series,     <a href='/name/nm0228492/'>Steve Ditko</a>..."},{ "id":"tt0061301", "title":"Spider-Man", "name":"","title_description":"1967 TV series,     <a href='/name/nm0228492/'>Steve Ditko</a>...","episode_title":"","description":"1967 TV series,     <a href='/name/nm0228492/'>Steve Ditko</a>..."},{ "id":"tt2249079", "title":"The Amazing Spider-Man", "name":"","title_description":"2012 video game,     <a href='/name/nm0034229/'>Keith Arem</a>","episode_title":"","description":"2012 video game,     <a href='/name/nm0034229/'>Keith Arem</a>"},{ "id":"tt0076975", "title":"The Amazing Spider-Man", "name":"","title_description":"1977 TV series","episode_title":"","description":"1977 TV series"},{ "id":"tt0211194", "title":"The Amazing Adventures of Spider-Man", "name":"","title_description":"1999 short,     <a href='/name/nm0873857/'>Scott Trowbridge</a>","episode_title":"","description":"1999 short,     <a href='/name/nm0873857/'>Scott Trowbridge</a>"},{ "id":"tt3262076", "title":"The Amazing Spider-Man 2", "name":"","title_description":"2014 video game","episode_title":"","description":"2014 video game"},{ "id":"tt2250912", "title":"The Amazing Spider-Man 3", "name":"","title_description":"2018,     <a href='/name/nm1989536/'>Marc Webb</a>","episode_title":"","description":"2018,     <a href='/name/nm1989536/'>Marc Webb</a>"},{ "id":"tt0437316", "title":"Making the Amazing", "name":"","title_description":"2004 video documentary,     <a href='/name/nm1361273/'>Charles de Lauzirika</a>","episode_title":"","description":"2004 video documentary,     <a href='/name/nm1361273/'>Charles de Lauzirika</a>"},{ "id":"tt0360619", "title":"The Green Goblin&#x27;s Last Stand", "name":"","title_description":"1992 video,     <a href='/name/nm1146072/'>Dan Poole</a>","episode_title":"","description":"1992 video,     <a href='/name/nm1146072/'>Dan Poole</a>"},{ "id":"tt2387576", "title":"Rite of Passage: The Amazing Spider-Man Reborn", "name":"","title_description":"2012 documentary,     <a href='/name/nm1361273/'>Charles de Lauzirika</a>","episode_title":"","description":"2012 documentary,     <a href='/name/nm1361273/'>Charles de Lauzirika</a>"},{ "id":"tt2308947", "title":"The Amazing Spider-Man", "name":"","title_description":"1991 video game","episode_title":"","description":"1991 video game"},{ "id":"tt3769232", "title":"Amazing Spider-Man 2: Behind the Scenes", "name":"","title_description":"2014 short,     <a href='/name/nm2675160/'>Nathaniel Moher</a>","episode_title":"","description":"2014 short,     <a href='/name/nm2675160/'>Nathaniel Moher</a>"},{ "id":"tt3637130", "title":"Heroes and Villains: The World of the Amazing Spider-Man", "name":"","title_description":"2014 TV movie,     <a href='/name/nm0448588/'>J.M. Kenny</a>","episode_title":"","description":"2014 TV movie,     <a href='/name/nm0448588/'>J.M. Kenny</a>"},{ "id":"tt4060186", "title":"Something Sinister This Way Comes - The Amazing Spider-Man 2", "name":"","title_description":"2014","episode_title":"","description":"2014"},{ "id":"tt2990104", "title":"The Amazing Spider-Man 4", "name":"","title_description":"????","episode_title":"","description":"????"},{ "id":"tt1043783", "title":"The Amazing Spider-Man Interactive Adventures", "name":"","title_description":"2007 video game,     <a href='/name/nm0728317/'>Mark Risley</a>","episode_title":"","description":"2007 video game,     <a href='/name/nm0728317/'>Mark Risley</a>"}]
+        "title_popular": [{ "id":"tt0316654", "title":"Spider-Man 2", "name":"","title_description":"2004,     <a href='/name/nm0000600/'>Sam Raimi</a>","episode_title":"","description":"2004,     <a href='/name/nm0000600/'>Sam Raimi</a>"},{ "id":"tt0948470", "title":"The Amazing Spider-Man", "name":"","title_description":"2012,     <a href='/name/nm1989536/'>Marc Webb</a>","episode_title":"","description":"2012,     <a href='/name/nm1989536/'>Marc Webb</a>"},{ "id":"tt1872181", "title":"The Amazing Spider-Man 2", "name":"","title_description":"2014,     <a href='/name/nm1989536/'>Marc Webb</a>","episode_title":"","description":"2014,     <a href='/name/nm1989536/'>Marc Webb</a>"}],"title_substring": [{ "id":"tt2233044", "title":"The Amazing Spiderman T4 Premiere Special", "name":"","title_description":"2012 TV documentary,     <a href='/name/nm1114381/'>Steve Kemsley</a>...","episode_title":"","description":"2012 TV documentary,     <a href='/name/nm1114381/'>Steve Kemsley</a>..."}],"title_approx": [{ "id":"tt0976192", "title":"The Spectacular Spider-Man", "name":"","title_description":"2008 TV series,     <a href='/name/nm0228492/'>Steve Ditko</a>...","episode_title":"","description":"2008 TV series,     <a href='/name/nm0228492/'>Steve Ditko</a>..."},{ "id":"tt0061301", "title":"Spider-Man", "name":"","title_description":"1967 TV series,     <a href='/name/nm0228492/'>Steve Ditko</a>...","episode_title":"","description":"1967 TV series,     <a href='/name/nm0228492/'>Steve Ditko</a>..."},{ "id":"tt2250912", "title":"The Amazing Spider-Man 3", "name":"","title_description":"2016,     <a href='/name/nm1989536/'>Marc Webb</a>","episode_title":"","description":"2016,     <a href='/name/nm1989536/'>Marc Webb</a>"},{ "id":"tt2249079", "title":"The Amazing Spider-Man", "name":"","title_description":"2012 video game,     <a href='/name/nm0034229/'>Keith Arem</a>","episode_title":"","description":"2012 video game,     <a href='/name/nm0034229/'>Keith Arem</a>"},{ "id":"tt0076975", "title":"The Amazing Spider-Man", "name":"","title_description":"1977 TV series","episode_title":"","description":"1977 TV series"},{ "id":"tt0211194", "title":"The Amazing Adventures of Spider-Man", "name":"","title_description":"1999 short,     <a href='/name/nm0873857/'>Scott Trowbridge</a>","episode_title":"","description":"1999 short,     <a href='/name/nm0873857/'>Scott Trowbridge</a>"},{ "id":"tt3262076", "title":"The Amazing Spider-Man 2", "name":"","title_description":"2014 video game","episode_title":"","description":"2014 video game"},{ "id":"tt0437316", "title":"Making the Amazing", "name":"","title_description":"2004 video documentary,     <a href='/name/nm1361273/'>Charles de Lauzirika</a>","episode_title":"","description":"2004 video documentary,     <a href='/name/nm1361273/'>Charles de Lauzirika</a>"},{ "id":"tt0360619", "title":"The Green Goblin&#x27;s Last Stand", "name":"","title_description":"1992 video,     <a href='/name/nm1146072/'>Dan Poole</a>","episode_title":"","description":"1992 video,     <a href='/name/nm1146072/'>Dan Poole</a>"},{ "id":"tt3886654", "title":"Forming the Foundation [Spider-Man and the Future Foundation]", "name":"","title_description":"2014 short,     <a href='/name/nm6650957/'>Alex Malamos</a>","episode_title":"","description":"2014 short,     <a href='/name/nm6650957/'>Alex Malamos</a>"},{ "id":"tt2387576", "title":"Rite of Passage: The Amazing Spider-Man Reborn", "name":"","title_description":"2012 documentary,     <a href='/name/nm1361273/'>Charles de Lauzirika</a>","episode_title":"","description":"2012 documentary,     <a href='/name/nm1361273/'>Charles de Lauzirika</a>"},{ "id":"tt2308947", "title":"The Amazing Spider-Man", "name":"","title_description":"1991 video game","episode_title":"","description":"1991 video game"},{ "id":"tt3769232", "title":"Amazing Spider-Man 2: Behind the Scenes", "name":"","title_description":"2014 short,     <a href='/name/nm2675160/'>Nathaniel Moher</a>","episode_title":"","description":"2014 short,     <a href='/name/nm2675160/'>Nathaniel Moher</a>"},{ "id":"tt3637130", "title":"Heroes and Villains: The World of the Amazing Spider-Man", "name":"","title_description":"2014 TV movie,     <a href='/name/nm0448588/'>J.M. Kenny</a>","episode_title":"","description":"2014 TV movie,     <a href='/name/nm0448588/'>J.M. Kenny</a>"},{ "id":"tt4387264", "title":"LEGO the Amazing Spider-Man", "name":"","title_description":"2012 short,     <a href='/name/nm6724167/'>Gavin Velasco</a>","episode_title":"","description":"2012 short,     <a href='/name/nm6724167/'>Gavin Velasco</a>"},{ "id":"tt4060186", "title":"Something Sinister This Way Comes - The Amazing Spider-Man 2", "name":"","title_description":"2014","episode_title":"","description":"2014"}]
         }
     http_version: 
-  recorded_at: Mon, 29 Sep 2014 02:56:01 GMT
+  recorded_at: Tue, 03 Feb 2015 03:21:38 GMT
 - request:
     method: get
     uri: http://www.omdbapi.com/?i=tt0948470
@@ -71,13 +71,13 @@ http_interactions:
       message: OK
     headers:
       Cache-Control:
-      - private, max-age=324
+      - private, max-age=625
       Content-Type:
       - text/html; charset=utf-8
       Expires:
-      - Mon, 29 Sep 2014 03:01:19 GMT
+      - Tue, 03 Feb 2015 03:32:16 GMT
       Last-Modified:
-      - Mon, 29 Sep 2014 02:01:19 GMT
+      - Tue, 03 Feb 2015 02:32:16 GMT
       Vary:
       - "*"
       Server:
@@ -89,9 +89,9 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       Date:
-      - Mon, 29 Sep 2014 02:55:55 GMT
+      - Tue, 03 Feb 2015 03:21:51 GMT
       Content-Length:
-      - '948'
+      - '924'
     body:
       encoding: UTF-8
       string: '{"Title":"The Amazing Spider-Man","Year":"2012","Rated":"PG-13","Released":"03
@@ -99,13 +99,183 @@ http_interactions:
         Webb","Writer":"James Vanderbilt (screenplay), Alvin Sargent (screenplay),
         Steve Kloves (screenplay), James Vanderbilt (story), Stan Lee (based on the
         Marvel comic book by), Steve Ditko (based on the Marvel comic book by)","Actors":"Andrew
-        Garfield, Emma Stone, Rhys Ifans, Denis Leary","Plot":"Peter Parker finds
-        a clue that might help him understand why his parents disappeared when he
-        was young. His path puts him on a collision course with Dr. Curt Connors,
-        his father''s former partner.","Language":"English","Country":"USA","Awards":"4
-        wins & 29 nominations.","Poster":"http://ia.media-imdb.com/images/M/MV5BMjMyOTM4MDMxNV5BMl5BanBnXkFtZTcwNjIyNzExOA@@._V1_SX300.jpg","Metascore":"66","imdbRating":"7.1","imdbVotes":"338,048","imdbID":"tt0948470","Type":"movie","Response":"True"}'
+        Garfield, Emma Stone, Rhys Ifans, Denis Leary","Plot":"After Peter Parker
+        is bitten by a genetically altered spider, he gains newfound, spider-like
+        powers and ventures out to solve the mystery of his parent''s mysterious death.","Language":"English","Country":"USA","Awards":"4
+        wins & 29 nominations.","Poster":"http://ia.media-imdb.com/images/M/MV5BMjMyOTM4MDMxNV5BMl5BanBnXkFtZTcwNjIyNzExOA@@._V1_SX300.jpg","Metascore":"66","imdbRating":"7.1","imdbVotes":"365,991","imdbID":"tt0948470","Type":"movie","Response":"True"}'
     http_version: 
-  recorded_at: Mon, 29 Sep 2014 02:56:02 GMT
+  recorded_at: Tue, 03 Feb 2015 03:21:38 GMT
+- request:
+    method: get
+    uri: http://www.omdbapi.com/?i=tt2249079
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - www.omdbapi.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private, max-age=915
+      Content-Type:
+      - text/html; charset=utf-8
+      Expires:
+      - Tue, 03 Feb 2015 03:37:07 GMT
+      Last-Modified:
+      - Tue, 03 Feb 2015 02:37:07 GMT
+      Vary:
+      - "*"
+      Server:
+      - Microsoft-IIS/7.5
+      X-Aspnet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Tue, 03 Feb 2015 03:21:51 GMT
+      Content-Length:
+      - '749'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJUaXRsZSI6IlRoZSBBbWF6aW5nIFNwaWRlci1NYW4iLCJZZWFyIjoiMjAx
+        MiIsIlJhdGVkIjoiTi9BIiwiUmVsZWFzZWQiOiIyNiBKdW4gMjAxMiIsIlJ1
+        bnRpbWUiOiJOL0EiLCJHZW5yZSI6IkFjdGlvbiIsIkRpcmVjdG9yIjoiS2Vp
+        dGggQXJlbSIsIldyaXRlciI6IlNlYW11cyBLZXZpbiBGYWhleSwgR8OpcmFy
+        ZCBMZWhpYW55LCBKb2huIFp1cmhlbGxlbiIsIkFjdG9ycyI6IlNhbSBSaWVn
+        ZWwsIEthcmkgV2FobGdyZW4sIFN0ZXZlIEJsdW0sIEpvbmF0aGFuIEdyYXki
+        LCJQbG90IjoiTllDIGlzIGluZmVjdGVkISBFdmVuIHRob3VnaCB0aGUgbGl6
+        YXJkL0RyLiBDdXJ0IENvbm5vcnMgaXMgaW4gamFpbCB0aGUgZ2FtZSB0YWtl
+        cyBwbGFjZSBhZnRlciB0aGUgZXZlbnRzIG9mIHRoZSBtb3ZpZSB3aGVuIGRp
+        ZmZlcmVudCBjcm9zcy1zcGVjaWVzIGFyZSBjcmVhdGVkIGF0IE9zQ29ycCBi
+        dXQgd2hlbiB0aGV5IGJyZWFrLi4uIiwiTGFuZ3VhZ2UiOiJFbmdsaXNoIiwi
+        Q291bnRyeSI6IkNhbmFkYSwgVVNBIiwiQXdhcmRzIjoiTi9BIiwiUG9zdGVy
+        IjoiaHR0cDovL2lhLm1lZGlhLWltZGIuY29tL2ltYWdlcy9NL01WNUJNVFV4
+        TkRNNE56VTNNVjVCTWw1QmFuQm5Ya0Z0WlRjd05EZzROVFF3T0FAQC5fVjFf
+        U1gzMDAuanBnIiwiTWV0YXNjb3JlIjoiTi9BIiwiaW1kYlJhdGluZyI6Ijcu
+        NyIsImltZGJWb3RlcyI6Ijg3MiIsImltZGJJRCI6InR0MjI0OTA3OSIsIlR5
+        cGUiOiJnYW1lIiwiUmVzcG9uc2UiOiJUcnVlIn0=
+    http_version: 
+  recorded_at: Tue, 03 Feb 2015 03:21:38 GMT
+- request:
+    method: get
+    uri: http://www.omdbapi.com/?i=tt0076975
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - www.omdbapi.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private, max-age=3600
+      Content-Type:
+      - text/html; charset=utf-8
+      Expires:
+      - Tue, 03 Feb 2015 04:21:51 GMT
+      Last-Modified:
+      - Tue, 03 Feb 2015 03:21:51 GMT
+      Vary:
+      - "*"
+      Server:
+      - Microsoft-IIS/7.5
+      X-Aspnet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Tue, 03 Feb 2015 03:21:51 GMT
+      Content-Length:
+      - '549'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJUaXRsZSI6IlRoZSBBbWF6aW5nIFNwaWRlci1NYW4iLCJZZWFyIjoiMTk3
+        N+KAkzE5NzkiLCJSYXRlZCI6Ik4vQSIsIlJlbGVhc2VkIjoiMDUgQXByIDE5
+        NzgiLCJSdW50aW1lIjoiNjAgbWluIiwiR2VucmUiOiJBZHZlbnR1cmUsIENy
+        aW1lLCBTY2ktRmkiLCJEaXJlY3RvciI6Ik4vQSIsIldyaXRlciI6Ik4vQSIs
+        IkFjdG9ycyI6Ik5pY2hvbGFzIEhhbW1vbmQsIFJvYmVydCBGLiBTaW1vbiwg
+        Q2hpcCBGaWVsZHMsIEVsbGVuIEJyeSIsIlBsb3QiOiJXaXRoIHRoZSBwb3dl
+        cnMgZ2l2ZW4gYnkgdGhlIGJpdGUgb2YgYSByYWRpb2FjdGl2ZSBzcGlkZXIs
+        IGEgeW91bmcgbWFuIGZpZ2h0cyBjcmltZSBhcyBhIHdhbGwtY3Jhd2xpbmcg
+        c3VwZXJoZXJvLiIsIkxhbmd1YWdlIjoiRW5nbGlzaCIsIkNvdW50cnkiOiJV
+        U0EiLCJBd2FyZHMiOiJOL0EiLCJQb3N0ZXIiOiJOL0EiLCJNZXRhc2NvcmUi
+        OiJOL0EiLCJpbWRiUmF0aW5nIjoiNi40IiwiaW1kYlZvdGVzIjoiODMzIiwi
+        aW1kYklEIjoidHQwMDc2OTc1IiwiVHlwZSI6InNlcmllcyIsIlJlc3BvbnNl
+        IjoiVHJ1ZSJ9
+    http_version: 
+  recorded_at: Tue, 03 Feb 2015 03:21:39 GMT
+- request:
+    method: get
+    uri: http://www.omdbapi.com/?i=tt2308947
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - www.omdbapi.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private, max-age=3600
+      Content-Type:
+      - text/html; charset=utf-8
+      Expires:
+      - Tue, 03 Feb 2015 04:21:52 GMT
+      Last-Modified:
+      - Tue, 03 Feb 2015 03:21:52 GMT
+      Vary:
+      - "*"
+      Server:
+      - Microsoft-IIS/7.5
+      X-Aspnet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Tue, 03 Feb 2015 03:21:52 GMT
+      Content-Length:
+      - '341'
+    body:
+      encoding: UTF-8
+      string: '{"Title":"The Amazing Spider-Man","Year":"1991","Rated":"N/A","Released":"N/A","Runtime":"N/A","Genre":"Action","Director":"N/A","Writer":"N/A","Actors":"N/A","Plot":"N/A","Language":"N/A","Country":"USA","Awards":"N/A","Poster":"N/A","Metascore":"N/A","imdbRating":"5.4","imdbVotes":"8","imdbID":"tt2308947","Type":"game","Response":"True"}'
+    http_version: 
+  recorded_at: Tue, 03 Feb 2015 03:21:39 GMT
 - request:
     method: get
     uri: http://www.omdbapi.com/?i=tt1872181
@@ -127,13 +297,13 @@ http_interactions:
       message: OK
     headers:
       Cache-Control:
-      - private, max-age=205
+      - private, max-age=630
       Content-Type:
       - text/html; charset=utf-8
       Expires:
-      - Mon, 29 Sep 2014 02:59:21 GMT
+      - Tue, 03 Feb 2015 03:32:22 GMT
       Last-Modified:
-      - Mon, 29 Sep 2014 01:59:21 GMT
+      - Tue, 03 Feb 2015 02:32:22 GMT
       Vary:
       - "*"
       Server:
@@ -145,9 +315,9 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       Date:
-      - Mon, 29 Sep 2014 02:55:55 GMT
+      - Tue, 03 Feb 2015 03:21:52 GMT
       Content-Length:
-      - '952'
+      - '935'
     body:
       encoding: UTF-8
       string: '{"Title":"The Amazing Spider-Man 2","Year":"2014","Rated":"PG-13","Released":"02
@@ -156,15 +326,14 @@ http_interactions:
         Pinkner (screenplay), Alex Kurtzman (screen story), Roberto Orci (screen story),
         Jeff Pinkner (screen story), James Vanderbilt (screen story), Stan Lee (Marvel
         comic book), Steve Ditko (Marvel comic book)","Actors":"Andrew Garfield, Emma
-        Stone, Jamie Foxx, Dane DeHaan","Plot":"When atrocities threaten New York,
-        Spider-Man must protect the citizens of New York and his loved ones before
-        New York''s heart befalls into tragedy.","Language":"English","Country":"USA","Awards":"8
-        nominations.","Poster":"http://ia.media-imdb.com/images/M/MV5BOTA5NDYxNTg0OV5BMl5BanBnXkFtZTgwODE5NzU1MTE@._V1_SX300.jpg","Metascore":"53","imdbRating":"7.1","imdbVotes":"184,363","imdbID":"tt1872181","Type":"movie","Response":"True"}'
+        Stone, Jamie Foxx, Dane DeHaan","Plot":"When New York is put under siege by
+        Oscorp, it is up to Spider-Man to save the city he swore to protect as well
+        as his loved ones.","Language":"English","Country":"USA","Awards":"21 nominations.","Poster":"http://ia.media-imdb.com/images/M/MV5BOTA5NDYxNTg0OV5BMl5BanBnXkFtZTgwODE5NzU1MTE@._V1_SX300.jpg","Metascore":"53","imdbRating":"6.9","imdbVotes":"235,021","imdbID":"tt1872181","Type":"movie","Response":"True"}'
     http_version: 
-  recorded_at: Mon, 29 Sep 2014 02:56:02 GMT
+  recorded_at: Tue, 03 Feb 2015 03:21:39 GMT
 - request:
     method: get
-    uri: http://www.omdbapi.com/?i=tt0316654
+    uri: http://www.omdbapi.com/?i=tt2250912
     body:
       encoding: US-ASCII
       string: ''
@@ -183,13 +352,13 @@ http_interactions:
       message: OK
     headers:
       Cache-Control:
-      - private, max-age=543
+      - private, max-age=3600
       Content-Type:
       - text/html; charset=utf-8
       Expires:
-      - Mon, 29 Sep 2014 03:04:59 GMT
+      - Tue, 03 Feb 2015 04:21:52 GMT
       Last-Modified:
-      - Mon, 29 Sep 2014 02:04:59 GMT
+      - Tue, 03 Feb 2015 03:21:52 GMT
       Vary:
       - "*"
       Server:
@@ -201,25 +370,21 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       Date:
-      - Mon, 29 Sep 2014 02:55:55 GMT
+      - Tue, 03 Feb 2015 03:21:52 GMT
       Content-Length:
-      - '866'
+      - '564'
     body:
       encoding: UTF-8
-      string: '{"Title":"Spider-Man 2","Year":"2004","Rated":"PG-13","Released":"30
-        Jun 2004","Runtime":"127 min","Genre":"Action, Adventure","Director":"Sam
-        Raimi","Writer":"Stan Lee (comic book), Steve Ditko (comic book), Alfred Gough
-        (screen story), Miles Millar (screen story), Michael Chabon (screen story),
-        Alvin Sargent (screenplay)","Actors":"Tobey Maguire, Kirsten Dunst, James
-        Franco, Alfred Molina","Plot":"Peter Parker is beset with troubles in his
-        failing personal life as he battles a brilliant scientist named Doctor Otto
-        Octavius.","Language":"English, Russian, Chinese","Country":"USA","Awards":"Won
-        1 Oscar. Another 18 wins & 43 nominations.","Poster":"http://ia.media-imdb.com/images/M/MV5BMjE0Njc1NDYzN15BMl5BanBnXkFtZTcwNjAxMzYyMQ@@._V1_SX300.jpg","Metascore":"83","imdbRating":"7.4","imdbVotes":"295,395","imdbID":"tt0316654","Type":"movie","Response":"True"}'
+      string: '{"Title":"The Amazing Spider-Man 3","Year":"2018","Rated":"N/A","Released":"N/A","Runtime":"N/A","Genre":"Action,
+        Adventure, Fantasy","Director":"Marc Webb","Writer":"Steve Ditko (characters),
+        Alex Kurtzman (screenplay), Stan Lee (characters), Jeff Pinkner (screenplay)","Actors":"Andrew
+        Garfield, Dane DeHaan","Plot":"Peter Parker/Spider-Man faces a new challenge
+        to protect New York City.","Language":"N/A","Country":"USA","Awards":"N/A","Poster":"N/A","Metascore":"N/A","imdbRating":"N/A","imdbVotes":"N/A","imdbID":"tt2250912","Type":"movie","Response":"True"}'
     http_version: 
-  recorded_at: Mon, 29 Sep 2014 02:56:02 GMT
+  recorded_at: Tue, 03 Feb 2015 03:21:39 GMT
 - request:
     method: get
-    uri: http://www.omdbapi.com/?i=tt2233044
+    uri: http://www.omdbapi.com/?i=tt3262076
     body:
       encoding: US-ASCII
       string: ''
@@ -238,13 +403,13 @@ http_interactions:
       message: OK
     headers:
       Cache-Control:
-      - private, max-age=3558
+      - private, max-age=3600
       Content-Type:
       - text/html; charset=utf-8
       Expires:
-      - Mon, 29 Sep 2014 03:55:15 GMT
+      - Tue, 03 Feb 2015 04:21:52 GMT
       Last-Modified:
-      - Mon, 29 Sep 2014 02:55:15 GMT
+      - Tue, 03 Feb 2015 03:21:52 GMT
       Vary:
       - "*"
       Server:
@@ -256,15 +421,196 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       Date:
-      - Mon, 29 Sep 2014 02:55:56 GMT
+      - Tue, 03 Feb 2015 03:21:52 GMT
       Content-Length:
-      - '438'
+      - '515'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJUaXRsZSI6IlRoZSBBbWF6aW5nIFNwaWRlci1NYW4gMiIsIlllYXIiOiIy
+        MDE0IiwiUmF0ZWQiOiJOL0EiLCJSZWxlYXNlZCI6IjI5IEFwciAyMDE0Iiwi
+        UnVudGltZSI6Ik4vQSIsIkdlbnJlIjoiQWN0aW9uLCBBZHZlbnR1cmUiLCJE
+        aXJlY3RvciI6Ik4vQSIsIldyaXRlciI6IlJhbWlybyBCw6lsYW5nZXIgKGxl
+        YWQgbmFycmF0aXZlIGRlc2lnbmVyKSwgQ2hyaXN0b3MgTi4gR2FnZSIsIkFj
+        dG9ycyI6IlNhbSBSaWVnZWwsIEFsaSBIaWxsaXMsIEpCIEJsYW5jLCBTdGV2
+        ZSBCbHVtIiwiUGxvdCI6IlNwaWRlcm1hbiBmYWNlcyBuZXcgdGhyZWF0cyB0
+        byB0aGUgY2l0eSBvZiBOZXcgWW9yay4iLCJMYW5ndWFnZSI6IkVuZ2xpc2gi
+        LCJDb3VudHJ5IjoiVVNBIiwiQXdhcmRzIjoiTi9BIiwiUG9zdGVyIjoiTi9B
+        IiwiTWV0YXNjb3JlIjoiTi9BIiwiaW1kYlJhdGluZyI6IjcuNSIsImltZGJW
+        b3RlcyI6IjE3NSIsImltZGJJRCI6InR0MzI2MjA3NiIsIlR5cGUiOiJnYW1l
+        IiwiUmVzcG9uc2UiOiJUcnVlIn0=
+    http_version: 
+  recorded_at: Tue, 03 Feb 2015 03:21:39 GMT
+- request:
+    method: get
+    uri: http://www.omdbapi.com/?i=tt4387264
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - www.omdbapi.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private, max-age=3600
+      Content-Type:
+      - text/html; charset=utf-8
+      Expires:
+      - Tue, 03 Feb 2015 04:21:53 GMT
+      Last-Modified:
+      - Tue, 03 Feb 2015 03:21:53 GMT
+      Vary:
+      - "*"
+      Server:
+      - Microsoft-IIS/7.5
+      X-Aspnet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Tue, 03 Feb 2015 03:21:54 GMT
+      Content-Length:
+      - '390'
     body:
       encoding: UTF-8
-      string: '{"Title":"The Amazing Spiderman T4 Premiere Special","Year":"2012","Rated":"N/A","Released":"30
-        Jun 2012","Runtime":"N/A","Genre":"Documentary","Director":"Steve Kemsley,
-        Steven Vinacour","Writer":"Steven Vinacour","Actors":"Nick Grimshaw, Julio
-        Leal","Plot":"N/A","Language":"English","Country":"UK","Awards":"N/A","Poster":"N/A","Metascore":"N/A","imdbRating":"5.7","imdbVotes":"6","imdbID":"tt2233044","Type":"movie","Response":"True"}'
+      string: '{"Title":"LEGO the Amazing Spider-Man","Year":"2012","Rated":"N/A","Released":"02
+        Sep 2012","Runtime":"1 min","Genre":"Short, Action","Director":"Gavin Velasco","Writer":"Gavin
+        Velasco","Actors":"N/A","Plot":"N/A","Language":"English","Country":"USA","Awards":"N/A","Poster":"N/A","Metascore":"N/A","imdbRating":"N/A","imdbVotes":"N/A","imdbID":"tt4387264","Type":"movie","Response":"True"}'
     http_version: 
-  recorded_at: Mon, 29 Sep 2014 02:56:03 GMT
-recorded_with: VCR 2.9.2
+  recorded_at: Tue, 03 Feb 2015 03:21:41 GMT
+- request:
+    method: get
+    uri: http://www.omdbapi.com/?i=tt0976192
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - www.omdbapi.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private, max-age=3600
+      Content-Type:
+      - text/html; charset=utf-8
+      Expires:
+      - Tue, 03 Feb 2015 04:21:54 GMT
+      Last-Modified:
+      - Tue, 03 Feb 2015 03:21:54 GMT
+      Vary:
+      - "*"
+      Server:
+      - Microsoft-IIS/7.5
+      X-Aspnet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Tue, 03 Feb 2015 03:21:54 GMT
+      Content-Length:
+      - '668'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJUaXRsZSI6IlRoZSBTcGVjdGFjdWxhciBTcGlkZXItTWFuIiwiWWVhciI6
+        IjIwMDjigJMyMDA5IiwiUmF0ZWQiOiJUVi1ZNyIsIlJlbGVhc2VkIjoiMDEg
+        TWFyIDIwMDgiLCJSdW50aW1lIjoiMjQgbWluIiwiR2VucmUiOiJBbmltYXRp
+        b24sIEFjdGlvbiwgQWR2ZW50dXJlIiwiRGlyZWN0b3IiOiJOL0EiLCJXcml0
+        ZXIiOiJTdGFuIExlZSwgU3RldmUgRGl0a28iLCJBY3RvcnMiOiJKb3NoIEtl
+        YXRvbiwgTGFjZXkgQ2hhYmVydCwgSm9zaHVhIExlQmFyLCBHcmV5IERlTGlz
+        bGUiLCJQbG90IjoiQW4gYW5pbWF0ZWQgdGVsZXZpc2lvbiBzaG93IHRoYXQg
+        Zm9jdXNlcyBvbiBhIDE2LXllYXItb2xkIFBldGVyIFBhcmtlciBhbmQgdGhl
+        IG9yaWdpbnMgb2YgU3BpZGVyLU1hbi4iLCJMYW5ndWFnZSI6IkVuZ2xpc2gi
+        LCJDb3VudHJ5IjoiVVNBIiwiQXdhcmRzIjoiMiBub21pbmF0aW9ucy4iLCJQ
+        b3N0ZXIiOiJodHRwOi8vaWEubWVkaWEtaW1kYi5jb20vaW1hZ2VzL00vTVY1
+        Qk9UYzVOekV3T1Rjek5WNUJNbDVCYW5CblhrRnRaVGd3T0RFd01ETXdNakVA
+        Ll9WMV9TWDMwMC5qcGciLCJNZXRhc2NvcmUiOiJOL0EiLCJpbWRiUmF0aW5n
+        IjoiOC4xIiwiaW1kYlZvdGVzIjoiNSwwOTAiLCJpbWRiSUQiOiJ0dDA5NzYx
+        OTIiLCJUeXBlIjoic2VyaWVzIiwiUmVzcG9uc2UiOiJUcnVlIn0=
+    http_version: 
+  recorded_at: Tue, 03 Feb 2015 03:21:41 GMT
+- request:
+    method: get
+    uri: http://www.omdbapi.com/?i=tt0061301
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - www.omdbapi.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private, max-age=3600
+      Content-Type:
+      - text/html; charset=utf-8
+      Expires:
+      - Tue, 03 Feb 2015 04:21:54 GMT
+      Last-Modified:
+      - Tue, 03 Feb 2015 03:21:54 GMT
+      Vary:
+      - "*"
+      Server:
+      - Microsoft-IIS/7.5
+      X-Aspnet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Tue, 03 Feb 2015 03:21:54 GMT
+      Content-Length:
+      - '622'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJUaXRsZSI6IlNwaWRlci1NYW4iLCJZZWFyIjoiMTk2N+KAkzE5NzAiLCJS
+        YXRlZCI6IlRWLVk3IiwiUmVsZWFzZWQiOiIwOSBTZXAgMTk2NyIsIlJ1bnRp
+        bWUiOiJOL0EiLCJHZW5yZSI6IkFuaW1hdGlvbiwgQWR2ZW50dXJlLCBGYW1p
+        bHkiLCJEaXJlY3RvciI6Ik4vQSIsIldyaXRlciI6IlN0ZXZlIERpdGtvLCBT
+        dGFuIExlZSIsIkFjdG9ycyI6IlBhdWwgS2xpZ21hbiwgUGF1bCBTb2xlcywg
+        UGVnIERpeG9uLCBCZXJuYXJkIENvd2FuIiwiUGxvdCI6IkEgdGVlbmFnZSBi
+        b3kgd2l0aCB0aGUgcG93ZXJzIG9mIGEgc3BpZGVyIGZpZ2h0cyBjcmltZSBh
+        cyB0aGUgV2Vic2xpbmdpbmcgV29uZGVyLiIsIkxhbmd1YWdlIjoiRW5nbGlz
+        aCIsIkNvdW50cnkiOiJDYW5hZGEsIFVTQSIsIkF3YXJkcyI6Ik4vQSIsIlBv
+        c3RlciI6Imh0dHA6Ly9pYS5tZWRpYS1pbWRiLmNvbS9pbWFnZXMvTS9NVjVC
+        T0Rnek5UTXlORFk1TTE1Qk1sNUJhbkJuWGtGdFpUY3dPVGszTnpVeU1RQEAu
+        X1YxX1NYMzAwLmpwZyIsIk1ldGFzY29yZSI6Ik4vQSIsImltZGJSYXRpbmci
+        OiI3LjQiLCJpbWRiVm90ZXMiOiIxLDUxMSIsImltZGJJRCI6InR0MDA2MTMw
+        MSIsIlR5cGUiOiJzZXJpZXMiLCJSZXNwb25zZSI6IlRydWUifQ==
+    http_version: 
+  recorded_at: Tue, 03 Feb 2015 03:21:41 GMT
+recorded_with: VCR 2.9.3
