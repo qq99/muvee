@@ -16,8 +16,8 @@
           data-refresh-key="movie<%= movie.id %>"
           data-fanart-path="<%= fanart_video_path(movie) %>">
           <% if poster_url = movie.poster_url %>
-            <img class="video-thumbnail has-aspect" src="<%= poster_url %>" onerror="Twine.context(this).imageErrored = true; Twine.refresh()" bind-show="!imageErrored" alt="">
-            <div class="hide" bind-show="imageErrored">
+            <img class="video-thumbnail has-aspect" src="<%= poster_url %>" alt="">
+            <div class="img-errored">
               <%= render 'shared/no_poster_available' %>
             </div>
           <% else %>

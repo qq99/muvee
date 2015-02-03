@@ -22,6 +22,7 @@ module DownloadFile
     raise ArgumentError, 'too many HTTP redirects' if limit == 0
 
     begin
+      Net::HTTP.read_timeout = 5 # 5 seconds sounds reasonable
       response = Net::HTTP.get_response(URI(uri_str))
 
       case response

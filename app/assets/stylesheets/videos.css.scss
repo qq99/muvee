@@ -138,13 +138,11 @@ a.back {
   img {
     width: 100%;
     height: auto;
-    opacity: 0.8;
     object-fit: cover;
   }
 }
 .poster-link:focus, .poster-link:hover {
   > * {
-    opacity: 1;
     outline: 5px solid $radical-blue;
   }
 }
@@ -228,12 +226,15 @@ button {
   }
 }
 
-
-
-
+.img-errored {
+  z-index: 1;
+}
 
 .aspect-poster {
   position: relative;
+  img {
+    z-index: 2;
+  }
   padding-bottom: 148.00%; /* 16:9 */
   padding-top: 25px;
   height: 0;
