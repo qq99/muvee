@@ -1,6 +1,9 @@
 @import 'variables';
 
-$roundedness: 5px;
+$roundedness: 0px;
+$video-control-button-width: 1.25em;
+$video-control-group-padding: 0.25em;
+$volumebar-width: 8em;
 
 #watch {
   position: relative;
@@ -33,90 +36,62 @@ $roundedness: 5px;
   left: 10%;
   bottom: 10%;
   height: 2em;
-  background: rgba(0,0,0,0.8);
+  background: rgba(0, 0, 0, 0.85);
   border-radius: $roundedness;
-  padding: 0 0.5em;
+  display: flex;
 }
 
 // buttons
 .video-controls-group {
-  display: inline-block;
   position: relative;
   z-index: 10;
   height: 100%;
+  margin: 0 $video-control-group-padding;
+  display: flex;
+  align-items: center;
 }
 .video-controls-button {
   font-size: 1.5em;
   line-height: 1.5em;
   color: white;
-  width: 1.5em;
+  margin: 0.25em;
   text-align: center;
-  display: inline-block;
   cursor: pointer;
   max-height: 100%;
-}
-.volume-group, .fullscreen-group {
-  float: right;
+  width: 1em;
 }
 
-// volume bar
-.volumebar-container {
-  width: 8em;
-  height: 100%;
-  padding: 10px 0;
-  overflow: hidden;
-  border-radius: 10px;
-  float: left;
-  border-radius: $roundedness;
+#duration-group {
+  width: 80%;
 }
-.video-controls-volumebar {
+#volume-group {
+  width: 15%;
+}
+
+.progress-bar {
+  padding: 8px 0;
+  width: 100%;
+  height: 100%;
+}
+.progress-bar__container {
   width: 100%;
   height: 100%;
   position: relative;
-  background: #555;
   overflow: hidden;
+  background: #333;
 }
-// progress bar
-.progressbar-container {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  padding: 10px 14em 10px 6em;
-  overflow: hidden;
-  z-index: 1;
-}
-.video-controls-progressbar {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  background: #555;
-  overflow: hidden;
-}
-.video-controls-volume, .video-controls-progress {
+.progress-bar__bar {
   height: 100%;
   width: 0;
-  position: absolute;
-  left: 0;
-  top: 0;
   background: green;
   box-shadow: inset 2px 2px 1px rgba(255,255,255,0.3);
 }
-.video-controls-volumebar, .video-controls-volume, .video-controls-progressbar, .video-controls-progress {
-  border-radius: $roundedness;
-}
-.video-controls-volume, .video-controls-progress {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
 
-.video-controls-time-remaining {
+.duration-remaining {
   pointer-events: none;
   position: absolute;
   right: 0.5em;
   top: 0em;
-  font-size: 0.8em;
   color: white;
   text-shadow: 1px 1px 0px black;
 }

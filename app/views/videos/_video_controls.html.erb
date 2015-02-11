@@ -1,12 +1,4 @@
 <div class="video-controls hide">
-  <div class="progressbar-container">
-    <div class="video-controls-progressbar">
-      <div class="video-controls-progress">
-
-      </div>
-      <div class="video-controls-time-remaining js-time-remaining"></div>
-    </div>
-  </div>
 
   <div class="video-controls-group play-group">
     <div class="video-controls-pause video-controls-button">
@@ -20,21 +12,20 @@
     </div>
   </div>
 
-  <div class="video-controls-group fullscreen-group">
-    <div class="video-controls-fullscreen video-controls-button">
-      <i class="fa fa-arrows-alt"></i>
-    </div>
-    <div class="video-controls-unfullscreen video-controls-button hide">
-      <i class="fa fa-compress"></i>
+  <div id="duration-group" class="video-controls-group">
+    <div class="progress-bar">
+      <div id="duration-bar" class="progress-bar__container">
+        <div class="progress-bar__bar"></div>
+
+        <div class="js-duration-remaining duration-remaining"></div>
+      </div>
     </div>
   </div>
 
-  <div class="video-controls-group volume-group">
-    <div class="volumebar-container">
-      <div class="video-controls-volumebar">
-        <div class="video-controls-volume" style="width: 100%">
-
-        </div>
+  <div id="volume-group" class="video-controls-group">
+    <div class="progress-bar">
+      <div id="volume-bar" class="progress-bar__container">
+        <div class="progress-bar__bar" style="width: 100%"></div>
       </div>
     </div>
 
@@ -45,4 +36,17 @@
       <i class="fa fa-volume-off"></i>
     </div>
   </div>
+
+  <div class="video-controls-group fullscreen-group">
+    <div class="video-controls-hue video-controls-button">
+      <i class="fa fa-lightbulb-o"></i>
+    </div>
+    <div class="video-controls-fullscreen video-controls-button">
+      <i class="fa fa-arrows-alt"></i>
+    </div>
+    <div class="video-controls-unfullscreen video-controls-button hide">
+      <i class="fa fa-compress"></i>
+    </div>
+  </div>
+
 </div>

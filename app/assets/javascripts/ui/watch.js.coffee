@@ -76,8 +76,8 @@ document.addEventListener 'page:change', ->
   throttledSetLeftOffAt = _.throttle(setLeftOffAt, 500)
 
   # http://www.w3.org/TR/html5/embedded-content-0.html#mediaevents
-  $progress = $(".video-controls-progress")
-  timeRemaining = $(".js-time-remaining")[0]
+  $progress = $("#duration-bar .progress-bar__bar")
+  timeRemaining = $(".js-duration-remaining")[0]
   $video.on "timeupdate.videoplayer", _.throttle (e) ->
     throttledSetLeftOffAt(e)
     progress = video.currentTime / video.duration
@@ -115,11 +115,11 @@ document.addEventListener 'page:change', ->
     hideMeta()
     dimLights()
 
-  $(".video-controls-progressbar").on "click.videoplayer", (e) ->
+  $("#duration-bar").on "click.videoplayer", (e) ->
     clickedRatio = (e.offsetX / $(e.currentTarget).width())
     video.currentTime = clickedRatio * video.duration
 
-  $(".video-controls-volumebar").on "click.videoplayer", (e) ->
+  $("#volume-bar").on "click.videoplayer", (e) ->
     clickedRatio = (e.offsetX / $(e.currentTarget).width())
     video.volume = Math.max(0, Math.min(clickedRatio, 1))
 
@@ -144,7 +144,7 @@ document.addEventListener 'page:change', ->
 
   $video.on "volumechange.videoplayer", ->
     muted = video.volume == 0
-    $(".video-controls-volume").width("#{video.volume * 100}%")
+    $("#volume-bar .progress-bar__bar").width("#{video.volume * 100}%")
     if muted
       $(".video-controls-mute").addClass("hide")
       $(".video-controls-unmute").removeClass("hide")
