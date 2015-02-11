@@ -1,10 +1,19 @@
 controlTimeout = null
+sampleTimeout = null
+shouldDimLights = false
+shouldSample = false
 
 brightenLights = ->
-  $.post("/videos/brighten_lights")
+  return unless shouldDimLights
+  $.post("/lights/brighten")
 
 dimLights = ->
-  $.post("/videos/dim_lights")
+  return unless shouldDimLights
+  $.post("/lights/dim")
+
+setLights = (rgbs) ->
+  return unless shouldSample
+  $.post("/lights/set", {colors: rgbs})
 
 showControls = ->
   $(".video-controls, .video-back-button").removeClass('hide')
@@ -60,8 +69,26 @@ document.addEventListener 'page:change', ->
   $(document).off(".videoplayer")
 
   $video = $("video").first()
+  sampler = document.getElementById("pixel-sampler")
+  samplerContext = sampler.getContext('2d')
+
   video = $video[0]
   return if !video
+
+  sample = ->
+    return if video.paused || video.ended
+    samplerContext.drawImage(video,0,0,8,8)
+    pix = samplerContext.getImageData(0,0,8,8).data
+    rgbs = []
+    i = 0
+    while i < pix.length
+      rgb = {r: pix[i], g: pix[i+1], b: pix[i+2]}
+      rgbs.push rgb
+      i += 4
+
+    setLights(rgbs)
+
+    setTimeout sample, 5000
 
   left_off_at_path = $video.data("left-off-at-path")
   last_time = params.t || parseInt($video.data("resume-from"), 10)
@@ -114,6 +141,7 @@ document.addEventListener 'page:change', ->
     $(".video-controls-pause").removeClass("hide")
     hideMeta()
     dimLights()
+    sample()
 
   $("#duration-bar").on "click.videoplayer", (e) ->
     clickedRatio = (e.offsetX / $(e.currentTarget).width())
@@ -162,6 +190,32 @@ document.addEventListener 'page:change', ->
 
   $(".video-controls-unmute").on "click.videoplayer", ->
     video.volume = 1
+
+  $hueButton = $(".video-controls-hue")
+
+  updateLightIcon = (brightness, color) ->
+    if brightness
+      $hueButton.addClass("brightness")
+    else
+      $hueButton.removeClass("brightness")
+
+    if color
+      $hueButton.addClass("color")
+    else
+      $hueButton.removeClass("color")
+
+  $hueButton.on "click.videoplayer", ->
+    if shouldDimLights
+      if shouldSample
+        shouldDimLights = false
+        shouldSample = false
+      else
+        shouldSample = true
+        sample()
+    else
+      shouldDimLights = true
+
+    updateLightIcon(shouldDimLights, shouldSample);
 
   $(".video-controls-play").on "click.videoplayer", -> video.play()
   $(".video-controls-pause").on "click.videoplayer", -> video.pause()

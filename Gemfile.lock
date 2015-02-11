@@ -91,6 +91,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.9.0)
+    color (1.7.1)
     columnize (0.9.0)
     connection_pool (2.1.1)
     cookiejar (0.3.2)
@@ -312,6 +313,7 @@ DEPENDENCIES
   binding_of_caller
   chronic_duration
   coffee-rails (~> 4.0.0)
+  color
   ffi
   font-awesome-rails
   foreman

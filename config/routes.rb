@@ -10,8 +10,7 @@ Rails.application.routes.draw do
       get 'reanalyze'
       get 'redownload'
       get 'redownload_missing'
-      post 'dim_lights'
-      post 'brighten_lights'
+
     end
     member do
       get 'stream'
@@ -19,6 +18,14 @@ Rails.application.routes.draw do
       get 'thumbnails'
       post 'left_off_at'
       post 'reanalyze' => 'videos#reanalyze_video'
+    end
+  end
+
+  resources :lights do
+    collection do
+      post 'dim'
+      post 'brighten'
+      post 'set'
     end
   end
 

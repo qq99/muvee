@@ -95,3 +95,12 @@ $volumebar-width: 8em;
   color: white;
   text-shadow: 1px 1px 0px black;
 }
+
+.video-controls-hue {
+  &.brightness {
+    color: yellow;
+  }
+  &.color {
+    color: magenta;
+  }
+}

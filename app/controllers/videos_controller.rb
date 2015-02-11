@@ -138,18 +138,6 @@ class VideosController < ApplicationController
     render json: {thumbnails: @video.thumbnails.map{|t| t.url}}
   end
 
-  def brighten_lights
-    HueManagingService.brighten_lights
-
-    render json: {status: "ok"}
-  end
-
-  def dim_lights
-    HueManagingService.dim_lights
-
-    render json: {status: "ok"}
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_video

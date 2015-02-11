@@ -21,6 +21,9 @@ gem 'jquery-rails'
 gem 'lodash-rails'
 gem "font-awesome-rails"
 
+
+gem 'color'
+
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbograft', '0.1.9'
 gem 'twine-rails'
