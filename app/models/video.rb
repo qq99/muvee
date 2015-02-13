@@ -195,4 +195,9 @@ class Video < ActiveRecord::Base
     return if self.duration == 0
     system(avconv_create_thumbnail_command(at_seconds, output_path))
   end
+
+  def move_raw_file(new_path)
+    self.update_attribute(:raw_file_path, new_path)
+    FileUtils.mv(raw_file_path, new_path)
+  end
 end

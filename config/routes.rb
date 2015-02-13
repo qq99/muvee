@@ -32,6 +32,8 @@ Rails.application.routes.draw do
   resources :settings do
     collection do
       get 'welcome'
+      get 'reorganize_movies' => 'settings#reorganize_movies_show'
+      post 'reorganize_movies' => 'settings#reorganize_movies_perform'
     end
   end
 

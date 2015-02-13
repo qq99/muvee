@@ -146,3 +146,37 @@
     width: calc(100% / 6);
   }
 }
+
+.rename-table {
+  border:none;
+  border-collapse:collapse;
+  border-spacing:0;
+  td {
+    padding: 0.5em 1em;
+  }
+  .from, .to {
+    width: 45%;
+    word-break: break-word;
+    font-family: monospace;
+    input, span {
+      display: inline-block;
+      font-size: 1em;
+      font-family: monospace;
+      border: 0;
+      outline: 0;
+      text-align: left;
+      padding: 0;
+      vertical-align: top;
+    }
+    input {
+      background: lightyellow;
+      width: 100%;
+    }
+  }
+  .to-arrow {
+    text-align: center;
+  }
+  tr:nth-child(2n) {
+    background: #efefef;
+  }
+}

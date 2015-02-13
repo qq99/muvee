@@ -5,6 +5,7 @@ require 'pry'
 require 'pry-byebug'
 require 'webmock/minitest'
 require 'vcr'
+require 'mocha/setup'
 
 VCR.configure do |c|
   c.cassette_library_dir = 'fixtures/vcr_cassettes'

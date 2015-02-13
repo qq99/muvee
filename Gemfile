@@ -48,13 +48,16 @@ gem 'mini_magick'
 #gem 'pHash'
 gem 'ffi'
 gem 'thepiratebay', github: "qq99/thepiratebay", branch: "master"
-gem 'hue', github: "qq99/hue", branch: "master"
 
 gem 'foreman'
 gem 'sidekiq'
 gem 'sidekiq-limit_fetch'
 gem "sidekiq-cron", "~> 0.2.0"
 gem "transmission_api", github: "qq99/TransmissionApi", branch: "master"
+
+group :production, :development do
+  gem 'hue', github: "qq99/hue", branch: "master"
+end
 
 group :test do
   gem 'webmock'

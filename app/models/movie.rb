@@ -49,7 +49,7 @@ class Movie < Video
     rescue
       self.released_on = nil
     end
-    self.year = self.released_on.try(:year)
+    self.year = metadata[:Year]
     self.overview = metadata[:Plot]
     self.language = metadata[:Language]
     self.country = metadata[:Country]
@@ -169,6 +169,13 @@ class Movie < Video
     if imdb_id != old_imdb_id
       redownload
     end
+  end
+
+  def suggested_filename
+    name = "#{title} (#{year})"
+    name += " [#{quality}]" if quality.present?
+    name.gsub!(/[^0-9A-Za-z.\(\)\[\]\-\s]/, '')
+    name += File.extname(raw_file_path)
   end
 
   def redownload

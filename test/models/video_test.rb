@@ -67,4 +67,13 @@ class VideoTest < ActiveSupport::TestCase
       @vid.destroy
     end
   end
+
+  test '#move_raw_file' do
+    vid = videos(:american_dad_s01_e01)
+
+    FileUtils.expects(:mv).with(vid.raw_file_path, Dir.getwd() + "/tmp/new.path.mp4")
+    vid.expects(:update_attribute).with(:raw_file_path, Dir.getwd() + "/tmp/new.path.mp4")
+
+    vid.move_raw_file(Dir.getwd() + "/tmp/new.path.mp4")
+  end
 end

@@ -38,6 +38,28 @@ class SettingsController < ApplicationController
     end
   end
 
+  def reorganize_movies_show
+    @config = ApplicationConfiguration.first
+    @folders = @config.movie_sources
+    @movies = Movie.local.all
+  end
+
+  def reorganize_movies_perform
+    to_rename = reorganize_movies_params.select do |m|
+      m["rename"].present?
+    end
+    to_rename.each do |to_rename|
+      movie = Movie.find(to_rename["from"])
+      new_path = to_rename["to_folder"] + to_rename["to_filename"]
+      movie.move_raw_file(new_path)
+    end
+    redirect_to reorganize_movies_settings_path
+  end
+
+  def reorganize_movies_params
+    params[:reorg].values
+  end
+
   def config_params
     config = params.require(:application_configuration).permit(:tv_sources, :movie_sources, :transcode_media, :transcode_folder, :torrent_start_path)
     config[:transcode_media] = false if config[:transcode_media].blank?
