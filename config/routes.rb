@@ -64,6 +64,7 @@ Rails.application.routes.draw do
       get 'find_sources_via_yts'
       get 'find_sources_via_pirate_bay'
       post 'download'
+      patch 'override_imdb_id'
     end
   end
 

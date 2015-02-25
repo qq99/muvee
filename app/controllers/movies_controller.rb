@@ -1,10 +1,11 @@
 class MoviesController < ApplicationController
-  before_action :set_movie, only: [:show, :find_sources_via_yts, :destroy, :download, :find_sources_via_pirate_bay]
+  before_action :set_movie, only: [:show, :find_sources_via_yts, :destroy, :download, :find_sources_via_pirate_bay, :override_imdb_id]
   before_action :set_existing_copies, only: [:show, :find_sources_via_yts, :find_sources_via_pirate_bay]
 
   def index
     @section = :all
     @movies = Movie.local.all.shuffle
+    render 'index2'
   end
 
   def show
@@ -96,6 +97,13 @@ class MoviesController < ApplicationController
     @movie.delete_file!
     @movie.destroy
     redirect_to movies_path
+  end
+
+  def override_imdb_id
+    @movie.update_attributes(imdb_id: params[:imdb_id], imdb_id_is_accurate: true)
+    @movie.reanalyze
+
+    render 'show'
   end
 
   private

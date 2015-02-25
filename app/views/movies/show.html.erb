@@ -114,6 +114,10 @@
                   <%= @movie.raw_file_path %>
                 </p>
               </div>
+
+              <%= form_for @movie, url: override_imdb_id_movie_path(@movie), 'tg-remote' => true do |f| %>
+                <%= f.text_field :imdb_id %>
+              <% end %>
             <% end %>
           </div>
         <% else %>

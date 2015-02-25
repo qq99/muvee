@@ -1,0 +1,152 @@
+@import 'variables';
+
+.tile-list {
+  height: 100%;
+  width: 100%;
+}
+.block-level-link {
+  display: block;
+}
+.tile-row {
+  display: flex;
+  flex-direction: row;
+  height: 75%;
+}
+.col-2-3 {
+  width: 66.6666%;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+.col-1-3 {
+  width: 33.3333%;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+.flex-down {
+  flex-direction: column;
+}
+
+.tile {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  flex-grow: 1;
+  position: relative;
+  transition: all 0.75s ease-in-out;
+}
+.tile__background {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: black;
+  background: no-repeat center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  transition: all 0.75s ease-in-out;
+}
+.tile__play {
+  opacity: 0;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  font-size: 6em;
+  cursor: pointer;
+  > a {
+    color: inherit;
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    &:hover {
+      color: $radical-blue;
+    }
+    > * {
+      flex-grow: 1;
+    }
+  }
+}
+
+.tile:hover .tile__meta {
+  background: rgba(0,0,0,0.85);
+  border-bottom: 5px solid $radical-blue;
+  height: 200px;
+}
+.tile:hover .tile__play {
+  opacity: 1;
+}
+.tile:hover .video-description {
+  height: 50px;
+  opacity: 1;
+}
+.tile__meta {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+  background: rgba(0,0,0,0.65);
+  color: white;
+  padding: 1em;
+  border-bottom: 5px solid transparent;
+  height: 125px;
+
+  transition: all 0.75s ease-in-out;
+
+  .video-type, .video-year {
+    text-transform: uppercase;
+    font-size: 0.7em;
+    color: rgb(242, 190, 92);
+  }
+  .video-year {
+    float: right;
+  }
+  .video-title {
+    font-size: 1.6em;
+  }
+  .video-genres {
+    float: right;
+    margin-top: 0.5em;
+  }
+  .video-description {
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.75s ease-in-out;
+    font-size: 0.95em;
+    font-weight: 200;
+  }
+  .genre-badge {
+    font-size: 0.75em;
+    font-weight: 200;
+    padding: 0.3em 1em 0.2em 1em;
+    background: rgba(255,255,255,0);
+    border: 1px solid #666;
+    text-decoration: none;
+    color: white;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transition: all 0.35s ease-in-out;
+    &:hover {
+      background: black;
+      border: 1px solid $radical-blue;
+    }
+  }
+}
