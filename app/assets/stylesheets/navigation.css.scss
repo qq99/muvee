@@ -19,16 +19,15 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  border-right: 1px solid $nav-border-color;
 }
 
-$nav-border-color: rgba(255,255,255,0.1);
 .main-navigation__items {
   margin: 0;
   padding: 0;
   width: 100%;
   list-style-type: none;
   color: white;
-  border-right: 1px solid $nav-border-color;
   li {
     text-align: center;
     font-size: 1.1em;
