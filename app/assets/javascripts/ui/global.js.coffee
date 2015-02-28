@@ -17,8 +17,18 @@ $ ->
 
     try
       data = JSON.parse(event.data)
-      console.log(event, data)
-    catch
+      #console.log(event, data)
+
+      if data.type == "VideoCreationService"
+        $parent = $("#scan-progress")
+        $(".job-message", $parent).text(data.processing)
+        $(".job-progress", $parent).text(parseInt(data.progress, 10) + "%")
+        $(".job-current", $parent).text(data.current)
+        $(".job-max", $parent).text(data.max)
+        $(".progress-bar__bar").css("width", data.progress + "%")
+
+    catch e
+      console.log(e)
 
   socket.onclose = (event) ->
     console.log 'Socket closed.'

@@ -1,3 +1,44 @@
 // Place all the styles related to the settings controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.job {
+  height: 2em;
+}
+.job-quantity {
+  width: 8em;
+}
+.job-current, .job-max {
+  display: block;
+  width: 5em;
+  text-align: center;
+}
+.job-max {
+  &::before {
+    content: "of "
+  }
+}
+.job-message {
+  max-width: 70%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.job-info {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  font-size: 0.7em;
+  > * {
+    flex-grow: 1;
+  }
+}
+.job-progress {
+  text-align: right;
+  width: 4em;
+  padding-right: 2em;
+}

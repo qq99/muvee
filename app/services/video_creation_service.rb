@@ -25,6 +25,12 @@ class VideoCreationService
     files.select{|file| Video::UNSERVABLE_CONTAINERS.include? File.extname(file) }
   end
 
+  def publish(event)
+    redis = Redis.new
+    event = event.merge(type: 'VideoCreationService')
+    redis.publish(:sidekiq, event.to_json)
+  end
+
   def create_videos(klass, folders)
     files = []
     successes = []
@@ -38,7 +44,10 @@ class VideoCreationService
     no_transcode = eligible_files(files) # filter out non-acceptable formats
     needs_transcode = files_to_transcode(files)
 
-    no_transcode.each do |filepath|
+    creation_size = no_transcode.size
+    publish({operation: "creation", current: 0, max: creation_size, progress: 0})
+    no_transcode.each_with_index do |filepath, i|
+      publish({operation: "creation", current: i, max: creation_size, progress: (i / creation_size.to_f) * 100.0, processing: filepath})
       begin
         if create_video(klass, filepath)
           successes << filepath
@@ -49,6 +58,7 @@ class VideoCreationService
         failures << filepath
       end
     end
+    publish({operation: "creation", current: creation_size, max: creation_size, progress: 100.0, processing: "Done!"})
 
     if should_transcode?
       needs_transcode.each do |path|
