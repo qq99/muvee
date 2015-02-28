@@ -1,5 +1,5 @@
-<% content_for :subnav do %>
-<ul class="top-nav-container subnav">
+<% content_for :series_subnav do %>
+<ul class="subnav">
   <li>
     <%= link_to 'On deck', newest_unwatched_series_index_path, class: @section == :newest_unwatched ? 'active' : '' %>
   </li>

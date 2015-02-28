@@ -12,38 +12,49 @@
 <body>
 
   <header class="main-navigation">
-    <ul class="top-nav-container">
+    <ul class="main-navigation__items">
       <li class="<% if controller_name == 'videos' && action_name == 'index' %>active<% end %>">
         <a class="top-nav-button home" href="/">
           <i class="fa fa-home"></i>
+          <h1>Home</h1>
         </a>
       </li>
       <li <% if controller_name == 'movies' %>class="active" <% end %>>
         <%= link_to movies_path, class: 'top-nav-button' do %>
-          <i class="fa fa-film"></i> Movies
+          <i class="fa fa-film"></i>
+          <h1>Movies</h1>
         <% end %>
+
+        <%= yield :movies_subnav %>
       </li>
       <li <% if controller_name == 'series' %>class="active" <% end %>>
         <%= link_to series_index_path, class: 'top-nav-button' do %>
-          <i class="fa fa-desktop"></i> TV
+          <i class="fa fa-desktop"></i>
+          <h1>TV</h1>
         <% end %>
+
+        <%= yield :series_subnav %>
       </li>
       <li>
         <%= link_to shuffle_videos_path, class: 'top-nav-button' do %>
-          <i class="fa fa-random"></i> Shuffle
+          <i class="fa fa-random"></i>
+          <h1>Shuffle</h1>
         <% end %>
       </li>
-      <li class="fr">
+      <li>
         <a id="showGlobalOptions" href="#" class="top-nav-button" data-modal="global-options">
           <i class="fa fa-cogs"></i>
+          <h1>Options</h1>
         </a>
       </li>
     </ul>
-
-    <%= yield :subnav %>
   </header>
 
-<%= yield %>
+  <div class="main-content-container">
+    <div class="main-content">
+      <%= yield %>
+    </div>
+  </div>
 
 <div id="global-options" class="modal">
   <div class="modal-backdrop js-close-modal"></div>

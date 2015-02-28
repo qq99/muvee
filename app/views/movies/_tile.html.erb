@@ -13,10 +13,5 @@
     </div>
     <%#= render 'shared/star_rating', rating: movie.metadata[:imdbRating] || 0, rating_max: 10, new_scale: 5 %>
   </div>
-  <div class="tile__play">
-    <%= link_to video_path(movie) do %>
-      <i class="fa fa-play"></i>
-    <% end %>
-  </div>
   <div class="tile__background" style="background-image: url(<%= movie.fanarts.sample.try(:url) %>);"></div>
 </div>

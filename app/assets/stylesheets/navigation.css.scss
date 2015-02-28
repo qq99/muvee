@@ -1,60 +1,79 @@
 @import 'variables';
 
+$nav-width: 6em;
+
+body {
+  background: black;
+}
+
 .main-navigation {
   position: fixed;
-  width: 100%;
+  top: 0;
+  left: 0;
+  width: $nav-width;
+  height: 100%;
   z-index: 2000;
   background: black;
   background: $sleek-transparent-black;
-  padding: 1em 3em;
-  top: 0;
-  transition: all 1s ease-in-out;
-  height: $topnav-height;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-a.top-nav-button {
-  font-size: 1.5em;
-  color: inherit;
-  text-decoration: none;
-  display: block;
+$nav-border-color: rgba(255,255,255,0.1);
+.main-navigation__items {
+  margin: 0;
+  padding: 0;
   width: 100%;
-  height: 100%;
-  padding: 0.25em 0.5em;
-  outline: 0;
-}
-
-.top-nav-container {
-  width: 100%;
-  list-style: none;
+  list-style-type: none;
+  color: white;
+  border-right: 1px solid $nav-border-color;
   li {
-    display: inline-block;
-    color: white;
-    &.active {
-      background: rgba(255,255,255,0.1);
-    }
-    a.active {
+    text-align: center;
+    font-size: 1.1em;
+    border-bottom: 1px solid $nav-border-color;
+    &.active, &:hover {
+      background: rgba(0,0,0,0.9);
       color: $radical-blue;
     }
-  }
 
-  a {
-    text-decoration: none;
-    color: white;
-    &:visited {
+    a {
       color: inherit;
-    }
-    &:focus, &:hover {
-      color: darken($radical-blue, 30%);
+      padding: 1em 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+
+      &.active {
+        color: $radical-blue;
+      }
     }
   }
-
-  &.subnav {
-    margin-top: 0.5rem;
-    li {
-      margin-right: 2em;
-    }
+  i {
+    font-size: 1.5em;
+  }
+  h1 {
+    text-transform: uppercase;
+    color: $golden;
+    font-size: 1em;
+    font-weight: 200;
   }
 }
-.with-header {
-  padding-top: 6em;
+
+.subnav {
+  text-transform: uppercase;
+  color: desaturate($golden, 50%);
+  font-size: 0.66em;
+}
+
+.main-content-container {
+  width: 100%;
+  height: 100%;
+  padding-left: $nav-width;
+}
+.main-content {
+  width: 100%;
+  height: 100%;
+  position: relative;
 }

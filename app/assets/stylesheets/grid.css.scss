@@ -10,7 +10,7 @@
 .tile-row {
   display: flex;
   flex-direction: row;
-  height: 75%;
+  height: 66.6666%;
 }
 .col-2-3 {
   width: 66.6666%;
@@ -35,6 +35,15 @@
   flex-grow: 1;
   position: relative;
   transition: all 0.75s ease-in-out;
+
+  &.is-expanded {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+  }
 }
 .tile__background {
   width: 100%;
@@ -50,47 +59,11 @@
   background-size: cover;
   transition: all 0.75s ease-in-out;
 }
-.tile__play {
-  opacity: 0;
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-content: center;
-  align-items: center;
-  text-align: center;
-  color: white;
-  font-size: 6em;
-  cursor: pointer;
-  > a {
-    color: inherit;
-    display: flex;
-    flex-grow: 1;
-    width: 100%;
-    height: 100%;
-    align-content: center;
-    align-items: center;
-    text-align: center;
-    text-decoration: none;
-    &:hover {
-      color: $radical-blue;
-    }
-    > * {
-      flex-grow: 1;
-    }
-  }
-}
 
 .tile:hover .tile__meta {
   background: rgba(0,0,0,0.85);
   border-bottom: 5px solid $radical-blue;
   height: 200px;
-}
-.tile:hover .tile__play {
-  opacity: 1;
 }
 .tile:hover .video-description {
   height: 50px;
@@ -120,6 +93,10 @@
   }
   .video-title {
     font-size: 1.6em;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
   .video-genres {
     float: right;
