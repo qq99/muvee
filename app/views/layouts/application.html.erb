@@ -42,10 +42,10 @@
         <% end %>
       </li>
       <li>
-        <a id="showGlobalOptions" href="#" class="top-nav-button" data-modal="global-options">
+        <%= link_to settings_path, class: 'top-nav-button' do %>
           <i class="fa fa-cogs"></i>
           <h1>Options</h1>
-        </a>
+        <% end %>
       </li>
     </ul>
   </header>
@@ -56,58 +56,24 @@
     </div>
   </div>
 
-<div id="global-options" class="modal">
-  <div class="modal-backdrop js-close-modal"></div>
-  <div class="modal-box">
-    <div class="modal-box-contents">
-      <div class="modal-header">
-        Media Actions
-      </div>
-      <div class="divider">
-        <%= link_to 'Change settings', settings_path %>
-      </div>
-      <div class="divider">
-        <button onclick="rescanLibrary()" class="js-close-modal">
-          Scan for new media
-        </button>
-      </div>
-      <div class="divider">
-        <button onclick="reanalyzeLibrary()" class="js-close-modal">
-          Re-analyze media library
-        </button>
-      </div>
-      <div class="divider">
-        <button onclick="redownloadMissingImages()" class="js-close-modal">
-          Download missing posters and fanart
-        </button>
-      </div>
-      <div class="divider">
-        <button onclick="redownloadImages()" class="js-close-modal">
-          Re-download all posters and fanart
-        </button>
+  <div class="error modal">
+    <div class="modal-backdrop js-close-modal"></div>
+    <div class="modal-box">
+      <div class="modal-box-contents">
+        <div class="modal-header">
+          I'm afraid I can't let you do that.
+        </div>
+        <div class="modal-body">
+          <p class="error-text">
+            An error has occurred!
+          </p>
+        </div>
+        <div class="divider">
+          <button class="js-close-modal">Ok</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-<div class="error modal">
-  <div class="modal-backdrop js-close-modal"></div>
-  <div class="modal-box">
-    <div class="modal-box-contents">
-      <div class="modal-header">
-        I'm afraid I can't let you do that.
-      </div>
-      <div class="modal-body">
-        <p class="error-text">
-          An error has occurred!
-        </p>
-      </div>
-      <div class="divider">
-        <button class="js-close-modal">Ok</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 </body>
 </html>

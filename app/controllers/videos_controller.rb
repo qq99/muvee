@@ -56,15 +56,6 @@ class VideosController < ApplicationController
   def edit
   end
 
-  def generate
-    if existing_jobs.include? "MediaScannerWorker"
-      already_working
-    else
-      MediaScannerWorker.perform_async
-      render json: {status: "ok"}
-    end
-  end
-
   # GET /videos/1/stream
   def stream
     video_extension = File.extname(@video.raw_file_path)[1..-1]
@@ -86,38 +77,11 @@ class VideosController < ApplicationController
     end
   end
 
-  # POST /videos/reanalyze
-  def reanalyze
-    if existing_jobs.include? "AnalyzerWorker"
-      already_working
-    else
-      AnalyzerWorker.perform_async({method: :reanalyze})
-      render json: {status: "ok"}
-    end
-  end
-
   # POST /videos/:id/reanalyze
+  # re-analyze the metadata of a single video
   def reanalyze_video
     @video.reanalyze
     render json: {status: "ok"}
-  end
-
-  def redownload
-    if existing_jobs.include? "AnalyzerWorker"
-      already_working
-    else
-      AnalyzerWorker.perform_async({method: :redownload})
-      render json: {status: "ok"}
-    end
-  end
-
-  def redownload_missing
-    if existing_jobs.include? "AnalyzerWorker"
-      already_working
-    else
-      AnalyzerWorker.perform_async({method: :redownload_missing})
-      render json: {status: "ok"}
-    end
   end
 
   # POST /videos/1/left_off_at.json
@@ -142,10 +106,6 @@ class VideosController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_video
       @video = Video.find(params[:id])
-    end
-
-    def already_working
-      render json: {status: "Please wait; this task is already running."}, status: 409
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

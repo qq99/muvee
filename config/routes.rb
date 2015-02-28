@@ -5,72 +5,71 @@ Rails.application.routes.draw do
 
   resources :videos do
     collection do
-      get 'generate'
-      get 'shuffle'
-      get 'reanalyze'
-      get 'redownload'
-      get 'redownload_missing'
-
+      get :shuffle
     end
     member do
-      get 'stream'
-      get 'fanart'
-      get 'thumbnails'
-      post 'left_off_at'
+      get :stream
+      get :fanart
+      get :thumbnails
+      post :left_off_at
       post 'reanalyze' => 'videos#reanalyze_video'
     end
   end
 
   resources :lights do
     collection do
-      post 'dim'
-      post 'brighten'
-      post 'set'
+      post :dim
+      post :brighten
+      post :set
     end
   end
 
   resources :settings do
     collection do
-      get 'welcome'
+      get :welcome
       get 'reorganize_movies' => 'settings#reorganize_movies_show'
       post 'reorganize_movies' => 'settings#reorganize_movies_perform'
+      post :scan_for_new_media
+      post :reanalyze_media
+      post :redownload_missing_arts
+      post :redownload_all_arts
     end
   end
 
   resources :series do
     collection do
-      get 'nonepisodic'
-      get 'newest_episodes'
-      get 'newest_unwatched'
+      get :nonepisodic
+      get :newest_episodes
+      get :newest_unwatched
     end
     member do
-      get 'find_episode'
-      post 'find_episode'
-      post 'download'
+      get :find_episode
+      post :find_episode
+      post :download
     end
   end
   resources :movies do
     collection do
-      get 'remote'
+      get :remote
       get '3D', as: 'three_d', action: 'three_d'
       get '2D', as: 'two_d', action: 'two_d'
-      get 'newest'
-      get 'discover_more'
-      get 'genres'
+      get :newest
+      get :discover_more
+      get :genres
       get 'genres/:type', as: :by_genre, action: :genre
-      post 'movie_search', as: :movie_search, action: :movie_search
+      post :movie_search, as: :movie_search, action: :movie_search
     end
     member do
-      get 'find_sources_via_yts'
-      get 'find_sources_via_pirate_bay'
-      post 'download'
-      patch 'override_imdb_id'
+      get :find_sources_via_yts
+      get :find_sources_via_pirate_bay
+      post :download
+      patch :override_imdb_id
     end
   end
 
   resources :torrents, only: [] do
     member do
-      get 'status'
+      get :status
     end
   end
 

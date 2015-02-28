@@ -2,8 +2,6 @@ class SettingsController < ApplicationController
 
   skip_before_filter :check_if_first_use
 
-  layout 'settings'
-
   def index
     @config = ApplicationConfiguration.first
     render layout: 'application'
@@ -54,6 +52,48 @@ class SettingsController < ApplicationController
       movie.move_raw_file(new_path)
     end
     redirect_to reorganize_movies_settings_path
+  end
+
+  def scan_for_new_media
+    if existing_jobs.include? "MediaScannerWorker"
+      already_working
+    else
+      MediaScannerWorker.perform_async
+      redirect_to settings_path, notice: 'Now scanning for new media'
+    end
+  end
+
+  def reanalyze_media
+    if existing_jobs.include? "AnalyzerWorker"
+      already_working
+    else
+      AnalyzerWorker.perform_async({method: :reanalyze})
+      redirect_to settings_path, notice: 'Now re-analyzing your media'
+    end
+  end
+
+  def redownload_all_arts
+    if existing_jobs.include? "AnalyzerWorker"
+      already_working
+    else
+      AnalyzerWorker.perform_async({method: :redownload})
+      redirect_to settings_path, notice: 'Now re-downloading all art'
+    end
+  end
+
+  def redownload_missing_arts
+    if existing_jobs.include? "AnalyzerWorker"
+      already_working
+    else
+      AnalyzerWorker.perform_async({method: :redownload_missing})
+      redirect_to settings_path, notice: 'Now re-downloading missing art'
+    end
+  end
+
+  private
+
+  def already_working
+    render json: {status: "Please wait; this task is already running."}, status: 409
   end
 
   def reorganize_movies_params
