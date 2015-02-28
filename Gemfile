@@ -21,11 +21,13 @@ gem 'jquery-rails'
 gem 'lodash-rails'
 gem "font-awesome-rails"
 
-
+gem 'tubesock'
+gem 'event_bus'
+gem 'redis'
 gem 'color'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbograft', '0.1.9'
+gem 'turbograft', '0.1.14'
 gem 'twine-rails'
 gem 'jquery-turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -35,7 +37,8 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',        group: :development
-gem 'thin'
+#gem 'thin'
+gem 'puma'
 gem 'pg'
 gem 'rb-readline'
 gem 'pry'

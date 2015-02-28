@@ -7,6 +7,12 @@ class TranscoderWorker
     @config.transcode_folder
   end
 
+  def publish(event)
+    redis = Redis.new
+    event = event.merge(type: 'TranscoderWorker')
+    redis.publish(:sidekiq, event.to_json)
+  end
+
   def perform(klass, input_path)
     klass = klass.constantize
 
@@ -41,18 +47,24 @@ class TranscoderWorker
 
 
     if File.exist?(eventual_path) || File.exist?(webm_path) # don't convert it again! webm stuff is legacy and should be removed!
-      puts "Video #{eventual_path} already transcoded; creating #{klass.to_s}, please review #{input_path}"
+      notice = "Video #{eventual_path} already transcoded; creating #{klass.to_s}, please review #{input_path}"
+      publish({notice: notice})
+      Rails.logger.info notice
       klass.create(raw_file_path: eventual_path)
       return true
     end
     if File.exist?(transcode_path) # in process
-      puts "Video #{eventual_path} already present in #{transcode_path}; please review"
+      notice = "Video #{eventual_path} already present in #{transcode_path}; please review"
+      publish({notice: notice})
+      Rails.logger.info notice
       return true
     end
 
     # HEAVY WORK
+    publish({notice: "Transcoding #{input_path}"})
+
     cmd = transcode_specify_codec_command(input_path, transcode_path, video_codec, audio_codec)
-    puts "Transcoding #{input_path} with #{cmd}"
+    Rails.logger.info "Transcoding #{input_path} with #{cmd}"
     success = system("#{cmd}")
 
     sleep 10 # let the file handle close
@@ -63,7 +75,7 @@ class TranscoderWorker
       klass.create(raw_file_path: eventual_path)
       return true
     else
-      File.delete(transcode_path) # clean up
+      File.delete(transcode_path) if File.exist?(transcode_path) # clean up
       puts "Conversion seems to have failed: #{success}"
       Rails.logger.error "Conversion seems to have failed"
       return false

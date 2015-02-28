@@ -116,4 +116,12 @@ class SettingsController < ApplicationController
     end
   end
 
+  def existing_jobs
+    jobs = [Sidekiq::ScheduledSet.new.to_a, Sidekiq::RetrySet.new.to_a, Sidekiq::Queue.new("default").to_a, Sidekiq::Queue.new("analyze").to_a, Sidekiq::Queue.new("transcode").to_a]
+    jobs = jobs.inject([]) {|set, el| set.concat el}
+    existing_jobs = jobs.map do |job|
+      job.display_class
+    end
+  end
+
 end

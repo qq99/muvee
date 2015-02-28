@@ -9,3 +9,16 @@ $(document).on "click", "[data-modal]", (ev) ->
   ev.preventDefault()
   modalId = $(ev.currentTarget).data("modal")
   $("##{modalId}").addClass("show")
+
+
+$ ->
+  socket = new WebSocket "ws://#{window.location.host}/status"
+  socket.onmessage = (event) ->
+
+    try
+      data = JSON.parse(event.data)
+      console.log(event, data)
+    catch
+
+  socket.onclose = (event) ->
+    console.log 'Socket closed.'
