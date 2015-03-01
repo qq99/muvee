@@ -25,7 +25,7 @@ $ ->
         $(".job-progress", $parent).text(parseInt(data.progress, 10) + "%")
         $(".job-current", $parent).text(data.current)
         $(".job-max", $parent).text(data.max)
-        $(".progress-bar__bar").css("width", data.progress + "%")
+        $(".progress-bar__bar", $parent).css("width", data.progress + "%")
 
     catch e
       console.log(e)
