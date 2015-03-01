@@ -67,6 +67,7 @@ class Movie < Video
   end
 
   def download_poster
+    # TODO this is mad broke now
     return if metadata[:Response] == "False"
     remote_filename = metadata[:Poster]
     return if remote_filename.blank?
