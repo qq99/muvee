@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150111165854) do
+ActiveRecord::Schema.define(version: 20150301060258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -135,6 +135,11 @@ ActiveRecord::Schema.define(version: 20150111165854) do
     t.string   "imdb_id"
     t.string   "transmission_id"
     t.boolean  "imdb_id_is_accurate"
+    t.text     "tagline"
+    t.integer  "vote_count"
+    t.decimal  "vote_average"
+    t.string   "parental_guidance_rating"
+    t.integer  "runtime_minutes"
   end
 
   add_index "videos", ["raw_file_path"], name: "index_videos_on_raw_file_path", unique: true, using: :btree

@@ -1,5 +1,5 @@
 class MoviesController < ApplicationController
-  before_action :set_movie, only: [:show, :find_sources_via_yts, :destroy, :download, :find_sources_via_pirate_bay, :override_imdb_id]
+  before_action :set_movie, only: [:show, :find_sources_via_yts, :destroy, :download, :find_sources_via_pirate_bay, :override_imdb_id, :reanalyze]
   before_action :set_existing_copies, only: [:show, :find_sources_via_yts, :find_sources_via_pirate_bay]
 
   def index
@@ -33,7 +33,7 @@ class MoviesController < ApplicationController
   def remote
     @section = :discover
     @genres = Genre.all.sort_by(&:name).reject { |genre| genre.videos.length == 0 }
-    @movies = Movie.remote.order(created_at: :desc).limit(50).all
+    @movies = Movie.remote.order(created_at: :desc).limit(50).all.to_a
   end
 
   def genres
@@ -99,9 +99,16 @@ class MoviesController < ApplicationController
     redirect_to movies_path
   end
 
-  def override_imdb_id
-    @movie.update_attributes(imdb_id: params[:imdb_id], imdb_id_is_accurate: true)
+  def reanalyze
     @movie.reanalyze
+
+    render 'show'
+  end
+
+  def override_imdb_id
+    @movie.update_attributes(imdb_id: params[:movie][:imdb_id], imdb_id_is_accurate: true)
+    @movie.reanalyze
+    @movie.redownload
 
     render 'show'
   end

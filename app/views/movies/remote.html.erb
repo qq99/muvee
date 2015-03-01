@@ -1,16 +1,8 @@
 <%= render 'subnav' %>
-<%= render 'movie_slideshow', movies: @movies %>
 
-<div class="movies-index--full">
-  <div class="window-box">
-    <div id="movies-index-panel" refresh="movies-index-panel" class="movies-index panel clearfix">
-      <%= render 'remote_actions' %>
-      <% if @movies.present? %>
-        <%= render 'movies_list', movies: @movies %>
-      <% end %>
-    </div>
-    <% if @movies.present? %>
-      <%= render 'movie_meta', movies: @movies %>
-    <% end %>
-  </div>
+<%= render 'remote_actions' %>
+<div class="tile-list">
+  <% while @movies.size > 0 %>
+    <%= layout(@movies) %>
+  <% end %>
 </div>

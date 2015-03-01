@@ -146,7 +146,12 @@ class Video < ActiveRecord::Base
   end
 
   def compute_genres(genre_string)
-    genre_string.split(/,|\|/).compact.uniq.map(&:strip).map(&:titleize).reject(&:blank?)
+    genre_array = genre_string.split(/,|\|/)
+    dedupe_genre_array(genre_array)
+  end
+
+  def dedupe_genre_array(genre_array)
+    genre_array.compact.map(&:strip).map(&:titleize).uniq.reject(&:blank?)
   end
 
   def avconv_create_thumbnail_command(at_seconds, output_path)

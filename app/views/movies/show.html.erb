@@ -22,25 +22,20 @@
         <% end %>
       </span>
       &ndash;
-      <span class="movie-duration"><%= @movie.metadata[:Runtime] %></span>
+      <span class="movie-duration"><%= @movie.runtime_minutes %> minutes</span>
       &ndash;
       <span class="movie-year"><%= @movie.year %></span>
-      &ndash;
-      <span class="movie-parental-rating">Rated <%= @movie.metadata[:Rated] || "Unknown" %></span>
       <p class="movie-rating">
-        <%= render 'shared/star_rating', rating: @movie.metadata[:imdbRating] || 0, rating_max: 10, new_scale: 5 %>
-        <% if @movie.metadata[:imdbVotes] %>
-          from <%= @movie.metadata[:imdbVotes] %> votes
+        <%= render 'shared/star_rating', rating: @movie.vote_average || 0, rating_max: 10.0, new_scale: 5 %>
+        <% if @movie.vote_count.present? %>
+          from <%= @movie.vote_count %> votes
         <% end %>
       </p>
       <p>
         <%= @movie.overview %>
       </p>
       <p>
-        Starring: <%= @movie.metadata[:Actors] %>
-      </p>
-      <p>
-        <%= link_to "View on IMDB", imdb_link(@movie.fetch_imdb_id), target: :_blank %>
+        <%= link_to "View on IMDB", imdb_link(@movie.imdb_id), target: :_blank %>
       </p>
     </div>
 
@@ -80,7 +75,7 @@
             <% else %>
               <%= link_to "Play", video_path(@movie, t: 0), class: 'action-button' %>
             <% end %>
-            <%= link_to "Re-analyze", reanalyze_video_path(@movie), class: 'action-button', "tg-remote" => "POST" %>
+            <%= link_to "Re-analyze", reanalyze_movie_path(@movie), class: 'action-button', "tg-remote" => "POST" %>
 
             <% unless @movie.remote? %>
               <div class="action-button" bind-event-click="showInfo = !showInfo">
@@ -115,8 +110,9 @@
                 </p>
               </div>
 
-              <%= form_for @movie, url: override_imdb_id_movie_path(@movie), 'tg-remote' => true do |f| %>
+              <%= form_for @movie, url: override_imdb_id_movie_path(@movie), html: {'tg-remote' => true} do |f| %>
                 <%= f.text_field :imdb_id %>
+                <%= f.submit "Override IMDB ID" %>
               <% end %>
             <% end %>
           </div>

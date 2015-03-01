@@ -19,9 +19,9 @@ class Movie < Video
   }.freeze
 
   def metadata
-    @imdb_id ||= search_imdb_for_id
+    @imdb_id ||= fetch_imdb_id || search_for_imdb_id
     return {} if @imdb_id.blank?
-    @metadata ||= (OmdbSearchResult.get(@imdb_id).data || {})
+    @metadata ||= (TmdbMovieResult.get(@imdb_id).data || {})
   end
 
   def released_on_human
@@ -32,10 +32,15 @@ class Movie < Video
     end
   end
 
-  def search_imdb_for_id
+  def search_tmdb_for_id
+    tmdb_movie = TmdbMovieSearchResult.get(title).sorted_by_popularity.first
+    tmdb_id = tmdb_movie[:id]
+  end
+
+  def search_for_imdb_id
     return imdb_id if imdb_id.present? && imdb_id_is_accurate
-    Rails.logger.info "[search_imdb_for_id] Searching IMDB for an ID for: #{title}"
-    self.imdb_id = ImdbSearchResult.get(title).relevant_result(title)
+    Rails.logger.info "[search_for_imdb_id] Searching TMDB for an ID for: #{title}"
+    imdb_id = TmdbMovieResult.get(search_tmdb_for_id).data.try(:[], :imdb_id)
   end
 
   def poster_url
@@ -43,18 +48,21 @@ class Movie < Video
   end
 
   def extract_metadata
-    self.title = metadata[:Title]
+    self.title = metadata[:title]
     begin
-      self.released_on = Time.parse(metadata[:Released]) if metadata[:Released]
+      self.released_on = Time.parse(metadata[:release_date]) if metadata[:release_date]
     rescue
       self.released_on = nil
     end
-    self.year = metadata[:Year]
-    self.overview = metadata[:Plot]
-    self.language = metadata[:Language]
-    self.country = metadata[:Country]
-    self.awards = metadata[:Awards]
-    self.imdb_id = fetch_imdb_id
+    self.runtime_minutes = metadata[:runtime]
+    self.year = released_on.try(:year)
+    self.tagline = metadata[:tagline]
+    self.vote_count = metadata[:vote_count]
+    self.vote_average = metadata[:vote_average]
+    self.overview = metadata[:overview]
+    self.language = metadata[:spoken_languages].map{|d| d.values.first}.flatten.join(", ")
+    self.country = metadata[:production_countries].map{|d| d.values.last}.flatten.join(", ")
+    self.imdb_id = metadata[:imdb_id]
     self.save
   end
 
@@ -118,13 +126,13 @@ class Movie < Video
   end
 
   def fetch_imdb_id
-    imdb_id || metadata[:imdbID]
+    imdb_id
   end
 
   def associate_with_genres
-    return unless metadata[:Genre].present?
+    return unless metadata[:genres].present?
 
-    listed_genres = compute_genres(metadata[:Genre])
+    listed_genres = dedupe_genre_array(metadata[:genres].map{|g| g[:name]})
     self.genres = []
     listed_genres.each do |genre_name|
       normalized = Genre.normalized_name(genre_name)
