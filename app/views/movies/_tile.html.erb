@@ -7,8 +7,8 @@
       <%= movie.overview %>
     </p>
     <div class="video-genres">
-      <% movie.genres.each do |genre| %>
-      <%= link_to(genre.name, by_genre_movies_path(genre.name.parameterize), class: "genre-badge") %>
+      <% movie.genres.sample(3).each do |genre| %>
+        <%= link_to(genre.name, by_genre_movies_path(genre.name.parameterize), class: "genre-badge") %>
       <% end %>
     </div>
     <%#= render 'shared/star_rating', rating: movie.metadata[:imdbRating] || 0, rating_max: 10, new_scale: 5 %>
