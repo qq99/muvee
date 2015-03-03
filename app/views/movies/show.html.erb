@@ -23,6 +23,11 @@
       <h3 class="year">
         <i class="fa fa-calendar"></i>
         <%= @movie.year %>
+
+        <% if @movie.downloading? %>
+          <i class="fa fa-clock-o"></i>
+          <%= human_duration(@movie.duration || (@movie.runtime_minutes * 60)) %>
+        <% end %>
       </h3>
 
       <% if @movie.quality.present? %>
