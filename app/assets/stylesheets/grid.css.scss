@@ -61,7 +61,7 @@
 }
 
 .tile:hover .tile__meta {
-  background: rgba(0,0,0,0.85);
+  background: $mostly-black-darker;
   border-bottom: 5px solid $radical-blue;
   height: 200px;
 }
@@ -69,13 +69,63 @@
   height: 50px;
   opacity: 1;
 }
+
+
+.video-type, .video-year, .video-status {
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 0.7em;
+  color: rgb(242, 190, 92);
+}
+.video-status {
+  color: #B0B0B0;
+}
+.video-year {
+  float: right;
+}
+
+
+.badge {
+  font-size: 0.75em;
+  font-weight: 200;
+  padding: 0.3em 1em 0.2em 1em;
+  background: rgba(255,255,255,0);
+  border: 1px solid #666;
+  text-decoration: none;
+  color: white;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: all 0.35s ease-in-out;
+}
+.linked-badge:hover {
+  background: black;
+  border: 1px solid $radical-blue;
+}
+
+.badge.quality-1080p {
+  color: rgb(208, 255, 208);
+  background: rgb(24, 66, 24);
+  border-color: lighten(rgb(24, 66, 24), 10%);
+  font-weight: 400;
+}
+.badge.quality-720p {
+  background: #939622;
+  color: black;
+  border-color: lighten(#939622, 10%);
+  font-weight: 400;
+}
+
+.video-genres {
+  display: inline-block;
+}
+
 .tile__meta {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
   z-index: 2;
-  background: rgba(0,0,0,0.65);
+  background: $mostly-black;
   color: white;
   padding: 1em;
   border-bottom: 5px solid transparent;
@@ -83,14 +133,6 @@
 
   transition: all 0.75s ease-in-out;
 
-  .video-type, .video-year {
-    text-transform: uppercase;
-    font-size: 0.7em;
-    color: rgb(242, 190, 92);
-  }
-  .video-year {
-    float: right;
-  }
   .video-title {
     font-size: 1.6em;
     width: 100%;
@@ -110,20 +152,14 @@
     font-size: 0.95em;
     font-weight: 200;
   }
-  .genre-badge {
-    font-size: 0.75em;
-    font-weight: 200;
-    padding: 0.3em 1em 0.2em 1em;
-    background: rgba(255,255,255,0);
-    border: 1px solid #666;
-    text-decoration: none;
-    color: white;
-    text-transform: uppercase;
-    border-radius: 2px;
-    transition: all 0.35s ease-in-out;
-    &:hover {
-      background: black;
-      border: 1px solid $radical-blue;
-    }
+
+
+  .torrent-progress {
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    height: 5px;
+    margin: 0;
+    padding: 0;
   }
 }

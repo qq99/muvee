@@ -1,0 +1,5 @@
+<div class="video-genres">
+  <% genres.each do |genre| %>
+    <%= link_to(genre.name, by_genre_movies_path(genre.name.parameterize), class: 'badge linked-badge') %>
+  <% end %>
+</div>

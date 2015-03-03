@@ -81,10 +81,12 @@ $volumebar-width: 8em;
   background: #333;
 }
 .progress-bar__bar {
+  position: absolute;
+  top: 0;
+  left: 0;
   height: 100%;
   width: 0;
-  background: green;
-  box-shadow: inset 2px 2px 1px rgba(255,255,255,0.3);
+  background: $progressive-green;
 }
 
 .duration-remaining {

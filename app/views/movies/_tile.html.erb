@@ -2,16 +2,20 @@
   <div class="tile__meta">
     <h3 class="video-year"><%= movie.year %></h3>
     <h3 class="video-type">Movie</h3>
+    <% if movie.downloading? %>
+      <h3 class='video-status'>Downloading Now</h3>
+    <% end %>
     <h1 class="video-title"><%= link_to movie.title, movie_path(movie) %></h1>
     <p class="video-description">
       <%= movie.overview %>
     </p>
-    <div class="video-genres">
-      <% movie.genres.sample(3).each do |genre| %>
-        <%= link_to(genre.name, by_genre_movies_path(genre.name.parameterize), class: "genre-badge") %>
-      <% end %>
-    </div>
-    <%#= render 'shared/star_rating', rating: movie.metadata[:imdbRating] || 0, rating_max: 10, new_scale: 5 %>
+    <%= render 'genre_badge_listing', genres: movie.genres.sample(3) %>
+    <% if movie.downloading? %>
+      <div id="torrent-progress-<%= movie.id %>" class="torrent-progress progress-bar__container">
+        <div class="progress-bar__bar"></div>
+      </div>
+    <% end %>
+    <%#= render 'shared/star_rating', rating: movie.vote_average || 0, rating_max: 10.0, new_scale: 5 %>
   </div>
   <div class="tile__background" style="background-image: url(<%= movie.fanarts.sample.try(:url) %>);"></div>
 </div>

@@ -12,8 +12,10 @@ class Video < ActiveRecord::Base
   after_create :shellout_and_grab_duration
   after_create :create_initial_thumb
 
-  scope :local, -> {where(status: "local")}
-  scope :remote, -> {where(status: "remote")}
+  scope :local, -> {where(status: 'local')}
+  scope :remote, -> {where(status: 'remote')}
+  scope :downloading, -> {where(status: 'downloading')}
+  scope :local_and_downloading, -> {where('status in (?)', ['local', 'downloading'])}
   scope :movies, -> {where(type: "Movie")}
   scope :tv_shows, -> {where(type: "TvShow")}
   scope :latest, -> {order(season: :desc, episode: :desc)}
@@ -41,6 +43,10 @@ class Video < ActiveRecord::Base
 
   def remote?
     status == 'remote'
+  end
+
+  def downloading?
+    status == 'downloading'
   end
 
   def is_3d?

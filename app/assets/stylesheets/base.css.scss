@@ -40,10 +40,6 @@ a {
   background: url(/yts_logo.png) no-repeat;
 }
 
-.inline-buttons .action-button {
-  margin-right: 1em;
-}
-
 .hide {
   display: none !important;
 }
@@ -55,12 +51,14 @@ a {
   cursor: pointer;
   display: inline-block;
   width: auto;
-  padding: 0.5em 1em;
-  margin-top: 0.5em;
+  font-weight: 100;
+  border-radius: 3px;
+  padding: 0.4em 0.75em;
+  margin: 0.5em 0;
   background: #333;
   color: white;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 0.9rem;
   border: 0;
   &:visited {
     color: white;

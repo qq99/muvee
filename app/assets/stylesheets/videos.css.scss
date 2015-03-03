@@ -208,24 +208,6 @@ button {
   }
 }
 
-.watch-progress {
-  width: 100%;
-  height: 15px;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  background: black;
-  outline: 1px solid #333;
-  .watched-bar {
-    height: 100%;
-    width: 0;
-    position: absolute;
-    left: 0;
-    top: 0;
-    background: green;
-  }
-}
-
 .img-errored {
   z-index: 1;
 }

@@ -4,7 +4,7 @@ class MoviesController < ApplicationController
 
   def index
     @section = :all
-    @movies = Movie.local.all.shuffle
+    @movies = Movie.local_and_downloading.all.shuffle
     render 'index2'
   end
 

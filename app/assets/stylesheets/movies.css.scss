@@ -77,12 +77,6 @@ $preview-height: 45%;
 .three-d {
   color: $less-radical-blue;
 }
-.movie-quality {
-  position: relative;
-  font-size: 0.5em;
-  line-height: 1em;
-  color: #999;
-}
 
 .featured-image {
   position: absolute;
@@ -95,6 +89,9 @@ $preview-height: 45%;
   height: 100%;
   width: 100%;
   position: absolute;
+}
+.year-and-duration {
+  margin-bottom: 0.4em;
 }
 
 .movies-index__container {
@@ -146,23 +143,33 @@ $preview-height: 45%;
   overflow-y: auto;
   overflow-x: hidden;
   word-wrap: break-word;
+  padding: 1em;
 }
 
 .movie-information {
   position: absolute;
   z-index: 3;
-  top: 45%;
+  bottom: 0%;
   left: 0;
   height: 55%;
   width: 100%;
-  padding: 2rem 4rem;
-  background: transparentize($sleek-transparent-black, 0.1);
+  background: $mostly-black-darker;
   color: white;
   overflow: hidden;
+  display: flex;
+
+  .torrent-progress {
+    position: absolute;
+    height: 7px;
+    left: 0;
+    top: 0;
+  }
   p {
     margin: 1em 0;
   }
   .movie-information-meta {
+    margin: 1em;
+    padding: 1em;
     width: 50%;
     height: 100%;
     overflow-y: auto;
@@ -183,16 +190,20 @@ $preview-height: 45%;
 
 #movie_show {
   .movie-actions {
-    padding: 2rem;
-    position: absolute;
-    top: 0;
-    right: 0;
     background: transparent;
-    width: 40%;
+    width: 50%;
     height: 100%;
+    margin: 1em;
+    overflow-y: auto;
   }
   .duration {
     display: none;
+  }
+  .watch-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 8px;
   }
 }
 

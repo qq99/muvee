@@ -77,4 +77,17 @@ class Torrent < ActiveRecord::Base
   def completion_status
     service.check_completion_status(transmission_id)
   end
+
+  def torrent_name
+    service.find(transmission_id)["name"]
+  end
+
+  def summary
+    {
+      video_id: video_id,
+      video_type: video_type,
+      video_name: video.try(:title) || torrent_name,
+      progress: percentage
+    }
+  end
 end

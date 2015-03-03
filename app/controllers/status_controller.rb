@@ -9,7 +9,17 @@ class StatusController < ApplicationController
       end
 
       tubesock.onmessage do |data|
-        tubesock.send_data "You said: #{data}"
+        begin
+          data = JSON.parse(data).with_indifferent_access
+          if data[:name] == 'torrent_info'
+            payload = Torrent.all.map(&:summary)
+            tubesock.send_data({type: 'TorrentInformation', results: payload}.to_json)
+          else
+            tubesock.send_data 'Unrecognized'
+          end
+        rescue JSON::ParserError => e
+          puts 'Was not sent JSON'
+        end
       end
 
       EventBus.subscribe(:sidekiq) do |payload|

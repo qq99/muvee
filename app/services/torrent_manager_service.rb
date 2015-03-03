@@ -97,6 +97,7 @@ class TorrentManagerService
     if remote_video
       record.video_id = remote_video.id
       record.video_type = remote_video.class.name
+      remote_video.update_attribute(:status, 'downloading')
     end
 
     record.save
