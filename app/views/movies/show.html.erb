@@ -11,6 +11,7 @@
 
   <div class="movie-information">
     <div class="movie-information-meta">
+
       <h3 class="video-type">Movie</h3>
       <% if @movie.downloading? %>
         <h3 class='video-status'>Downloading Now</h3>
@@ -44,8 +45,14 @@
       <p>
         <%= @movie.overview %>
       </p>
+
+      <img class="movie-poster" src="<%= @movie.poster_url %>">
+
       <p>
-        <%= link_to "View on IMDB", imdb_link(@movie.imdb_id), target: :_blank %>
+        <%= link_to imdb_link(@movie.imdb_id), target: :_blank do %>
+          <%= render 'shared/imdb_logo' %>
+        <% end %>
+        <%= render 'shared/tmdb_logo' %>
       </p>
     </div>
 

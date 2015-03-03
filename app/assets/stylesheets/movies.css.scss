@@ -146,6 +146,26 @@ h3.year {
   padding: 1em;
 }
 
+.movie-poster {
+  float: left;
+  width: 20%;
+  margin: 0 1em 1em 0;
+  border-radius: 3px;
+  box-shadow: 2px 2px 4px rgba(0,0,0, 0.8);
+}
+
+#ImdbLogoSvg {
+  height: 50px;
+  width: 101px;
+}
+#TmdbLogoSvg {
+  height: 50px;
+  width: 200px;
+  path {
+    fill: white;
+  }
+}
+
 .movie-information {
   position: absolute;
   z-index: 3;

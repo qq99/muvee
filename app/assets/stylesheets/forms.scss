@@ -1,13 +1,17 @@
 @import 'variables';
 
+$form-element-padding: 0.4em 0.75em;
+$form-element-margin: 0.5em 0;
+$form-element-roundedness: 3px;
+
 .action-button {
   cursor: pointer;
   display: inline-block;
   width: auto;
   font-weight: 100;
-  border-radius: 3px;
-  padding: 0.4em 0.75em;
-  margin: 0.5em 0;
+  border-radius: $form-element-roundedness;
+  padding: $form-element-padding;
+  margin: $form-element-margin;
   background: #333;
   color: white;
   text-decoration: none;
