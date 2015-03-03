@@ -90,7 +90,7 @@ $preview-height: 45%;
   width: 100%;
   position: absolute;
 }
-.year-and-duration {
+h3.year {
   margin-bottom: 0.4em;
 }
 
@@ -151,7 +151,7 @@ $preview-height: 45%;
   z-index: 3;
   bottom: 0%;
   left: 0;
-  height: 55%;
+  height: 65%;
   width: 100%;
   background: $mostly-black-darker;
   color: white;
@@ -197,7 +197,11 @@ $preview-height: 45%;
     overflow-y: auto;
   }
   .duration {
-    display: none;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 0.5em 1em;
+    background: $mostly-black-darker;
   }
   .watch-progress {
     position: absolute;
@@ -209,6 +213,9 @@ $preview-height: 45%;
 
 .fa-star, .fa-star-half-o {
   color: gold;
+}
+.fa-star-o {
+  color: #777;
 }
 
 .torrent-source {

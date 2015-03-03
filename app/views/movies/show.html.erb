@@ -20,10 +20,9 @@
         <span class="three-d <% unless @movie.is_3d? %>hide<% end %>">3D</span>
       </h1>
 
-      <h3 class="year-and-duration">
-        <%= @movie.year %> &ndash;
-        <i class="fa fa-clock-o"></i>
-        <%= @movie.runtime_minutes %> minutes
+      <h3 class="year">
+        <i class="fa fa-calendar"></i>
+        <%= @movie.year %>
       </h3>
 
       <% if @movie.quality.present? %>
@@ -63,7 +62,8 @@
                 <i class="fa fa-play-circle"></i>
               </div>
               <div class="duration">
-                <%= human_duration(@movie.duration) %>
+                <i class="fa fa-clock-o"></i>
+                <%= human_duration(@movie.duration || (@movie.runtime_minutes * 60)) %>
               </div>
               <% if @movie.left_off_at_percent > 0 %>
                 <div class="watch-progress progress-bar__container">

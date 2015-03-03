@@ -1,0 +1,23 @@
+@import 'variables';
+
+.action-button {
+  cursor: pointer;
+  display: inline-block;
+  width: auto;
+  font-weight: 100;
+  border-radius: 3px;
+  padding: 0.4em 0.75em;
+  margin: 0.5em 0;
+  background: #333;
+  color: white;
+  text-decoration: none;
+  font-size: 0.9rem;
+  border: 0;
+  &:visited {
+    color: white;
+  }
+  &:focus, &:hover {
+    color: $radical-blue;
+    background: #393939;
+  }
+}
