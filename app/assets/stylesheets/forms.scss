@@ -9,6 +9,7 @@ $form-element-roundedness: 3px;
   display: inline-block;
   width: auto;
   font-weight: 100;
+  line-height: inherit;
   border-radius: $form-element-roundedness;
   padding: $form-element-padding;
   margin: $form-element-margin;
@@ -16,6 +17,7 @@ $form-element-roundedness: 3px;
   color: white;
   text-decoration: none;
   font-size: 0.9rem;
+  font-family: inherit;
   border: 0;
   &:visited {
     color: white;

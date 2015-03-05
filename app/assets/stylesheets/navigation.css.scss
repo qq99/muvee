@@ -48,6 +48,9 @@ body {
         color: $radical-blue;
       }
     }
+    &:last-child {
+      border-bottom: 0;
+    }
   }
   i {
     font-size: 1.5em;
