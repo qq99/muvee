@@ -61,6 +61,7 @@
 }
 
 .tile:hover .tile__meta {
+  background: linear-gradient(0deg, rgba(0,0,0,0.8), rgba(0,0,0,0.5));
   border-bottom: 5px solid $radical-blue;
   height: 200px;
 }
@@ -74,7 +75,7 @@
   display: inline-block;
   text-transform: uppercase;
   font-size: 0.7em;
-  color: rgb(242, 190, 92);
+  color: $golden;
 }
 .video-status {
   color: #cacaca;

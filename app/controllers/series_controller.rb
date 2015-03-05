@@ -39,7 +39,6 @@ class SeriesController < ApplicationController
     @next_episode_of_next_season = TvShow.format_season_and_episode(latest.season + 1, 1)
 
     @seasons = @all_episodes.map{|v| v.season}.uniq.sort
-    render layout: 'fullscreen'
   end
 
   def find_episode

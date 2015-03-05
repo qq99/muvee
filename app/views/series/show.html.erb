@@ -1,10 +1,8 @@
 <div id="series">
+  <div class="series-featured-image" style="background:url(<%= @series.fanart_url %>); background-size: cover;"></div>
   <div class="series-information">
     <h1 class="series-name">
-      <a href="<%= series_index_path %>" class="back">
-        <i class="fa fa-chevron-left"></i>
-      </a> <%= @series.title  %>
-
+      <%= @series.title  %>
     </h1>
     <div id="series_overview" refresh="series_overview">
       <h3 class="series-overview">
@@ -49,10 +47,10 @@
     </div>
   </div>
   <div class="video-list">
-    <div class="series-featured-image" style="background:url(<%= @series.fanart_url %>); background-size: cover;"></div>
     <% if @series.last_watched_video && @series.last_watched_video.left_off_at_percent < 95 %>
       <% if (@season && @series.last_watched_video.season == @season) || !@season %>
         <div class="featured-episode">
+          <h2>Continue watching...</h2>
           <%= render 'video_tile', video: @series.last_watched_video %>
           <% featured_video_consumed = true %>
         </div>
