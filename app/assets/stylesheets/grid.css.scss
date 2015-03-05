@@ -61,7 +61,6 @@
 }
 
 .tile:hover .tile__meta {
-  background: $mostly-black-darker;
   border-bottom: 5px solid $radical-blue;
   height: 200px;
 }
@@ -78,7 +77,7 @@
   color: rgb(242, 190, 92);
 }
 .video-status {
-  color: #B0B0B0;
+  color: #cacaca;
 }
 .video-year {
   float: right;
@@ -125,11 +124,13 @@
   left: 0;
   width: 100%;
   z-index: 2;
-  background: $mostly-black;
+  text-shadow: 1px 1px 0px black;
+  background: linear-gradient(0deg, rgba(0,0,0,0.8), rgba(0,0,0,0.0));
+  border-bottom: 5px solid rgba(0,0,0,0.8);
   color: white;
   padding: 1em;
-  border-bottom: 5px solid transparent;
-  height: 125px;
+  height: 130px;
+  p { color: inherit; }
 
   transition: all 0.75s ease-in-out;
 
