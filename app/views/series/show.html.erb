@@ -4,6 +4,21 @@
     <h1 class="series-name">
       <%= @series.title  %>
     </h1>
+
+    <div class="badges">
+      <div class="badge-listing">
+        <%= link_to "Latest", series_path(@series, season: @season, sort: :latest), class: "badge linked-badge #{'active' if @sort == :latest}" %>
+        <%= link_to "Unwatched", series_path(@series, season: @season, sort: :unwatched), class: "badge linked-badge #{'active' if @sort == :unwatched}" %>
+        <%= link_to "In order", series_path(@series, season: @season, sort: :release_order), class: "badge linked-badge #{'active' if @sort == :release_order}" %>
+      </div>
+      <div class="badge-listing">
+        <%= link_to "All", series_path(@series, sort: @sort), class: "badge #{'active' if @season.blank?}" %>
+        <% @seasons.each do |s| %>
+          <%= link_to "S#{s}", series_path(@series, season: s, sort: @sort), class: "badge linked-badge #{'active' if @season == s}" %>
+        <% end %>
+      </div>
+    </div>
+
     <div id="series_overview" refresh="series_overview">
       <h3 class="series-overview">
         <%= @series.overview %>
@@ -27,23 +42,12 @@
           <input name="series_episode" type="text" value="" placeholder="or search (e.g., S01E01)">
         <% end %>
       </div>
-      <div class="prepend-label">
-        <label>Season</label>
-        <%= link_to "All", series_path(@series, sort: @sort), class: 'divider' %>
-        <% @seasons.each do |s| %>
-          <%= link_to "#{s}", series_path(@series, season: s, sort: @sort), class: 'divider' %>
-        <% end %>
-      </div>
-      <div class="prepend-label">
-        <label>Sort</label>
-        <%= link_to "Release order", series_path(@series, season: @season, sort: :release_order, class: 'divider') %>
-        <%= link_to "Unwatched", series_path(@series, season: @season, sort: :unwatched, class: 'divider') %>
-        <%= link_to "Latest", series_path(@series, season: @season, sort: :latest, class: 'divider') %>
-      </div>
-      <div class="prepend-label">
-        <label>Shuffle</label>
-        <%= link_to "All", video_path(@videos.map(&:id).sample, shuffle: true, series_id: @series.id) %>
-      </div>
+      <% if @videos.size > 0 %>
+        <div class="prepend-label">
+          <label>Shuffle</label>
+          <%= link_to "All", video_path(@videos.map(&:id).sample, shuffle: true, series_id: @series.id) %>
+        </div>
+      <% end %>
     </div>
   </div>
   <div class="video-list">
@@ -61,6 +65,10 @@
         <% unless show == @series.last_watched_video && featured_video_consumed %>
           <%= render 'video_tile', video: show %>
         <% end %>
+      <% end %>
+
+      <% if @videos.size == 0 && @sort == :unwatched %>
+        <h2>It looks like you've seen everything!</h2>
       <% end %>
     </div>
   </div>

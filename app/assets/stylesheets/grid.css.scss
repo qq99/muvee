@@ -97,7 +97,7 @@
   border-radius: 2px;
   transition: all 0.35s ease-in-out;
 }
-.linked-badge:hover {
+.linked-badge:hover, .badge.active {
   background: black;
   border: 1px solid $radical-blue;
 }

@@ -5,6 +5,8 @@
   padding-right: 1rem;
   overflow-y: auto;
   margin-top: 1rem;
+  font-size: 1em;
+  h3 { font-size: 1.2em; }
   .torrent-source {
     float: none;
     width: 100%;
@@ -21,6 +23,12 @@
   .poster-button {
     width: 15em;
     float: none;
+  }
+  .badges {
+    margin: 0.25em 0;
+  }
+  .badge-listing {
+    margin: 0.2em 0;
   }
   .series-information, .video-list {
     position: absolute;
