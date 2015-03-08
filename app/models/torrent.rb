@@ -53,6 +53,7 @@ class Torrent < ActiveRecord::Base
     video.raw_file_path = true_path
     video.status = "local"
     video.shellout_and_grab_duration
+    video.create_initial_thumb
     video.save
   end
 
