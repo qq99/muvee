@@ -2,9 +2,11 @@ class MoviesController < ApplicationController
   before_action :set_movie, only: [:show, :find_sources_via_yts, :destroy, :download, :find_sources_via_pirate_bay, :override_imdb_id, :reanalyze]
   before_action :set_existing_copies, only: [:show, :find_sources_via_yts, :find_sources_via_pirate_bay]
 
+  RESULTS_PER_PAGE = 24
+
   def index
     @section = :all
-    @movies = Movie.local_and_downloading.all.shuffle
+    @movies = Movie.local_and_downloading.shuffle.to_a
     render 'index2'
   end
 
@@ -26,14 +28,25 @@ class MoviesController < ApplicationController
 
   def newest
     @section = :newest
-    @movies = Movie.local.order(created_at: :desc).all.to_a
-    render 'index2'
+    @movies = paginated_movies.local_and_downloading.order(created_at: :desc).all.to_a
+
+    if @movies.size > 0
+      render 'index2'
+    else
+      head :not_found
+    end
   end
 
   def remote
     @section = :discover
     @genres = Genre.all.sort_by(&:name).reject { |genre| genre.videos.length == 0 }
-    @movies = Movie.remote.order(created_at: :desc).limit(50).all.to_a
+    @movies = paginated_movies.remote.order(created_at: :desc).to_a
+
+    if @movies.size > 0
+      render 'remote'
+    else
+      head :not_found
+    end
   end
 
   def genres
@@ -114,6 +127,11 @@ class MoviesController < ApplicationController
   end
 
   private
+    def paginated_movies
+      page = params[:page].to_i || 0
+      Movie.limit(RESULTS_PER_PAGE).offset(page * RESULTS_PER_PAGE)
+    end
+
     def set_movie
       @movie = Movie.find(params[:id])
     end

@@ -16,5 +16,6 @@
 //= require turbograft
 //= require twine
 //= require ./ui/bootstrap.js.coffee
+//= require_tree ./modules
 //= require_tree ./ui
 //= require nprogress

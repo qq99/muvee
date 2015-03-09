@@ -9,9 +9,15 @@ $ ->
   $.ajaxSetup
     headers:
       'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+    beforeSend: ->
+      NProgress.start()
+    complete: ->
+      NProgress.done()
 
 # Twine & Turbograft interop:
 window.context = {}
+
+window.Muvee ||= {}
 
 reset = (nodes) ->
   if nodes

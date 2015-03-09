@@ -1,6 +1,6 @@
 <%= render 'subnav' %>
 
-<div class="tile-list">
+<div class="tile-list" define="{pager: new Muvee.Pager()}">
   <% while @movies.size > 0 %>
     <%= layout(@movies) %>
   <% end %>
