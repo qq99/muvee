@@ -18,6 +18,15 @@ module MoviesHelper
       max = layout[:max_items]
       number_to_take = (rand() * max).to_i + min
     end
+
+    # hacky solution to make sure we have a full row at all times:
+    if number_to_take > movies.size
+      if movies.size <= 4 # take some and stick in layout 1
+        which_layout = 1
+        number_to_take = [4, movies.size].min
+      end
+    end
+
     render "row_style_#{which_layout}", movies: movies.shift(number_to_take)
   end
 

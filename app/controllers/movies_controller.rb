@@ -26,8 +26,8 @@ class MoviesController < ApplicationController
 
   def newest
     @section = :newest
-    @movies = Movie.local.order(created_at: :desc).all
-    render 'index'
+    @movies = Movie.local.order(created_at: :desc).all.to_a
+    render 'index2'
   end
 
   def remote
