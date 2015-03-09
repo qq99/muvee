@@ -1,11 +1,11 @@
 class Muvee.Pager
 
-  constructor: ->
+  constructor: (@node) ->
     console.log 'Muvee.Pager::constructor'
     @currentPage = 0
     $(window).on "scroll.pager", _.debounce(@scrollLoad.bind(this))
 
-    $(document).one 'page:load', @destructor.bind(this)
+    Page.onReplace @node, @destructor.bind(this)
 
   destructor: ->
     console.log 'Muvee.Pager::destructor'

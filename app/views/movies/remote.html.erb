@@ -1,7 +1,7 @@
 <%= render 'subnav' %>
 
 <%= render 'remote_actions' %>
-<div class="tile-list" define="{pager: new Muvee.Pager()}">
+<div class="tile-list" define="{pager: new Muvee.Pager(this)}">
   <% while @movies.size > 0 %>
     <%= layout(@movies) %>
   <% end %>
