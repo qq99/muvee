@@ -67,12 +67,13 @@ class Movie < Video
   end
 
   def download_poster
-    # TODO this is mad broke now
-    return if metadata[:Response] == "False"
-    remote_filename = metadata[:Poster]
-    return if remote_filename.blank?
-    output_filename = UUID.generate(:compact) + File.extname(remote_filename)
+    posters = query_tmdb_posters
+    return if posters.blank?
+
+    output_filename = UUID.generate(:compact)
     output_path = POSTER_FOLDER.join(output_filename)
+
+    remote_filename = posters.first
 
     if download_file(remote_filename, output_path)
       self.poster_path = output_filename
@@ -95,23 +96,33 @@ class Movie < Video
   def query_tmdb_fanart
     return [] if fetch_imdb_id.blank?
 
-    @tmdb_find ||= TmdbFindResult.get(fetch_imdb_id).data
-    if result = @tmdb_find[:movie_results].first
-      tmdb_id = result[:id]
-      images_result = TmdbImageResult.get(tmdb_id).data
-      backgrounds = images_result[:backdrops]
-      backgrounds = backgrounds.map do |bg|
-        path = bg.try(:[], :file_path)
-        if path
-          "http://image.tmdb.org/t/p/original/#{path}"
-        else
-          nil
-        end
+    images_result = TmdbImageResult.get(fetch_imdb_id).data
+    backgrounds = images_result[:backdrops]
+    backgrounds = backgrounds.map do |bg|
+      path = bg.try(:[], :file_path)
+      if path
+        "http://image.tmdb.org/t/p/original/#{path}"
+      else
+        nil
       end
-      backgrounds
-    else
-      []
     end
+    backgrounds
+  end
+
+  def query_tmdb_posters
+    return [] if fetch_imdb_id.blank?
+
+    images_result = TmdbImageResult.get(fetch_imdb_id).data
+    posters = images_result[:posters]
+    posters = posters.map do |poster|
+      path = poster.try(:[], :file_path)
+      if path
+        "http://image.tmdb.org/t/p/original/#{path}"
+      else
+        nil
+      end
+    end
+    posters
   end
 
   def query_fanart_tv_fanart
@@ -175,6 +186,7 @@ class Movie < Video
     guessit unless imdb_id_is_accurate
     extract_metadata
     associate_with_genres
+    redownload_missing
     if imdb_id != old_imdb_id
       redownload
     end
@@ -202,14 +214,18 @@ class Movie < Video
     if self.fanarts.blank?
       download_fanart
     end
-    if self.poster_path.blank?
+    if self.poster_path.blank? || !File.exist?(poster_filepath)
       download_poster
     end
   end
 
+  def poster_filepath
+    POSTER_FOLDER.join(poster_path)
+  end
+
   def destroy_poster
     begin
-      File.delete(POSTER_FOLDER.join(poster_path))
+      File.delete(poster_filepath)
     rescue => e
       Rails.logger.info "Movie#destroy_poster: #{e}"
     end
