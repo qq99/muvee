@@ -16,6 +16,7 @@
       </div>
     <% end %>
     <%#= render 'shared/star_rating', rating: movie.vote_average || 0, rating_max: 10.0, new_scale: 5 %>
+    <div class="tile__meta-backdrop"></div>
   </div>
   <div class="tile__background" style="background-image: url(<%= movie.fanarts.sample.try(:url) %>);"></div>
 </div>
