@@ -7,7 +7,7 @@ class VideoCreationService
   end
 
   def should_transcode?
-    @config ||= ApplicationConfiguration.first
+    @config ||= APP_CONFIG
     @config.transcode_media
   end
 

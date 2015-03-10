@@ -15,14 +15,14 @@ class Torrent < ActiveRecord::Base
   end
 
   def move_to_movie_folder
-    config = ApplicationConfiguration.first
+    config = APP_CONFIG
     folder = config.movie_sources.first
 
     service.move_torrent({transmission_id: transmission_id, to: folder})
   end
 
   def move_to_tv_show_folder
-    config = ApplicationConfiguration.first
+    config = APP_CONFIG
     folder = config.tv_sources.first
 
     service.move_torrent({transmission_id: transmission_id, to: folder})
@@ -46,7 +46,7 @@ class Torrent < ActiveRecord::Base
   def set_video_to_local_after_complete
     return if video.blank? || video.local?
     return if video.is_tv? # we don't create a model for TV shows
-    config = ApplicationConfiguration.first
+    config = APP_CONFIG
     folders = config.movie_sources
     search_for = files_by_size.first[:name]
     true_path = find_file_in_folders(search_for, folders).first

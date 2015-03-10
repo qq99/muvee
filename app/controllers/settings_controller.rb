@@ -3,7 +3,7 @@ class SettingsController < ApplicationController
   skip_before_filter :check_if_first_use
 
   def index
-    @config = ApplicationConfiguration.first
+    @config = APP_CONFIG
     render layout: 'application'
   end
 
@@ -11,7 +11,7 @@ class SettingsController < ApplicationController
     if ApplicationConfiguration.count > 0
       redirect_to settings_path
     end
-    @config = ApplicationConfiguration.first || ApplicationConfiguration.new
+    @config = APP_CONFIG || ApplicationConfiguration.new
   end
 
   def create
@@ -37,7 +37,7 @@ class SettingsController < ApplicationController
   end
 
   def reorganize_movies_show
-    @config = ApplicationConfiguration.first
+    @config = APP_CONFIG
     @folders = @config.movie_sources
     @movies = Movie.local.all
   end
