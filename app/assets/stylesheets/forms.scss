@@ -27,6 +27,10 @@ $form-element-roundedness: 3px;
     background: #393939;
     outline: 0;
   }
+
+  i.fa {
+    margin-right: 0.25em;
+  }
 }
 input, textarea {
   &.action-button:focus {

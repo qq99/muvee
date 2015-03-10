@@ -2,7 +2,10 @@
   <div class="movie-actions__section" define="{findClicked: false}">
     <h3>Discover more movies</h3>
     <span bind-event-click="findClicked = true" bind-show="!findClicked">
-      <%= link_to 'Sure, find me some', discover_more_movies_path, class: 'action-button' %>
+      <%= link_to discover_more_movies_path, class: 'action-button' do %>
+        <i class="fa fa-binoculars"></i>
+        Sure, find me some
+      <% end %>
     </span>
     <div class="action-button hide" bind-show="findClicked">Finding...</div>
   </div>
@@ -10,7 +13,10 @@
     <%= form_tag movie_search_movies_path, method: "POST", "tg-remote" => true, "refresh-on-success" => "movies-index-panel n-remote-results" do %>
       <h3><%= label_tag :q, "Search the net:" %></h3>
       <%= text_field_tag :q, '', class: 'action-button', placeholder: 'e.g., Skyfall' %>
-      <%= button_tag "Search", type: "submit", class: 'action-button' %>
+      <%= button_tag type: "submit", class: 'action-button' do %>
+        <i class="fa fa-search"></i>
+        Search
+      <% end %>
     <% end %>
 
     <div id="n-remote-results" refresh="n-remote-results">
