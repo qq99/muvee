@@ -71,10 +71,6 @@
               <div class="play-icon">
                 <i class="fa fa-play-circle"></i>
               </div>
-              <div class="duration">
-                <i class="fa fa-clock-o"></i>
-                <%= @movie.runtime_human %>
-              </div>
               <% if @movie.left_off_at_percent > 0 %>
                 <div class="watch-progress progress-bar__container">
                   <span class="progress-bar__bar" title="<%= @movie.left_off_at %> seconds of <%= @movie.duration %> total seconds" style="width: <%= @movie.left_off_at_percent %>%"></span>
