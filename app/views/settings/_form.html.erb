@@ -21,7 +21,7 @@
       <p>
         Where are your TV shows stored?
       </p>
-      <%= f.text_area :tv_sources, value: config.tv_sources.map(&:strip).join(", "), placeholder: "Enter absolute paths separated by a comma, e.g., /home/yourself/TV/, /external/TvShows/" %>
+      <%= f.text_area :tv_sources, value: config.tv_sources.map(&:strip).join(", "), placeholder: "Enter absolute paths separated by a comma, e.g., /home/yourself/TV/, /external/TvShows/", class: 'action-button' %>
     <% end %>
   </li>
   <li>
@@ -29,7 +29,7 @@
       <p>
         Where are your movies stored?
       </p>
-      <%= f.text_area :movie_sources, value: config.movie_sources.map(&:strip).join(", "), placeholder: "Enter absolute paths separated by a comma, e.g., /home/yourself/TV/, /external/TvShows/" %>
+      <%= f.text_area :movie_sources, value: config.movie_sources.map(&:strip).join(", "), placeholder: "Enter absolute paths separated by a comma, e.g., /home/yourself/TV/, /external/TvShows/", class: 'action-button' %>
     <% end %>
   </li>
   <li>
@@ -53,7 +53,7 @@
       <p>
         Where should files mid-transcode be stored?  It's a good idea to specify this path to be somewhere you have a lot of space.
       </p>
-      <%= f.text_field :transcode_folder, placeholder: "Enter an absolute path, e.g., /storage/transcoding/" %>
+      <%= f.text_field :transcode_folder, placeholder: "Enter an absolute path, e.g., /storage/transcoding/", class: 'action-button' %>
     <% end %>
   </li>
   <li>
@@ -61,9 +61,9 @@
       <p>
         Where should files reside while downloading?  It's a good idea to specify this path to be somewhere you have a lot of space.
       </p>
-      <%= f.text_field :torrent_start_path, placeholder: "Enter an absolute path, e.g., /storage/torrents/" %>
+      <%= f.text_field :torrent_start_path, placeholder: "Enter an absolute path, e.g., /storage/torrents/", class: 'action-button' %>
     <% end %>
   </li>
-  <%= f.button "Save", type: "Submit" %>
+  <%= f.button "Save", type: "Submit", class: 'action-button' %>
 </ul>
 <% end %>

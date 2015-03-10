@@ -16,10 +16,10 @@
       </div>
     </div>
 
-    <%= link_to 'Scan for new media', scan_for_new_media_settings_path, 'tg-remote' => 'POST' %>
-    <%= link_to 'Reanalyze media library', reanalyze_media_settings_path, 'tg-remote' => 'POST' %>
-    <%= link_to 'Download missing posters and fanart', redownload_missing_arts_settings_path, 'tg-remote' => 'POST' %>
-    <%= link_to 'Re-download all posters and fanart', redownload_all_arts_settings_path, 'tg-remote' => 'POST' %>
+    <%= link_to 'Scan for new media', scan_for_new_media_settings_path, 'tg-remote' => 'POST', class: 'action-button' %>
+    <%= link_to 'Reanalyze media library', reanalyze_media_settings_path, 'tg-remote' => 'POST', class: 'action-button' %>
+    <%= link_to 'Download missing posters and fanart', redownload_missing_arts_settings_path, 'tg-remote' => 'POST', class: 'action-button' %>
+    <%= link_to 'Re-download all posters and fanart', redownload_all_arts_settings_path, 'tg-remote' => 'POST', class: 'action-button' %>
     <%= render 'form', config: @config %>
   </div>
 </div>
