@@ -32,6 +32,14 @@ class Movie < Video
     end
   end
 
+  def runtime_human
+    if duration.blank? && runtime_minutes.blank?
+      "Unknown"
+    else
+      ChronicDuration.output(duration || (runtime_minutes * 60), format: :chrono)
+    end
+  end
+
   def search_tmdb_for_id
     tmdb_movie = TmdbMovieSearchResult.get(title).sorted_by_popularity.first
     tmdb_id = tmdb_movie[:id]
