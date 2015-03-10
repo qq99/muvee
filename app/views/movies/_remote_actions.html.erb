@@ -1,29 +1,27 @@
-<div class="movie-actions--remote panel">
-  <ul class="responsive-grid responsive-grid-2x">
-    <li class="movie-actions__section" define="{findClicked: false}">
-      <h3>Discover more movies</h3>
-      <span bind-event-click="findClicked = true" bind-show="!findClicked">
-        <%= link_to 'Sure, find me some', discover_more_movies_path, class: 'action-button' %>
-      </span>
-      <div class="action-button hide" bind-show="findClicked">Finding...</div>
-    </li>
-    <li class="movie-actions__section">
-      <%= form_tag movie_search_movies_path, method: "POST", "tg-remote" => true, "refresh-on-success" => "movies-index-panel n-remote-results" do %>
-        <h3><%= label_tag :q, "Search the net:" %></h3>
-        <%= text_field_tag :q, '', class: 'action-button', placeholder: 'e.g., Skyfall' %>
-        <%= button_tag "Search", type: "submit", class: 'action-button' %>
-      <% end %>
+<div class="movie-actions--remote">
+  <div class="movie-actions__section" define="{findClicked: false}">
+    <h3>Discover more movies</h3>
+    <span bind-event-click="findClicked = true" bind-show="!findClicked">
+      <%= link_to 'Sure, find me some', discover_more_movies_path, class: 'action-button' %>
+    </span>
+    <div class="action-button hide" bind-show="findClicked">Finding...</div>
+  </div>
+  <div class="movie-actions__section">
+    <%= form_tag movie_search_movies_path, method: "POST", "tg-remote" => true, "refresh-on-success" => "movies-index-panel n-remote-results" do %>
+      <h3><%= label_tag :q, "Search the net:" %></h3>
+      <%= text_field_tag :q, '', class: 'action-button', placeholder: 'e.g., Skyfall' %>
+      <%= button_tag "Search", type: "submit", class: 'action-button' %>
+    <% end %>
 
-      <div id="n-remote-results" refresh="n-remote-results">
-        <% if @query.present? %>
-          <p>
-            <%= @movies.present? ? "#{@movies.length} results found for" : "No results found for" %>
-            <em><%= @query %></em>
-          </p>
-          <% else %>
-        <% end %>
-      </div>
-    </li>
-  </ul>
+    <div id="n-remote-results" refresh="n-remote-results">
+      <% if @query.present? %>
+        <p>
+          <%= @movies.present? ? "#{@movies.length} results found for" : "No results found for" %>
+          <em><%= @query %></em>
+        </p>
+        <% else %>
+      <% end %>
+    </div>
+  </div>
   <div class="clearfix"></div>
 </div>

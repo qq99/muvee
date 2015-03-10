@@ -18,12 +18,18 @@ $form-element-roundedness: 3px;
   text-decoration: none;
   font-size: 0.9rem;
   font-family: inherit;
-  border: 0;
+  border: 1px solid transparent;
   &:visited {
     color: white;
   }
   &:focus, &:hover {
     color: $radical-blue;
     background: #393939;
+    outline: 0;
+  }
+}
+input, textarea {
+  &.action-button:focus {
+    border: 1px solid #555;
   }
 }
