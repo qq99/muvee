@@ -12,7 +12,7 @@ Thread.new {
         message
       end
 
-      Rails.logger.debug "Redis says: #{message}"
+      #Rails.logger.debug "Redis says: #{message}"
       EventBus.announce(:sidekiq, data: message)
     end
 
