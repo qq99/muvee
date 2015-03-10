@@ -109,9 +109,10 @@
                 </div>
               </div>
 
-              <%= form_for @movie, url: override_imdb_id_movie_path(@movie), html: {'tg-remote' => true} do |f| %>
-                <%= f.text_field :imdb_id %>
-                <%= f.submit "Override IMDB ID" %>
+              <%= form_for @movie, url: override_imdb_id_movie_path(@movie), html: {'tg-remote' => true, class: 'inline-form'} do |f| %>
+                <div class="action-button-group">
+                  <%= f.text_field :imdb_id, class: 'action-button' %><%= f.submit "Override IMDB ID", class: 'action-button' %>
+                </div>
               <% end %>
 
               <p>

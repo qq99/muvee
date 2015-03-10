@@ -32,7 +32,30 @@ $form-element-roundedness: 3px;
     margin-right: 0.25em;
   }
 }
-input, textarea {
+
+form.inline-form {
+  display: inline-block;
+}
+
+.action-button-group {
+  .action-button {
+    border-radius: 0;
+    margin-right: 0;
+    margin-left: 0;
+  }
+  :first-child {
+    border-top-left-radius: $form-element-roundedness;
+    border-bottom-left-radius: $form-element-roundedness;
+  }
+  :last-child {
+    border-top-right-radius: $form-element-roundedness;
+    border-bottom-right-radius: $form-element-roundedness;
+  }
+}
+input[type='text'], textarea {
+  &.action-button {
+    background: #222;
+  }
   &.action-button:focus {
     border: 1px solid #555;
   }
