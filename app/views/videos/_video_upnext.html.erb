@@ -1,14 +1,8 @@
-<div class="video-upnext hidden hide">
-  <div class="title-information">
-    <h1>Next Up</h1>
-    <% if next_episode.present? && next_episode.overview.present? %>
-      <div class="description">
-        <p>
-          <%= truncate(next_episode.overview, length: 125, separator: ' ') %>
-        </p>
-      </div>
-    <% end %>
-  </div>
+<div class="video-upnext hidden" bind-class="{'hidden': !player.showUpnext()}">
+  <h1>Next Up</h1>
+  <% if next_episode.present? && next_episode.overview.present? %>
+    <p><%= truncate(next_episode.overview, length: 125, separator: ' ') %></p>
+  <% end %>
   <% if next_episode.present? %>
     <div class="thumbnail-preview">
       <% if next_episode.thumbnails.present? %>
@@ -16,7 +10,9 @@
           <img class="video-thumbnail" src="<%= next_episode.thumbnails.first.url %>" alt="">
         <% end %>
       <% end %>
-      <span class="starting-in"></span>
     </div>
+    <p>
+      Starting in <span bind="player.secondsLeft()"></span> seconds
+    </p>
   <% end %>
 </div>

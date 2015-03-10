@@ -1,15 +1,15 @@
 <div class="meta-options">
   <% if previous_episode.present? %>
-    <%= link_to video_path(previous_episode, t: 0), class: "meta-option-button" do %>
+    <%= link_to video_path(previous_episode, t: 0), class: "action-button" do %>
       <i class="fa fa-backward"></i>
       Skip to previous episode
     <% end %>
   <% end %>
-  <button id="restart" class="meta-option-button">
+  <button class="action-button" bind-event-click="player.restart()">
     <i class="fa fa-refresh"></i> Restart playback
   </button>
   <% if next_episode.present? %>
-    <%= link_to video_path(next_episode, t: 0, shuffle: params[:shuffle].presence, series_id: params[:series_id].presence), class: "meta-option-button" do %>
+    <%= link_to video_path(next_episode, t: 0, shuffle: params[:shuffle].presence, series_id: params[:series_id].presence), class: "action-button" do %>
       <i class="fa fa-forward"></i>
       Skip to next episode
     <% end %>

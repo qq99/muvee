@@ -1,6 +1,6 @@
-<div class="video-watch-meta hidden">
+<div class="video-watch-meta hidden" bind-class="{'hidden': player.playing()}">
   <div class="meta-options">
-    <a class="home" href="/">
+    <a class="home action-button" href="/">
       <i class="fa fa-home"></i> Bring me back home
     </a>
   </div>
@@ -13,12 +13,13 @@
       <% else %>
         <%= video.title %>
       <% end %>
-    </h1>
-    <h3>
-      <%= video.episode_name.presence %>
+
       <% if video.season && video.episode %>
-        <em class="smaller"><%= video.season_episode %></em>
+        <em class="season-and-episode"><%= video.season_episode %></em>
       <% end %>
+    </h1>
+    <h3 class="episode-title">
+      <%= video.episode_name.presence %>
     </h3>
     <% if video.overview.present? %>
       <div class="description">

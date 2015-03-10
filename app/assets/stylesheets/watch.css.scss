@@ -3,7 +3,12 @@
 #watch {
   width: 100%;
   height: 100%;
-  a:hover {
+  overflow: hidden;
+
+  .season-and-episode {
+    font-size: 0.5em;
+  }
+  .episode-title {
     color: $radical-blue;
   }
 }
@@ -14,6 +19,7 @@
   height: 100%;
   background: black;
   background: rgba(0,0,0,0.9);
+  background: linear-gradient(45deg, rgba(0,0,0,1), rgba(0,0,0,0.5));
   position: absolute;
   top: 0;
   left: 0;
@@ -47,7 +53,7 @@
 
 .video-upnext {
   position: absolute;
-  z-index: 2;
+  z-index: 50;
   top: 0;
   right: 0;
   padding: 2em;
@@ -55,11 +61,19 @@
   background: rgba(0,0,0,0.9);
   h1 {
     text-transform: uppercase;
-    color: $radical-blue;
+    color: $golden;
     font-size: 1em;
-    margin-bottom: 1em;
     font-weight: normal;
     font-style: italic;
+  }
+  p, h1, div {
+    margin: 1em 0;
+  }
+  :first-child {
+    margin-top: 0;
+  }
+  :last-child {
+    margin-bottom: 0;
   }
 }
 .thumbnail-preview {
@@ -78,19 +92,6 @@
     text-shadow: 1px 1px 1px black;
     color: white;
   }
-}
-
-.meta-options {
-  button, a {
-    text-decoration: none;
-    color: white;
-    &:hover {
-      color: $radical-blue;
-    }
-  }
-}
-.meta-option-button {
-  display: block;
 }
 
 .hidden {

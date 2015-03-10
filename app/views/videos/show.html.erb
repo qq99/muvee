@@ -1,24 +1,18 @@
-<div id="watch">
+<div id="watch" define="{
+  player: new Muvee.VideoPlayer(this, {
+    leftOffAtPath: '<%= left_off_at_video_path(@video) %>',
+    resumeFrom: <%= @video.left_off_at.try(:to_i) || 0 %>
+  }),
+  hue: new Muvee.HueController(this, {
+    brightenPath: '<%= brighten_lights_path %>',
+    dimPath: '<%= dim_lights_path %>',
+    setPath: '<%= set_lights_path %>'
+  })}">
   <%= render 'video_controls' %>
   <%= render 'video_watch_meta', video: @video, next_episode: @next_episode, previous_episode: @previous_episode %>
   <% if @video.is_tv? %>
     <%= render 'video_upnext', next_episode: @next_episode, previous_episode: @previous_episode if @next_episode %>
   <% end %>
-  <div class="video-back-button">
-    <% if @video.is_a?(TvShow) && @video.series.present? %>
-      <%= link_to @video.series do %>
-        <i class="fa fa-arrow-circle-left"></i>
-      <% end %>
-    <% elsif @video.is_a?(TvShow) && @video.series.blank? %>
-      <%= link_to nonepisodic_series_index_path do %>
-        <i class="fa fa-arrow-circle-left"></i>
-      <% end %>
-    <% elsif @video.is_a?(Movie) %>
-      <%= link_to movie_path(@video) do %>
-        <i class="fa fa-arrow-circle-left"></i>
-      <% end %>
-    <% end %>
-  </div>
   <div class="video-container">
     <video src="<%= stream_video_path(@video) %>"
       id="video"
