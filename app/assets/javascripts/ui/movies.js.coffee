@@ -35,26 +35,3 @@ $(document).on "focus mouseenter", ".js-movie-tile", (ev) ->
   ctx = Twine.context(target)
   _.merge(window.context.movieMeta, ctx)
   Twine.refresh()
-
-
-# movie#show
-
-transition = ($slideshow) ->
-  $next = $slideshow.find(".movie-background:not(.hidden)").next()
-  $next = $slideshow.find(".movie-background").first() if $next.length == 0
-
-  setBackground($next)
-  setBackground($next.next())
-
-  $next.prev().addClass("hidden")
-  $next.removeClass("hidden")
-
-$(document).on "page:change", ->
-  $slideshow = $(".js-auto-slideshow")
-  clearInterval(window.movieArtSlideshow)
-
-  if $slideshow.length
-    transition($slideshow)
-    window.movieArtSlideshow = setInterval ->
-      transition($slideshow)
-    , 7000

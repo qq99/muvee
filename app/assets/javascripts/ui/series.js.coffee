@@ -1,24 +1,3 @@
-startSimpleSlideshow = (el) ->
-  $parent = $(el).find(".thumbnails")
-  clearInterval window.slideshow
-  window.slideshow = setInterval ->
-    $shown = $parent.find(".video-thumbnail:not(.hidden)")
-    $next = $shown.next()
-    if !$next.length
-      $next = $parent.find(".video-thumbnail").first()
-    $shown.addClass("hidden")
-    $next.removeClass("hidden")
-  , 1500
-
-stopSimpleSlideshow = ->
-  clearInterval(window.slideshow)
-
-$(document).on "focus mouseenter", ".js-has-thumbnails", (e) ->
-  startSimpleSlideshow(e.currentTarget)
-
-$(document).on "mouseleave blur", ".js-has-thumbnails", (e) ->
-  stopSimpleSlideshow()
-
 document.addEventListener 'page:change', ->
   $(".js-get-thumbnails:not(.has-thumbnails)").one "mouseenter focus", (e) ->
     $target = $(e.currentTarget)

@@ -1,5 +1,6 @@
 <div
-  class="clearfix video video-tile js-get-thumbnails js-has-thumbnails <% if video.has_set_of_thumbnails? %>has-thumbnails<% end %>"
+  context="video<%= video.id %>"
+  class="clearfix video video-tile js-get-thumbnails <% if video.has_set_of_thumbnails? %>has-thumbnails<% end %>"
   data-thumbnail-path="<%= thumbnails_video_path(video) %>">
   <%
   effective_video_path = if video.left_off_at_percent > 90
@@ -8,11 +9,15 @@
     video_path(video)
   end
   %>
-  <a href="<%= effective_video_path %>" class="video-link">
+  <a
+    define="{thumbnailSlideshow: new Muvee.AutoSlideshow(this, 2000)}"
+    bind-event-mouseenter="thumbnailSlideshow.start()"
+    bind-event-mouseleave="thumbnailSlideshow.stop()"
+    href="<%= effective_video_path %>" class="video-link">
     <div class="thumbnail-area">
-      <div class="thumbnails">
+      <div class="js-slideshow thumbnails">
         <% video.thumbnails.each_with_index do |thumb, i| %>
-          <img class="video-thumbnail <% if i>0 %>hidden<% end %>" src="<%= thumb.url %>" alt="">
+          <img class="js-slide video-thumbnail <% if i>0 %>hidden<% end %>" <% if i <= 2 %>src="<%= thumb.url %>"<% end %> data-src="<%= thumb.url %>">
         <% end %>
       </div>
       <div class="duration">
