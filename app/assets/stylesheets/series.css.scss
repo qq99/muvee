@@ -147,15 +147,6 @@
     .description-area {
       padding-top: 1.5em;
     }
-    a {
-      color: black;
-      &:focus, &:hover {
-        background: transparent;
-        .thumbnails {
-          outline: 5px solid #94ddff;
-        }
-      }
-    }
   }
 }
 

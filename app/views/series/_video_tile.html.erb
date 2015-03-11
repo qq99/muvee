@@ -1,7 +1,6 @@
 <div
   context="video<%= video.id %>"
-  class="clearfix video video-tile js-get-thumbnails <% if video.has_set_of_thumbnails? %>has-thumbnails<% end %>"
-  data-thumbnail-path="<%= thumbnails_video_path(video) %>">
+  class="clearfix video video-tile"
   <%
   effective_video_path = if video.left_off_at_percent > 90
     video_path(video, t: 0)
@@ -10,14 +9,19 @@
   end
   %>
   <a
-    define="{thumbnailSlideshow: new Muvee.AutoSlideshow(this, 2000)}"
+    define="{
+      <% unless video.has_set_of_thumbnails? %>
+      thumbnailRetriever: new Muvee.ThumbnailRetriever(this, '<%= thumbnails_video_path(video) %>', '.js-thumbnail'),
+      <% end %>
+      thumbnailSlideshow: new Muvee.AutoSlideshow(this, 2000)
+    }"
     bind-event-mouseenter="thumbnailSlideshow.start()"
     bind-event-mouseleave="thumbnailSlideshow.stop()"
     href="<%= effective_video_path %>" class="video-link">
     <div class="thumbnail-area">
-      <div class="js-slideshow thumbnails">
+      <div class="js-slideshow js-thumbnail-container thumbnails">
         <% video.thumbnails.each_with_index do |thumb, i| %>
-          <img class="js-slide video-thumbnail <% if i>0 %>hidden<% end %>" <% if i <= 2 %>src="<%= thumb.url %>"<% end %> data-src="<%= thumb.url %>">
+          <img class="js-slide js-thumbnail video-thumbnail <% if i>0 %>hidden<% end %>" <% if i <= 2 %>src="<%= thumb.url %>"<% end %> data-src="<%= thumb.url %>">
         <% end %>
       </div>
       <div class="duration">
@@ -35,6 +39,6 @@
   <p class="video-overview"><%= video.overview %></p>
   <span class="hide"><%= video.raw_file_path %></span>
   <p>
-    <%= link_to 'Reanalyze', reanalyze_video_path(video), 'tg-remote' => 'POST' %>
+    <%= link_to 'Reanalyze', reanalyze_video_path(video), 'tg-remote' => 'POST', class: 'action-button' %>
   </p>
 </div>
