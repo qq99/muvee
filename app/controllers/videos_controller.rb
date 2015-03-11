@@ -94,9 +94,9 @@ class VideosController < ApplicationController
   def thumbnails
     # builds thumbnails if they don't exist, returns them if they do
     # all videos start with 1 thumbnail
-    if @video.thumbnails.count != 10
+    unless @video.has_set_of_thumbnails?
       @video.thumbnails.destroy_all
-      @video.create_n_thumbnails(10)
+      @video.create_n_thumbnails(Thumbnail::IDEAL_NUMBER_OF_THUMBNAILS)
     end
 
     render json: {thumbnails: @video.thumbnails.map{|t| t.url}}

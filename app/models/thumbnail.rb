@@ -5,6 +5,7 @@ class Thumbnail < ActiveRecord::Base
   before_destroy :destroy_thumbnail_file
   after_create :postprocess_thumbnail
 
+  IDEAL_NUMBER_OF_THUMBNAILS = 10
   THUMBNAIL_FOLDER = Rails.root.join('public', 'thumbnails')
 
   def url

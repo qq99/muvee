@@ -62,7 +62,7 @@ class Video < ActiveRecord::Base
   end
 
   def has_set_of_thumbnails?
-    self.thumbnails.length > 1
+    self.thumbnails.count == Thumbnail::IDEAL_NUMBER_OF_THUMBNAILS
   end
 
   def self.thumbnail_root_path
