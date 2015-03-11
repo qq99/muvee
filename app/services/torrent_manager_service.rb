@@ -25,6 +25,8 @@ class TorrentManagerService
 
   def find(transmission_id)
     client.all.find { |t| t["addedDate"] == transmission_id }
+  rescue Net::ReadTimeout
+    nil
   end
 
   def check_completion_status(transmission_id)
@@ -55,6 +57,8 @@ class TorrentManagerService
     all_torrents = client.all
     torrent = all_torrents.find { |t| t["addedDate"] == transmission_id }
     torrent["id"]
+  rescue Net::ReadTimeout
+    nil
   end
 
   def self.find_sources(remote_movie)
