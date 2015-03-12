@@ -5,6 +5,10 @@ class MoviesController < ApplicationController
   RESULTS_PER_PAGE = 24
 
   def index
+    newest
+  end
+
+  def all
     @section = :all
     @movies = Movie.local_and_downloading.shuffle.to_a
     render 'index2'

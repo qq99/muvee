@@ -50,6 +50,7 @@ Rails.application.routes.draw do
   end
   resources :movies do
     collection do
+      get :all
       get :remote
       get '3D', as: 'three_d', action: 'three_d'
       get '2D', as: 'two_d', action: 'two_d'
