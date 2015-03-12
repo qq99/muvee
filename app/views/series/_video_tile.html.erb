@@ -1,6 +1,4 @@
-<div
-  context="video<%= video.id %>"
-  class="clearfix video video-tile"
+<div context="video<%= video.id %>" class="clearfix video video-tile">
   <%
   effective_video_path = if video.left_off_at_percent > 90
     video_path(video, t: 0)
