@@ -103,29 +103,6 @@
       }
     }
   }
-  .prepend-label {
-    text-align: left;
-    border: 1px solid #222;
-    label {
-      padding: 0.5em 1em;
-      width: 7em;
-      padding-right: 2em;
-      display: inline-block;
-      color: #aaa;
-    }
-    a, input {
-      padding: 0.5em 0.25em;
-      color: white;
-      text-decoration: none;
-    }
-    input {
-      font-size: 1rem;
-      border: 0;
-      background: 0;
-      outline: 0;
-      display: inline-block;
-    }
-  }
   .featured-episode {
     margin-top: 2em;
     padding: 0 3em 0 3em;
