@@ -27,7 +27,7 @@ gem 'redis'
 gem 'color'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbograft', github: 'Shopify/turbograft', ref: '22cf7cac626d297b4fa9cb6bdfe936e4e7bfe028'
+gem 'turbograft', '0.1.16'
 gem 'twine-rails'
 gem 'jquery-turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder

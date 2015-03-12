@@ -1,12 +1,4 @@
 GIT
-  remote: git://github.com/Shopify/turbograft.git
-  revision: 22cf7cac626d297b4fa9cb6bdfe936e4e7bfe028
-  ref: 22cf7cac626d297b4fa9cb6bdfe936e4e7bfe028
-  specs:
-    turbograft (0.1.15)
-      coffee-rails
-
-GIT
   remote: git://github.com/qq99/TransmissionApi.git
   revision: 31811484057b7fe4ed0e9456ea1c02d36b01255b
   branch: master
@@ -292,6 +284,8 @@ GEM
     tubesock (0.2.5)
       rack (>= 1.5.0)
       websocket (>= 1.1.0)
+    turbograft (0.1.16)
+      coffee-rails
     turbolinks (2.5.3)
       coffee-rails
     twine-rails (0.0.15)
@@ -355,7 +349,7 @@ DEPENDENCIES
   timecop
   transmission_api!
   tubesock
-  turbograft!
+  turbograft (= 0.1.16)
   twine-rails
   uglifier (>= 1.3.0)
   uuid
