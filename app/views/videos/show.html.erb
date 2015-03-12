@@ -1,7 +1,8 @@
 <div id="watch" define="{
   player: new Muvee.VideoPlayer(this, {
     leftOffAtPath: '<%= left_off_at_video_path(@video) %>',
-    resumeFrom: <%= @video.left_off_at.try(:to_i) || 0 %>
+    resumeFrom: <%= @video.left_off_at.try(:to_i) || 0 %>,
+    duration: <%= @video.duration.try(:to_i) %>
   }),
   hue: new Muvee.HueController(this, {
     brightenPath: '<%= brighten_lights_path %>',

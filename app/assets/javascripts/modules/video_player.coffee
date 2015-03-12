@@ -9,10 +9,14 @@ class Muvee.VideoPlayer
     if params.t
       stripped = URI(document.location).query('').toString()
       history.replaceState({}, null, stripped)
+      startAt = parseInt(params.t, 10)
+    else
+      startAt = @opts.resumeFrom
 
     # HTML5 video events: http://www.w3.org/TR/html5/embedded-content-0.html#mediaevents
     $(@videoEl).one "canplay.VideoPlayer", =>
-      @setCurrentTime(params.t || @opts.resumeFrom)
+      unless @opts.duration && (@opts.duration - startAt) < 30 # don't set time if we're already near the end
+        @setCurrentTime(startAt)
 
     $(@videoEl).on "pause.VideoPlayer", =>
       if @secondsLeft() < 1
