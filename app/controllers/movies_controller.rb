@@ -39,7 +39,7 @@ class MoviesController < ApplicationController
 
   def remote
     @section = :discover
-    @genres = Genre.all.sort_by(&:name).reject { |genre| genre.videos.length == 0 }
+    #@genres = Genre.all.sort_by(&:name).reject { |genre| genre.videos.length == 0 }
     @movies = paginated_movies.remote.order(created_at: :desc).to_a
 
     if @movies.size > 0
@@ -51,15 +51,15 @@ class MoviesController < ApplicationController
 
   def genres
     @section = :genres
-    @genres = Genre.all.sort_by(&:name).reject { |genre| genre.videos.length == 0 }
+    @genres = Genre.all.sort_by(&:name).select { |genre| genre.has_local_movies? }
   end
 
   def genre
     @section = :genres
     name = Genre.normalized_name(params[:type])
     @genre = Genre.find_by(name: name)
-    @movies = @genre.videos.movies.all
-    render 'index'
+    @movies = @genre.videos.movies.all.to_a
+    render 'index2'
   end
 
   def discover_more

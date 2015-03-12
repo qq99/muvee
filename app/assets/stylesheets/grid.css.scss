@@ -12,6 +12,10 @@
   flex-direction: row;
   height: 66.6666%;
 }
+.tile-row--banner {
+  height: 33%;
+  border-bottom: 1px solid #222;
+}
 .col-2-3 {
   width: 66.6666%;
   display: flex;
@@ -132,6 +136,27 @@
   display: inline-block;
 }
 
+.tile__meta--banner {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+  text-shadow: 1px 1px 0px black;
+  background: linear-gradient(0deg, rgba(0,0,0,0.8), rgba(0,0,0,0.0));
+  border-bottom: 5px solid rgba(0,0,0,0.8);
+  color: white;
+  padding: 1em;
+  height: 100%;
+  font-weight: 200;
+  font-size: 1.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  h1 {
+    font-weight: inherit;
+  }
+}
 .tile__meta {
   position: absolute;
   bottom: 0;

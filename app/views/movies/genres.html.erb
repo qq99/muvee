@@ -1,13 +1,17 @@
 <%= render 'subnav' %>
 
-<div id="all_movies_by_genre">
-  <div class="genres-box">
-    <% @genres.each_slice( (@genres.size/3.0).round ) do |genres| %>
-      <div>
+<div class="tile-list">
+  <% @genres.each_slice(3) do |genres| %>
+    <div class="tile-row tile-row--banner">
+
       <% genres.each do |genre| %>
-        <h1><%= link_to genre.name, by_genre_movies_path(genre.name.parameterize) %></h1>
+        <div class="tile">
+          <div class="tile__meta--banner">
+            <h1><%= link_to genre.name, by_genre_movies_path(genre.name.parameterize) %></h1>
+          </div>
+          <div class="tile__background" style="background-image: url(<%= genre.movies.local.sample.fanarts.sample.try(:url) %>);"></div>
+        </div>
       <% end %>
-      </div>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 </div>
