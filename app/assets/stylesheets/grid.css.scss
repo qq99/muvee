@@ -103,9 +103,11 @@
 
 
 .badge {
+  display: inline-block;
   font-size: 0.75em;
   font-weight: 200;
-  padding: 0.3em 1em 0.2em 1em;
+  margin: 0.2em 0;
+  padding: 0.3em 1em;
   background: rgba(255,255,255,0);
   border: 1px solid #666;
   text-decoration: none;
@@ -155,6 +157,16 @@
   justify-content: center;
   h1 {
     font-weight: inherit;
+    transition: all 0.25s ease-in-out;
+  }
+  &:hover {
+    h1, a {
+      color: $golden;
+    }
+  }
+
+  &:hover h1 {
+    transform: scale(1.1);
   }
 }
 .tile__meta {
@@ -182,7 +194,6 @@
   }
   .video-genres {
     float: right;
-    margin-top: 0.5em;
   }
   .video-description {
     height: 0;
