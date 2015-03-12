@@ -8,7 +8,7 @@ class Muvee.ThumbnailRetriever
 
     @$container.one "mouseenter.ThumbnailRetriever focus.ThumbnailRetriever", @retrieve.bind(this)
 
-    Page.onReplace(@node, @destructor)
+    Page.onReplace(@node, @destructor.bind(this))
 
   destructor: ->
     @$container.off "mouseenter.ThumbnailRetriever focus.ThumbnailRetriever"
