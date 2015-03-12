@@ -7,6 +7,9 @@ class TvShow < Video
   after_create :associate_with_genres
   after_create :extract_metadata
 
+  scope :latest, -> {order(season: :desc, episode: :desc)}
+  scope :release_order, -> {order(season: :asc, episode: :asc)}
+
   # More formats available at https://github.com/midgetspy/Sick-Beard/blob/development/sickbeard/name_parser/regexes.py
   FORMATS = {
     standard_repeat: /([\w\-\.\_\(\) ]*)S(\d+)(?:\D*)E(\d+)(?:.*)S(\d+)(?:\D*)E(\d+)/i,

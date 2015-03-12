@@ -18,9 +18,8 @@ class Video < ActiveRecord::Base
   scope :local_and_downloading, -> {where('status in (?)', ['local', 'downloading'])}
   scope :movies, -> {where(type: "Movie")}
   scope :tv_shows, -> {where(type: "TvShow")}
-  scope :latest, -> {order(season: :desc, episode: :desc)}
-  scope :release_order, -> {order(season: :asc, episode: :asc)}
   scope :unwatched, -> {where(left_off_at: nil)}
+  scope :newest, -> {order(created_at: :desc)}
 
   # https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats
   SERVABLE_CONTAINERS = %w{.m4v .mp4 .webm}.freeze

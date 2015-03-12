@@ -8,13 +8,13 @@ class SeriesController < ApplicationController
 
   def newest_episodes
     @section = :newest
-    @shows = TvShow.all.limit(50).sort_by{|item| -item.created_at.to_i} # newest first
+    @shows = TvShow.newest.limit(50) # newest first
     render 'nonepisodic'
   end
 
   def newest_unwatched
     @section = :newest_unwatched
-    @shows = TvShow.all.limit(50).sort_by{|item| -item.created_at.to_i}.reject{|item| item.left_off_at != nil}.take(6*6)
+    @shows = TvShow.newest.unwatched.limit(50)
     render 'nonepisodic'
   end
 
