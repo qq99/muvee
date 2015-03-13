@@ -78,7 +78,7 @@ class MovieTest < ActiveSupport::TestCase
     movie.reanalyze
   end
 
-  test "reanalyze sets the status of a video to local" do
+  test "reanalyze sets the status of a video to local" do # sketchy, may not be want is wanted
     Movie.any_instance.expects(:guessit).once
     Movie.any_instance.expects(:associate_with_genres).once
     Movie.any_instance.expects(:extract_metadata).once
@@ -112,9 +112,10 @@ class MovieTest < ActiveSupport::TestCase
   end
 
   test "reanalyze will attempt to redownload fanarts/videos/etc if the imdb_id changes" do
+    Movie.any_instance.expects(:guessit).once
+    Movie.any_instance.expects(:associate_with_genres).once
     Movie.any_instance.expects(:redownload).once
     Movie.any_instance.expects(:extract_metadata).once
-    Movie.any_instance.expects(:associate_with_genres).once
     Movie.any_instance.expects(:redownload_missing).once
     Movie.any_instance.stubs(:imdb_id).returns('a', 'b') # changes during duration of test
 
@@ -138,14 +139,14 @@ class MovieTest < ActiveSupport::TestCase
   test "associate_with_genres works" do
     VCR.use_cassette "extract_metadata_test" do
       movie = videos(:true_grit)
-      assert_difference "Genre.count", 3 do
+      assert_difference "Genre.count", 1 do
         movie.associate_with_genres
       end
       assert_no_difference "Genre.count" do
         movie.associate_with_genres
       end
 
-      assert_equal 3, movie.genres.length
+      assert_equal 1, movie.genres.length
     end
   end
 
@@ -156,11 +157,18 @@ class MovieTest < ActiveSupport::TestCase
       quality: '1080p'
     )
 
-    movie = Movie.new
+    movie = Movie.new(status: 'local')
     movie.raw_file_path = 'something'
     movie.guessit
     assert_equal "True Grit", movie.title
     assert_equal 1900, movie.year
     assert_equal '1080p', movie.quality
+  end
+
+  test "#guessit will set title to unknown if the movie is not local" do
+    Guesser::Movie.expects(:guess_from_filepath).never
+    movie = Movie.new(status: 'remote')
+    movie.guessit
+    assert_equal 'Unknown', movie.title
   end
 end

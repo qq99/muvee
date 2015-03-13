@@ -156,7 +156,7 @@ class Movie < Video
   end
 
   def guessit
-    unless local?
+    if local?
       guessed = Guesser::Movie.guess_from_filepath(raw_file_path)
       self.title = guessed[:title]
       self.year = guessed[:year]
