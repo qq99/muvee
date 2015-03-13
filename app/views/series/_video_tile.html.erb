@@ -1,4 +1,4 @@
-<div context="video<%= video.id %>" class="clearfix video video-tile">
+<div id="video-<%= video.id %>" context="video<%= video.id %>" class="clearfix video video-tile" refresh="video-<%= video.id %>">
   <%
   effective_video_path = if video.left_off_at_percent > 90
     video_path(video, t: 0)
@@ -37,6 +37,10 @@
   <p class="video-overview"><%= video.overview %></p>
   <span class="hide"><%= video.raw_file_path %></span>
   <p>
-    <%= link_to 'Reanalyze', reanalyze_video_path(video), 'tg-remote' => 'POST', 'full-refresh' => true, class: 'action-button' %>
+    <%= link_to 'Reanalyze', reanalyze_video_path(video),
+      'tg-remote' => 'POST',
+      'full-refresh' => true,
+      'refresh-on-success' => "video-#{video.id}",
+      class: 'action-button' %>
   </p>
 </div>
