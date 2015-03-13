@@ -112,6 +112,7 @@ class Guesser
   end
 
   def self.containing_folder(filepath)
+    return '' unless filepath.present?
     filepath.split("/")[-2]
   end
 
@@ -126,6 +127,7 @@ class Guesser
   end
 
   def self.filename_without_extension(filename)
+    return '' unless filename.present?
     File.basename(filename, File.extname(filename))
   end
 

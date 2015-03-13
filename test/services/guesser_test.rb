@@ -24,6 +24,11 @@ class GuesserTest < ActiveSupport::TestCase
     assert_equal 'foo', Guesser.strip_scene_stuff("foox264")
   end
 
+  test 'TvShow#guess_from_filepath on nil or blank string' do
+    result = Guesser::TvShow.guess_from_filepath(nil)
+    assert_equal '', result[:title]
+  end
+
   test '#guess_from_filepath guesses something when no format matches' do
     filepath = '/foo/bar/Maggie.Simpson.in.The.Longest.Daycare.HDTV.x264-2HD.mp4'
     result = Guesser::TvShow.guess_from_filepath(filepath)
@@ -233,6 +238,11 @@ class GuesserTest < ActiveSupport::TestCase
     assert_equal "Khumba", result[:title]
     assert_equal 2013, result[:year]
     assert_equal nil, result[:quality]
+  end
+
+  test 'Movie#guess_from_filepath on nil or blank string' do
+    result = Guesser::Movie.guess_from_filepath(nil)
+    assert_equal '', result[:title]
   end
 
 end

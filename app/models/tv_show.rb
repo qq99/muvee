@@ -10,13 +10,6 @@ class TvShow < Video
   scope :latest, -> {order(season: :desc, episode: :desc)}
   scope :release_order, -> {order(season: :asc, episode: :asc)}
 
-  # More formats available at https://github.com/midgetspy/Sick-Beard/blob/development/sickbeard/name_parser/regexes.py
-  FORMATS = {
-    standard_repeat: /([\w\-\.\_\(\) !]*)S(\d+)(?:\D*)E(\d+)(?:.*)S(\d+)(?:\D*)E(\d+)/i,
-    standard: /([\w\-\.\_\(\) !]*)S(\d+)(?:\D*)E(\d+)/i,
-    fov_repeat: /([\w\-\.\(\) !]*)\D+?(\d+)(?:[x._])(\d+)/i
-  }.freeze
-
   def associate_with_series
     if series_tvdb_id = metadata[:seriesid]
       series_name = metadata[:SeriesName] || self.title
@@ -67,49 +60,15 @@ class TvShow < Video
   end
 
   def guessit
-    if filename_no_extension.empty?
-      self.title = "Unknown"
+    if local?
+      guessed = Guesser::TvShow.guess_from_filepath(raw_file_path)
+      self.title = guessed[:title]
+      self.season = guessed[:season]
+      self.episode = guessed[:episode]
+      self.quality = guessed[:quality]
     else
-      quality, remaining_filename = filename_without_quality(filename_no_extension)
-      containing_foldername = raw_file_path.split("/")[-2]
-
-      if matches = self.class.guess_info_from_string(remaining_filename) || self.class.guess_info_from_string(containing_foldername)
-        self.title, self.season, self.episode = matches
-      end
-
-      if !self.title.present?
-        self.title = pretty_title(remaining_filename)
-      end
+      self.title = "Unknown"
     end
-  end
-
-  def self.guessit(fromName)
-    if matches = guess_info_from_string(fromName)
-      guessed_title, guessed_season, guessed_episode = matches
-    end
-
-    {title: guessed_title, season: guessed_season, episode: guessed_episode}
-  end
-
-  def self.guess_info_from_string(from)
-    TvShow::FORMATS.each do |name, regex|
-      matches = regex.match(from)
-      if matches.present? && matches.length == 4
-        title = pretty_title matches[1]
-        season = matches[2].to_i
-        episode = matches[3].to_i
-        return [title, season, episode]
-      end
-      if matches.present? && matches.length == 6
-        title = pretty_title matches[1]
-        season = matches[2].to_i
-        episode = matches[3].to_i
-        season2 = matches[4].to_i
-        episode2 = matches[5].to_i
-        return [title, season, episode, season2, episode2]
-      end
-    end
-    nil
   end
 
   def reanalyze

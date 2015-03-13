@@ -72,24 +72,6 @@ class Video < ActiveRecord::Base
     raw_file_path.blank?
   end
 
-  def filename_no_extension
-    return "" if file_not_yet_present?
-
-    @filename_no_extension ||= File.basename(raw_file_path, File.extname(raw_file_path))
-  end
-
-  def filename_without_quality(filename)
-    matches = Video::QUALITIES.match(filename)
-    if matches.present?
-      quality = matches[0]
-      remaining_filename = filename.gsub(Video::QUALITIES, "")
-    else
-      quality = nil
-      remaining_filename = filename
-    end
-    [quality, remaining_filename]
-  end
-
   def left_off_at_percent
     return 0 if !self.left_off_at
     (self.left_off_at.to_f / self.duration.to_f) * 100
