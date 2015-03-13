@@ -2,6 +2,8 @@ require 'test_helper'
 
 class MovieTest < ActiveSupport::TestCase
   test "will attempt to grab duration & create initial thumbnail & extract metadata on create" do
+    Movie.any_instance.expects(:associate_with_genres).once
+    Movie.any_instance.expects(:guessit).once
     Movie.any_instance.expects(:create_initial_thumb).once
     Movie.any_instance.expects(:shellout_and_grab_duration).once
     Movie.any_instance.expects(:extract_metadata).once
@@ -66,54 +68,59 @@ class MovieTest < ActiveSupport::TestCase
   end
 
   test "reanalyze calls Video::reanalyze" do
-    movie = videos(:true_grit)
     Video.any_instance.expects(:reanalyze).once
+    Movie.any_instance.expects(:guessit).once
+    Movie.any_instance.expects(:associate_with_genres).once
+    Movie.any_instance.expects(:extract_metadata).once
+    Movie.any_instance.expects(:redownload_missing).once
+
+    movie = videos(:true_grit)
     movie.reanalyze
   end
 
   test "reanalyze sets the status of a video to local" do
+    Movie.any_instance.expects(:guessit).once
+    Movie.any_instance.expects(:associate_with_genres).once
+    Movie.any_instance.expects(:extract_metadata).once
+    Movie.any_instance.expects(:redownload_missing).once
+
     movie = videos(:true_grit)
     movie.update_attribute(:status, "remote")
     movie.reanalyze
     assert movie.local?
   end
 
-  test "reanalyze attempts to guessit unless the imdb_id has been noted to be accurated" do
+  test "reanalyze does not guessit if imdb id is accurate" do
+    Movie.any_instance.expects(:guessit).never
+    Movie.any_instance.expects(:associate_with_genres).once
+    Movie.any_instance.expects(:extract_metadata).once
+    Movie.any_instance.expects(:redownload_missing).once
+
     movie = videos(:true_grit)
-    Movie.any_instance.expects(:guessit).once
-    movie.reanalyze
     movie.update_attribute(:imdb_id_is_accurate, true)
     movie.reanalyze
   end
 
-  test "reanalyze will extract metadata fields into the movie" do
-    VCR.use_cassette "extract_metadata_test" do
-      movie = videos(:true_grit)
-      movie.reanalyze
-      assert_equal "True Grit", movie.title
-      assert_equal Time.parse("22 Dec 2010"), movie.released_on
-      assert movie.overview.present?
-      assert_equal "English", movie.language
-      assert_equal "USA", movie.country
-      assert movie.awards.present?
-    end
-  end
-
   test "reanalyze performs a few subtasks" do
-    movie = videos(:true_grit)
     Movie.any_instance.expects(:guessit).once
     Movie.any_instance.expects(:associate_with_genres).once
     Movie.any_instance.expects(:extract_metadata).once
+    Movie.any_instance.expects(:redownload_missing).once
+
+    movie = videos(:true_grit)
     movie.reanalyze
   end
 
   test "reanalyze will attempt to redownload fanarts/videos/etc if the imdb_id changes" do
-    VCR.use_cassette "extract_metadata_test" do
-      movie = videos(:true_grit)
-      movie.update_attribute(:imdb_id, "wat")
-      Movie.any_instance.expects(:redownload).once
-      movie.reanalyze
-    end
+    Movie.any_instance.expects(:redownload).once
+    Movie.any_instance.expects(:extract_metadata).once
+    Movie.any_instance.expects(:associate_with_genres).once
+    Movie.any_instance.expects(:redownload_missing).once
+    Movie.any_instance.stubs(:imdb_id).returns('a', 'b') # changes during duration of test
+
+    movie = videos(:true_grit)
+    movie.imdb_id = "wat"
+    movie.reanalyze
   end
 
   test "extract_metadata works" do
@@ -123,9 +130,8 @@ class MovieTest < ActiveSupport::TestCase
       assert_equal "True Grit", movie.title
       assert_equal Time.parse("22 Dec 2010"), movie.released_on
       assert movie.overview.present?
-      assert_equal "English", movie.language
-      assert_equal "USA", movie.country
-      assert movie.awards.present?
+      assert_equal "en", movie.language
+      assert_equal "United States of America", movie.country
     end
   end
 
@@ -143,55 +149,18 @@ class MovieTest < ActiveSupport::TestCase
     end
   end
 
-  test "#guessit" do
-    movie = Movie.new(raw_file_path: "/foo/bar/Disconnect.2012.HDTV.XviD.spinzes.mp4")
+  test "#guessit will call Guesser if there's path, and assigns year and title" do
+    Guesser::Movie.stubs(:guess_from_filepath).returns(
+      year: 1900,
+      title: 'True Grit',
+      quality: '1080p'
+    )
+
+    movie = Movie.new
+    movie.raw_file_path = 'something'
     movie.guessit
-    assert_equal "Disconnect", movie.title
-    assert_equal 2012, movie.year
-    assert_equal nil, movie.quality
-
-    movie = Movie.new(raw_file_path: "/foo/bar/Frozen.2013.1080p.BluRay.x264.YIFY.mp4")
-    movie.guessit
-    assert_equal "Frozen", movie.title
-    assert_equal 2013, movie.year
-    assert_equal "1080p", movie.quality
-
-    movie = Movie.new(raw_file_path: "/foo/bar/Glengarry.Glen.Ross.1992.720p.HDTV.x264.YIFY.mp4")
-    movie.guessit
-    assert_equal "Glengarry Glen Ross", movie.title
-    assert_equal 1992, movie.year
-    assert_equal "720p", movie.quality
-
-    movie = Movie.new(raw_file_path: "/foo/bar/Stoker 2013.mp4")
-    movie.guessit
-    assert_equal "Stoker", movie.title
-    assert_equal 2013, movie.year
-    assert_equal nil, movie.quality
-
-    movie = Movie.new(raw_file_path: "/foo/bar/The Nines[2007]DvDrip[Eng]-FXG.avi")
-    movie.guessit
-    assert_equal "The Nines", movie.title
-    assert_equal 2007, movie.year
-    assert_equal nil, movie.quality
-
-    movie = Movie.new(raw_file_path: "/foo/bar/The.Amazing.Spiderman.2012.1080p.BrRip.x264.YIFY.mp4")
-    movie.guessit
-    assert_equal "The Amazing Spiderman", movie.title
-    assert_equal 2012, movie.year
-    assert_equal "1080p", movie.quality
-
-    movie = Movie.new(raw_file_path: "/foo/bar/Inside Job.mp4")
-    movie.guessit
-    assert_equal "Inside Job", movie.title
-    assert_equal nil, movie.year
-    assert_equal nil, movie.quality
-
-    movie = Movie.new(raw_file_path: "/foo/bar/Khumba.2013.1080p.3D.HSBS.BluRay.x264.YIFY.mp4")
-    movie.guessit
-    assert_equal "Khumba", movie.title
-    assert_equal 2013, movie.year
-    assert_equal "1080p", movie.quality
-
-
+    assert_equal "True Grit", movie.title
+    assert_equal 1900, movie.year
+    assert_equal '1080p', movie.quality
   end
 end

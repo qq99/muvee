@@ -10,7 +10,7 @@ class Guesser
 
     def self.guess_from_filepath(filepath)
       filename = Guesser.filename_without_extension(filepath)
-      filename = Guesser.strip_scene_stuff(filename)
+      filename = Guesser.strip_scene_stuff(filename).gsub(Video::QUALITIES, '')
       filefolder = Guesser.containing_folder(filepath)
 
       results_from_filename = guess(filename).delete_if {|k,v| v.blank? }
@@ -70,15 +70,14 @@ class Guesser
 
     FORMATS = {
       name_and_year: %r{
-        ([\w\-\.\_\s]*)
+        ([\w\-\.\_\s !]*)
         [\(\ \_\.\[]{1}([\d]{4})[\)\ \_\.\[]?
         }xi
     }.freeze
 
     def self.guess_from_filepath(filepath)
-      quality = Guesser.guess_quality(filepath)
       filename = Guesser.filename_without_extension(filepath)
-      filename = Guesser.strip_scene_stuff(filename)
+      filename = Guesser.strip_scene_stuff(filename).gsub(Video::QUALITIES, '')
       filefolder = Guesser.containing_folder(filepath)
 
       results_from_filename = guess(filename).delete_if {|k,v| v.blank? }

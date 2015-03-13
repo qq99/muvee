@@ -227,6 +227,12 @@ class GuesserTest < ActiveSupport::TestCase
     assert_equal "Khumba", result[:title]
     assert_equal 2013, result[:year]
     assert_equal "1080p", result[:quality]
+
+    filepath = "/foo/bar/Khumba.2013/movie.mp4"
+    result = Guesser::Movie.guess_from_filepath(filepath)
+    assert_equal "Khumba", result[:title]
+    assert_equal 2013, result[:year]
+    assert_equal nil, result[:quality]
   end
 
 end

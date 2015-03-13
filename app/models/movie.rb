@@ -156,26 +156,13 @@ class Movie < Video
   end
 
   def guessit
-    if filename_no_extension.blank?
-      self.title = "Unknown"
+    unless local?
+      guessed = Guesser::Movie.guess_from_filepath(raw_file_path)
+      self.title = guessed[:title]
+      self.year = guessed[:year]
+      self.quality = guessed[:quality]
     else
-      quality, remaining_filename = filename_without_quality(filename_no_extension)
-
-      self.quality = quality if quality.present?
-
-      Movie::FORMATS.each do |name, regex|
-        matches = regex.match(remaining_filename)
-        if matches.present?
-          self.title = pretty_title matches[1]
-          if matches[2].present?
-            self.year = matches[2].to_i
-          end
-        end
-      end
-
-      if !self.title.present?
-        self.title = pretty_title remaining_filename
-      end
+      self.title = "Unknown"
     end
   end
 
