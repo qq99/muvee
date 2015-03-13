@@ -19,7 +19,7 @@
   <li>
     <%= f.label :tv_sources do %>
       <p>
-        Where are your TV shows stored?
+        Where are your <span class="note">TV shows</span> stored?
       </p>
       <%= f.text_area :tv_sources, value: config.tv_sources.map(&:strip).join(", "), placeholder: "Enter absolute paths separated by a comma, e.g., /home/yourself/TV/, /external/TvShows/", class: 'action-button' %>
     <% end %>
@@ -27,42 +27,44 @@
   <li>
     <%= f.label :movie_sources do %>
       <p>
-        Where are your movies stored?
+        Where are your <span class="note">movies</span> stored?
       </p>
       <%= f.text_area :movie_sources, value: config.movie_sources.map(&:strip).join(", "), placeholder: "Enter absolute paths separated by a comma, e.g., /home/yourself/TV/, /external/TvShows/", class: 'action-button' %>
     <% end %>
   </li>
   <li>
-    <%= f.label :transcode_media do %>
-      <p>
-        Do you want to transcode <span class="note">.mkv</span> and <span class="note">.avi</span> files into <span class="note">.webm</span> files?
-      </p>
-      <%= f.check_box :transcode_media, bind: "showTranscodeFolder" %> Yes, transcode my media.
-      <p>
-        Your original media will not be destroyed.  After transcoding, the new file will be moved to the same directory as the old file.  This process is often slow (sometimes taking times up to or greater than the playtime of the video), but can often result in drastic compression.
-      </p>
-      <p>
-        Currently this is the only way for μv to make some media available to web browsers.
-      </p>
-      <p>
-      </p>
-    <% end %>
+    <p>
+      Do you want to <span class="note">transcode</span> files unplayable by browsers into formats that can be?
+    </p>
+    <%= f.check_box :transcode_media, bind: "showTranscodeFolder" %> <%= f.label :transcode_media, 'Yes, transcode my media.' %>
+    <p class="explanation">
+      Your original media will not be destroyed.  After transcoding, the new file will be moved to the same directory as the old file.  This process is often slow (sometimes taking times up to or greater than the playtime of the video), but can often result in drastic compression.
+    </p>
+    <p class="explanation">
+      Unfortunately, this is the only way for μv to make some media available to web browsers.
+    </p>
   </li>
   <li bind-show="showTranscodeFolder">
     <%= f.label :transcode_folder do %>
       <p>
-        Where should files mid-transcode be stored?  It's a good idea to specify this path to be somewhere you have a lot of space.
+        Where should files <span class="note">mid-transcode</span> be stored?
       </p>
-      <%= f.text_field :transcode_folder, placeholder: "Enter an absolute path, e.g., /storage/transcoding/", class: 'action-button' %>
     <% end %>
+    <%= f.text_field :transcode_folder, placeholder: "Enter an absolute path, e.g., /storage/transcoding/", class: 'action-button' %>
+    <p class="explanation">
+      It's a good idea to specify this path to be somewhere you have a lot of space.
+    </p>
   </li>
   <li>
     <%= f.label :torrent_start_path do %>
       <p>
-        Where should files reside while downloading?  It's a good idea to specify this path to be somewhere you have a lot of space.
+        Where should files reside <span class="note">while downloading</span>?
       </p>
-      <%= f.text_field :torrent_start_path, placeholder: "Enter an absolute path, e.g., /storage/torrents/", class: 'action-button' %>
     <% end %>
+    <%= f.text_field :torrent_start_path, placeholder: "Enter an absolute path, e.g., /storage/torrents/", class: 'action-button' %>
+    <p class="explanation">
+      It's a good idea to specify this path to be somewhere you have a lot of space.
+    </p>
   </li>
   <%= f.button "Save", type: "Submit", class: 'action-button' %>
 </ul>
