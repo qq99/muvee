@@ -33,6 +33,7 @@
 }
 
 .tile {
+  overflow: hidden;
   margin: 0;
   padding: 0;
   height: 100%;
@@ -67,6 +68,9 @@
 .tile:hover .tile__meta {
   border-bottom: 5px solid $radical-blue;
   height: 200px;
+}
+.tile:hover .tile__background {
+  transform: scale(1.05);
 }
 .tile__meta-backdrop {
   position: absolute;
