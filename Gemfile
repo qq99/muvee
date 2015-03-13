@@ -60,6 +60,8 @@ gem "transmission_api", github: "qq99/TransmissionApi", branch: "master"
 
 group :production, :development do
   gem 'hue', github: "qq99/hue", branch: "master"
+  gem 'guard'
+  gem 'guard-minitest'
 end
 
 group :test do

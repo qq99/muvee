@@ -30,7 +30,7 @@ class Video < ActiveRecord::Base
   SERVABLE_WEBM_VIDEO_CODECS = %w{libvpx vp8 vorbis}.freeze # may not be the proper names of said codecs as returned by avprobe
   SERVABLE_WEBM_AUDIO_CODECS = %w{libvorbis}.freeze
 
-  QUALITIES = /(1080p|720p)/i
+  QUALITIES = /(1080p|720p|HDTV)/i
 
   # convert to webm:
   # http://superuser.com/questions/556463/converting-video-to-webm-with-ffmpeg-avconv
@@ -93,6 +93,11 @@ class Video < ActiveRecord::Base
   def left_off_at_percent
     return 0 if !self.left_off_at
     (self.left_off_at.to_f / self.duration.to_f) * 100
+  end
+
+  def self.pretty_title(str)
+    str.gsub!(/(x264|hdtv|x264-2HD)/i, '')
+    str.gsub(/[\.\_\-]/, ' ').titleize.squish.strip
   end
 
   def pretty_title(str)

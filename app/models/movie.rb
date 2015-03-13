@@ -11,13 +11,6 @@ class Movie < Video
 
   POSTER_FOLDER = Rails.root.join('public', 'posters')
 
-  FORMATS = {
-    name_and_year: %r{
-      ([\w\-\.\_\s]*)
-      [\(\ \_\.\[]{1}([\d]{4})[\)\ \_\.\[]?
-    }xi
-  }.freeze
-
   def metadata
     @imdb_id ||= fetch_imdb_id || search_for_imdb_id
     return {} if @imdb_id.blank?

@@ -5,6 +5,7 @@ class EztvSearchResult < ExternalMetadata
       uri = URI.parse(self.endpoint_url)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE # :(
       request = Net::HTTP::Post.new(uri.request_uri)
       request.set_form_data({"SearchString1" => query, "search" => "Search"})
       request.add_field(':host', 'eztv.it')
@@ -13,8 +14,8 @@ class EztvSearchResult < ExternalMetadata
       request.add_field(':scheme', 'https')
       request.add_field(':version', 'HTTP/1.1')
       request.add_field(':accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8')
-      request.add_field('origin', 'https://eztv.ch')
-      request.add_field('referer', 'https://eztv.ch/search/')
+      request.add_field('origin', 'https://eztv.it')
+      request.add_field('referer', 'https://eztv.it/search/')
       result = http.request(request)
     # rescue
       # nil
@@ -22,7 +23,7 @@ class EztvSearchResult < ExternalMetadata
 
     result
 
-    begin
+    #begin
       page = Nokogiri::HTML(result.body)
       results_table = page.css('table').select{|table| table.css('.section_post_header').text.strip == 'Television Show Releases' }
       magnet_rows = results_table.first.css('tr').select{|el| el.css('a.magnet').size > 0 }
@@ -36,16 +37,26 @@ class EztvSearchResult < ExternalMetadata
           magnet_link: magnet_link
         }
       end
-      # results = results.sort_by{|entry| Ldistance.compute(entry[:title], query)}
+      results.each do |entry|
+        entry[:guessed] = TvShow.guessit(entry[:title])
+      end
+
+      guessed_query = TvShow.guessit(query)
+      results.reject! do |entry|
+        entry[:guessed][:title].blank? || entry[:guessed][:season].blank? || entry[:guessed][:episode].blank?
+      end
+      results.reject! do |entry|
+        Ldistance.compute(entry[:guessed][:title], guessed_query[:title] || '') > 3
+      end
       results
-    rescue
-      []
-    end
+    #rescue
+      #[]
+    #end
 
   end
 
   def self.endpoint_url
-    "https://eztv.ch/search/"
+    "https://eztv.it/search/"
   end
 
 end

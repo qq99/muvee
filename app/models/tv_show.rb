@@ -12,9 +12,9 @@ class TvShow < Video
 
   # More formats available at https://github.com/midgetspy/Sick-Beard/blob/development/sickbeard/name_parser/regexes.py
   FORMATS = {
-    standard_repeat: /([\w\-\.\_\(\) ]*)S(\d+)(?:\D*)E(\d+)(?:.*)S(\d+)(?:\D*)E(\d+)/i,
-    standard: /([\w\-\.\_\(\) ]*)S(\d+)(?:\D*)E(\d+)/i,
-    fov_repeat: /([\w\-\.\(\) ]*)\D+?(\d+)(?:[x._])(\d+)/i
+    standard_repeat: /([\w\-\.\_\(\) !]*)S(\d+)(?:\D*)E(\d+)(?:.*)S(\d+)(?:\D*)E(\d+)/i,
+    standard: /([\w\-\.\_\(\) !]*)S(\d+)(?:\D*)E(\d+)/i,
+    fov_repeat: /([\w\-\.\(\) !]*)\D+?(\d+)(?:[x._])(\d+)/i
   }.freeze
 
   def associate_with_series
@@ -73,7 +73,7 @@ class TvShow < Video
       quality, remaining_filename = filename_without_quality(filename_no_extension)
       containing_foldername = raw_file_path.split("/")[-2]
 
-      if matches = guess_info_from_string(remaining_filename) || guess_info_from_string(containing_foldername)
+      if matches = self.class.guess_info_from_string(remaining_filename) || self.class.guess_info_from_string(containing_foldername)
         self.title, self.season, self.episode = matches
       end
 
@@ -83,7 +83,15 @@ class TvShow < Video
     end
   end
 
-  def guess_info_from_string(from)
+  def self.guessit(fromName)
+    if matches = guess_info_from_string(fromName)
+      guessed_title, guessed_season, guessed_episode = matches
+    end
+
+    {title: guessed_title, season: guessed_season, episode: guessed_episode}
+  end
+
+  def self.guess_info_from_string(from)
     TvShow::FORMATS.each do |name, regex|
       matches = regex.match(from)
       if matches.present? && matches.length == 4
