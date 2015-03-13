@@ -38,10 +38,11 @@ class EztvSearchResult < ExternalMetadata
         }
       end
       results.each do |entry|
-        entry[:guessed] = TvShow.guessit(entry[:title])
+        entry[:guessed] = Guesser::TvShow.guess_from_string(entry[:title])
       end
 
-      guessed_query = TvShow.guessit(query)
+      guessed_query = Guesser::TvShow.guess_from_string(query)
+      
       results.reject! do |entry|
         entry[:guessed][:title].blank? || entry[:guessed][:season].blank? || entry[:guessed][:episode].blank?
       end

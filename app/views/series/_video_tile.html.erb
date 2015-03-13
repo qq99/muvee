@@ -37,6 +37,6 @@
   <p class="video-overview"><%= video.overview %></p>
   <span class="hide"><%= video.raw_file_path %></span>
   <p>
-    <%= link_to 'Reanalyze', reanalyze_video_path(video), 'tg-remote' => 'POST', class: 'action-button' %>
+    <%= link_to 'Reanalyze', reanalyze_video_path(video), 'tg-remote' => 'POST', 'full-refresh' => true, class: 'action-button' %>
   </p>
 </div>

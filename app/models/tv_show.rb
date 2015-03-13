@@ -60,7 +60,7 @@ class TvShow < Video
   end
 
   def guessit
-    if local?
+    if raw_file_path.present?
       guessed = Guesser::TvShow.guess_from_filepath(raw_file_path)
       self.title = guessed[:title]
       self.season = guessed[:season]
