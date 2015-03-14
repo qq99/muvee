@@ -12,7 +12,7 @@ $(document).on "click", "[data-modal]", (ev) ->
 
 
 $ ->
-  socket = new WebSocket "ws://#{window.location.host}/status"
+  socket = new WebSocket "ws://#{window.location.host}/status/info"
   socket.onmessage = (event) ->
 
     try

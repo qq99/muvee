@@ -1,7 +1,11 @@
 class StatusController < ApplicationController
   include Tubesock::Hijack
 
-  def status
+  def index
+
+  end
+
+  def info
     hijack do |tubesock|
 
       tubesock.onopen do

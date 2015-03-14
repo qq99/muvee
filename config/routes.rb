@@ -75,7 +75,11 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/status' => 'status#status'
+  resources :status, only: [:index] do
+    collection do
+      get :info
+    end
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
