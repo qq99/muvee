@@ -1,4 +1,4 @@
-<div id="welcome-page" class="with-header">
+<div class="text-page">
   <div class="readable-page">
     <h1 class="flashy-banner">μv status</h1>
     <%= link_to 'Scan for new media', scan_for_new_media_settings_path, 'tg-remote' => 'POST', 'tg-remote-norefresh' => true, class: 'action-button' %>
@@ -7,6 +7,7 @@
     <%= link_to 'Re-download all posters and fanart', redownload_all_arts_settings_path, 'tg-remote' => 'POST', 'tg-remote-norefresh' => true, class: 'action-button' %>
 
     <h3>Background job status</h3>
+    <p>The progress and statuses of very activities will appear here.</p>
     <div
       class='job-reporter'
       define="{scanner: new Muvee.ProgressReporter(this, 'VideoCreationService')}">
@@ -30,4 +31,7 @@
       </div>
     </div>
 
+    <h3>Notices</h3>
+    <p>Not implemented yet.</p>
+  </div>
 </div>

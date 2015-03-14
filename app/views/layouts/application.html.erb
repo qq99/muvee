@@ -40,13 +40,13 @@
           <h1>Shuffle</h1>
         <% end %>
       </li>
-      <li>
+      <li <% if controller_name == 'settings' %>class="active" <% end %>>
         <%= link_to settings_path, class: 'top-nav-button' do %>
           <i class="fa fa-cogs"></i>
           <h1>Options</h1>
         <% end %>
       </li>
-      <li>
+      <li <% if controller_name == 'status' %>class="active" <% end %>>
         <%= link_to status_index_path, class: 'top-nav-button' do %>
           <i class='fa fa-stethoscope'></i>
           <h1>Status</h1>

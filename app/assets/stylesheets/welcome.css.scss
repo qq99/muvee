@@ -1,9 +1,10 @@
 @import 'variables';
 
-#welcome-page {
+.text-page {
   background: #111;
   min-height: 100%;
   width: 100%;
+  color: white;
   textarea, input[type='text'] {
     width: 100%;
     font-size: 1em;
@@ -15,8 +16,10 @@
     min-height: 4em;
   }
   p {
+    font-size: 1em;
     margin: 0.5em 0;
-    color: white;
+    font-weight: 200;
+    color: inherit;
   }
   .explanation {
     font-size: 0.9em;
