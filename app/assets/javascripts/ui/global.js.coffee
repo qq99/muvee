@@ -17,15 +17,11 @@ $ ->
 
     try
       data = JSON.parse(event.data)
-      #console.log(data)
 
       if data.type == "VideoCreationService"
-        $parent = $("#scan-progress")
-        $(".job-message", $parent).text(data.processing)
-        $(".job-progress", $parent).text(parseInt(data.progress, 10) + "%")
-        $(".job-current", $parent).text(data.current)
-        $(".job-max", $parent).text(data.max)
-        $(".progress-bar__bar", $parent).css("width", data.progress + "%")
+        evt = new CustomEvent("muvee:progress_reporter:VideoCreationService", {'detail': data})
+        document.dispatchEvent(evt)
+
       else if data.type == "TorrentInformation"
         torrents = data.results
 

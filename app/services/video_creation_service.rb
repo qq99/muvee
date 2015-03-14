@@ -45,9 +45,9 @@ class VideoCreationService
     needs_transcode = files_to_transcode(files)
 
     creation_size = no_transcode.size
-    publish({operation: "creation", current: 0, max: creation_size, progress: 0})
+    publish({status: "scanning", current: 0, max: creation_size})
     no_transcode.each_with_index do |filepath, i|
-      publish({operation: "creation", current: i, max: creation_size, progress: (i / creation_size.to_f) * 100.0, processing: filepath})
+      publish({status: "scanning", current: i, max: creation_size, substatus: filepath})
       begin
         if create_video(klass, filepath)
           successes << filepath
@@ -58,7 +58,7 @@ class VideoCreationService
         failures << filepath
       end
     end
-    publish({operation: "creation", current: creation_size, max: creation_size, progress: 100.0, processing: "Done!"})
+    publish({status: "complete", current: creation_size, max: creation_size, substatus: "Done!"})
 
     if should_transcode?
       needs_transcode.each do |path|

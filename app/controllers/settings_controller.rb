@@ -59,7 +59,7 @@ class SettingsController < ApplicationController
       already_working
     else
       MediaScannerWorker.perform_async
-      redirect_to settings_path, notice: 'Now scanning for new media'
+      head :ok
     end
   end
 
@@ -68,7 +68,7 @@ class SettingsController < ApplicationController
       already_working
     else
       AnalyzerWorker.perform_async({method: :reanalyze})
-      redirect_to settings_path, notice: 'Now re-analyzing your media'
+      head :ok
     end
   end
 
@@ -77,7 +77,7 @@ class SettingsController < ApplicationController
       already_working
     else
       AnalyzerWorker.perform_async({method: :redownload})
-      redirect_to settings_path, notice: 'Now re-downloading all art'
+      head :ok
     end
   end
 
@@ -86,7 +86,7 @@ class SettingsController < ApplicationController
       already_working
     else
       AnalyzerWorker.perform_async({method: :redownload_missing})
-      redirect_to settings_path, notice: 'Now re-downloading missing art'
+      head :ok
     end
   end
 

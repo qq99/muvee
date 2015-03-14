@@ -2,24 +2,37 @@
   <div class="readable-page">
     <h1 class="flashy-banner">μv settings</h1>
 
-    <div id="scan-progress" class="job">
-      <div class="progress-bar__container">
-        <div class="progress-bar__bar"></div>
 
-        <div class="job-info">
-          <div class="job-quantity">
-            <span class="job-current">1</span><span class="job-max">100</span>
-          </div>
-          <div class="job-message">Wat</div>
-          <div class="job-progress">50%</div>
+    <div
+      class='job-reporter'
+      define="{scanner: new Muvee.ProgressReporter(this, 'VideoCreationService')}"
+      >
+      <div class="job-reporter-grid hide" bind-class="{hide: scanner.isHidden()}">
+        <div class="job-name">
+          Library Scan
         </div>
+        <div class="job-details">
+          <div class="progress-bar__container">
+            <div class="progress-bar__bar" bind-attribute="{style: scanner.progressCssWidth()}"></div>
+
+            <div class="job-info">
+              <div class="job-quantity">
+                <span class="job-current" bind="scanner.current"></span><span class="job-max" bind="scanner.max"></span>
+              </div>
+              <div class="job-message" bind="scanner.substatus"></div>
+              <div class="job-progress" bind="scanner.progressPercent()"></div>
+            </div>
+          </div>
+        </div>
+
       </div>
+
     </div>
 
-    <%= link_to 'Scan for new media', scan_for_new_media_settings_path, 'tg-remote' => 'POST', class: 'action-button' %>
-    <%= link_to 'Reanalyze media library', reanalyze_media_settings_path, 'tg-remote' => 'POST', class: 'action-button' %>
-    <%= link_to 'Download missing posters and fanart', redownload_missing_arts_settings_path, 'tg-remote' => 'POST', class: 'action-button' %>
-    <%= link_to 'Re-download all posters and fanart', redownload_all_arts_settings_path, 'tg-remote' => 'POST', class: 'action-button' %>
+    <%= link_to 'Scan for new media', scan_for_new_media_settings_path, 'tg-remote' => 'POST', 'tg-remote-norefresh' => true, class: 'action-button' %>
+    <%= link_to 'Reanalyze media library', reanalyze_media_settings_path, 'tg-remote' => 'POST', 'tg-remote-norefresh' => true, class: 'action-button' %>
+    <%= link_to 'Download missing posters and fanart', redownload_missing_arts_settings_path, 'tg-remote' => 'POST', 'tg-remote-norefresh' => true, class: 'action-button' %>
+    <%= link_to 'Re-download all posters and fanart', redownload_all_arts_settings_path, 'tg-remote' => 'POST', 'tg-remote-norefresh' => true, class: 'action-button' %>
     <%= render 'form', config: @config %>
   </div>
 </div>
