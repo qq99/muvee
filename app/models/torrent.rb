@@ -72,9 +72,6 @@ class Torrent < ActiveRecord::Base
     service.percentage_done(transmission_id)
   end
 
-  def move_to_tv_folder
-  end
-
   def completion_status
     service.check_completion_status(transmission_id)
   end

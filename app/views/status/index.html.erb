@@ -7,7 +7,7 @@
     <%= link_to 'Re-download all posters and fanart', redownload_all_arts_settings_path, 'tg-remote' => 'POST', 'tg-remote-norefresh' => true, class: 'action-button' %>
 
     <h3>Background job status</h3>
-    <p>The progress and statuses of very activities will appear here.</p>
+    <p>The progress and statuses of various activities will appear here.</p>
     <div
       class='job-reporter'
       define="{scanner: new Muvee.ProgressReporter(this, 'VideoCreationService')}">
@@ -31,7 +31,11 @@
       </div>
     </div>
 
+    <h3>Torrent Status</h3>
+    <p>Not implemented yet.</p>
+
     <h3>Notices</h3>
+    <p>Notices can provide recommendations and suggestions for you to take with your operation of μv</p>
     <p>Not implemented yet.</p>
   </div>
 </div>
