@@ -26,7 +26,7 @@
 
       <% if @videos.size > 0 %>
         <%= link_to video_path(@videos.map(&:id).sample, shuffle: true, series_id: @series.id), class: 'action-button' do %>
-          <i class="fa fa-refresh"></i> Shuffle
+          <i class="fa fa-random"></i> Shuffle
         <% end %>
       <% end %>
     </div>
@@ -57,20 +57,54 @@
     </div>
   </div>
   <div class="video-list">
-    <% if @series.last_watched_video && @series.last_watched_video.left_off_at_percent < 95 %>
-      <% if (@season && @series.last_watched_video.season == @season) || !@season %>
-        <div class="featured-episode">
-          <h2>Continue watching...</h2>
-          <%= render 'video_tile', video: @series.last_watched_video %>
-          <% featured_video_consumed = true %>
-        </div>
-      <% end %>
-    <% end %>
     <div class="video-list-container">
-      <% @videos.each do |show| %>
-        <% unless show == @series.last_watched_video && featured_video_consumed %>
-          <%= render 'video_tile', video: show %>
-        <% end %>
+      <%
+        grouped_by_season = @videos.group_by{|v| v.season}
+      %>
+      <% grouped_by_season.keys.each do |season| %>
+        <div class="series-season">
+          <h3>Season <%= season %></h3>
+
+          <% grouped_by_season[season].each do |video| %>
+            <div
+              id="video-<%= video.id %>"
+              context="video<%= video.id %>"
+              refresh="video-<%= video.id %>"
+              class="series-episode">
+              <div define="{showDetails: false}">
+                <%
+                effective_video_path = if video.left_off_at_percent > 90
+                  video_path(video, t: 0)
+                else
+                  video_path(video)
+                end
+                %>
+                <div class="video-quick-summary">
+                  <span class="season-and-episode"><%= video.episode %></span>
+                  <%= link_to effective_video_path, class: 'icon-link' do %>
+                    <i class="fa fa-play-circle"></i>
+                  <% end %>
+                  <span class="episode-title" bind-event-click="showDetails = !showDetails"><%= video.episode_name || "No title available" %></span>
+
+                  <div class="episode-watch-progress progress-bar__container">
+                    <div class="progress-bar__bar" title="<%= video.left_off_at %> seconds of <%= video.duration %> total seconds" style="width: <%= video.left_off_at_percent %>%"></div>
+                  </div>
+                  <%= link_to reanalyze_video_path(video),
+                    'tg-remote' => 'POST',
+                    'full-refresh' => true,
+                    'refresh-on-success' => "video-#{video.id}",
+                    class: 'icon-link' do %>
+                    <i class="fa fa-refresh"></i>
+                  <% end %>
+                </div>
+                <div class="video-detailed-summary hide" bind-class="{hide: !showDetails}">
+                  <%= render 'video_tile', video: video, effective_video_path: effective_video_path %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
       <% end %>
 
       <% if @videos.size == 0 && @sort == :unwatched %>
