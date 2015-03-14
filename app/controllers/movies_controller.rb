@@ -32,7 +32,7 @@ class MoviesController < ApplicationController
 
   def newest
     @section = :newest
-    @movies = paginated_movies.local_and_downloading.order(created_at: :desc).all.to_a
+    @movies = Movie.paginated(cur_page, RESULTS_PER_PAGE).local_and_downloading.order(created_at: :desc).all.to_a
 
     if @movies.size > 0
       render 'index2'
@@ -44,7 +44,7 @@ class MoviesController < ApplicationController
   def remote
     @section = :discover
     #@genres = Genre.all.sort_by(&:name).reject { |genre| genre.videos.length == 0 }
-    @movies = paginated_movies.remote.order(created_at: :desc).to_a
+    @movies = Movie.paginated(cur_page, RESULTS_PER_PAGE).remote.order(created_at: :desc).to_a
 
     if @movies.size > 0
       render 'remote'
@@ -62,7 +62,7 @@ class MoviesController < ApplicationController
     @section = :genres
     name = Genre.normalized_name(params[:type])
     @genre = Genre.find_by(name: name)
-    @movies = @genre.videos.movies.all.to_a
+    @movies = @genre.movies.all.to_a # TODO: figure out pagination here
     render 'index2'
   end
 
@@ -131,9 +131,8 @@ class MoviesController < ApplicationController
   end
 
   private
-    def paginated_movies
+    def cur_page
       page = params[:page].to_i || 0
-      Movie.limit(RESULTS_PER_PAGE).offset(page * RESULTS_PER_PAGE)
     end
 
     def set_movie

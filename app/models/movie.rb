@@ -9,6 +9,8 @@ class Movie < Video
   after_create :examine_thumbnail_for_3d
   before_destroy :destroy_poster
 
+  scope :paginated, ->(page, results_per_page) { limit(results_per_page).offset(page * results_per_page) }
+
   POSTER_FOLDER = Rails.root.join('public', 'posters')
 
   def metadata
