@@ -134,6 +134,7 @@ class Video < ActiveRecord::Base
   def redownload; end
 
   def delete_file!
+    return unless raw_file_path
     File.delete(raw_file_path)
   end
 

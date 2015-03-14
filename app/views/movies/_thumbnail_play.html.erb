@@ -1,0 +1,27 @@
+<a
+  define="{
+    <% unless movie.has_set_of_thumbnails? %>
+    thumbnailRetriever: new Muvee.ThumbnailRetriever(this, '<%= thumbnails_video_path(movie) %>', '.js-thumbnail'),
+    <% end %>
+    thumbnailSlideshow: new Muvee.AutoSlideshow(this, 1500)
+  }"
+  bind-event-mouseenter="thumbnailSlideshow.start()"
+  bind-event-mouseleave="thumbnailSlideshow.stop()"
+  class="video-thumbnail"
+  href="<%= video_path(movie) %>" class="video-link">
+  <div class="thumbnail-area">
+    <div class="js-slideshow js-thumbnail-container thumbnails">
+      <% movie.thumbnails.each_with_index do |thumb, i| %>
+      <img class="js-slide js-thumbnail video-thumbnail <% if i > 0 %>hidden<% end %>" <% if i <= 2 %>src="<%= thumb.url %>"<% end %> data-src="<%= thumb.url %>">
+      <% end %>
+    </div>
+    <div class="play-icon">
+      <i class="fa fa-play-circle"></i>
+    </div>
+    <% if movie.left_off_at_percent > 0 %>
+    <div class="watch-progress progress-bar__container">
+      <span class="progress-bar__bar" title="<%= movie.left_off_at %> seconds of <%= movie.duration %> total seconds" style="width: <%= movie.left_off_at_percent %>%"></span>
+    </div>
+    <% end %>
+  </div>
+</a>
