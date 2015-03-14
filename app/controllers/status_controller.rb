@@ -2,7 +2,7 @@ class StatusController < ApplicationController
   include Tubesock::Hijack
 
   def index
-
+    @torrents = Torrent.all
   end
 
   def info

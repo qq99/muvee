@@ -32,7 +32,31 @@
     </div>
 
     <h3>Torrent Status</h3>
-    <p>Not implemented yet.</p>
+    <table>
+      <thead>
+        <tr>
+          <td>
+            Title
+          </td>
+          <td>
+            %
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <% @torrents.each do |torrent| %>
+        <tr>
+          <td>
+            <%= torrent.video.title %>
+          </td>
+          <td>
+            <%= torrent.percentage %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <p>Not properly implemented yet.</p>
 
     <h3>Notices</h3>
     <p>Notices can provide recommendations and suggestions for you to take with your operation of μv</p>
