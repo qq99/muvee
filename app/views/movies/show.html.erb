@@ -80,7 +80,11 @@
             <%= link_to "Search the Pirate Bay", find_sources_via_pirate_bay_movie_path(@movie, q: @movie.title), "tg-remote" => "GET", "refresh-on-success" => "tbp-sources", class: "tbp-logo tracker-logo" %>
           </div>
         <% elsif @movie.downloading? %>
-
+          <% if @movie.torrents.count > 0 %>
+            There's <%= pluralize(@movie.torrents.size, 'torrent') %> associated with this movie.
+          <% else %>
+            There are no torrents associated with this movie.
+          <% end %>
         <% end %>
 
         <div class="inline-buttons">
