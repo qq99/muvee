@@ -45,6 +45,12 @@ class SeriesController < ApplicationController
     @seasons = @all_episodes.map{|v| v.season}.uniq.sort
   end
 
+  def show_episode_details
+    @episode = TvShow.find(params[:id])
+
+    render partial: 'episode', locals: {video: @episode, detailed: true}
+  end
+
   def find_episode
     series_episode = params[:series_episode]
     @query = @series.title + " " + series_episode
