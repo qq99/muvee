@@ -9,7 +9,7 @@ class StatusController < ApplicationController
     hijack do |tubesock|
 
       tubesock.onopen do
-        tubesock.send_data "Hello"
+        #tubesock.send_data "Hello"
       end
 
       tubesock.onmessage do |data|

@@ -82,10 +82,13 @@ class Torrent < ActiveRecord::Base
 
   def summary
     {
+      id: id,
       video_id: video_id,
       video_type: video_type,
       video_name: video.try(:title) || torrent_name,
-      progress: percentage
+      current: percentage,
+      status: completion_status,
+      max: 100.0
     }
   end
 end

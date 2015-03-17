@@ -24,11 +24,9 @@ $ ->
 
       else if data.type == "TorrentInformation"
         torrents = data.results
-
-        for torrent in torrents
-          $container = $("#torrent-progress-#{torrent.video_id}")
-          $container.find(".progress-bar__bar").css("width", torrent.progress + "%")
-
+        for data in torrents
+          evt = new CustomEvent("muvee:progress_reporter:TorrentInformation#{data.id}", {'detail': data})
+          document.dispatchEvent(evt)
 
     catch e
       console.log('Unable to parse as JSON', event.data)
