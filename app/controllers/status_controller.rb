@@ -16,8 +16,10 @@ class StatusController < ApplicationController
         begin
           data = JSON.parse(data).with_indifferent_access
           if data[:name] == 'torrent_info'
-            payload = Torrent.all.map(&:summary)
-            tubesock.send_data({type: 'TorrentInformation', results: payload}.to_json)
+            silence_action do
+              payload = Torrent.all.map(&:summary)
+              tubesock.send_data({type: 'TorrentInformation', results: payload}.to_json)
+            end
           else
             tubesock.send_data 'Unrecognized'
           end

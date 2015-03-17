@@ -11,4 +11,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def silence_action
+    Rails.logger.silence do
+      yield
+    end
+  end
+
 end
