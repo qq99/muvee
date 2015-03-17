@@ -1,6 +1,7 @@
 class VideosController < ApplicationController
   before_action :set_video, only: [:show, :edit, :update, :destroy, :stream, :left_off_at, :thumbnails, :fanart, :reanalyze_video]
 
+  skip_before_filter :check_if_first_use, only: [:left_off_at]
   respond_to :json, only: [:left_off_at, :thumbnails]
 
   def index
