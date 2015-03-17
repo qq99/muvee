@@ -69,10 +69,10 @@ Dependencies (and tested with):
 Hotkeys
 ---
 - `spacebar`: pause
-- `left arrow`: Jump 5s back in time
-- `right arrow`: Jump 5s forward in time
-- `-`: Decrease volume by 5%
-- `+`: Increase volume by 5%
+- `left arrow`: Jump 30s back in time
+- `right arrow`: Jump 30s forward in time
+- `up arrow`: Decrease volume by 5%
+- `down arrow`: Increase volume by 5%
 
 Definitions of terms
 ---
