@@ -209,6 +209,7 @@ h3.year {
 }
 
 #movie_show {
+  .video-thumbnail { min-height: 200px; }
   .movie-actions {
     background: transparent;
     width: 50%;

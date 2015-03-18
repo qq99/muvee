@@ -49,6 +49,10 @@ class Thumbnail < ActiveRecord::Base
     end
   end
 
+  def empty_or_missing?
+    !File.exist?(thumbnail_path)
+  end
+
   private
 
   def postprocess_thumbnail

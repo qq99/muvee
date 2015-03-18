@@ -128,8 +128,16 @@ class Video < ActiveRecord::Base
 
   def reanalyze
     shellout_and_grab_duration if duration.blank? || duration == 0
-    create_initial_thumb if thumbnails.blank?
+    if empty_or_missing_thumbnails?
+      thumbnails.destroy_all
+      create_initial_thumb
+    end
   end
+
+  def empty_or_missing_thumbnails?
+    thumbnails.blank? || thumbnails.any?(&:empty_or_missing?)
+  end
+
   def redownload_missing; end
   def redownload; end
 
