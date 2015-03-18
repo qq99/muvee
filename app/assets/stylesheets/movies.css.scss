@@ -148,7 +148,8 @@ h3.year {
 
 .movie-poster {
   float: left;
-  width: 20%;
+  width: auto;
+  height: 10.7em;
   margin: 0 1em 1em 0;
   border-radius: 3px;
   box-shadow: 2px 2px 4px rgba(0,0,0, 0.8);
@@ -193,6 +194,9 @@ h3.year {
     width: 50%;
     height: 100%;
     overflow-y: auto;
+    h1 {
+      font-size: 2.3em;
+    }
   }
   .movie-rating {
     font-size: 0.9em;

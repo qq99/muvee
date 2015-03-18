@@ -12,6 +12,8 @@
   <div class="movie-information">
     <div class="movie-information-meta">
 
+      <img class="movie-poster" src="<%= @movie.poster_url %>">
+
       <h3 class="video-type">Movie</h3>
       <% if @movie.downloading? %>
         <h3 class='video-status'>Downloading Now</h3>
@@ -43,8 +45,6 @@
       <p>
         <%= @movie.overview %>
       </p>
-
-      <img class="movie-poster" src="<%= @movie.poster_url %>">
 
       <p>
         <%= link_to imdb_link(@movie.imdb_id), target: :_blank do %>
