@@ -41,8 +41,6 @@ gem 'spring',        group: :development
 gem 'puma'
 gem 'pg'
 gem 'rb-readline'
-gem 'pry'
-gem 'pry-byebug'
 gem 'uuid'
 gem 'mocha'
 gem 'chronic_duration'
@@ -70,6 +68,10 @@ group :test do
 end
 
 group :development, :test do
+  gem 'pry-rails'
+  gem 'bond'
+  gem 'pry-byebug'
+  gem 'pry-theme'
   gem 'partially_useful'
   gem "better_errors"
   gem "binding_of_caller"
