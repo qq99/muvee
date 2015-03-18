@@ -1,10 +1,7 @@
 @import "variables";
 
 #series_overview {
-  height: 28rem;
-  padding-right: 1rem;
-  overflow-y: auto;
-  margin-top: 1rem;
+  margin: 1rem 0;
   font-size: 1em;
   h3 { font-size: 1.2em; }
   .torrent-source {
@@ -36,10 +33,10 @@
     top: 0;
   }
   .series-information {
-    overflow-y: hidden;
+    overflow-y: auto;
     width: 40%;
     left: 0;
-    padding: 3.5em;
+    padding: 3em;
     background: rgba(0,0,0,0.9);
     color: white;
     h2 {
