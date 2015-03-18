@@ -9,9 +9,12 @@ class Series < ActiveRecord::Base
   FANART_FOLDER = Rails.root.join('public', 'fanart')
   BANNER_FOLDER = Rails.root.join('public', 'banners')
 
-  has_many :tv_shows
+  has_many :tv_shows, counter_cache: true
   has_one :tvdb_series_result
   has_one :last_watched_video, class_name: "Video", primary_key: "last_watched_video_id", foreign_key: "id"
+
+  scope :with_episodes, -> {where('tv_shows_count > 0')}
+  scope :without_episodes, -> {where('tv_shows_count = 0')}
 
   def overview
     series_metadata[:Overview]

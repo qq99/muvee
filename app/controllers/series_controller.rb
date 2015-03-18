@@ -3,7 +3,11 @@ class SeriesController < ApplicationController
 
   def index
     @section = :series
-    @series = Series.all.sort_by{|item| -item.updated_at.to_i} # newest updated first
+    @series = Series.with_episodes.all.sort_by{|item| -item.updated_at.to_i} # newest updated first
+  end
+
+  def discover
+    @section = :discover
   end
 
   def newest_episodes
