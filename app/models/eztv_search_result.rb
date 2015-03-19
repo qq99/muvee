@@ -1,5 +1,7 @@
 class EztvSearchResult < ExternalMetadata
 
+  HOST = 'eztv.ch'
+
   def self.search(query)
     # begin
       uri = URI.parse(self.endpoint_url)
@@ -8,14 +10,14 @@ class EztvSearchResult < ExternalMetadata
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE # :(
       request = Net::HTTP::Post.new(uri.request_uri)
       request.set_form_data({"SearchString1" => query, "search" => "Search"})
-      request.add_field(':host', 'eztv.it')
+      request.add_field(':host', HOST)
       request.add_field(':method', 'POST')
       request.add_field(':path', '/search/')
       request.add_field(':scheme', 'https')
       request.add_field(':version', 'HTTP/1.1')
       request.add_field(':accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8')
-      request.add_field('origin', 'https://eztv.it')
-      request.add_field('referer', 'https://eztv.it/search/')
+      request.add_field('origin', "https://#{HOST}")
+      request.add_field('referer', "https://#{HOST}/search/")
       result = http.request(request)
     # rescue
       # nil
@@ -42,7 +44,7 @@ class EztvSearchResult < ExternalMetadata
       end
 
       guessed_query = Guesser::TvShow.guess_from_string(query)
-      
+
       results.reject! do |entry|
         entry[:guessed][:title].blank? || entry[:guessed][:season].blank? || entry[:guessed][:episode].blank?
       end
@@ -57,7 +59,7 @@ class EztvSearchResult < ExternalMetadata
   end
 
   def self.endpoint_url
-    "https://eztv.it/search/"
+    "https://#{HOST}/search/"
   end
 
 end
