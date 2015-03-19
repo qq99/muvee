@@ -61,6 +61,8 @@ class Series < ActiveRecord::Base
   end
 
   def download_fanart
+    return if series_metadata[:fanart].blank?
+
     remote_filename = "http://thetvdb.com/banners/" + series_metadata[:fanart]
     output_filename = UUID.generate(:compact) + File.extname(remote_filename)
     output_path = FANART_FOLDER.join(output_filename)
@@ -71,6 +73,8 @@ class Series < ActiveRecord::Base
   end
 
   def download_banner
+    return if series_metadata[:banner].blank?
+
     remote_filename = "http://thetvdb.com/banners/" + series_metadata[:banner]
     output_filename = UUID.generate(:compact) + File.extname(remote_filename)
     output_path = BANNER_FOLDER.join(output_filename)
@@ -81,6 +85,8 @@ class Series < ActiveRecord::Base
   end
 
   def download_poster
+    return if series_metadata[:poster].blank?
+
     remote_filename = "http://thetvdb.com/banners/" + series_metadata[:poster]
     output_filename = UUID.generate(:compact) + File.extname(remote_filename)
     output_path = POSTER_FOLDER.join(output_filename)
