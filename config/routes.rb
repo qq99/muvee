@@ -43,6 +43,7 @@ Rails.application.routes.draw do
       get :newest_unwatched
       get :show_episode_details
       get :discover
+      post :discover_series
     end
     member do
       get :find_episode

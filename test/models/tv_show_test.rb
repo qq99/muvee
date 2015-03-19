@@ -35,9 +35,8 @@ class TvShowTest < ActiveSupport::TestCase
       show = TvShow.create(raw_file_path: '/foo/bar/American.Dad.S11E21.HDTV.x264-LOL.mp4', status: 'local')
       show.reload
       assert_equal "American Dad!", show.title
-      assert_equal "American Dad!", Series.last.title
-      assert Series.last.tvdb_id
-      assert Series.last.tvdb_series_result
+      assert_equal "American Dad!", show.series.title
+      assert show.series.tvdb_id
     end
   end
 
@@ -78,7 +77,7 @@ class TvShowTest < ActiveSupport::TestCase
       episode: 5,
       quality: 'HDTV'
     })
-    show = TvShow.new(status: 'local')
+    show = TvShow.new(status: 'local', raw_file_path: '/some/path')
     show.guessit
 
     assert_equal 'American Dad', show.title

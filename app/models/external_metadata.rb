@@ -8,19 +8,17 @@ class ExternalMetadata < ActiveRecord::Base
     escaped_args = args.map{|a| CGI.escape(a.to_s)}
     url = self.endpoint_url(*escaped_args)
 
-    result = self.find_by_endpoint(url)
-    if !result
-      result = self.new
-      result.endpoint = url
-    end
-    if fetched = result.fetch_data
-      result.save
-    end
+    result = self.find_or_initialize_by(endpoint: url)
+    result.fetch_data
+    result.save if result.changed?
     result
   end
 
   def should_fetch
-    self.updated_at.blank? || (self.updated_at.present? && self.updated_at <= 6.hours.ago)
+    last_touched = updated_at.presence || created_at.presence
+    never_touched = last_touched.blank?
+
+    never_touched || (last_touched <= 6.hours.ago)
   end
 
   def fetch_data
@@ -47,7 +45,8 @@ class ExternalMetadata < ActiveRecord::Base
         end
       end
     end
-    return should_fetch
+
+    self
   end
 
   def data

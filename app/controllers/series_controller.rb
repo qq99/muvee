@@ -8,6 +8,12 @@ class SeriesController < ApplicationController
 
   def discover
     @section = :discover
+    @series = Series.without_episodes.all
+    render 'index'
+  end
+
+  def discover_series
+    SeriesDiscoveryWorker.perform_async
   end
 
   def newest_episodes

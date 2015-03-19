@@ -1,11 +1,6 @@
 module HasMetadata
   def self.included(base)
     base.class_eval do
-      # memoized hashes
-      def metadata
-        @metadata ||= get_first_series_metadata || {}
-      end
-
       def all_episodes_metadata
         @all_episodes_metadata ||= episode_metadata_search.data.fetch(:Data, {}).try(:fetch, :Episode, {})
       end
@@ -14,26 +9,30 @@ module HasMetadata
         @series_metadata ||= episode_metadata_search.data.fetch(:Data, {}).try(:fetch, :Series, {})
       end
 
-      # memoized searches:
-      def series_search
-        @series_search ||= TvdbSearchResult.get(self.title)
-      end
-
       def episode_metadata_search
-        @episode_metadata_search ||= self.try(:tvdb_series_result) || TvdbSeriesResult.get(metadata[:seriesid])
+        tvdb_id = self.try(:tvdb_id).presence || metadata[:seriesid]
+        @episode_metadata_search ||= TvdbSeriesResult.get(tvdb_id)
       end
 
-
-
-      # episode specific metadata:
       def episode_specific_metadata
-        @meta ||= all_episodes_metadata.select{|e| e[:SeasonNumber].to_i == season && e[:EpisodeNumber].to_i == episode}.first || {}
+        @meta ||= all_episodes_metadata.select { |e|
+          e[:SeasonNumber].to_i == season &&
+          e[:EpisodeNumber].to_i == episode
+        }.first || {}
+      end
+
+      def metadata
+        @metadata ||= get_first_series_data_matching_title(self.title) || {}
       end
 
       private
 
-      def get_first_series_metadata
-        results = series_search.data.fetch(:Data, {}).try(:fetch, :Series, nil)
+      def get_first_series_data_matching_title(title)
+        return {} unless title.present?
+
+        @series_search ||= TvdbSearchResult.get(title)
+
+        results = @series_search.data.fetch(:Data, {}).try(:fetch, :Series, nil)
         if results.kind_of? Array
           return results.first
         elsif results.kind_of? Hash

@@ -4,6 +4,9 @@ class Series < ActiveRecord::Base
 
   after_create :download_images
   before_destroy :destroy_images
+  before_validation :extract_metadata, on: :create
+
+  validates_uniqueness_of :tvdb_id, allow_nil: false, allow_blank: false
 
   POSTER_FOLDER = Rails.root.join('public', 'posters')
   FANART_FOLDER = Rails.root.join('public', 'fanart')
@@ -16,8 +19,14 @@ class Series < ActiveRecord::Base
   scope :with_episodes, -> {where('tv_shows_count > 0')}
   scope :without_episodes, -> {where('tv_shows_count = 0')}
 
-  def overview
-    series_metadata[:Overview]
+  def extract_metadata
+    self.tvdb_id = series_metadata[:id].to_i
+    self.overview = series_metadata[:Overview]
+    self.tvdb_rating = series_metadata[:Rating]
+    self.tvdb_rating_count = series_metadata[:RatingCount]
+    self.status = series_metadata[:Status]
+    #self.tvdb_series_result = episode_metadata_search
+    self
   end
 
   def first_aired

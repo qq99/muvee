@@ -3,33 +3,18 @@ class TvShow < Video
 
   belongs_to :series
   before_create :guessit
+  after_create :extract_metadata
   after_create :associate_with_series
   after_create :associate_with_genres
-  after_create :extract_metadata
 
   scope :latest, -> {order(season: :desc, episode: :desc)}
   scope :release_order, -> {order(season: :asc, episode: :asc)}
 
   def associate_with_series
-    if series_tvdb_id = metadata[:seriesid]
-      series_name = metadata[:SeriesName] || self.title
-
-      series = Series.find_by_tvdb_id(series_tvdb_id)
-
-      if series.blank?
-        series = Series.create(
-          tvdb_id: series_tvdb_id,
-          title: series_name,
-          overview: metadata[:Overview],
-          tvdb_rating: metadata[:Rating],
-          tvdb_rating_count: metadata[:RatingCount],
-          status: metadata[:Status]
-        )
-      end
-      series.tv_shows << self
-      series.tvdb_series_result = episode_metadata_search
-      series.save
-    end
+    series = Series.find_or_create_by(title: self.title)
+    series.tv_shows << self
+    #series.tvdb_series_result = episode_metadata_search
+    series.save
   end
 
   def season_episode
@@ -56,7 +41,7 @@ class TvShow < Video
     self.title = metadata[:SeriesName]
     self.overview = episode_specific_metadata[:Overview]
     self.episode_name = episode_specific_metadata[:EpisodeName]
-    self.save
+    self
   end
 
   def guessit
@@ -69,6 +54,7 @@ class TvShow < Video
     else
       self.title = "Unknown"
     end
+    self
   end
 
   def reanalyze
@@ -77,6 +63,7 @@ class TvShow < Video
     associate_with_series
     associate_with_genres
     extract_metadata
+    self.save
   end
 
   def redownload; end
