@@ -1,7 +1,7 @@
 class TvShow < Video
   include HasMetadata
 
-  belongs_to :series
+  belongs_to :series, counter_cache: true
   before_create :guessit
   after_create :extract_metadata
   after_create :associate_with_series
