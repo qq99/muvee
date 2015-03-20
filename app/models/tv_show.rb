@@ -11,10 +11,14 @@ class TvShow < Video
   scope :release_order, -> {order(season: :asc, episode: :asc)}
 
   def associate_with_series
-    series = Series.find_or_create_by(title: self.title)
-    series.tv_shows << self
-    #series.tvdb_series_result = episode_metadata_search
-    series.save
+    old_series = self.series.presence
+
+    new_series = Series.find_or_create_by(title: self.title)
+    self.series = new_series
+    self.save
+
+    Series.reset_counters(new_series.id, :tv_shows)
+    Series.reset_counters(old_series.id, :tv_shows) if old_series.present?
   end
 
   def season_episode
