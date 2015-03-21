@@ -37,7 +37,7 @@ class Video < ActiveRecord::Base
   # avconv -i src.avi -c:v libvpx -qmin 0 -qmax 50 -b:v 1M -c:a libvorbis -q:a 4 output2.webm
 
   def local?
-    status == 'local'
+    status == 'local' || raw_file_path.present?
   end
 
   def remote?

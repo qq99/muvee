@@ -2,13 +2,21 @@ class TvShow < Video
   include HasMetadata
 
   belongs_to :series, counter_cache: true
-  before_create :guessit
-  after_create :extract_metadata
-  after_create :associate_with_series
+  before_create :guessit, unless: :remote?
+  after_create :extract_metadata, unless: :remote?
+  after_create :associate_with_series, unless: :remote?
   after_create :associate_with_genres
+
+  validate :unique_episode_in_season, on: :create
 
   scope :latest, -> {order(season: :desc, episode: :desc)}
   scope :release_order, -> {order(season: :asc, episode: :asc)}
+
+  def unique_episode_in_season
+    if series.present?
+      self.errors.add(:unique_episode_in_season, 'Season&Episode must be unique within the context of a season') if series.tv_shows.find_by(season: season, episode: episode).present?
+    end
+  end
 
   def associate_with_series
     old_series = self.series.presence
@@ -17,7 +25,7 @@ class TvShow < Video
     self.series = new_series
     self.save
 
-    Series.reset_counters(new_series.id, :tv_shows)
+    Series.reset_counters(new_series.id, :tv_shows) if new_series.persisted?
     Series.reset_counters(old_series.id, :tv_shows) if old_series.present?
   end
 

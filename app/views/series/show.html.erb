@@ -66,7 +66,11 @@
           <h3>Season <%= season %></h3>
 
           <% grouped_by_season[season].each do |video| %>
-            <%= render 'episode', video: video, detailed: false %>
+            <% if video.local? %>
+              <%= render 'episode', video: video, detailed: false %>
+            <% else %>
+              <%= render 'remote_episode', video: video, detailed: false %>
+            <% end %>
           <% end %>
         </div>
 

@@ -1,0 +1,21 @@
+<div
+  id="video-<%= video.id %>"
+  context="video<%= video.id %>"
+  refresh="video-<%= video.id %>"
+  class="series-episode">
+  <div>
+    <div class="video-quick-summary">
+      <span class="season-and-episode"><%= video.episode %></span>
+      <%= link_to '#', class: 'icon-link' do %>
+        <i class="fa fa-download"></i>
+      <% end %>
+      <%= link_to video.episode_name || "No title available", show_episode_details_series_index_path(id: video.id),
+        class: 'episode-title',
+        'tg-remote' => 'GET',
+        'refresh-on-success' => "video-#{video.id}" %>
+    </div>
+    <% if detailed %>
+
+    <% end %>
+  </div>
+</div>

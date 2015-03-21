@@ -12,6 +12,24 @@ class TvShowTest < ActiveSupport::TestCase
     assert_equal "TvShow", show.type
   end
 
+  test 'validates that another episode with the same season&episode does not already exist on create' do
+    existing = videos(:american_dad_s01_e01)
+    new_show = TvShow.new(season: existing.season, episode: existing.episode, series_id: existing.series.id)
+
+    refute new_show.valid?
+    assert new_show.errors[:unique_episode_in_season].present?
+  end
+
+  test 'can set a show to the same season&episode as an existing show' do
+    existing = videos(:american_dad_s01_e01)
+    existing2 = videos(:american_dad_s01_e02)
+    existing2.season = existing.season
+    existing2.episode = existing.episode
+
+    assert existing2.valid?
+    assert existing2.errors[:unique_episode_in_season].blank?
+  end
+
   test 'will create a new series if one does not exist' do
     VCR.use_cassette 'family_guy' do
       assert_difference 'Series.all.length', 1 do

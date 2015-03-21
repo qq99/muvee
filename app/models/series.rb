@@ -105,4 +105,24 @@ class Series < ActiveRecord::Base
       Rails.logger.info "Series#destroy_images: #{e}"
     end
   end
+
+  def reanalyze
+    all_episodes_metadata.each do |ep|
+      show = TvShow.find_or_initialize_by(
+        series_id: self.id,
+        season: ep[:SeasonNumber],
+        episode: ep[:EpisodeNumber]
+      )
+
+      show.title = self.title
+      show.status = 'remote' unless show.persisted?
+      show.vote_count = ep[:RatingCount]
+      show.vote_average = ep[:Rating]
+      show.released_on = ep[:FirstAired]
+      show.overview = ep[:Overview]
+      show.episode_name = ep[:EpisodeName]
+
+      show.save
+    end
+  end
 end

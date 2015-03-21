@@ -14,6 +14,7 @@ big_buck_bunny:
   duration: 596
 
 american_dad_s01_e01:
+  status: 'local'
   title: "American Dad"
   raw_file_path: /foo/bar/American.Dad.S01E01.HDTV.x264-LOL.mp4
   type: "TvShow"
@@ -25,6 +26,7 @@ american_dad_s01_e01:
   series: american_dad
 
 american_dad_s01_e02:
+  status: 'local'
   title: "American Dad"
   type: "TvShow"
   episode: 2
@@ -35,6 +37,7 @@ american_dad_s01_e02:
   series: american_dad
 
 american_dad_s01_e03:
+  status: 'local'
   title: "American Dad"
   type: "TvShow"
   episode: 3

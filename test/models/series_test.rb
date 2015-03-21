@@ -66,4 +66,45 @@ class SeriesTest < ActiveSupport::TestCase
     assert_equal e.id, s.last_watched_video.id
     assert_equal e.id, s.last_watched_video_id
   end
+
+  def fake_remote_episodes
+    [{
+      SeasonNumber: 1000, # I wish ;)
+      EpisodeNumber: 1,
+      title: "A"
+    }, {
+      SeasonNumber: 1000,
+      EpisodeNumber: 2,
+      title: "B"
+    }, {
+      SeasonNumber: 1000,
+      EpisodeNumber: 3,
+      title: "C"
+    }]
+  end
+
+  test "reanalyze will create remote episodes for the series" do
+    Series.any_instance.stubs(:all_episodes_metadata).returns(fake_remote_episodes)
+
+    s = series(:american_dad)
+    assert_equal 3, s.tv_shows.local.count
+    assert_equal 0, s.tv_shows.remote.count
+
+    s.reanalyze
+    s.reload
+
+    assert_equal 3, s.tv_shows.local.count
+    assert_equal 3, s.tv_shows.remote.count
+    assert_equal 6, s.tv_shows.count
+  end
+
+  test "repeated reanalyzation will never add duplicate episodes (wrt Season&Episode)" do
+    Series.any_instance.stubs(:all_episodes_metadata).returns(fake_remote_episodes)
+
+    s = series(:american_dad)
+    s.reanalyze
+    s.reanalyze
+    s.reload
+    assert_equal 6, s.tv_shows.count
+  end
 end
