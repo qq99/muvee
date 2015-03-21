@@ -2,7 +2,8 @@ class TvShow < Video
   include HasMetadata
 
   belongs_to :series, counter_cache: true
-  before_create :guessit, unless: :reanalyzing_series
+  before_validation :guessit, on: :create, unless: :reanalyzing_series
+  before_validation :set_series, on: :create, unless: :reanalyzing_series
   after_create :extract_metadata, unless: :reanalyzing_series
   after_create :associate_with_series, unless: :reanalyzing_series
   after_create :associate_with_genres
@@ -18,6 +19,10 @@ class TvShow < Video
     if series.present?
       self.errors.add(:unique_episode_in_season, 'Season&Episode must be unique within the context of a season') if series.tv_shows.find_by(season: season, episode: episode).present?
     end
+  end
+
+  def set_series
+    self.series = series if series = Series.find_by(tvdb_id: series_metadata[:id].to_i)
   end
 
   def associate_with_series

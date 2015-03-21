@@ -47,6 +47,14 @@ american_dad_s01_e03:
   left_off_at: 20
   series: american_dad
 
+true_detective_remote:
+  status: 'remote'
+  title: 'True Detective'
+  type: 'TvShow'
+  season: 5
+  episode: 5
+  series: true_detective
+
 true_grit:
   raw_file_path: /foo/bar/True.Grit.mp4
   imdb_id: tt1403865

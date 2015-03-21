@@ -30,6 +30,15 @@ class TvShowTest < ActiveSupport::TestCase
     assert existing2.errors[:unique_episode_in_season].blank?
   end
 
+  test 'something' do
+    existing_remote = videos(:true_detective_remote)
+
+    from_worker = TvShow.new(raw_file_path: 'True.Detective.S05E05.mp4', status: 'local')
+    result = from_worker.save
+    refute from_worker.valid?
+
+  end
+
   test 'will create a new series if one does not exist' do
     VCR.use_cassette 'family_guy' do
       assert_difference 'Series.all.length', 1 do
@@ -67,7 +76,6 @@ class TvShowTest < ActiveSupport::TestCase
       assert_equal "American Dad!", show.title
       assert_equal 11, show.season
       assert_equal 22, show.episode
-      assert_equal "American Dad!", Series.last.title
     end
   end
 
