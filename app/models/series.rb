@@ -114,15 +114,16 @@ class Series < ActiveRecord::Base
         episode: ep[:EpisodeNumber]
       )
 
+      show.reanalyzing_series = true
       show.title = self.title
-      show.status = 'remote' unless show.persisted?
+      show.reset_status
       show.vote_count = ep[:RatingCount]
       show.vote_average = ep[:Rating]
       show.released_on = ep[:FirstAired]
       show.overview = ep[:Overview]
       show.episode_name = ep[:EpisodeName]
 
-      show.save
+      result = show.save
     end
   end
 end

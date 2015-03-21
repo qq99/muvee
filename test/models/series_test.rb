@@ -84,14 +84,19 @@ class SeriesTest < ActiveSupport::TestCase
   end
 
   test "reanalyze will create remote episodes for the series" do
+    Video.any_instance.stubs(:file_is_present_and_exists?).returns(false)
     Series.any_instance.stubs(:all_episodes_metadata).returns(fake_remote_episodes)
 
     s = series(:american_dad)
     assert_equal 3, s.tv_shows.local.count
     assert_equal 0, s.tv_shows.remote.count
 
-    s.reanalyze
-    s.reload
+    assert_difference 's.tv_shows.count', +3 do
+      assert_difference 's.tv_shows_count', +3 do
+        s.reanalyze
+        s.reload
+      end
+    end
 
     assert_equal 3, s.tv_shows.local.count
     assert_equal 3, s.tv_shows.remote.count
@@ -99,12 +104,39 @@ class SeriesTest < ActiveSupport::TestCase
   end
 
   test "repeated reanalyzation will never add duplicate episodes (wrt Season&Episode)" do
+    Video.any_instance.stubs(:file_is_present_and_exists?).returns(false)
     Series.any_instance.stubs(:all_episodes_metadata).returns(fake_remote_episodes)
+    s = series(:american_dad)
+
+    assert_difference 's.tv_shows.count', +3 do
+      assert_difference 's.tv_shows_count', +3 do
+        s.reanalyze
+        s.reanalyze
+        s.reload
+      end
+    end
+  end
+
+  test "reanalyze will update existing episodes with any new metadata" do
+    show = videos(:american_dad_s01_e01)
+
+    Video.any_instance.stubs(:file_is_present_and_exists?).returns(true)
+    Series.any_instance.stubs(:all_episodes_metadata).returns([{
+      SeasonNumber: show.season,
+      EpisodeNumber: show.episode,
+      Overview: "Something different entirely"
+    }])
 
     s = series(:american_dad)
-    s.reanalyze
-    s.reanalyze
-    s.reload
-    assert_equal 6, s.tv_shows.count
+
+    assert_no_difference 's.tv_shows.count' do
+      s.reanalyze
+      s.reload
+    end
+
+    show.reload
+    assert_equal 'local', show.status
+    assert_equal 'Something different entirely', show.overview
+
   end
 end

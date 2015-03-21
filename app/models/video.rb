@@ -37,11 +37,23 @@ class Video < ActiveRecord::Base
   # avconv -i src.avi -c:v libvpx -qmin 0 -qmax 50 -b:v 1M -c:a libvorbis -q:a 4 output2.webm
 
   def local?
-    status == 'local' || raw_file_path.present?
+    status == 'local'
   end
 
   def remote?
     status == 'remote'
+  end
+
+  def file_is_present_and_exists?
+    raw_file_path.present? && File.exist?(raw_file_path)
+  end
+
+  def reset_status
+    if file_is_present_and_exists?
+      self.status = 'local'
+    else # elsif something with torrents
+      self.status = 'remote'
+    end
   end
 
   def downloading?

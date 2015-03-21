@@ -2,15 +2,17 @@ class TvShow < Video
   include HasMetadata
 
   belongs_to :series, counter_cache: true
-  before_create :guessit, unless: :remote?
-  after_create :extract_metadata, unless: :remote?
-  after_create :associate_with_series, unless: :remote?
+  before_create :guessit, unless: :reanalyzing_series
+  after_create :extract_metadata, unless: :reanalyzing_series
+  after_create :associate_with_series, unless: :reanalyzing_series
   after_create :associate_with_genres
 
   validate :unique_episode_in_season, on: :create
 
   scope :latest, -> {order(season: :desc, episode: :desc)}
   scope :release_order, -> {order(season: :asc, episode: :asc)}
+
+  attr_accessor :reanalyzing_series
 
   def unique_episode_in_season
     if series.present?
