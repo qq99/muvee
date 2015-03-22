@@ -1,4 +1,5 @@
 class Video < ActiveRecord::Base
+  has_many :sources, dependent: :destroy
   has_many :thumbnails, dependent: :destroy
   has_many :fanarts, dependent: :destroy
 
@@ -7,7 +8,6 @@ class Video < ActiveRecord::Base
 
   has_many :torrents
 
-  validates_uniqueness_of :raw_file_path, allow_nil: true, allow_blank: true
   validates_uniqueness_of :imdb_id, allow_nil: true, allow_blank: true, if: Proc.new { |video| video.status == "remote" }
   after_create :shellout_and_grab_duration
   after_create :create_initial_thumb
@@ -36,32 +36,24 @@ class Video < ActiveRecord::Base
   # http://superuser.com/questions/556463/converting-video-to-webm-with-ffmpeg-avconv
   # avconv -i src.avi -c:v libvpx -qmin 0 -qmax 50 -b:v 1M -c:a libvorbis -q:a 4 output2.webm
 
-  def local?
-    status == 'local'
+  def local? # TODO: counter_cache?
+    sources.count > 0
   end
 
-  def remote?
-    status == 'remote'
-  end
-
-  def file_is_present_and_exists?
-    raw_file_path.present? && File.exist?(raw_file_path)
+  def remote? # TODO: counter_cache?
+    sources.count == 0
   end
 
   def reset_status
-    if file_is_present_and_exists?
+    if sources.count > 0
       self.status = 'local'
-    else # elsif something with torrents
-      self.status = 'remote'
+    else
+      self.status = 'remote' if self.status != 'downloading'
     end
   end
 
   def downloading?
     status == 'downloading'
-  end
-
-  def is_3d?
-    is_3d.present?
   end
 
   def is_tv?
@@ -87,16 +79,6 @@ class Video < ActiveRecord::Base
   def left_off_at_percent
     return 0 if !self.left_off_at
     (self.left_off_at.to_f / self.duration.to_f) * 100
-  end
-
-  def self.pretty_title(str)
-    str.gsub!(/(x264|hdtv|x264-2HD)/i, '')
-    str.gsub(/[\.\_\-]/, ' ').titleize.squish.strip
-  end
-
-  def pretty_title(str)
-    str.gsub!(/(x264|hdtv|x264-2HD)/i, '')
-    str.gsub(/[\.\_\-]/, ' ').titleize.squish.strip
   end
 
   def create_initial_thumb
@@ -125,10 +107,10 @@ class Video < ActiveRecord::Base
     success = shellout_and_grab_thumbnail(at_seconds, thumb_path)
     if success
       thumb = self.thumbnails.create(raw_file_path: thumb_path)
-      if self.is_3d?
-        thumb.check_for_sbs_3d(overwrite: true)
+      #if self.is_3d?
+        # thumb.check_for_sbs_3d(overwrite: true)
         # thumb.check_for_tab_3d
-      end
+      #end
     else
       Rails.logger.error "Failed to create thumbnail for Video.id=#{id}"
     end
@@ -153,9 +135,14 @@ class Video < ActiveRecord::Base
   def redownload_missing; end
   def redownload; end
 
+  def raw_file_path
+    sources.first.try(:raw_file_path) || nil
+  end
+
   def delete_file!
-    return unless raw_file_path
-    File.delete(raw_file_path)
+    # TODO: broken, delete sources?
+    #return unless raw_file_path
+    #File.delete(raw_file_path)
   end
 
   def compute_genres(genre_string)

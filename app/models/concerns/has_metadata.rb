@@ -21,8 +21,8 @@ module HasMetadata
         }.first || {}
       end
 
-      def metadata
-        @metadata ||= get_first_series_data_matching_title(self.title) || {}
+      def metadata(title = nil)
+        @metadata ||= get_first_series_data_matching_title(title || self.title) || {}
       end
 
       private

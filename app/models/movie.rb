@@ -1,12 +1,10 @@
 class Movie < Video
   include DownloadFile
 
-  before_create :guessit
   after_commit :queue_download_job, on: :create
   after_create :extract_metadata
   after_create :associate_with_genres
   after_create :download_poster
-  after_create :examine_thumbnail_for_3d
   before_destroy :destroy_poster
 
   scope :paginated, ->(page, results_per_page) { limit(results_per_page).offset(page * results_per_page) }
@@ -141,23 +139,9 @@ class Movie < Video
     self.save if listed_genres.any?
   end
 
-  def guessit
-    if local?
-      guessed = Guesser::Movie.guess_from_filepath(raw_file_path)
-      self.title = guessed[:title]
-      self.year = guessed[:year]
-      self.quality = guessed[:quality]
-    else
-      self.title = "Unknown"
-    end
-  end
-
   def reanalyze
-    return if raw_file_path.blank? # this is only for local movies
     super
     old_imdb_id = imdb_id
-    self.status = "local"
-    guessit unless imdb_id_is_accurate
     extract_metadata
     associate_with_genres
     redownload_missing
@@ -202,15 +186,6 @@ class Movie < Video
       File.delete(poster_filepath)
     rescue => e
       Rails.logger.info "Movie#destroy_poster: #{e}"
-    end
-  end
-
-  def examine_thumbnail_for_3d
-    thumb = self.thumbnails.first.presence
-    if thumb && thumb.check_for_sbs_3d
-      self.is_3d = true
-      self.type_of_3d = "sbs"
-      self.save
     end
   end
 end

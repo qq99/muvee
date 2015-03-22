@@ -84,7 +84,6 @@ class SeriesTest < ActiveSupport::TestCase
   end
 
   test "reanalyze will create remote episodes for the series" do
-    Video.any_instance.stubs(:file_is_present_and_exists?).returns(false)
     Series.any_instance.stubs(:all_episodes_metadata).returns(fake_remote_episodes)
 
     s = series(:american_dad)
@@ -104,7 +103,6 @@ class SeriesTest < ActiveSupport::TestCase
   end
 
   test "repeated reanalyzation will never add duplicate episodes (wrt Season&Episode)" do
-    Video.any_instance.stubs(:file_is_present_and_exists?).returns(false)
     Series.any_instance.stubs(:all_episodes_metadata).returns(fake_remote_episodes)
     s = series(:american_dad)
 
@@ -135,8 +133,6 @@ class SeriesTest < ActiveSupport::TestCase
     end
 
     show.reload
-    assert_equal 'local', show.status
     assert_equal 'Something different entirely', show.overview
-
   end
 end

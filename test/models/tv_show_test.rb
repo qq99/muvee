@@ -30,15 +30,6 @@ class TvShowTest < ActiveSupport::TestCase
     assert existing2.errors[:unique_episode_in_season].blank?
   end
 
-  test 'something' do
-    existing_remote = videos(:true_detective_remote)
-
-    from_worker = TvShow.new(raw_file_path: 'True.Detective.S05E05.mp4', status: 'local')
-    result = from_worker.save
-    refute from_worker.valid?
-
-  end
-
   test 'will create a new series if one does not exist' do
     VCR.use_cassette 'family_guy' do
       assert_difference 'Series.all.length', 1 do
@@ -57,26 +48,23 @@ class TvShowTest < ActiveSupport::TestCase
     end
   end
 
-  test 'will potentially change the name of the tvshow to match the remote datasource recommendation' do
-    VCR.use_cassette 'american_dad' do
-      show = TvShow.create(raw_file_path: '/foo/bar/American.Dad.S11E21.HDTV.x264-LOL.mp4', status: 'local')
-      show.reload
-      assert_equal "American Dad!", show.title
-      assert_equal "American Dad!", show.series.title
-      assert show.series.tvdb_id
-    end
-  end
+  test 'reanalyze can re-guess and reassociate metadata, given bad initial metadata' do
+    TvShow.any_instance.stubs(:metadata).returns({
+      SeriesName: 'American Dad!'
+    })
+    TvShow.any_instance.stubs(:episode_specific_metadata).returns({
+      EpisodeName: "Foo bar",
+      EpisodeNumber: 22,
+      SeasonNumber: 11
+    })
 
-  test 'reanalyze can re-guess and reassociate metadata given a bad initial guess and future engine improvements' do
-    VCR.use_cassette 'american_dad' do
-      show = videos(:poorly_analyzed_american_dad)
-      show.status = 'local'
-      show.reanalyze
-      show.reload
-      assert_equal "American Dad!", show.title
-      assert_equal 11, show.season
-      assert_equal 22, show.episode
-    end
+    show = videos(:poorly_analyzed_american_dad)
+    show.reanalyze
+    show.reload
+    assert_equal "Foo bar", show.episode_name
+    assert_equal "American Dad!", show.title
+    assert_equal 11, show.season
+    assert_equal 22, show.episode
   end
 
   test 'reanalyze does not save the model or reassociate metadata/series if nothing changed' do
@@ -89,33 +77,9 @@ class TvShowTest < ActiveSupport::TestCase
 
   test 'can get to episodic metadata' do
     VCR.use_cassette 'american_dad' do
-      show = TvShow.create(raw_file_path: '/foo/bar/American.Dad.S05E10.HDTV.x264-LOL.mp4', status: 'local')
-      show.reload
+      show = TvShow.create(title: 'American Dad', season: 5, episode: 10)
       assert_equal "Family Affair", show.episode_specific_metadata[:EpisodeName]
       assert_equal "When the Smiths try to plan a family game night, Roger is full of excuses about prior commitments. However, when he is caught in a lie, the Smiths feel stabbed in the back when they realize Roger has been cheating on them with other families. Stan, Francine, Hayley and Steve go on the offensive to teach Roger a lesson about monogamy until Roger has a breakthrough about why he isn't a one family kind-of-guy.", show.episode_specific_metadata[:Overview]
     end
-  end
-
-  test 'guessit calls Guesser when local' do
-    Guesser::TvShow.expects(:guess_from_filepath).once.returns({
-      title: "American Dad",
-      season: 1,
-      episode: 5,
-      quality: 'HDTV'
-    })
-    show = TvShow.new(status: 'local', raw_file_path: '/some/path')
-    show.guessit
-
-    assert_equal 'American Dad', show.title
-    assert_equal 1, show.season
-    assert_equal 5, show.episode
-    assert_equal 'HDTV', show.quality
-
-  end
-
-  test "guessit doesn't call Guesser when not local" do
-    Guesser::TvShow.expects(:guess_from_filepath).never
-
-    show = TvShow.new.guessit
   end
 end

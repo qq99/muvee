@@ -1,0 +1,4 @@
+big_buck_bunny_source:
+  video: sourced_movie
+  raw_file_path: Dir.getwd() + "/test/fixtures/BigBuckBunny_320x180.mp4"
+  type: 'MovieSource'

@@ -2,8 +2,6 @@ class TvShow < Video
   include HasMetadata
 
   belongs_to :series, counter_cache: true
-  before_validation :guessit, on: :create, unless: :reanalyzing_series
-  before_validation :set_series, on: :create, unless: :reanalyzing_series
   after_create :extract_metadata, unless: :reanalyzing_series
   after_create :associate_with_series, unless: :reanalyzing_series
   after_create :associate_with_genres
@@ -19,10 +17,6 @@ class TvShow < Video
     if series.present?
       self.errors.add(:unique_episode_in_season, 'Season&Episode must be unique within the context of a season') if series.tv_shows.find_by(season: season, episode: episode).present?
     end
-  end
-
-  def set_series
-    self.series = series if series = Series.find_by(tvdb_id: series_metadata[:id].to_i)
   end
 
   def associate_with_series
@@ -60,25 +54,12 @@ class TvShow < Video
     self.title = metadata[:SeriesName]
     self.overview = episode_specific_metadata[:Overview]
     self.episode_name = episode_specific_metadata[:EpisodeName]
-    self
-  end
-
-  def guessit
-    if raw_file_path.present?
-      guessed = Guesser::TvShow.guess_from_filepath(raw_file_path)
-      self.title = guessed[:title]
-      self.season = guessed[:season]
-      self.episode = guessed[:episode]
-      self.quality = guessed[:quality]
-    else
-      self.title = "Unknown"
-    end
-    self
+    self.season = episode_specific_metadata[:SeasonNumber]
+    self.episode = episode_specific_metadata[:EpisodeNumber]
   end
 
   def reanalyze
     super
-    guessit
     associate_with_series
     associate_with_genres
     extract_metadata

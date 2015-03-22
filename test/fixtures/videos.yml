@@ -1,7 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  raw_file_path: MyString
   type: "TvShow"
   episode: 1
   season: 1
@@ -9,14 +8,9 @@ one:
   left_off_at: 1
   series: example_series
 
-big_buck_bunny:
-  type: "Movie"
-  duration: 596
-
 american_dad_s01_e01:
   status: 'local'
   title: "American Dad"
-  raw_file_path: /foo/bar/American.Dad.S01E01.HDTV.x264-LOL.mp4
   type: "TvShow"
   episode: 1
   season: 1
@@ -56,14 +50,21 @@ true_detective_remote:
   series: true_detective
 
 true_grit:
-  raw_file_path: /foo/bar/True.Grit.mp4
   imdb_id: tt1403865
+  year: 2010
   title: True Grit
   type: 'Movie'
 
 poorly_analyzed_american_dad:
   type: "TvShow"
-  raw_file_path: /foo/bar/American.Dad.S11E22.HDTV.x264-LOL.mp4
   title: American Dude
   season: 20
   episode: 500
+
+big_buck_bunny:
+  type: 'Movie'
+  title: 'Big Buck Bunny'
+
+unsourced_movie:
+  type: 'Movie'
+  title: "I have no sources, ever"

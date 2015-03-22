@@ -7,14 +7,17 @@ class VideoCreationService
   end
 
   def should_transcode?
-    @config ||= APP_CONFIG
-    @config.transcode_media
+    APP_CONFIG.transcode_media
   end
 
   def generate
     new_tv_shows, failed_tv_shows = create_videos(TvShow, @sources[:tv])
     new_movies, failed_movies = create_videos(Movie, @sources[:movies])
     return [new_tv_shows, failed_tv_shows, new_movies, failed_movies]
+  end
+
+  def create_tv_shows
+
   end
 
   def eligible_files(files)
@@ -26,50 +29,51 @@ class VideoCreationService
   end
 
   def publish(event)
-    redis = Redis.new
+    @redis ||= Redis.new
     event = event.merge(type: 'VideoCreationService')
-    redis.publish(:sidekiq, event.to_json)
+    @redis.publish(:sidekiq, event.to_json)
   end
 
-  def create_videos(klass, folders)
+  def get_files_in_folders(folders)
     files = []
-    successes = []
-    failures = []
-
     folders.each do |folder|
-      folder = "#{folder}/" if folder[-1] != "/" # append trailing slash if not there
+      folder << "/" if folder[-1] != "/" # append trailing slash if not present
       all_files_in_folder = Dir["#{folder}**/*.*"]
       files.push(*all_files_in_folder)
     end
-    no_transcode = eligible_files(files) # filter out non-acceptable formats
-    needs_transcode = files_to_transcode(files)
+    files
+  end
 
+  def create_videos(klass, folders)
+    files = get_files_in_folders(folders)
+
+    create_eligible_sources(eligible_files(files))
+    transcode_ineligible_sources(files_to_transcode(files))
+  end
+
+  def create_eligible_sources(files)
     creation_size = no_transcode.size
     publish({status: "scanning", current: 0, max: creation_size})
     no_transcode.each_with_index do |filepath, i|
       publish({status: "scanning", current: i, max: creation_size, substatus: filepath})
       begin
-        if create_video(klass, filepath)
-          successes << filepath
-        else
-          failures << filepath
-        end
-      rescue
-        failures << filepath
+        create_source(klass, filepath)
+      rescue => e
+        puts e
       end
     end
     publish({status: "complete", current: creation_size, max: creation_size, substatus: "Done!"})
+  end
 
-    if should_transcode?
-      needs_transcode.each do |path|
-        TranscoderWorker.perform_async(klass, path)
-      end
+  def transcode_ineligible_sources(files)
+    return unless should_transcode?
+    needs_transcode.each do |path|
+      TranscoderWorker.perform_async(klass, path)
     end
-
-    return [successes, failures]
   end
 
   def create_video(klass, filepath)
+    source = Source.new(type: "#{klass}Source", raw_file_path: filepath)
     video = klass.new(raw_file_path: filepath, status: 'local')
     return video.save
   end

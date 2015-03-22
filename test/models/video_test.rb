@@ -12,28 +12,53 @@ class VideoTest < ActiveSupport::TestCase
     Thumbnail.destroy_all
   end
 
+  test "#reset_status" do
+    fake_metadata = {
+      SeriesName: 'American Dad'
+    }
+    Source.any_instance.stubs(:metadata).returns(fake_metadata)
+    TvShow.any_instance.stubs(:metadata).returns(fake_metadata)
+
+    vid = videos(:american_dad_s01_e01)
+    vid.status = nil
+    vid.reset_status
+
+    assert_equal 'remote', vid.status
+
+    vid.sources << TvShowSource.create(raw_file_path: '/foo/bar/American.Dad.S01E01.mp4')
+    vid.reload
+    vid.reset_status
+
+    assert_equal 'local', vid.status
+  end
+
   test "avprobe_grab_duration_command composes a shell safe string" do
-    vid = Video.create(raw_file_path: "/foo/bar/this is a test.mp4")
+    vid = videos(:big_buck_bunny)
+    vid.stubs(:raw_file_path).returns("/foo/bar/this is a test.mp4")
     assert_equal "avprobe /foo/bar/this\\ is\\ a\\ test.mp4 2>&1 | grep -Eo 'Duration: [0-9:.]*' | cut -c 11-", vid.send(:avprobe_grab_duration_command)
   end
 
   test "avconv_create_thumbnail_command composes a shell safe string" do
-    vid = Video.create(raw_file_path: "/foo/bar/this is a test.mp4")
+    vid = videos(:big_buck_bunny)
+    vid.stubs(:raw_file_path).returns("/foo/bar/this is a test.mp4")
     assert_equal "avconv -loglevel quiet -ss 45 -i /foo/bar/this\\ is\\ a\\ test.mp4 -qscale 1 -vsync 1 -vframes 1 -y /foo/bar/this\\ is\\ baz.jpg", vid.send(:avconv_create_thumbnail_command, 45, "/foo/bar/this is baz.jpg")
   end
 
-  test "sets duration to 0 for a file that does not exist" do
-    vid = Video.create(raw_file_path: "/foo/bar/this_is_a_test.mp4")
-    assert_equal 0, vid.duration
+  test "sets duration to nil for a file that does not exist" do
+    vid = Video.create(title: "Foo bar")
+    assert_equal nil, vid.duration
   end
 
   test "properly grabs duration for a file that exists" do
-    vid = Video.create(raw_file_path: @bigBuck)
+    vid = videos(:big_buck_bunny)
+    vid.stubs(:raw_file_path).returns(@bigBuck)
+    vid.shellout_and_grab_duration
     assert_equal 596, vid.duration
   end
 
   test "#create_thumbnail creates a file, and associates that thumbnail to the video" do
-    vid = Video.create(raw_file_path: @bigBuck)
+    vid = videos(:big_buck_bunny)
+    vid.stubs(:raw_file_path).returns(@bigBuck)
     assert_difference "vid.thumbnails.length", 1 do
       vid.create_thumbnail(10)
     end
@@ -42,29 +67,18 @@ class VideoTest < ActiveSupport::TestCase
 
   test "#create_thumbnail will log an error if it could not create a thumbnail" do
     vid = Video.create(raw_file_path: "/does/not/exist.mp4")
+    vid.stubs(:raw_file_path).returns('/foo/bar')
     Rails.logger.expects(:error).once
     vid.create_thumbnail(1)
   end
 
   test "#create_n_thumbnails will create N thumbnails" do
-    vid = Video.create(raw_file_path: @bigBuck)
+    vid = videos(:big_buck_bunny)
+    vid.stubs(:raw_file_path).returns(@bigBuck)
+    vid.shellout_and_grab_duration
+    vid.save
     assert_difference "vid.thumbnails.length", 10 do
       vid.create_n_thumbnails(10)
-    end
-  end
-
-  test "will call #create_thumbnail after creation of video model" do
-    Video.any_instance.expects(:create_thumbnail)
-    vid = Video.create(raw_file_path: @bigBuck)
-  end
-
-  test "will destroy thumbnails when video is destroyed" do
-    assert_difference "Thumbnail.all.length", 1 do
-      @vid = Video.create(raw_file_path: @bigBuck)
-    end
-    Thumbnail.any_instance.expects(:destroy_thumbnail_file)
-    assert_difference "Thumbnail.all.length", -1 do
-      @vid.destroy
     end
   end
 
