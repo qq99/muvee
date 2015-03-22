@@ -9,7 +9,7 @@
             imageErrored: false,
             title: "<%= escape_javascript(movie.title || 'Title unknown') %>",
             overview: "<%= escape_javascript(movie.overview || movie.raw_file_path) %>",
-            year: "<%= escape_javascript(movie.released_on_human.to_s) %>",
+            year: "<%= escape_javascript(released_on_human(movie.released_on).to_s) %>",
             quality: "<%= escape_javascript(movie.quality.to_s) %>"
           }'
           href="<%= movie_path(movie) %>"

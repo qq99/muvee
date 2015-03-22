@@ -28,7 +28,7 @@
         <%= @movie.year %>
 
         <i class="fa fa-clock-o"></i>
-        <%= @movie.runtime_human %>
+        <%= runtime_human(@movie.duration, @movie.runtime_minutes) %>
       </h3>
 
       <% if @movie.quality.present? %>

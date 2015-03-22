@@ -16,4 +16,20 @@ module ApplicationHelper
   def imdb_link(imdb_id)
     "http://www.imdb.com/title/#{imdb_id}/"
   end
+
+  def released_on_human(released_on)
+    if released_on
+      released_on.strftime("%Y %b %-d")
+    else
+      ''
+    end
+  end
+
+  def runtime_human(duration = nil, minutes = nil)
+    if duration.blank? && minutes.blank?
+      "Unknown"
+    else
+      ChronicDuration.output(duration || (minutes * 60), format: :chrono)
+    end
+  end
 end
