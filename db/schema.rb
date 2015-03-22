@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150318224718) do
+ActiveRecord::Schema.define(version: 20150322010604) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,6 +78,19 @@ ActiveRecord::Schema.define(version: 20150318224718) do
     t.string   "fanart_path"
     t.integer  "tv_shows_count",        default: 0
   end
+
+  create_table "sources", force: :cascade do |t|
+    t.integer  "video_id"
+    t.string   "type"
+    t.string   "raw_file_path", null: false
+    t.string   "quality"
+    t.boolean  "is_3d"
+    t.string   "type_of_3d"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sources", ["raw_file_path"], name: "index_sources_on_raw_file_path", unique: true, using: :btree
 
   create_table "thumbnails", force: :cascade do |t|
     t.integer  "video_id"
