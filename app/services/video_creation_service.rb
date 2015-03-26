@@ -47,14 +47,14 @@ class VideoCreationService
   def create_videos(klass, folders)
     files = get_files_in_folders(folders)
 
-    create_eligible_sources(eligible_files(files))
-    transcode_ineligible_sources(files_to_transcode(files))
+    create_eligible_sources(klass, eligible_files(files))
+    transcode_ineligible_sources(klass, files_to_transcode(files))
   end
 
-  def create_eligible_sources(files)
-    creation_size = no_transcode.size
+  def create_eligible_sources(klass, files)
+    creation_size = files.size
     publish({status: "scanning", current: 0, max: creation_size})
-    no_transcode.each_with_index do |filepath, i|
+    files.each_with_index do |filepath, i|
       publish({status: "scanning", current: i, max: creation_size, substatus: filepath})
       begin
         create_source(klass, filepath)
@@ -65,17 +65,16 @@ class VideoCreationService
     publish({status: "complete", current: creation_size, max: creation_size, substatus: "Done!"})
   end
 
-  def transcode_ineligible_sources(files)
+  def transcode_ineligible_sources(klass, files)
     return unless should_transcode?
-    needs_transcode.each do |path|
-      TranscoderWorker.perform_async(klass, path)
-    end
+    # files.each do |path|
+    #   TranscoderWorker.perform_async(klass, path)
+    # end
   end
 
-  def create_video(klass, filepath)
+  def create_source(klass, filepath)
     source = Source.new(type: "#{klass}Source", raw_file_path: filepath)
-    video = klass.new(raw_file_path: filepath, status: 'local')
-    return video.save
+    return source.save
   end
 
 end
