@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150322010604) do
+ActiveRecord::Schema.define(version: 20150326233955) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -154,6 +154,7 @@ ActiveRecord::Schema.define(version: 20150322010604) do
     t.decimal  "vote_average"
     t.string   "parental_guidance_rating"
     t.integer  "runtime_minutes"
+    t.integer  "sources_count",            default: 0
   end
 
   add_index "videos", ["raw_file_path"], name: "index_videos_on_raw_file_path", unique: true, using: :btree

@@ -1,6 +1,6 @@
 class Source < ActiveRecord::Base
   include HasMetadata
-  belongs_to :video
+  belongs_to :video, counter_cache: true
 
   before_validation :start_guessing, only: :create
 
