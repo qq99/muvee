@@ -36,12 +36,12 @@ class Video < ActiveRecord::Base
   # http://superuser.com/questions/556463/converting-video-to-webm-with-ffmpeg-avconv
   # avconv -i src.avi -c:v libvpx -qmin 0 -qmax 50 -b:v 1M -c:a libvorbis -q:a 4 output2.webm
 
-  def local? # TODO: counter_cache?
-    sources.count > 0
+  def local?
+    sources_count > 0
   end
 
-  def remote? # TODO: counter_cache?
-    sources.count == 0
+  def remote?
+    sources_count == 0
   end
 
   def reset_status
