@@ -29,16 +29,16 @@ class VideoCreationServiceTest < ActiveSupport::TestCase
     ApplicationConfiguration.destroy_all
   end
 
-  test "the service will create models for each type" do
+  test "the service will create sources for TvShows" do
     service = VideoCreationService.new({
-      tv: [Dir.getwd() + '/test/fixtures/'],
-      movies: [Dir.getwd() + '/test/fixtures/']
+      tv: [Dir.getwd() + '/test/fixtures/']
     })
 
-    TvShow.expects(:new).once
-    Movie.expects(:new).once
-
-    @results = service.generate()
+    assert_difference 'Source.count', +1 do
+      assert_difference 'TvShow.count', +1 do
+        @results = service.generate()
+      end
+    end
   end
 
   test "service will append trailing slashes to any folder supplied to it without trailing slash" do

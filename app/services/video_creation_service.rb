@@ -7,7 +7,7 @@ class VideoCreationService
   end
 
   def should_transcode?
-    APP_CONFIG.transcode_media
+    ApplicationConfiguration.first.transcode_media
   end
 
   def generate
