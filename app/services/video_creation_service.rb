@@ -73,10 +73,9 @@ class VideoCreationService
   end
 
   def create_source(klass, filepath)
+    return false if Source.exists?(raw_file_path: filepath)
     source = Source.new(type: "#{klass}Source", raw_file_path: filepath)
-    return source.save
-  rescue PG::UniqueViolation
-    false
+    source.save
   end
 
 end

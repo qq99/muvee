@@ -13,6 +13,19 @@
         class: 'episode-title',
         'tg-remote' => 'GET',
         'refresh-on-success' => "video-#{video.id}" %>
+      <% if video.downloading? %>
+        <div class="episode-watch-progress downloading progress-bar__container"
+          define="{torrent: new Muvee.ProgressReporter(this, 'TorrentInformation<%= video.torrents.first.id %>')}">
+          <div class="progress-bar__bar animates" bind-attribute="{style: torrent.progressCssWidth()}"></div>
+        </div>
+      <% end %>
+      <%= link_to reanalyze_video_path(video),
+        'tg-remote' => 'POST',
+        'full-refresh' => true,
+        'refresh-on-success' => "video-#{video.id}",
+        class: 'icon-link' do %>
+        <i class="fa fa-refresh"></i>
+      <% end %>
     </div>
     <% if detailed %>
       <div class="video-detailed-summary remote">
@@ -21,34 +34,33 @@
         <% end %>
         <% if @torrent_sources.present? %>
           <p><%= pluralize(@torrent_sources.size, 'source') %> found:</p>
-        <% elsif @torrent_sources != nil %>
+        <% elsif @torrent_sources != nil && video.torrents.size == 0 %>
           <p>No sources were found for this episode.</p>
           <% if video.released_on.present? && video.released_on > Time.now %>
             <p>Check back in <%= expected_release_from_now(video.released_on) %></p>
           <% end %>
-        <% end %>
-
-        <% if video.torrents.any? %>
-          There are torrents!
+        <% elsif video.torrents.size > 0 %>
+          <p>Downloading now...</p>
         <% end %>
 
         <% if @torrent_sources.present? %>
           <% @torrent_sources.each do |torrent_source| %>
             <div class="episode-torrent-source">
-              <p><%= torrent_source[:title] %></p>
+              <span><%= torrent_source[:title] %></span>
               <%= form_tag download_series_path(video.series, video),
                 method: "post",
                 'tg-remote' => true,
                 'refresh-on-success' => "video-#{video.id}" do %>
+
                 <%= hidden_field_tag :download_url, torrent_source[:magnet_link] %>
                 <%= button_tag type: "submit", class: 'action-button' do %>
                   <i class="fa fa-download"></i>
                   Download
                 <% end %>
-                <a class="action-button" href="<%= torrent_source[:magnet_link] %>">
-                  <i class="fa fa-magnet"></i> Magnet URL
-                </a>
               <% end %>
+              <a class="action-button" href="<%= torrent_source[:magnet_link] %>">
+                <i class="fa fa-magnet"></i> Magnet URL
+              </a>
             </div>
           <% end %>
         <% end %>

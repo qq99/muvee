@@ -147,6 +147,7 @@
     color: #ddd;
     font-size: 1.1em;
     font-size: inherit;
+    margin-bottom: 1em;
   }
   a:hover, a:focus {
     .thumbnails {
@@ -193,5 +194,8 @@
   }
   .episode-watch-progress {
     width: 50px;
+    &.downloading .progress-bar__bar {
+      background: $less-radical-blue;
+    }
   }
 }

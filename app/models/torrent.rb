@@ -45,7 +45,6 @@ class Torrent < ActiveRecord::Base
 
   def set_video_to_local_after_complete
     return if video.blank? || video.local?
-    return if video.is_tv? # we don't create a model for TV shows
     config = APP_CONFIG
     folders = config.movie_sources
     search_for = files_by_size.first[:name]

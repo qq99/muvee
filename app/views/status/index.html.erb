@@ -38,7 +38,18 @@
           class="job-reporter-grid"
           define="{torrent: new Muvee.ProgressReporter(this, 'TorrentInformation<%= torrent.id %>')}">
           <div class="job-name">
-            <%= torrent.video.try(:title) %>
+            <% if torrent.video.present? %>
+              <% if torrent.video.try(:is_tv?) %>
+                <span title="<%= torrent.video.title %> <%= torrent.video.season_episode %>">
+                  <%= torrent.video.title %>
+                  <%= torrent.video.season_episode %>
+                </span>
+              <% else %>
+                <%= torrent.video.title %>
+              <% end %>
+            <% else %>
+              Unknown
+            <% end %>
           </div>
           <div class="job-details">
             <div class="progress-bar__container">
