@@ -44,15 +44,6 @@ class SeriesController < ApplicationController
       @videos = @all_episodes
     end
 
-    if @all_episodes.present?
-      by_season_and_episode = @videos.sort_by{ |e| e.season * 1000 + e.episode }
-      latest = by_season_and_episode.last
-      @next_episode = TvShow.format_season_and_episode(latest.season, latest.episode + 1)
-      @next_episode_of_next_season = TvShow.format_season_and_episode(latest.season + 1, 1)
-    else
-      @next_episode = "S1 E1"
-    end
-
     @seasons = @all_episodes.map{|v| v.season}.uniq.sort
   end
 
