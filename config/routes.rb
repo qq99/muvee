@@ -3,16 +3,17 @@ require 'sidekiq/web'
 Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
 
-  resources :videos do
+  resources :videos, except: [:show] do
     collection do
       get :shuffle
     end
     member do
-      get :stream
+      get 'source/(:source_id)', action: :show_source, as: :show_source
+      get 'source/:source_id/stream', action: :stream_source, as: :stream_source
       get :fanart
       get :thumbnails
       post :left_off_at
-      post 'reanalyze' => 'videos#reanalyze_video'
+      post :reanalyze, action: :reanalyze_video
     end
   end
 
@@ -48,7 +49,8 @@ Rails.application.routes.draw do
     member do
       get :find_episode
       post :find_episode
-      post :download
+      post 'download/:episode_id', action: :download, as: :download
+      post :reanalyze
     end
   end
   resources :movies do

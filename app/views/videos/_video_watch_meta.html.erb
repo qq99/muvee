@@ -11,7 +11,7 @@
       <% if video.is_tv? && video.series_id.present? %>
         <%= link_to video.title, series_path(video.series) %>
       <% else %>
-        <%= video.title %>
+        <%= link_to video.title, movie_path(video) %>
       <% end %>
 
       <% if video.season && video.episode %>

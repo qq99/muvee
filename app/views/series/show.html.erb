@@ -24,6 +24,10 @@
         <%= @series.overview %>
       </h3>
 
+      <%= link_to reanalyze_series_path(@series), class: 'action-button', 'tg-remote' => 'POST', 'full-refresh' => true do %>
+        <i class="fa fa-refresh"></i> Refresh
+      <% end %>
+
       <% if @videos.size > 0 %>
         <%= link_to video_path(@videos.map(&:id).sample, shuffle: true, series_id: @series.id), class: 'action-button' do %>
           <i class="fa fa-random"></i> Shuffle

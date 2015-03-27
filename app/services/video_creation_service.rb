@@ -75,6 +75,8 @@ class VideoCreationService
   def create_source(klass, filepath)
     source = Source.new(type: "#{klass}Source", raw_file_path: filepath)
     return source.save
+  rescue PG::UniqueViolation
+    false
   end
 
 end

@@ -8,14 +8,14 @@ class Video < ActiveRecord::Base
 
   has_many :torrents
 
-  validates_uniqueness_of :imdb_id, allow_nil: true, allow_blank: true, if: Proc.new { |video| video.status == "remote" }
+  validates_uniqueness_of :imdb_id, allow_nil: true, allow_blank: true
   after_create :shellout_and_grab_duration
   after_create :create_initial_thumb
 
-  scope :local, -> {where(status: 'local')}
-  scope :remote, -> {where(status: 'remote')}
+  scope :local, -> {where('sources_count > 0')}
+  scope :remote, -> {where('sources_count = 0')}
   scope :downloading, -> {where(status: 'downloading')}
-  scope :local_and_downloading, -> {where('status in (?)', ['local', 'downloading'])}
+  scope :local_and_downloading, -> {where("videos.status='downloading' or videos.sources_count > 0")}
   scope :movies, -> {where(type: "Movie")}
   scope :tv_shows, -> {where(type: "TvShow")}
   scope :unwatched, -> {where(left_off_at: nil)}

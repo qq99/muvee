@@ -20,6 +20,7 @@ class Series < ActiveRecord::Base
   scope :without_episodes, -> {where('tv_shows_count = 0')}
 
   def extract_metadata
+    self.title = series_metadata[:SeriesName]
     self.tvdb_id = series_metadata[:id].to_i
     self.overview = series_metadata[:Overview]
     self.tvdb_rating = series_metadata[:Rating]
@@ -107,6 +108,8 @@ class Series < ActiveRecord::Base
   end
 
   def reanalyze
+    extract_metadata
+    self.save
     all_episodes_metadata.each do |ep|
       show = TvShow.find_or_initialize_by(
         series_id: self.id,

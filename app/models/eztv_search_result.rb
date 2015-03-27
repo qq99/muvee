@@ -18,38 +18,53 @@ class EztvSearchResult < ExternalMetadata
       request.add_field(':accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8')
       request.add_field('origin', "https://#{HOST}")
       request.add_field('referer', "https://#{HOST}/search/")
-      result = http.request(request)
-    # rescue
-      # nil
-    # end
 
-    result
+      result = nil
+      self.benchmark("Querying eztv") do
+        result = http.request(request)
+      end
 
     #begin
-      page = Nokogiri::HTML(result.body)
-      results_table = page.css('table').select{|table| table.css('.section_post_header').text.strip == 'Television Show Releases' }
-      magnet_rows = results_table.first.css('tr').select{|el| el.css('a.magnet').size > 0 }
-
       results = []
-      magnet_rows.each do |row|
-        title = row.css(".epinfo").text.strip
-        magnet_link = row.css(".magnet").first.attributes["href"].to_s
-        results << {
-          title: title,
-          magnet_link: magnet_link
-        }
+      self.benchmark("Parsing HTML") do
+        page = Nokogiri::HTML(result.body)
+        results_table = page.css('table').select{|table| table.css('.section_post_header').text.strip == 'Television Show Releases' }
+        magnet_rows = results_table.first.css('tr').select{|el| el.css('a.magnet').size > 0 }
+
+        results = []
+        magnet_rows.each do |row|
+          title = row.css(".epinfo").text.strip
+          magnet_link = row.css(".magnet").first.attributes["href"].to_s
+          results << {
+            title: title,
+            magnet_link: magnet_link
+          }
+        end
       end
-      results.each do |entry|
-        entry[:guessed] = Guesser::TvShow.guess_from_string(entry[:title])
+
+      self.benchmark("Guessing parsed") do
+        results.each do |entry|
+          entry[:guessed] = Guesser::TvShow.guess_from_string(entry[:title])
+        end
       end
 
       guessed_query = Guesser::TvShow.guess_from_string(query)
 
-      results.reject! do |entry|
-        entry[:guessed][:title].blank? || entry[:guessed][:season].blank? || entry[:guessed][:episode].blank?
+      self.benchmark("Rejecting empty guesses") do
+        results.reject! do |entry|
+          entry[:guessed][:title].blank? || entry[:guessed][:season].blank? || entry[:guessed][:episode].blank?
+        end
       end
-      results.reject! do |entry|
-        Ldistance.compute(entry[:guessed][:title], guessed_query[:title] || '') > 3
+      self.benchmark("Computing Ldistance") do
+        results.reject! do |entry|
+          Ldistance.compute(entry[:guessed][:title], guessed_query[:title] || '') > 3
+        end
+      end
+      self.benchmark("Rejecting non-matching season+episode") do
+        results.select! do |entry|
+          guessed_query[:episode] == entry[:guessed][:episode] &&
+          guessed_query[:season] == entry[:guessed][:season]
+        end
       end
       results
     #rescue

@@ -32,4 +32,8 @@ module ApplicationHelper
       ChronicDuration.output(duration || (minutes * 60), format: :chrono)
     end
   end
+
+  def expected_release_from_now(future_time)
+    ChronicDuration.output(future_time - Time.now, days: true, units: 2, joiner: ', ')
+  end
 end

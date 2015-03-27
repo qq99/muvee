@@ -69,8 +69,8 @@ class TorrentManagerService
     end
   end
 
-  def download_tv_show(url)
-    download_video(url, "TvShow", nil)
+  def download_tv_show(url, remote_video = nil)
+    download_video(url, "TvShow", remote_video)
   end
 
   def download_movie(url, remote_video = nil)

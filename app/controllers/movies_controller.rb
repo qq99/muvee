@@ -1,6 +1,5 @@
 class MoviesController < ApplicationController
   before_action :set_movie, only: [:show, :find_sources_via_yts, :destroy, :download, :find_sources_via_pirate_bay, :override_imdb_id, :reanalyze]
-  before_action :set_existing_copies, only: [:show, :find_sources_via_yts, :find_sources_via_pirate_bay]
 
   RESULTS_PER_PAGE = 24
 
@@ -12,10 +11,6 @@ class MoviesController < ApplicationController
     @section = :all
     @movies = Movie.local_and_downloading.shuffle.to_a
     render 'index2'
-  end
-
-  def show
-
   end
 
   def three_d
@@ -43,14 +38,9 @@ class MoviesController < ApplicationController
 
   def remote
     @section = :discover
-    #@genres = Genre.all.sort_by(&:name).reject { |genre| genre.videos.length == 0 }
     @movies = Movie.paginated(cur_page, RESULTS_PER_PAGE).remote.order(created_at: :desc).to_a
 
-    if @movies.size > 0
-      render 'remote'
-    else
-      head :not_found
-    end
+    render 'remote'
   end
 
   def genres
@@ -80,6 +70,7 @@ class MoviesController < ApplicationController
   def find_sources_via_yts
     @query = params[:q]
     @sources = TorrentManagerService.find_sources(@movie)
+    @torrents = Torrent.all
     render partial: 'yts_sources', locals: {sources: @sources}
   end
 
@@ -137,10 +128,5 @@ class MoviesController < ApplicationController
 
     def set_movie
       @movie = Movie.find(params[:id])
-    end
-
-    def set_existing_copies
-      @torrents = @movie.torrents.all
-      @existing_copies = Movie.local.where(imdb_id: @movie.fetch_imdb_id)
     end
 end

@@ -1,5 +1,6 @@
 class VideosController < ApplicationController
-  before_action :set_video, only: [:show, :edit, :update, :destroy, :stream, :left_off_at, :thumbnails, :fanart, :reanalyze_video]
+  before_action :set_video, only: [:show, :show_source, :edit, :update, :destroy, :stream, :stream_source, :left_off_at, :thumbnails, :fanart, :reanalyze_video]
+  before_action :set_source, only: [:show_source, :stream_source]
 
   skip_before_filter :check_if_first_use, only: [:left_off_at]
   respond_to :json, only: [:left_off_at, :thumbnails]
@@ -20,7 +21,8 @@ class VideosController < ApplicationController
 
   # GET /videos/1
   # GET /videos/1.json
-  def show
+  def show_source
+
     if @video.is_tv?
       if @video.series.present?
         @video.series.last_watched_video_id = @video.id
@@ -40,7 +42,7 @@ class VideosController < ApplicationController
         @next_episode = episodic.at(index_of_current_episode + 1) if index_of_current_episode < (episodic.length - 1)
       end
     end
-    render layout: 'fullscreen'
+    render 'show', layout: 'fullscreen'
   end
 
   def shuffle
@@ -58,13 +60,14 @@ class VideosController < ApplicationController
   end
 
   # GET /videos/1/stream
-  def stream
-    video_extension = File.extname(@video.raw_file_path)[1..-1]
+  def stream_source
+    filepath = @source.raw_file_path
 
-    send_file @video.raw_file_path,
-      filename: File.basename(@video.raw_file_path),
+    video_extension = File.extname(filepath)[1..-1]
+
+    send_file filepath,
+      filename: File.basename(filepath),
       type: Mime::Type.lookup_by_extension(video_extension),
-      type: 'video/mp4',
       disposition: 'inline',
       stream: true,
       buffer_size: 4096
@@ -107,6 +110,14 @@ class VideosController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_video
       @video = Video.find(params[:id])
+    end
+
+    def set_source
+      if params[:source_id].present?
+        @source = Source.find(params[:source_id])
+      else
+        @source = @video.sources.first
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

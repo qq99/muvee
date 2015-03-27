@@ -54,20 +54,9 @@
     padding: 3em;
   }
   .video-tile {
-    margin: 0.5em;
     display: flex;
     align-items: top;
     color: white;
-    p {
-      color: #ddd;
-      font-size: 1.1em;
-      font-size: inherit;
-    }
-    a:hover, a:focus {
-      .thumbnails {
-        outline: 5px solid $radical-blue;
-      }
-    }
   }
   .duration {
     position: absolute;
@@ -149,6 +138,28 @@
   transition: all 0.5s ease-in-out;
   &:hover {
     background: rgba(0,0,0,0.5);
+  }
+}
+
+.video-detailed-summary {
+  margin: 0.5em;
+  p {
+    color: #ddd;
+    font-size: 1.1em;
+    font-size: inherit;
+  }
+  a:hover, a:focus {
+    .thumbnails {
+      outline: 5px solid $radical-blue;
+    }
+  }
+}
+
+.episode-torrent-source {
+  display: flex;
+  align-items: center;
+  > * {
+    margin: 0 1em;
   }
 }
 

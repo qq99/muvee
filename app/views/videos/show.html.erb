@@ -2,7 +2,7 @@
   player: new Muvee.VideoPlayer(this, {
     leftOffAtPath: '<%= left_off_at_video_path(@video) %>',
     resumeFrom: <%= @video.left_off_at.try(:to_i) || 0 %>,
-    duration: <%= @video.duration.try(:to_i) %>
+    duration: <%= @video.duration.try(:to_i) || 0 %>
   }),
   hue: new Muvee.HueController(this, {
     brightenPath: '<%= brighten_lights_path %>',
@@ -15,7 +15,7 @@
     <%= render 'video_upnext', next_episode: @next_episode, previous_episode: @previous_episode if @next_episode %>
   <% end %>
   <div class="video-container">
-    <video src="<%= stream_video_path(@video) %>"
+    <video src="<%= stream_source_video_path(@video, @source) %>"
       id="video"
       class="video-<%= @video.id %>"
       data-resume-from="<%= @video.left_off_at %>"

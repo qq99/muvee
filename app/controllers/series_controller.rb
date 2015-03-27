@@ -1,5 +1,6 @@
 class SeriesController < ApplicationController
-  before_action :set_series, only: [:show, :find_episode, :download]
+  before_action :set_series, only: [:show, :find_episode, :download, :reanalyze]
+  before_action :set_episode, only: [:show_episode_details, :download]
 
   def index
     @section = :series
@@ -56,26 +57,39 @@ class SeriesController < ApplicationController
   end
 
   def show_episode_details
-    @episode = TvShow.find(params[:id])
+    @episode = TvShow.find(params[:episode_id])
 
-    render partial: 'episode', locals: {video: @episode, detailed: true}
-  end
-
-  def find_episode
-    series_episode = params[:series_episode]
-    @query = @series.title + " " + series_episode
-    @results = EztvSearchResult.search(@query).first(100)
-    render partial: 'find_episode', locals: {sources: @results, download_path: download_series_path(@series) }
+    if @episode.local?
+      render partial: 'episode', locals: {video: @episode, detailed: true}
+    else
+      if params[:query].present?
+        @torrent_sources = EztvSearchResult.search(params[:query])
+        @torrent_sources.reject! do |src|
+          Torrent.exists?(source: src[:magnet_link]).present?
+        end
+      end
+      render partial: 'remote_episode', locals: {video: @episode, detailed: true}
+    end
   end
 
   def download
     service = TorrentManagerService.new
-    service.download_tv_show(params[:download_url])
-    redirect_to series_path(@series)
+    service.download_tv_show(params[:download_url], @episode)
+
+    show_episode_details
+  end
+
+  def reanalyze
+    @series.reanalyze
+    render json: {status: "ok"}
   end
 
   private
     def set_series
       @series = Series.find(params[:id])
+    end
+
+    def set_episode
+      @episode = TvShow.find(params[:episode_id])
     end
 end

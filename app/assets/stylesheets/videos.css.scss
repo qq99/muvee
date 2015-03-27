@@ -90,16 +90,25 @@ a.back {
 
 .play-icon {
   position: absolute;
-  top: 50%;
+  top: 0;
   left: 0;
   width: 100%;
-  i {
-    display: block;
-    width: 100%;
-    text-align: center;
-    font-size: 5rem;
-    margin-top: -2.5rem;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .play-icon-link {
     transition: all 0.5s ease-in-out;
+    text-align: center;
+    padding: 2em;
+    i {
+      font-size: 4em;
+    }
+    .source-quality {
+      text-transform: uppercase;
+      font-weight: 200;
+    }
   }
 }
 

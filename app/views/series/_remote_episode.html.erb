@@ -9,13 +9,50 @@
       <%= link_to '#', class: 'icon-link' do %>
         <i class="fa fa-download"></i>
       <% end %>
-      <%= link_to video.episode_name || "No title available", show_episode_details_series_index_path(id: video.id),
+      <%= link_to video.episode_name || "No title available", show_episode_details_series_index_path(episode_id: video.id, query: "#{video.title} S#{video.season}E#{video.episode}"),
         class: 'episode-title',
         'tg-remote' => 'GET',
         'refresh-on-success' => "video-#{video.id}" %>
     </div>
     <% if detailed %>
+      <div class="video-detailed-summary remote">
+        <% if video.overview.present? %>
+          <p class="video-overview"><%= video.overview %></p>
+        <% end %>
+        <% if @torrent_sources.present? %>
+          <p><%= pluralize(@torrent_sources.size, 'source') %> found:</p>
+        <% elsif @torrent_sources != nil %>
+          <p>No sources were found for this episode.</p>
+          <% if video.released_on.present? && video.released_on > Time.now %>
+            <p>Check back in <%= expected_release_from_now(video.released_on) %></p>
+          <% end %>
+        <% end %>
 
+        <% if video.torrents.any? %>
+          There are torrents!
+        <% end %>
+
+        <% if @torrent_sources.present? %>
+          <% @torrent_sources.each do |torrent_source| %>
+            <div class="episode-torrent-source">
+              <p><%= torrent_source[:title] %></p>
+              <%= form_tag download_series_path(video.series, video),
+                method: "post",
+                'tg-remote' => true,
+                'refresh-on-success' => "video-#{video.id}" do %>
+                <%= hidden_field_tag :download_url, torrent_source[:magnet_link] %>
+                <%= button_tag type: "submit", class: 'action-button' do %>
+                  <i class="fa fa-download"></i>
+                  Download
+                <% end %>
+                <a class="action-button" href="<%= torrent_source[:magnet_link] %>">
+                  <i class="fa fa-magnet"></i> Magnet URL
+                </a>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
     <% end %>
   </div>
 </div>

@@ -6,7 +6,7 @@ class Muvee.ThumbnailRetriever
 
     throw new Error("Unable to find a thumbnail container for node") if @$container.length == 0
 
-    @$container.one "mouseenter.ThumbnailRetriever focus.ThumbnailRetriever", @retrieve.bind(this)
+    $(@node).one "mouseenter.ThumbnailRetriever focus.ThumbnailRetriever", @retrieve.bind(this)
 
     Page.onReplace(@node, @destructor.bind(this))
 

@@ -31,8 +31,10 @@
         <%= runtime_human(@movie.duration, @movie.runtime_minutes) %>
       </h3>
 
-      <% if @movie.quality.present? %>
-        <span class="badge quality-<%= @movie.quality %>"><%= @movie.quality %></span>
+      <% if @movie.sources.size > 0 %>
+        <% @movie.sources.each do |source| %>
+          <span class="badge quality-<%= source.quality %>"><%= source.quality %></span>
+        <% end %>
       <% end %>
       <%= render 'genre_badge_listing', genres: @movie.genres %>
 
@@ -59,34 +61,7 @@
       <div class="movie-actions-contents">
         <% if @movie.local? %>
           <%= render 'thumbnail_play', movie: @movie %>
-        <% elsif @movie.remote? %>
-          <h2>Download this movie</h2>
-          <% if @existing_copies.length > 0 %>
-            <p>You already have this movie in:</p>
-            <ul>
-              <% @existing_copies.each do |copy| %>
-                <li>
-                  <%= link_to movie_path(copy) do %>
-                    <% if copy.is_3d? %>3D<% end %> <%= copy.quality %>
-                  <% end %>
-                </li>
-              <% end %>
-            </ul>
-          <% end %>
-          <div id="yts-sources" refresh="yts-sources">
-            <%= link_to "Search YTS", find_sources_via_yts_movie_path(@movie, q: @movie.title), "tg-remote" => "GET", "refresh-on-success" => "yts-sources", class: "yts-logo tracker-logo" %>
-          </div>
-          <div id="tbp-sources" refresh="tbp-sources">
-            <%= link_to "Search the Pirate Bay", find_sources_via_pirate_bay_movie_path(@movie, q: @movie.title), "tg-remote" => "GET", "refresh-on-success" => "tbp-sources", class: "tbp-logo tracker-logo" %>
-          </div>
-        <% elsif @movie.downloading? %>
-          <% if @movie.torrents.count > 0 %>
-            There's <%= pluralize(@movie.torrents.size, 'torrent') %> associated with this movie.
-          <% else %>
-            There are no torrents associated with this movie.
-          <% end %>
         <% end %>
-
         <div class="inline-buttons">
           <% if @movie.local? %>
             <% if @movie.left_off_at_percent > 5 %>
@@ -107,10 +82,30 @@
               </div>
             <% end %>
           <% end %>
+        </div>
 
-          <% unless @movie.remote? %>
-            <%= @movie.raw_file_path %>
+        <% if @movie.downloading? %>
+          <% if @movie.torrents.count > 0 %>
+            There's <%= pluralize(@movie.torrents.size, 'torrent') %> associated with this movie.
+          <% else %>
+            There are no torrents associated with this movie.
           <% end %>
+        <% end %>
+
+        <% @movie.sources.each do |source| %>
+          <p><%= source.raw_file_path %></p>
+        <% end %>
+
+        <% if @movie.sources.size > 0 %>
+          <h2>Re-download this movie</h2>
+        <% else %>
+          <h2>Download this movie</h2>
+        <% end %>
+        <div id="yts-sources" refresh="yts-sources">
+          <%= link_to "Search YTS", find_sources_via_yts_movie_path(@movie, q: @movie.title), "tg-remote" => "GET", "refresh-on-success" => "yts-sources", class: "yts-logo tracker-logo" %>
+        </div>
+        <div id="tbp-sources" refresh="tbp-sources">
+          <%= link_to "Search the Pirate Bay", find_sources_via_pirate_bay_movie_path(@movie, q: @movie.title), "tg-remote" => "GET", "refresh-on-success" => "tbp-sources", class: "tbp-logo tracker-logo" %>
         </div>
       </div>
     </div>
