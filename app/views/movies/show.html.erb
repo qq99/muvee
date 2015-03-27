@@ -64,12 +64,6 @@
         <% end %>
         <div class="inline-buttons">
           <% if @movie.local? %>
-            <% if @movie.left_off_at_percent > 5 %>
-              <%= link_to "Resume", video_path(@movie), class: 'action-button' %>
-              <%= link_to "Play from the start", video_path(@movie, t: 0), class: 'action-button' %>
-            <% else %>
-              <%= link_to "Play", video_path(@movie, t: 0), class: 'action-button' %>
-            <% end %>
             <%= link_to "Re-analyze", reanalyze_movie_path(@movie), class: 'action-button', "tg-remote" => "POST" %>
           <% else %>
             <%= render 'delete_movie_button', movie: @movie %>

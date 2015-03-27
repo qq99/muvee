@@ -6,7 +6,7 @@
       <% if @series.present? %>
         <ul class="responsive-grid responsive-grid-6x">
           <% @series.each do |serie| %>
-            <%= render 'shared/poster', show_path: series_path(serie), poster_url: serie.poster_url %>
+            <%= render 'shared/poster', show_path: series_path(serie), poster_url: serie.poster_url, title: serie.title %>
           <% end %>
           <div class="clearfix"></div>
         </div>

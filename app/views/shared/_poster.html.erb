@@ -4,7 +4,9 @@
       <% if poster_url.present? %>
         <img class="video-thumbnail has-aspect" src="<%= poster_url %>" alt="">
       <% else %>
-        <%= render 'shared/no_poster_available' %>
+        <div class="no-poster-available">
+          <span><%= title || "Unknown" %></span>
+        </div>
       <% end %>
     <% end %>
   </div>
