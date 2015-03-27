@@ -9,8 +9,6 @@ class Video < ActiveRecord::Base
   has_many :torrents
 
   validates_uniqueness_of :imdb_id, allow_nil: true, allow_blank: true
-  after_create :shellout_and_grab_duration
-  after_create :create_initial_thumb
 
   scope :local, -> {where('sources_count > 0')}
   scope :remote, -> {where('sources_count = 0')}
@@ -42,6 +40,12 @@ class Video < ActiveRecord::Base
 
   def remote?
     sources_count == 0
+  end
+
+  def post_sourced_actions
+    return unless sources.count > 0
+    shellout_and_grab_duration
+    create_initial_thumb
   end
 
   def reset_status
