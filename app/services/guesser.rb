@@ -20,6 +20,7 @@ class Guesser
 
       results[:title] = Guesser.pretty_title(filename) if results[:title].blank?
       results[:quality] = Guesser.guess_quality(filepath)
+      results[:three_d] = Guesser.guess_3d(filepath)
 
       results
     end
@@ -60,6 +61,7 @@ class Guesser
       end
 
       results[:quality] = Guesser.guess_quality(from)
+      results[:three_d] = Guesser.guess_3d(from)
 
       results
     end
@@ -87,6 +89,7 @@ class Guesser
 
       results[:title] = Guesser.pretty_title(filename) if results[:title].blank?
       results[:quality] = Guesser.guess_quality(filepath)
+      results[:three_d] = Guesser.guess_3d(filepath)
 
       results
     end
@@ -124,6 +127,16 @@ class Guesser
       quality = nil
     end
     quality
+  end
+
+  def self.guess_3d(from)
+    threed_regex = /(3D)/i
+    matches = threed_regex.match(from)
+    if matches.present?
+      true
+    else
+      false
+    end
   end
 
   def self.filename_without_extension(filename)
