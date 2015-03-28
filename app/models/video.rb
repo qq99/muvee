@@ -46,13 +46,17 @@ class Video < ActiveRecord::Base
     return unless sources.count > 0
     shellout_and_grab_duration
     create_initial_thumb
+    reset_status
+    self.save if self.changed?
   end
 
   def reset_status
-    if sources.count > 0
+    if torrents.count > 0
+      self.status = 'downloading'
+    elsif sources.count > 0
       self.status = 'local'
     else
-      self.status = 'remote' if self.status != 'downloading'
+      self.status = 'remote'
     end
   end
 

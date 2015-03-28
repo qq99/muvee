@@ -53,6 +53,12 @@ class TorrentManagerService
     client.move(tid, opts[:to])
   end
 
+  def remove_torrent(opts)
+    tid = find_id_by_transmission_id(opts[:transmission_id])
+
+    client.remove(tid) if tid.present?
+  end
+
   def find_id_by_transmission_id(transmission_id)
     all_torrents = client.all
     torrent = all_torrents.find { |t| t["addedDate"] == transmission_id }
