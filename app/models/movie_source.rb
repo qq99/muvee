@@ -8,21 +8,23 @@ class MovieSource < Source
     guessed = Guesser::Movie.guess_from_filepath(raw_file_path)
 
     movie = Movie.find_or_initialize_by(
-      title: guessed[:title],
-      year: guessed[:year]
+      title: guessed[:title]
     )
 
-    # guessed = Guesser::TvShow.guess_from_filepath(raw_file_path)
-    # guessed[:title] = metadata(guessed[:title])[:SeriesName]
-    #
-    # show = TvShow.find_or_initialize_by(
-    # title: guessed[:title],
-    # season: guessed[:season],
-    # episode: guessed[:episode]
-    # )
-    #
+    unless movie.imdb_id.present?
+      imdb_id = movie.search_for_imdb_id
+      movie = Movie.find_or_initialize_by(imdb_id: imdb_id)
+    end
+
     self.quality = guessed[:quality]
     self.video = movie
+  end
+
+  def reanalyze
+    guessed = Guesser::Movie.guess_from_filepath(raw_file_path)
+    self.quality = guessed[:quality]
+    self.is_3d = guessed[:three_d]
+    self.save
   end
 
 end

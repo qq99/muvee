@@ -129,6 +129,9 @@ class Video < ActiveRecord::Base
   end
 
   def reanalyze
+    sources.each do |source|
+      source.reanalyze
+    end
     shellout_and_grab_duration if duration.blank? || duration == 0
     if empty_or_missing_thumbnails?
       thumbnails.destroy_all

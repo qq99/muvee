@@ -22,4 +22,11 @@ class TvShowSource < Source
     self.video = show
   end
 
+  def reanalyze
+    guessed = Guesser::TvShow.guess_from_filepath(raw_file_path)
+    self.quality = guessed[:quality]
+    self.is_3d = guessed[:three_d]
+    self.save
+  end
+
 end
