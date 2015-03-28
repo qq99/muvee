@@ -87,7 +87,7 @@
         <% end %>
 
         <% @movie.sources.each do |source| %>
-          <p><%= source.raw_file_path %></p>
+          <div><%= source.raw_file_path %></div>
         <% end %>
 
         <% if @movie.sources.size > 0 %>

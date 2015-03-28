@@ -19,13 +19,13 @@ class SeriesController < ApplicationController
 
   def newest_episodes
     @section = :newest
-    @shows = TvShow.newest.limit(50) # newest first
+    @shows = TvShow.local.newest.limit(50) # newest first
     render 'nonepisodic'
   end
 
   def newest_unwatched
     @section = :newest_unwatched
-    @shows = TvShow.newest.unwatched.limit(50)
+    @shows = TvShow.local.newest.unwatched.limit(50)
     render 'nonepisodic'
   end
 
