@@ -2,7 +2,7 @@ class Source < ActiveRecord::Base
   include HasMetadata
   belongs_to :video, counter_cache: true
 
-  before_validation :start_guessing, only: :create
+  before_validation :associate_self_with_video, only: :create
 
   after_create :trigger_post_source_actions
 

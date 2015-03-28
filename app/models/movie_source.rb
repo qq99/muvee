@@ -1,10 +1,6 @@
 class MovieSource < Source
 
-  def start_guessing
-    associate_self_with_movie
-  end
-
-  def associate_self_with_movie
+  def associate_self_with_video
     guessed = Guesser::Movie.guess_from_filepath(raw_file_path)
 
     movie = Movie.find_or_initialize_by(

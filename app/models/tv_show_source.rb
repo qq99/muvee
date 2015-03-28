@@ -1,14 +1,6 @@
 class TvShowSource < Source
 
-  def start_guessing
-    if type == 'TvShowSource'
-      associate_self_with_tv_show
-    elsif type == 'MovieSource'
-
-    end
-  end
-
-  def associate_self_with_tv_show
+  def associate_self_with_video
     guessed = Guesser::TvShow.guess_from_filepath(raw_file_path)
     guessed[:title] = metadata(guessed[:title])[:SeriesName]
 
