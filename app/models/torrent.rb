@@ -37,15 +37,19 @@ class Torrent < ActiveRecord::Base
 
   def finalize
     move_to_proper_folder
-    service.remove_torrent(transmission_id: transmission_id)
-    self.destroy
+
+    # find the file in its new location
+    largest_file = files_by_size.first[:name]
+    resulting_file = post_move_filepath(largest_file)
+    create_source(resulting_file)
+
+    self.destroy # remove the torrent
     create_source
+    service.remove_torrent(transmission_id: transmission_id) # must be done last
   end
 
-  def create_source
+  def create_source(resulting_file)
     if video.present?
-      largest_file = files_by_size.first[:name]
-      resulting_file = post_move_filepath(largest_file)
       video.sources.create(raw_file_path: resulting_file)
     else # this shouldn't happen anymore, but potentially could if you were to somehow add a torrent external to current methods
       MediaScannerWorker.perform_async

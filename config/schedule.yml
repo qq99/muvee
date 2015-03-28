@@ -1,7 +1,3 @@
-media_scanner:
-  cron: "*/5 * * * *"
-  class: "MediaScannerWorker"
-
 torrent_completion_worker:
   cron: "*/1 * * * *"
   class: "TorrentCompletionWorker"
