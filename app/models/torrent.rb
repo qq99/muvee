@@ -44,13 +44,13 @@ class Torrent < ActiveRecord::Base
     create_source(resulting_file)
 
     self.destroy # remove the torrent
-    create_source
+    create_source(resulting_file)
     service.remove_torrent(transmission_id: transmission_id) # must be done last
   end
 
   def create_source(resulting_file)
     if video.present?
-      video.sources.create(raw_file_path: resulting_file)
+      video.sources.create(raw_file_path: resulting_file, type: "#{video.type}Source")
     else # this shouldn't happen anymore, but potentially could if you were to somehow add a torrent external to current methods
       MediaScannerWorker.perform_async
     end
