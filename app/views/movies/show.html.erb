@@ -33,7 +33,12 @@
 
       <% if @movie.sources.size > 0 %>
         <% @movie.sources.each do |source| %>
-          <span class="badge quality-<%= source.quality %>"><%= source.quality %></span>
+          <span class="badge quality-<%= source.quality %>">
+            <%= source.quality %>
+            <% if source.is_3d? %>
+              <span class="3d">3D</span>
+            <% end %>
+          </span>
         <% end %>
       <% end %>
       <%= render 'genre_badge_listing', genres: @movie.genres %>

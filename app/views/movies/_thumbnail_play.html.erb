@@ -18,7 +18,12 @@
     <% movie.sources.each do |source| %>
       <%= link_to show_source_video_path(movie, source), class: 'play-icon-link' do %>
         <i class="fa fa-play-circle"></i>
-        <div class="source-quality"><%= source.quality %></div>
+        <div class="source-quality">
+          <%= source.quality %>
+          <% if source.is_3d? %>
+            <span class="3d">3D</span>
+          <% end %>
+        </div>
       <% end %>
     <% end %>
     </div>
