@@ -6,13 +6,17 @@ class YtsQueryService
 
     results = []
     remote_movies.each do |m|
-      movie = Movie.create(
-        status: "remote",
-        title: m[:MovieTitleClean],
-        imdb_id: m[:ImdbCode],
-        imdb_id_is_accurate: true
-      )
-      results << movie.persisted?
+      if Movie.exists?(imdb_id: m[:ImdbCode])
+        results << false
+      else
+        movie = Movie.create(
+          status: "remote",
+          title: m[:MovieTitleClean],
+          imdb_id: m[:ImdbCode],
+          imdb_id_is_accurate: true
+        )
+        results << movie.persisted?
+      end
     end
 
     results
