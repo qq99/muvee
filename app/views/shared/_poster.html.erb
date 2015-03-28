@@ -5,7 +5,7 @@
         <img class="video-thumbnail has-aspect" src="<%= poster_url %>" alt="">
       <% else %>
         <div class="no-poster-available">
-          <span><%= title || "Unknown" %></span>
+          <span><%= local_assigns[:title] || "Unknown" %></span>
         </div>
       <% end %>
     <% end %>
