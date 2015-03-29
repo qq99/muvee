@@ -6,7 +6,7 @@
   <% if next_episode.present? %>
     <div class="thumbnail-preview">
       <% if next_episode.thumbnails.present? %>
-        <%= link_to video_path(next_episode, t: 0), id: 'next-episode-link' do %>
+        <%= link_to show_source_video_path(next_episode, t: 0), id: 'next-episode-link' do %>
           <img class="video-thumbnail" src="<%= next_episode.thumbnails.first.url %>" alt="">
         <% end %>
       <% end %>
