@@ -1,33 +1,26 @@
 <%= render 'subnav' %>
 
-<div class="movies-index--full movies-bg">
-  <div class="window-box">
-    <div class="panel scrolling-panel">
-      <% if @shows.present? %>
-        <ul class="responsive-grid responsive-grid-6x">
-          <% @shows.each do |video| %>
-            <li class="poster">
-              <div class="poster-innards">
-                <% if (video.thumbnails.present?) %>
-                  <a href="<%= video_path(video) %>" class="poster-link aspect16x8">
-                    <img src="<%= video.thumbnails.first.url %>" class="video-thumbnail">
-                  </a>
-                <% end %>
-                <span class="title">
-                  <%= video.title.presence || video.raw_file_path %>
-                </span>
-                <% if video.season && video.episode %>
-                  <span class="season">
-                    <%= video.season_episode %>
-                  </span>
-                <% end %>
-              </div>
-            </li>
-          <% end %>
-        </ul>
-      <% else %>
-        <div>No shows found.</div>
+<% if @shows.present? %>
+  <div class="tile-list" <% if @_is_paged %>define="{pager: new Muvee.Pager(this)}"<% end %>>
+    <% @shows.each_slice(3) do |shows_slice| %>
+    <div class="tile-row" style='height: 33%;'>
+      <% shows_slice.each do |show| %>
+        <div class="tile" context="tile<%= show.id %>">
+          <div class="tile__meta">
+            <h3 class="video-year"><%= year_month_day(show.released_on) %></h3>
+            <h3 class="video-type"><%= show.season_episode %></h3>
+            <h1 class="video-title"><%= link_to show.title || show.sources.first.raw_file_path, show_source_video_path(show) %></h1>
+            <p class="video-description">
+              <%= show.overview %>
+            </p>
+            <div class="tile__meta-backdrop"></div>
+          </div>
+          <div class="tile__background" style="background-image: url(<%= show.thumbnails.sample.try(:url) %>);"></div>
+        </div>
       <% end %>
     </div>
+    <% end %>
   </div>
-</div>
+<% else %>
+  <div>No shows found.</div>
+<% end %>

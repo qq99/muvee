@@ -36,4 +36,8 @@ module ApplicationHelper
   def expected_release_from_now(future_time)
     ChronicDuration.output(future_time - Time.now, days: true, units: 2, joiner: ', ')
   end
+
+  def year_month_day(time)
+    time.try(:strftime, '%Y-%m-%e')
+  end
 end

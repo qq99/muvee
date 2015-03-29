@@ -95,40 +95,6 @@ a {
   float: left;
 }
 
-.responsive-grid {
-  clear: both;
-  margin-top: -1em;
-  padding: 0;
-  list-style: none;
-  position: relative;
-  width: 100%;
-
-  > li {
-    position: relative;
-    float: left;
-    overflow: hidden;
-    width: 25%;
-    width: calc(100% / 4);
-  }
-  @media screen and (max-width: 660px) {
-    li {
-      width: 100%;
-    }
-  }
-}
-.responsive-grid-2x {
-  li {
-    width: 100% / 2;
-    width: calc(100% / 2);
-  }
-}
-.responsive-grid-6x {
-  li {
-    width: 100% / 6;
-    width: calc(100% / 6);
-  }
-}
-
 .rename-table {
   border:none;
   border-collapse:collapse;

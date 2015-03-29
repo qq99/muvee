@@ -1,12 +1,17 @@
 <%= render 'subnav' %>
 
-<% if @series.present? %>
-  <div class="tile-list responsive-grid responsive-grid-6x" <% if @_is_paged %>define="{pager: new Muvee.Pager(this)}"<% end %>>
-    <% @series.each do |serie| %>
-      <%= render 'shared/poster', show_path: series_path(serie), poster_url: serie.poster_url, title: serie.title %>
-    <% end %>
-    <div class="clearfix"></div>
-  </div>
-<% else %>
-  <div>No series found.</div>
-<% end %>
+<div style="padding: 1em;">
+  <% if @series.present? %>
+    <div class="tile-list" <% if @_is_paged %>define="{pager: new Muvee.Pager(this)}"<% end %>>
+      <% @series.each_slice(6) do |series_slice| %>
+        <div class="tile-row">
+          <% series_slice.each do |serie| %>
+            <%= render 'shared/poster', show_path: series_path(serie), poster_url: serie.poster_url, title: serie.title %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div>No series found.</div>
+  <% end %>
+</div>
