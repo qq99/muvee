@@ -14,7 +14,7 @@ class TranscoderWorker
   end
 
   def perform(klass, input_path)
-    klass = klass.constantize
+    source_type = "#{klass}Source"
 
     filename = File.basename(input_path, File.extname(input_path))
     transcode_path = Pathname.new(transcode_folder).join(filename).to_s
@@ -47,10 +47,10 @@ class TranscoderWorker
 
 
     if File.exist?(eventual_path) || File.exist?(webm_path) # don't convert it again! webm stuff is legacy and should be removed!
-      notice = "Video #{eventual_path} already transcoded; creating #{klass.to_s}, please review #{input_path}"
+      notice = "#{eventual_path} already transcoded; creating #{source_type}, please review #{input_path}"
       publish({notice: notice})
       Rails.logger.info notice
-      klass.create(raw_file_path: eventual_path)
+      Source.create(type: source_type, raw_file_path: eventual_path) unless Source.exists?(raw_file_path: eventual_path)
       return true
     end
     if File.exist?(transcode_path) # in process
@@ -69,10 +69,10 @@ class TranscoderWorker
 
     sleep 10 # let the file handle close
     if success
-      Rails.logger.info "Video #{eventual_path} already transcoded; moving and creating, please review #{input_path}"
+      Rails.logger.info "Video #{eventual_path} transcoded successfully; moving and creating, please review #{input_path}"
       move_transcoded_file(transcode_path, eventual_path)
       sleep 5 # let the file handle close (?)
-      klass.create(raw_file_path: eventual_path)
+      Source.create(type: source_type, raw_file_path: eventual_path) unless Source.exists?(raw_file_path: eventual_path)
       return true
     else
       File.delete(transcode_path) if File.exist?(transcode_path) # clean up

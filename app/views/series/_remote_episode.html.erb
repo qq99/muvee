@@ -13,7 +13,7 @@
         class: 'episode-title',
         'tg-remote' => 'GET',
         'refresh-on-success' => "video-#{video.id}" %>
-      <% if video.downloading? %>
+      <% if video.downloading? && video.torrents.size > 0 %>
         <div class="episode-watch-progress downloading progress-bar__container"
           define="{torrent: new Muvee.ProgressReporter(this, 'TorrentInformation<%= video.torrents.first.id %>')}">
           <div class="progress-bar__bar animates" bind-attribute="{style: torrent.progressCssWidth()}"></div>

@@ -67,9 +67,9 @@ class VideoCreationService
 
   def transcode_ineligible_sources(klass, files)
     return unless should_transcode?
-    # files.each do |path|
-    #   TranscoderWorker.perform_async(klass, path)
-    # end
+    files.each do |path|
+      TranscoderWorker.perform_async(klass, path)
+    end
   end
 
   def create_source(klass, filepath)
