@@ -33,7 +33,7 @@
 
       <% if @movie.sources.size > 0 %>
         <% @movie.sources.each do |source| %>
-          <span class="badge quality-<%= source.quality %>">
+          <span class="badge quality-<%= source.quality %>" title="<%= source.raw_file_path %>">
             <%= source.quality %>
             <% if source.is_3d? %>
               <span class="3d">3D</span>
@@ -91,12 +91,8 @@
           <% end %>
         <% end %>
 
-        <% @movie.sources.each do |source| %>
-          <div><%= source.raw_file_path %></div>
-        <% end %>
-
         <% if @movie.sources.size > 0 %>
-          <h2>Re-download this movie</h2>
+          <h2>Download more sources</h2>
         <% else %>
           <h2>Download this movie</h2>
         <% end %>
