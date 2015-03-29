@@ -41,7 +41,6 @@ class Torrent < ActiveRecord::Base
     # find the file in its new location
     largest_file = files_by_size.first[:name]
     resulting_file = post_move_filepath(largest_file)
-    create_source(resulting_file)
 
     self.destroy # remove the torrent
     service.remove_torrent(transmission_id: transmission_id) # must be done last
