@@ -2,14 +2,18 @@ class SeriesController < ApplicationController
   before_action :set_series, only: [:show, :find_episode, :download, :reanalyze]
   before_action :set_episode, only: [:show_episode_details, :download]
 
+  RESULTS_PER_PAGE = 18
+
   def index
+    paged
     @section = :series
-    @series = Series.with_episodes.all.sort_by{|item| -item.updated_at.to_i} # newest updated first
+    @series = Series.with_episodes.paginated(cur_page, RESULTS_PER_PAGE).order(updated_at: :desc).all # newest updated first
   end
 
   def discover
+    paged
     @section = :discover
-    @series = Series.without_episodes.all
+    @series = Series.without_episodes.paginated(cur_page, RESULTS_PER_PAGE).all
     render 'index'
   end
 
@@ -76,6 +80,14 @@ class SeriesController < ApplicationController
   end
 
   private
+    def paged
+      @_is_paged = true
+    end
+
+    def cur_page
+      page = params[:page].to_i || 0
+    end
+
     def set_series
       @series = Series.find(params[:id])
     end
