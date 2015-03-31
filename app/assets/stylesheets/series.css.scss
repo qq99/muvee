@@ -190,8 +190,5 @@
   }
   .episode-watch-progress {
     width: 50px;
-    &.downloading .progress-bar__bar {
-      background: $less-radical-blue;
-    }
   }
 }
