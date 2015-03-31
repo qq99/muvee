@@ -1,71 +1,80 @@
-<div class="text-page">
+<div id="status-page" class="text-page">
   <div class="readable-page">
     <h1 class="flashy-banner">μv status</h1>
-    <%= link_to 'Scan for new media', scan_for_new_media_settings_path, 'tg-remote' => 'POST', 'tg-remote-norefresh' => true, class: 'action-button' %>
-    <%= link_to 'Reanalyze media library', reanalyze_media_settings_path, 'tg-remote' => 'POST', 'tg-remote-norefresh' => true, class: 'action-button' %>
-    <%= link_to 'Download missing posters and fanart', redownload_missing_arts_settings_path, 'tg-remote' => 'POST', 'tg-remote-norefresh' => true, class: 'action-button' %>
-    <%= link_to 'Re-download all posters and fanart', redownload_all_arts_settings_path, 'tg-remote' => 'POST', 'tg-remote-norefresh' => true, class: 'action-button' %>
 
-    <h3>Background job status</h3>
-    <p>The progress and statuses of various activities will appear here.</p>
-    <div
-      class='job-reporter'
-      define="{scanner: new Muvee.ProgressReporter(this, 'VideoCreationService')}">
-      <div class="job-reporter-grid hide" bind-class="{hide: scanner.isHidden()}">
-        <div class="job-name">
-          Library Scan
-        </div>
-        <div class="job-details">
-          <div class="progress-bar__container">
-            <div class="progress-bar__bar animates" bind-attribute="{style: scanner.progressCssWidth()}"></div>
+    <div class="section">
+      <%= link_to 'Scan for new media', scan_for_new_media_settings_path, 'tg-remote' => 'POST', 'tg-remote-norefresh' => true, class: 'action-button' %>
+      <%= link_to 'Reanalyze media library', reanalyze_media_settings_path, 'tg-remote' => 'POST', 'tg-remote-norefresh' => true, class: 'action-button' %>
+      <%= link_to 'Download missing posters and fanart', redownload_missing_arts_settings_path, 'tg-remote' => 'POST', 'tg-remote-norefresh' => true, class: 'action-button' %>
+      <%= link_to 'Re-download all posters and fanart', redownload_all_arts_settings_path, 'tg-remote' => 'POST', 'tg-remote-norefresh' => true, class: 'action-button' %>
+    </div>
 
-            <div class="job-info">
-              <div class="job-quantity">
-                <span class="job-current" bind="scanner.current"></span><span class="job-max" bind="scanner.max"></span>
+    <div class="section">
+      <h3>Background job status</h3>
+      <p>The progress and statuses of various activities will appear here.</p>
+      <div
+        class='job-reporter'
+        define="{scanner: new Muvee.ProgressReporter(this, 'VideoCreationService')}">
+        <div class="job-reporter-grid hide" bind-class="{hide: scanner.isHidden()}">
+          <div class="job-name">
+            Library Scan
+          </div>
+          <div class="job-details">
+            <div class="progress-bar__container">
+              <div class="progress-bar__bar animates" bind-attribute="{style: scanner.progressCssWidth()}"></div>
+
+              <div class="job-info">
+                <div class="job-quantity">
+                  <span class="job-current" bind="scanner.current"></span><span class="job-max" bind="scanner.max"></span>
+                </div>
+                <div class="job-message" bind="scanner.substatus"></div>
+                <div class="job-progress" bind="scanner.progressPercent()"></div>
               </div>
-              <div class="job-message" bind="scanner.substatus"></div>
-              <div class="job-progress" bind="scanner.progressPercent()"></div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <h3>Torrent Status</h3>
-    <% @torrents.each do |torrent| %>
-      <div class='job-reporter' context='torrent<%= torrent.id %>'>
-        <div
-          class="job-reporter-grid"
-          define="{torrent: new Muvee.ProgressReporter(this, 'TorrentInformation<%= torrent.id %>')}">
-          <div class="job-name">
-            <% if torrent.video.present? %>
-              <% if torrent.video.try(:is_tv?) %>
-                <span title="<%= torrent.video.title %> <%= torrent.video.season_episode %>">
+    <div class="section">
+      <h3>Torrent Status</h3>
+      <% @torrents.each do |torrent| %>
+        <div class='job-reporter torrent' context='torrent<%= torrent.id %>'>
+          <div
+            class="job-reporter-grid"
+            define="{torrent: new Muvee.ProgressReporter(this, 'TorrentInformation<%= torrent.id %>')}">
+            <div class="job-name">
+              <% if torrent.video.present? %>
+                <% if torrent.video.try(:is_tv?) %>
+                  <span title="<%= torrent.video.title %> <%= torrent.video.season_episode %>">
+                    <%= torrent.video.title %>
+                    <%= torrent.video.season_episode %>
+                  </span>
+                <% else %>
                   <%= torrent.video.title %>
-                  <%= torrent.video.season_episode %>
-                </span>
+                <% end %>
               <% else %>
-                <%= torrent.video.title %>
+                Unknown
               <% end %>
-            <% else %>
-              Unknown
-            <% end %>
-          </div>
-          <div class="job-details">
-            <div class="progress-bar__container">
-              <div class="progress-bar__bar animates" bind-attribute="{style: torrent.progressCssWidth()}"></div>
+            </div>
+            <div class="job-details">
+              <div class="torrent-progress progress-bar__container">
+                <div class=" progress-bar__bar animates" bind-attribute="{style: torrent.progressCssWidth()}"></div>
 
-              <div class="job-info">
-                <div class="job-progress" bind="torrent.progressPercent()"></div>
+                <div class="job-info">
+                  <div class="job-progress" bind="torrent.progressPercent()"></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
 
-    <h3>Notices</h3>
-    <p>Notices can provide recommendations and suggestions for you to take with your operation of μv</p>
-    <p>Not implemented yet.</p>
+    <div class="section">
+      <h3>Notices</h3>
+      <p>Notices can provide recommendations and suggestions for you to take with your operation of μv</p>
+      <p>Not implemented yet.</p>
+    </div>
   </div>
 </div>

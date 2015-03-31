@@ -19,13 +19,18 @@
     font-size: 1em;
     margin: 0.5em 0;
     font-weight: 200;
-    color: inherit;
   }
   .explanation {
     font-size: 0.9em;
     margin: 1.1em;
     font-weight: 200;
     color: #ccc;
+  }
+
+  .section {
+    margin-bottom: 1em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid #222;
   }
 }
 
@@ -50,12 +55,4 @@
 
 span.note {
   color: $radical-blue;
-}
-
-ul.steps {
-  li {
-    margin-bottom: 1em;
-    padding-bottom: 1em;
-    border-bottom: 1px solid #222;
-  }
 }

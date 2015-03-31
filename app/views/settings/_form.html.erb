@@ -11,28 +11,28 @@
   </p>
   <ul>
     <% config.errors.messages.each do |err| %>
-      <li><%= err.join(" ") %></li>
+    <li class="section"><%= err.join(" ") %></li>
     <% end %>
   </ul>
 <% end %>
-<ul class="steps">
-  <li>
+
+  <div class="section">
     <%= f.label :tv_sources do %>
       <p>
         Where are your <span class="note">TV shows</span> stored?
       </p>
       <%= f.text_area :tv_sources, value: config.tv_sources.map(&:strip).join(", "), placeholder: "Enter absolute paths separated by a comma, e.g., /home/yourself/TV/, /external/TvShows/", class: 'action-button' %>
     <% end %>
-  </li>
-  <li>
+  </div>
+  <div class="section">
     <%= f.label :movie_sources do %>
       <p>
         Where are your <span class="note">movies</span> stored?
       </p>
       <%= f.text_area :movie_sources, value: config.movie_sources.map(&:strip).join(", "), placeholder: "Enter absolute paths separated by a comma, e.g., /home/yourself/TV/, /external/TvShows/", class: 'action-button' %>
     <% end %>
-  </li>
-  <li>
+  </div>
+  <div class="section">
     <p>
       Do you want to <span class="note">transcode</span> files unplayable by browsers into formats that can be?
     </p>
@@ -43,8 +43,8 @@
     <p class="explanation">
       Unfortunately, this is the only way for μv to make some media available to web browsers.
     </p>
-  </li>
-  <li bind-show="showTranscodeFolder">
+  </div>
+  <div class="section" bind-show="showTranscodeFolder">
     <%= f.label :transcode_folder do %>
       <p>
         Where should files <span class="note">mid-transcode</span> be stored?
@@ -54,8 +54,8 @@
     <p class="explanation">
       It's a good idea to specify this path to be somewhere you have a lot of space.
     </p>
-  </li>
-  <li>
+  </div>
+  <div class="section">
     <%= f.label :torrent_start_path do %>
       <p>
         Where should files reside <span class="note">while downloading</span>?
@@ -65,7 +65,7 @@
     <p class="explanation">
       It's a good idea to specify this path to be somewhere you have a lot of space.
     </p>
-  </li>
+  </div>
   <%= f.button "Save", type: "Submit", class: 'action-button' %>
-</ul>
+
 <% end %>
