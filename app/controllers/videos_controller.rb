@@ -39,8 +39,8 @@ class VideosController < ApplicationController
   end
 
   def shuffle
-    random_show = TvShow.all.sample
-    redirect_to show_source_video_path(random_show, shuffle: true)
+    random_show = TvShow.local.sample
+    redirect_to show_source_video_path(random_show, shuffle: true, t: 0)
   end
 
   # GET /videos/new
