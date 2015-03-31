@@ -15,7 +15,7 @@ $tile-transition-delay: 0.30s;
   height: 66.6666%;
 }
 .tile-row--banner {
-  height: 33%;
+  height: 34%;
   border-bottom: 1px solid #222;
 }
 .col-2-3 {
@@ -177,6 +177,7 @@ $tile-transition-delay: 0.30s;
   align-items: center;
   justify-content: center;
   h1 {
+    text-align: center;
     font-weight: inherit;
     transition: all 0.25s ease-in-out;
   }

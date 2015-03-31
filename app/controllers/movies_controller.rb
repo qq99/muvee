@@ -45,7 +45,7 @@ class MoviesController < ApplicationController
 
   def genres
     @section = :genres
-    @genres = Genre.all.sort_by(&:name).select { |genre| genre.has_local_movies? }
+    @genres = Genre.order(name: :asc).select { |genre| genre.has_local_movies? }
   end
 
   def genre
