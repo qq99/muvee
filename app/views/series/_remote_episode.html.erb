@@ -9,7 +9,11 @@
       <%= link_to '#', class: 'icon-link' do %>
         <i class="fa fa-download"></i>
       <% end %>
-      <%= link_to video.episode_name || "No title available", show_episode_details_series_index_path(episode_id: video.id, query: "#{video.title} S#{video.season}E#{video.episode}"),
+      <%= link_to video.episode_name || "No title available",
+        show_episode_details_series_index_path(
+          episode_id: video.id,
+          query: "#{video.title} #{video.season_episode}"
+        ),
         class: 'episode-title',
         'tg-remote' => 'GET',
         'refresh-on-success' => "video-#{video.id}" %>

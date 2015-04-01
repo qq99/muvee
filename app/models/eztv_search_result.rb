@@ -4,6 +4,7 @@ class EztvSearchResult < ExternalMetadata
 
   def self.search(query)
     # begin
+      query.gsub!(/'/, '')
       uri = URI.parse(self.endpoint_url)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
