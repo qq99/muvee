@@ -7,7 +7,7 @@ class SeriesController < ApplicationController
   def index
     paged
     @section = :series
-    @series = Series.with_episodes.paginated(cur_page, RESULTS_PER_PAGE).order(updated_at: :desc).all # newest updated first
+    @series = Series.with_episodes.paginated(cur_page, RESULTS_PER_PAGE).order(title: :asc).all
   end
 
   def discover
@@ -48,7 +48,7 @@ class SeriesController < ApplicationController
     else
       nil
     end
-    
+
     @sort = params[:sort].try(:to_sym) || @series.last_sort_value.try(:to_sym) || :release_order
 
     @series.update_attributes(last_sort_value: @sort.to_s, last_season_filter: @season.to_s)
