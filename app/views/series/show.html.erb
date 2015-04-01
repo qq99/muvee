@@ -12,7 +12,7 @@
         <%= link_to "In order", series_path(@series, season: @season, sort: :release_order), class: "badge linked-badge #{'active' if @sort == :release_order}" %>
       </div>
       <div class="badge-listing">
-        <%= link_to "All", series_path(@series, sort: @sort), class: "badge #{'active' if @season.blank?}" %>
+        <%= link_to "All", series_path(@series, season: 'all', sort: @sort), class: "badge #{'active' if @season.blank?}" %>
         <% @seasons.each do |s| %>
           <%= link_to "S#{s}", series_path(@series, season: s, sort: @sort), class: "badge linked-badge #{'active' if @season == s}" %>
         <% end %>

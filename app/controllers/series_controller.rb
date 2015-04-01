@@ -39,8 +39,20 @@ class SeriesController < ApplicationController
   end
 
   def show
-    @season = params[:season].present? ? params[:season].to_i : nil
-    @sort = params[:sort].try(:to_sym) || :release_order
+    season = params[:season].presence || @series.last_season_filter.presence
+
+    @season = if season == 'all'
+      nil
+    elsif season.present?
+      season.to_i
+    else
+      nil
+    end
+    
+    @sort = params[:sort].try(:to_sym) || @series.last_sort_value.try(:to_sym) || :release_order
+
+    @series.update_attributes(last_sort_value: @sort.to_s, last_season_filter: @season.to_s)
+
     @all_episodes = @series.tv_shows.send(@sort)
     if @season
       @videos = @all_episodes.where(season: @season)
