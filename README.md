@@ -13,7 +13,8 @@ I started it because I wanted to view my media on my PS4 (but as of late, I've j
 
 WIP
 
-[Pictures!](http://imgur.com/a/2wBvh)
+[YouTube video of current design](https://www.youtube.com/watch?v=1tevKG6u1qM&html5=1)
+[Old pictures of an earlier design](http://imgur.com/a/2wBvh)
 
 To install and use on Linux
 ---
