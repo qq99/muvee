@@ -63,6 +63,7 @@ Rails.application.routes.draw do
       get :discover_more
       get :genres
       get 'genres/:type', as: :by_genre, action: :genre
+      get :search
       post :movie_search, as: :movie_search, action: :movie_search
     end
     member do
@@ -90,7 +91,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'videos#index'
+  root 'series#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

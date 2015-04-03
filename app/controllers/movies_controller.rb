@@ -7,6 +7,14 @@ class MoviesController < ApplicationController
     newest
   end
 
+  def search
+    query = "%#{params[:query]}%".downcase
+    @movies = Movie.paginated(cur_page, RESULTS_PER_PAGE).where('lower(title) like :q', q: query).to_a
+
+    response.headers['X-XHR-Redirected-To'] = request.env['REQUEST_URI']
+    render 'index2'
+  end
+
   def all
     @section = :all
     @movies = Movie.local_and_downloading.shuffle.to_a

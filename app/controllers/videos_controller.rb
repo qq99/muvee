@@ -5,9 +5,6 @@ class VideosController < ApplicationController
   skip_before_filter :check_if_first_use, only: [:left_off_at]
   respond_to :json, only: [:left_off_at, :thumbnails]
 
-  def index
-  end
-
   def list
     @videos = Video.all
   end

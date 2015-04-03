@@ -1,6 +1,6 @@
 @import 'variables';
 
-$nav-width: 6em;
+
 
 body {
   background: black;
@@ -14,7 +14,7 @@ body {
   height: 100%;
   z-index: 2000;
   background: black;
-  background: $sleek-transparent-black;
+  background: #0c0c0c;
   padding: 0;
   display: flex;
   flex-direction: column;

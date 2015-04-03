@@ -8,16 +8,10 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body define="{fixedSearch: new Muvee.FixedSearch(this)}">
 
   <header class="main-navigation">
     <ul class="main-navigation__items">
-      <li class="<% if controller_name == 'videos' && action_name == 'index' %>active<% end %>">
-        <a class="top-nav-button home" href="/">
-          <i class="fa fa-home"></i>
-          <h1>Home</h1>
-        </a>
-      </li>
       <li <% if controller_name == 'movies' %>class="active" <% end %>>
         <%= link_to movies_path, class: 'top-nav-button' do %>
           <i class="fa fa-film"></i>
@@ -57,6 +51,20 @@
 
   <div class="main-content-container">
     <div class="main-content">
+
+      <div class="fixed-search" bind-class="{'is-active': fixedSearch.visible}">
+        <i class="fa fa-search"></i>
+        <%= form_tag search_movies_path,
+        method: 'GET',
+        'tg-remote' => true,
+        'refresh-on-success' => 'results' do %>
+
+          <input class="fixed-search__input" type="text" name="query" value="" autocomplete="off" placeholder="What do you want to see today?">
+        <% end %>
+
+        <i class="fa fa-close" bind-event-click="fixedSearch.hide()"></i>
+      </div>
+
       <%= yield %>
     </div>
   </div>
