@@ -4,6 +4,8 @@
     <h3 class="video-type">Movie</h3>
     <% if movie.downloading? %>
       <h3 class='video-status'>Downloading Now</h3>
+    <% elsif movie.remote? %>
+      <h3 class='video-status'>Remote</h3>
     <% end %>
     <h1 class="video-title"><%= link_to movie.title, movie_path(movie) %></h1>
     <p class="video-description">

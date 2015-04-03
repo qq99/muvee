@@ -11,6 +11,11 @@ class MoviesController < ApplicationController
     query = "%#{params[:query]}%".downcase
     @movies = Movie.paginated(cur_page, RESULTS_PER_PAGE).where('lower(title) like :q', q: query).to_a
 
+    if cur_page == 0 && @movies.size == 1
+      response.headers['X-Next-Redirect'] = movie_path(@movies.first)
+      head :found
+      return
+    end
     response.headers['X-XHR-Redirected-To'] = request.env['REQUEST_URI']
     render 'index2'
   end
