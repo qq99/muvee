@@ -130,7 +130,7 @@ a {
 }
 
 $fixed-search-transition-duration: 0.25s;
-$fixed-search-padding: 2em;
+$fixed-search-padding: 3em;
 .fixed-search {
   position: fixed;
   transition: all $fixed-search-transition-duration ease-in-out;
@@ -144,11 +144,15 @@ $fixed-search-padding: 2em;
   align-items: center;
 
   width: 100%;
-  background: rgba(0,0,0,0.8);
+  background: #fafafa;
 
   font-size: 1em;
-  color: white;
+  color: #111;
   font-weight: 200;
+
+  i {
+    color: #aaa;
+  }
 
   > * {
     font-size: 1.5em;
@@ -171,12 +175,12 @@ $fixed-search-padding: 2em;
   font-size: inherit;
   font-weight: 200;
   border: 0;
-  border-bottom: 1px solid transparent;
+  border-bottom: 2px solid transparent;
   background: none;
   outline: 0;
   color: $less-radical-blue;
   padding: 0.25em;
   &:hover, &:focus {
-    border-bottom: 1px solid $radical-blue;
+    border-bottom: 2px solid #999;
   }
 }

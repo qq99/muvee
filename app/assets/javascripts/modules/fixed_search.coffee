@@ -7,12 +7,9 @@ class Muvee.FixedSearch
     @bindGlobalListener()
 
     $(".fixed-search__input").on "keydown.FixedSearch", (ev) =>
-      if ev.keyCode == 27 # esc
-        @hide()
-        Twine.refresh()
+      @hide() if ev.keyCode == 27 || ev.keyCode == 13 # esc
 
   bindGlobalListener: ->
-    console.log 'Bind'
     @globalListener = $(document).on 'keydown.FixedSearch', (ev) =>
       if ev.keyCode == 84 # t
         @show()
@@ -35,3 +32,4 @@ class Muvee.FixedSearch
   hide: ->
     @visible = false
     @bindGlobalListener()
+    Twine.refresh()
