@@ -10,6 +10,21 @@ class SeriesController < ApplicationController
     @series = Series.with_episodes.paginated(cur_page, RESULTS_PER_PAGE).order(title: :asc).all
   end
 
+  def search
+    paged
+    query = "%#{params[:query]}%".downcase
+    @section = :series
+    @series = Series.paginated(cur_page, RESULTS_PER_PAGE).where('lower(title) like :q', q: query).to_a
+
+    if cur_page == 0 && @series.size == 1
+      response.headers['X-Next-Redirect'] = series_path(@series.first)
+      head :found
+      return
+    end
+    response.headers['X-XHR-Redirected-To'] = request.env['REQUEST_URI']
+    render 'index'
+  end
+
   def discover
     paged
     @section = :discover
@@ -39,6 +54,7 @@ class SeriesController < ApplicationController
   end
 
   def show
+    @section = :series
     season = params[:season].presence || @series.last_season_filter.presence
 
     @season = if season == 'all'
