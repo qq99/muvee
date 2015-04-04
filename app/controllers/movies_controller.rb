@@ -26,18 +26,6 @@ class MoviesController < ApplicationController
     render 'index2'
   end
 
-  def three_d
-    @section = :threed
-    @movies = Movie.local.where(is_3d: true).all
-    render 'index'
-  end
-
-  def two_d
-    @section = :twod
-    @movies = Movie.local.where(is_3d: false).all
-    render 'index'
-  end
-
   def newest
     @section = :newest
     @movies = Movie.paginated(cur_page, RESULTS_PER_PAGE).local_and_downloading.order(created_at: :desc).all.to_a
