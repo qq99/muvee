@@ -45,7 +45,7 @@ Rails.application.routes.draw do
       get :show_episode_details
       get :discover
       get :search
-      post :discover_series
+      post :discover_more
     end
     member do
       get :find_episode

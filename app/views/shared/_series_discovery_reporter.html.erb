@@ -1,0 +1,22 @@
+<div
+class='job-reporter'
+define="{seriesDiscovery: new Muvee.ProgressReporter(this, 'SeriesDiscoveryWorker')}">
+  <div class="job-reporter-grid hide" bind-class="{hide: seriesDiscovery.isHidden()}">
+    <div class="job-name">
+      Finding new series...
+    </div>
+    <div class="job-details">
+      <div class="progress-bar__container">
+        <div class="progress-bar__bar animates" bind-attribute="{style: seriesDiscovery.progressCssWidth()}"></div>
+
+        <div class="job-info">
+          <div class="job-quantity">
+            <span class="job-current" bind="seriesDiscovery.current"></span><span class="job-max" bind="seriesDiscovery.max"></span>
+          </div>
+          <div class="job-message" bind="seriesDiscovery.substatus"></div>
+          <div class="job-progress" bind="seriesDiscovery.progressPercent()"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

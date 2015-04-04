@@ -10,6 +10,10 @@ class Muvee.MuveeSocket
         evt = new CustomEvent("muvee:progress_reporter:VideoCreationService", {'detail': data})
         document.dispatchEvent(evt)
 
+      else if data.type == "SeriesDiscoveryWorker"
+        evt = new CustomEvent("muvee:progress_reporter:SeriesDiscoveryWorker", {'detail': data})
+        document.dispatchEvent(evt)
+
       else if data.type == "TorrentInformation"
         torrents = data.results
         for data in torrents

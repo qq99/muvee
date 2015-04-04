@@ -328,6 +328,14 @@ h3.year {
   }
 }
 
+.index-actions {
+  padding: 2em;
+  color: white;
+  h1, h2, h3, h4, h5 {
+    color: $less-radical-blue;
+  }
+}
+
 .movie-actions__section {
   padding: 2em;
   text-align: left;

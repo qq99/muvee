@@ -16,10 +16,6 @@ class VideoCreationService
     return [new_tv_shows, failed_tv_shows, new_movies, failed_movies]
   end
 
-  def create_tv_shows
-
-  end
-
   def eligible_files(files)
     files.select{|file| Video::SERVABLE_CONTAINERS.include? File.extname(file) }
   end

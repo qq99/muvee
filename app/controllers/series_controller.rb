@@ -29,11 +29,7 @@ class SeriesController < ApplicationController
     paged
     @section = :discover
     @series = Series.without_episodes.paginated(cur_page, RESULTS_PER_PAGE).all
-    render 'index'
-  end
-
-  def discover_series
-    SeriesDiscoveryWorker.perform_async
+    render 'remote'
   end
 
   def newest_episodes
@@ -105,6 +101,11 @@ class SeriesController < ApplicationController
   def reanalyze
     @series.reanalyze
     render json: {status: "ok"}
+  end
+
+  def discover_more
+    SeriesDiscoveryWorker.perform_async
+    redirect_to discover_series_index_path
   end
 
   private
