@@ -2,8 +2,7 @@ class Muvee.FixedSearch
 
   INPUT_SELECTOR = '.fixed-search__input'
 
-  constructor: (node) ->
-    @visible = false
+  constructor: (@node) ->
     @bindGlobalListener()
 
     $(".fixed-search__input").on "keydown.FixedSearch", (ev) =>
@@ -13,7 +12,6 @@ class Muvee.FixedSearch
     @globalListener = $(document).on 'keydown.FixedSearch', (ev) =>
       if ev.keyCode == 84 # t
         @show()
-        Twine.refresh()
         ev.preventDefault()
 
   clearGlobalListener: ->
@@ -24,12 +22,17 @@ class Muvee.FixedSearch
     $(INPUT_SELECTOR).val('')
 
   show: ->
+    $(@node).removeClass('hide')
     @clearGlobalListener()
     @clear()
-    @visible = true
-    $(INPUT_SELECTOR).focus()
+    setTimeout =>
+      $(@node).addClass('is-active')
+      $(INPUT_SELECTOR).focus()
+    , 250
 
-  hide: ->
-    @visible = false
+  hide: =>
     @bindGlobalListener()
-    Twine.refresh()
+    $(@node).removeClass('is-active')
+    setTimeout =>
+      $(@node).addClass('hide')
+    , 250

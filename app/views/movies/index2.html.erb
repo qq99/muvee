@@ -1,19 +1,5 @@
 <%= render 'subnav' %>
-
-<div class="fixed-search" define="{fixedSearch: new Muvee.FixedSearch(this)}" bind-class="{'is-active': fixedSearch.visible}">
-  <i class="fa fa-search"></i>
-  <%= form_tag search_movies_path,
-  method: 'GET',
-  'tg-remote' => true,
-  'refresh-on-success' => 'results' do %>
-
-  <input class="fixed-search__input" type="text" name="query" value="" autocomplete="off" placeholder="Which movie do you want to see today?">
-  <% end %>
-
-  <i class="fa fa-close" bind-event-click="fixedSearch.hide()"></i>
-</div>
-
-
+<%= render 'movies_fixed_search' %>
 
 <div id="results" class="tile-list" define="{pager: new Muvee.Pager(this)}" refresh="results">
   <% while @movies.size > 0 %>
