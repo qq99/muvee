@@ -1,0 +1,22 @@
+<div
+class='job-reporter'
+define="{scanner: new Muvee.ProgressReporter(this, 'VideoCreationService')}">
+  <div class="job-reporter-grid hide" bind-class="{hide: scanner.isHidden()}">
+    <div class="job-name">
+      Scanning your library...
+    </div>
+    <div class="job-details">
+      <div class="progress-bar__container">
+        <div class="progress-bar__bar animates" bind-attribute="{style: scanner.progressCssWidth()}"></div>
+
+        <div class="job-info">
+          <div class="job-quantity">
+            <span class="job-current" bind="scanner.current"></span><span class="job-max" bind="scanner.max"></span>
+          </div>
+          <div class="job-message" bind="scanner.substatus"></div>
+          <div class="job-progress" bind="scanner.progressPercent()"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
