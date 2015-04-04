@@ -4,7 +4,7 @@ class MoviesController < ApplicationController
   RESULTS_PER_PAGE = 24
 
   def index
-    newest
+    all
   end
 
   def search
@@ -22,7 +22,7 @@ class MoviesController < ApplicationController
 
   def all
     @section = :all
-    @movies = Movie.local_and_downloading.shuffle.to_a
+    @movies = Movie.paginated(cur_page, RESULTS_PER_PAGE).order('random()').to_a
     render 'index2'
   end
 
