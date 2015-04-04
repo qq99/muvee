@@ -9,6 +9,10 @@
 
 <div id="movie_show">
 
+  <% if @movie.remote? %>
+    <%= render 'delete_movie_button', movie: @movie %>
+  <% end %>
+
   <div class="movie-information">
     <div class="movie-information-meta">
 
@@ -63,7 +67,6 @@
       </p>
     </div>
 
-
     <div class="movie-actions">
       <div class="movie-actions-contents">
         <% if @movie.local? %>
@@ -72,8 +75,6 @@
         <div class="inline-buttons">
           <% if @movie.local? %>
             <%= link_to "Re-analyze", reanalyze_movie_path(@movie), class: 'action-button', "tg-remote" => "POST" %>
-          <% else %>
-            <%= render 'delete_movie_button', movie: @movie %>
           <% end %>
 
           <% if @movie.local? %>
@@ -85,19 +86,20 @@
           <% end %>
         </div>
 
-        <% if @movie.downloading? %>
-          <% if @movie.torrents.count > 0 %>
-            There's <%= pluralize(@movie.torrents.size, 'torrent') %> associated with this movie.
-          <% else %>
-            There are no torrents associated with this movie.
-          <% end %>
-        <% end %>
-
         <% if @movie.sources.size > 0 %>
           <h2>Download more sources</h2>
         <% else %>
           <h2>Download this movie</h2>
         <% end %>
+
+        <% if @movie.downloading? %>
+          <% if @movie.torrents.count > 0 %>
+            <p>Download in progress. There's <%= pluralize(@movie.torrents.size, 'torrent') %> associated with this movie.</p>
+          <% else %>
+            <p>Finalizing download.</p>
+          <% end %>
+        <% end %>
+
         <div id="yts-sources" refresh="yts-sources">
           <%= link_to "Search YTS", find_sources_via_yts_movie_path(@movie, q: @movie.title), "tg-remote" => "GET", "refresh-on-success" => "yts-sources", class: "yts-logo tracker-logo" %>
         </div>

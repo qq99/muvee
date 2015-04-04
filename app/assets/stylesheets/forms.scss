@@ -31,6 +31,9 @@ $form-element-roundedness: 3px;
   i.fa {
     margin-right: 0.25em;
   }
+  :last-child {
+    margin-right: 0 !important;
+  }
 }
 
 form.inline-form {

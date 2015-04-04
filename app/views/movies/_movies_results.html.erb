@@ -3,7 +3,7 @@
   <% empty = @movies.size == 0 %>
 
   <% while @movies.size > 0 %>
-  <%= layout(@movies) %>
+    <%= layout(@movies) %>
   <% end %>
 
   <% if empty && params[:query] %>

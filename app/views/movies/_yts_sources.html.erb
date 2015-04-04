@@ -27,9 +27,13 @@
             torrent = @torrents.find{ |t| t.source == source_url }
           %>
           <% if torrent.present? %>
-            <div class="torrent-progress-meter" data-torrent-progress-url="<%= status_torrent_path(torrent) %>">
-              <div class="torrent-progress"></div>
-              <span class="downloading">Downloading...</span>
+            <div context="source-torrent<%= torrent.id %>">
+              <div
+                style='height: 5px;'
+                class="progress-bar__container"
+                define="{torrent: new Muvee.ProgressReporter(this, 'TorrentInformation<%= torrent.id %>')}">
+                <div class="progress-bar__bar animates" bind-attribute="{style: torrent.progressCssWidth()}"></div>
+              </div>
             </div>
           <% else %>
             <%= form_tag download_movie_path(@movie), method: "post" do %>

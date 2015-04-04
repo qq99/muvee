@@ -208,3 +208,10 @@ $fixed-search-padding: 3em;
   align-items: center;
   justify-content: center;
 }
+
+.trash-badge {
+  position: absolute;
+  z-index: 10;
+  top: 1em;
+  right: 1em;
+}
