@@ -1,0 +1,18 @@
+<div id="results" class="tile-list" define="{pager: new Muvee.Pager(this)}" refresh="results">
+
+  <% empty = @movies.size == 0 %>
+
+  <% while @movies.size > 0 %>
+  <%= layout(@movies) %>
+  <% end %>
+
+  <% if empty && params[:query] %>
+    <div class="index-notice">
+      <h3>
+        Nothing was found for <span class="note"><%= params[:query] %></span>.
+      </h3>
+      <%= link_to 'Search the net', movie_search_movies_path(q: params[:query]), "tg-remote" => "POST", "refresh-on-success" => "results", class: 'action-button' %>
+
+    </div>
+  <% end %>
+</div>

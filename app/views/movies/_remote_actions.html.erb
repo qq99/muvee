@@ -1,5 +1,5 @@
-<div class="movie-actions--remote">
-  <div class="movie-actions__section" define="{findClicked: false}">
+<div class="index-actions">
+  <div class="index-actions__section" define="{findClicked: false}">
     <h3>Discover more movies</h3>
     <span bind-event-click="findClicked = true" bind-show="!findClicked">
       <%= link_to discover_more_movies_path, class: 'action-button' do %>
@@ -9,8 +9,8 @@
     </span>
     <div class="action-button hide" bind-show="findClicked">Finding...</div>
   </div>
-  <div class="movie-actions__section">
-    <%= form_tag movie_search_movies_path, method: "POST", "tg-remote" => true, "refresh-on-success" => "movies-index-panel n-remote-results" do %>
+  <div class="index-actions__section">
+    <%= form_tag movie_search_movies_path, method: "POST", "tg-remote" => true, "refresh-on-success" => "results" do %>
       <h3><%= label_tag :q, "Search the net:" %></h3>
       <div class="action-button-group">
         <%= text_field_tag :q, '', class: 'action-button', placeholder: 'e.g., Skyfall' %><%= button_tag type: "submit", class: 'action-button' do %>
@@ -30,5 +30,4 @@
       <% end %>
     </div>
   </div>
-  <div class="clearfix"></div>
 </div>

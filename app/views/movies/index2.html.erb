@@ -1,8 +1,3 @@
 <%= render 'subnav' %>
 <%= render 'movies_fixed_search' %>
-
-<div id="results" class="tile-list" define="{pager: new Muvee.Pager(this)}" refresh="results">
-  <% while @movies.size > 0 %>
-    <%= layout(@movies) %>
-  <% end %>
-</div>
+<%= render 'movies_results' %>
