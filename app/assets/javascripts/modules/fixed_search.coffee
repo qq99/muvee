@@ -9,14 +9,13 @@ class Muvee.FixedSearch
       @hide() if ev.keyCode == 27 || ev.keyCode == 13 # esc
 
   bindGlobalListener: ->
-    @globalListener = $(document).on 'keydown.FixedSearch', (ev) =>
+    $(document).on 'keydown.FixedSearch', (ev) =>
       if ev.keyCode == 84 # t
         @show()
         ev.preventDefault()
 
   clearGlobalListener: ->
-    console.log 'Manual unbind'
-    @globalListener.off()
+    $(document).off(".FixedSearch")
 
   clear: ->
     $(INPUT_SELECTOR).val('')
