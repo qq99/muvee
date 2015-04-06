@@ -68,6 +68,7 @@ group :test do
 end
 
 group :development, :test do
+  gem 'byebug'
   gem 'pry-rails'
   gem 'bond'
   gem 'pry-byebug'

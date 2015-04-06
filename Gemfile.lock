@@ -341,6 +341,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bond
+  byebug
   chronic_duration
   coffee-rails (~> 4.0.0)
   color
