@@ -72,7 +72,7 @@ class SeriesController < ApplicationController
       @videos = @all_episodes
     end
 
-    @seasons = @all_episodes.map{|v| v.season}.uniq.sort
+    @seasons = @all_episodes.map{|v| v.season}.uniq.compact.sort
   end
 
   def show_episode_details
