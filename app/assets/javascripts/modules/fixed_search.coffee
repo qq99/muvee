@@ -11,6 +11,7 @@ class Muvee.FixedSearch
   bindGlobalListener: ->
     $(document).on 'keydown.FixedSearch', (ev) =>
       if ev.keyCode == 84 # t
+        return if ev.target.tagName == 'INPUT'
         @show()
         ev.preventDefault()
 
