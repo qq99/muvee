@@ -64,6 +64,8 @@ http {
     listen 8080;
     listen [::]:8080 default ipv6only=on;
 
+    expires 5m;
+
     access_log <%= @app_root %>/tmp/access.log;
     error_log <%= @app_root %>/tmp/error.log;
 
@@ -78,6 +80,9 @@ http {
     }
 
     location ~ ^/(fonts|fanart|banners|posters|thumbnails) {
+      expires 30d;
+      add_header Pragma public;
+      add_header Cache-Control "public";
       root <%= @app_root %>/public;
     }
 
