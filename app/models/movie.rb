@@ -23,7 +23,7 @@ class Movie < Video
   end
 
   def search_for_imdb_id
-    return imdb_id if imdb_id.present? && imdb_id_is_accurate
+    return imdb_id if imdb_id.present?
     Rails.logger.info "[search_for_imdb_id] Searching TMDB for an ID for: #{title}"
     imdb_id = TmdbMovieResult.get(search_tmdb_for_id).data.try(:[], :imdb_id)
   end
@@ -47,7 +47,7 @@ class Movie < Video
     self.overview = metadata[:overview]
     self.language = metadata[:spoken_languages].map{|d| d.values.first}.flatten.join(", ")
     self.country = metadata[:production_countries].map{|d| d.values.last}.flatten.join(", ")
-    self.imdb_id = metadata[:imdb_id]
+    self.imdb_id = metadata[:imdb_id] unless imdb_id.present?
     self.save
   end
 

@@ -92,8 +92,7 @@ class MoviesController < ApplicationController
       movie ||= Movie.create(
         status: "remote",
         title: result[:Title],
-        imdb_id: result[:imdbID],
-        imdb_id_is_accurate: true
+        imdb_id: result[:imdbID]
       )
       @movies << movie
     end
@@ -115,7 +114,20 @@ class MoviesController < ApplicationController
   end
 
   def override_imdb_id
-    @movie.update_attributes(imdb_id: params[:movie][:imdb_id], imdb_id_is_accurate: true)
+    unless @movie.update_attributes(imdb_id: params[:movie][:imdb_id]) # movie already exists, find it, and swap sources
+      existing_movie = Movie.find_by(imdb_id: params[:movie][:imdb_id])
+      @movie.sources.each do |source|
+        source.update_attribute(:video_id, existing_movie.id)
+      end
+
+      existing_movie.reanalyze
+      existing_movie.redownload
+
+      response.headers['X-Next-Redirect'] = movie_path(existing_movie)
+      head :ok
+      return
+    end
+
     @movie.reanalyze
     @movie.redownload
 

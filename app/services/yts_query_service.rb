@@ -12,8 +12,7 @@ class YtsQueryService
         movie = Movie.create(
           status: "remote",
           title: m[:MovieTitleClean],
-          imdb_id: m[:ImdbCode],
-          imdb_id_is_accurate: true
+          imdb_id: m[:ImdbCode]
         )
         results << movie.persisted?
       end

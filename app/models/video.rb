@@ -51,6 +51,7 @@ class Video < ActiveRecord::Base
   end
 
   def reset_status
+    Video.reset_counters(id, :sources)
     if torrents.count > 0
       self.status = 'downloading'
     elsif sources.count > 0
@@ -132,6 +133,7 @@ class Video < ActiveRecord::Base
     sources.each do |source|
       source.reanalyze
     end
+    reset_status
     shellout_and_grab_duration if duration.blank? || duration == 0
     if empty_or_missing_thumbnails?
       thumbnails.destroy_all
