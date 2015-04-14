@@ -51,7 +51,7 @@ class Video < ActiveRecord::Base
   end
 
   def reset_status
-    Video.reset_counters(id, :sources)
+    Video.reset_counters(id, :sources) if id.present?
     if torrents.count > 0
       self.status = 'downloading'
     elsif sources.count > 0
