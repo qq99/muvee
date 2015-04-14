@@ -1,17 +1,26 @@
 <%= render 'subnav' %>
 <div class="inline-movie-preview" define="{backgroundArtSlideshow: new Muvee.AutoSlideshow(this).transition().start()}">
   <div class="js-slideshow featured-image">
-    <% @movie.fanarts.shuffle.each do |art| %>
-      <div class="js-slide movie-background hidden" data-background-url="<%= art.url %>"></div>
+    <% if @movie.fanarts.present? %>
+      <% @movie.fanarts.shuffle.each do |art| %>
+        <div class="js-slide movie-background hidden" data-background-url="<%= art.url %>"></div>
+      <% end %>
     <% end %>
   </div>
 </div>
 
 <div id="movie_show">
 
-  <% if @movie.remote? %>
-    <%= render 'delete_movie_button', movie: @movie %>
-  <% end %>
+  <div class="action-badges">
+
+    <%= link_to reanalyze_movie_path(@movie), class: 'badge', "tg-remote" => "POST" do %>
+      <i class="fa fa-refresh"></i>
+    <% end %>
+
+    <% if @movie.remote? %>
+      <%= render 'delete_movie_button', movie: @movie %>
+    <% end %>
+  </div>
 
   <div class="movie-information">
     <div class="movie-information-meta">
@@ -73,10 +82,6 @@
           <%= render 'thumbnail_play', movie: @movie %>
         <% end %>
         <div class="inline-buttons">
-          <% if @movie.local? %>
-            <%= link_to "Re-analyze", reanalyze_movie_path(@movie), class: 'action-button', "tg-remote" => "POST" %>
-          <% end %>
-
           <% if @movie.local? %>
             <%= form_for @movie, url: override_imdb_id_movie_path(@movie), html: {'tg-remote' => true, class: 'inline-form'} do |f| %>
               <div class="action-button-group">
