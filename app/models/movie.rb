@@ -86,6 +86,7 @@ class Movie < Video
     backgrounds = backgrounds.map do |bg|
       path = bg.try(:[], :file_path)
       if path
+        path.gsub!(/^\//, '') # trim beginning slash
         "http://image.tmdb.org/t/p/original/#{path}"
       else
         nil
@@ -102,6 +103,7 @@ class Movie < Video
     posters = posters.map do |poster|
       path = poster.try(:[], :file_path)
       if path
+        path.gsub!(/^\//, '') # trim beginning slash
         "http://image.tmdb.org/t/p/original/#{path}"
       else
         nil
