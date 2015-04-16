@@ -2,6 +2,7 @@ class Source < ActiveRecord::Base
   include HasMetadata
   belongs_to :video, counter_cache: true
 
+  validates :raw_file_path, unique: true
   before_validation :associate_self_with_video, on: :create
 
   after_create :trigger_post_source_actions

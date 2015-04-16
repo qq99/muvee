@@ -6,6 +6,8 @@ class Series < ActiveRecord::Base
   before_destroy :destroy_images
   before_validation :extract_metadata, on: :create
 
+  validates :title, presence: true
+
   validates_uniqueness_of :tvdb_id, allow_nil: false, allow_blank: false
 
   POSTER_FOLDER = Rails.root.join('public', 'posters')

@@ -9,7 +9,8 @@
           <div class="tile__meta">
             <h3 class="video-year"><%= year_month_day(show.released_on) %></h3>
             <h3 class="video-type"><%= show.season_episode %></h3>
-            <h1 class="video-title"><%= link_to show.title || show.sources.first.raw_file_path, show_source_video_path(show) %></h1>
+            <% effective_title = show.title || show.sources.first.raw_file_path %>
+            <h1 class="video-title" title="<%= effective_title %>"><%= link_to effective_title, show_source_video_path(show) %></h1>
             <p class="video-description">
               <%= show.overview %>
             </p>

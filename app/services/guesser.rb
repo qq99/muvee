@@ -149,7 +149,7 @@ class Guesser
   end
 
   def self.pretty_title(str)
-    str.gsub(/[\.\_\-]/, ' ').titleize.squish.strip
+    str.gsub(/[\.\_\-]/, ' ').split(" ").map(&:capitalize).join(" ").squish.strip
   end
 
 end
