@@ -225,3 +225,19 @@ $tile-transition-delay: 0.30s;
 .torrent-progress .progress-bar__bar {
   background: $less-radical-blue;
 }
+
+@media (max-width: 1200px) {
+  .tile {
+    width: 100%;
+    height: 300px;
+  }
+  .tile-row {
+    flex-wrap: nowrap;
+    flex-direction: column;
+    height: auto;
+  }
+  .col-2-3, .col-1-3 {
+    width: 100%;
+    flex: 1 0 auto;
+  }
+}
