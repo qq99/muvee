@@ -13,38 +13,29 @@
   }
 }
 
+.flex-fixed {
+  flex: 0 0 auto;
+}
+
 #series {
   width: 100%;
   height: 100%;
+  display: flex;
   overflow: hidden;
+
+  .series-information, .video-list {
+    flex: 1 1 50%;
+    background: rgba(0,0,0,0.85);
+    color: white;
+    padding: 3em;
+    overflow-y: auto;
+  }
+
   .badges {
     margin: 0.25em 0;
   }
   .badge-listing {
     margin: 0.2em 0;
-  }
-  .series-information, .video-list {
-    position: absolute;
-    height: 100%;
-    top: 0;
-  }
-  .series-information {
-    overflow-y: auto;
-    width: 40%;
-    left: 0;
-    padding: 3em;
-    background: rgba(0,0,0,0.9);
-    color: white;
-    h2 {
-      font-weight: 300;
-    }
-  }
-  .video-list {
-    overflow-y: scroll;
-    background: rgba(0,0,0,0.9);
-    width: 60%;
-    left: 40%;
-    color: white;
   }
   .video-list-container {
     padding: 3em;
@@ -117,6 +108,8 @@
 }
 
 .series-featured-image {
+  position: absolute;
+  z-index: -1;
   width: 100%;
   height: 100%;
   opacity: 0.8;
@@ -155,8 +148,11 @@
 .episode-torrent-source {
   display: flex;
   align-items: center;
+  span {
+    flex: 1 1 auto;
+  }
   > * {
-    margin: 0 1em;
+    margin-right: 0.5em;
   }
 }
 

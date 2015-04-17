@@ -5,8 +5,8 @@
   class="series-episode">
   <div>
     <div class="video-quick-summary">
-      <span class="season-and-episode"><%= video.episode %></span>
-      <%= link_to '#', class: 'icon-link' do %>
+      <span class="flex-fixed season-and-episode"><%= video.episode %></span>
+      <%= link_to '#', class: 'flex-fixed icon-link' do %>
         <i class="fa fa-download"></i>
       <% end %>
       <%= link_to video.episode_name || "No title available",
@@ -51,18 +51,13 @@
           <% @torrent_sources.each do |torrent_source| %>
             <div class="episode-torrent-source">
               <span><%= torrent_source[:title] %></span>
-              <%= form_tag download_series_path(video.series, video),
-                method: "post",
-                'tg-remote' => true,
+              <%= link_to download_series_path(video.series, video, download_url: torrent_source[:magnet_link]),
+                class: 'action-button flex-fixed',
+                'tg-remote' => "post",
                 'refresh-on-success' => "video-#{video.id}" do %>
-
-                <%= hidden_field_tag :download_url, torrent_source[:magnet_link] %>
-                <%= button_tag type: "submit", class: 'action-button' do %>
-                  <i class="fa fa-download"></i>
-                  Download
-                <% end %>
+                  <i class="fa fa-download"></i> Download
               <% end %>
-              <a class="action-button" href="<%= torrent_source[:magnet_link] %>">
+              <a class="flex-fixed action-button" href="<%= torrent_source[:magnet_link] %>">
                 <i class="fa fa-magnet"></i> Magnet URL
               </a>
             </div>

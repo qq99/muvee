@@ -37,28 +37,26 @@
     </div>
   </div>
   <div class="video-list">
-    <div class="video-list-container">
-      <%
-        grouped_by_season = @videos.group_by{|v| v.season}
-      %>
-      <% grouped_by_season.keys.each do |season| %>
-        <div class="series-season">
-          <h3>Season <%= season %></h3>
+    <%
+      grouped_by_season = @videos.group_by{|v| v.season}
+    %>
+    <% grouped_by_season.keys.each do |season| %>
+      <div class="series-season">
+        <h3>Season <%= season %></h3>
 
-          <% grouped_by_season[season].each do |video| %>
-            <% if video.local? %>
-              <%= render 'episode', video: video, detailed: false %>
-            <% else %>
-              <%= render 'remote_episode', video: video, detailed: false %>
-            <% end %>
+        <% grouped_by_season[season].each do |video| %>
+          <% if video.local? %>
+            <%= render 'episode', video: video, detailed: false %>
+          <% else %>
+            <%= render 'remote_episode', video: video, detailed: false %>
           <% end %>
-        </div>
+        <% end %>
+      </div>
 
-      <% end %>
+    <% end %>
 
-      <% if @videos.size == 0 && @sort == :unwatched %>
-        <h2>It looks like you've seen everything!</h2>
-      <% end %>
-    </div>
+    <% if @videos.size == 0 && @sort == :unwatched %>
+      <h2>It looks like you've seen everything!</h2>
+    <% end %>
   </div>
 </div>
