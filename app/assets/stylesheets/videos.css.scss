@@ -139,7 +139,7 @@ a.back {
   z-index: 2;
   overflow: hidden;
   float: left;
-  width: 20em;
+  flex: 1 1 auto;
   color: white;
   padding: 0.25em;
   font-size: 1.4em;

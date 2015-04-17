@@ -14,6 +14,9 @@ $tile-transition-delay: 0.30s;
   flex-direction: row;
   height: 66.6666%;
 }
+.tile-row--1-3 {
+  height: 33%;
+}
 .tile-row--banner {
   height: 34%;
   border-bottom: 1px solid #222;
@@ -239,8 +242,5 @@ $tile-transition-delay: 0.30s;
   .col-2-3, .col-1-3 {
     width: 100%;
     flex: 1 0 auto;
-  }
-  .poster {
-    max-width: 100%;
   }
 }

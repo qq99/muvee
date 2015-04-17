@@ -3,7 +3,7 @@
 <% if @shows.present? %>
   <div class="tile-list" <% if @_is_paged %>define="{pager: new Muvee.Pager(this)}"<% end %>>
     <% @shows.each_slice(3) do |shows_slice| %>
-    <div class="tile-row" style='height: 33%;'>
+    <div class="tile-row tile-row--1-3">
       <% shows_slice.each do |show| %>
         <div class="tile" context="tile<%= show.id %>">
           <div class="tile__meta">
