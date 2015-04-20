@@ -4,6 +4,8 @@ class Muvee.VideoPlayer
     @setLeftOffAtTime = _.throttle(@_setLeftOffAtTime.bind(this), 1000)
     @videoEl = $(@node).find("video")[0]
 
+    @volumePreference = parseFloat(localStorage.getItem("volume-preference")) || 1.0
+
     params = URI(document.location).search(true)
 
     if params.t
@@ -15,6 +17,7 @@ class Muvee.VideoPlayer
 
     # HTML5 video events: http://www.w3.org/TR/html5/embedded-content-0.html#mediaevents
     $(@videoEl).one "canplay.VideoPlayer", =>
+      @setVolume(@volumePreference)
       unless @opts.duration && (@opts.duration - startAt) < 30 # don't set time if we're already near the end
         @setCurrentTime(startAt)
 
@@ -48,9 +51,9 @@ class Muvee.VideoPlayer
         when 39 # right arrow
           @stepForwards()
         when 40 # up arrow
-          @videoEl.volume = Math.max(0, @videoEl.volume - 0.05)
+          @setVolume(@videoEl.volume - 0.05)
         when 38 # down arrow
-          @videoEl.volume = Math.min(1.0, @videoEl.volume + 0.05)
+          @setVolume(@videoEl.volume + 0.05)
 
     Page.onReplace @node, @destructor
 
@@ -101,17 +104,21 @@ class Muvee.VideoPlayer
 
   clickVolumeBar: (ev) ->
     clickedRatio = (ev.offsetX / $(ev.currentTarget).width())
-    @videoEl.volume = Math.max(0, Math.min(clickedRatio, 1))
+    @setVolume(clickedRatio)
+
+  setVolume: (newVolume) ->
+    @videoEl.volume = Math.max(0, Math.min(newVolume, 1))
+    localStorage.setItem("volume-preference", @videoEl.volume)
 
   updateVolumeBar: ->
     $("#volume-bar .progress-bar__bar", @node).css("width", "#{@percentageVolume()}%")
 
   toggleMute: ->
     if @muted()
-      @videoEl.volume = @previousVolume || 1
+      @setVolume(@previousVolume || 1)
     else
       @previousVolume = @videoEl.volume
-      @videoEl.volume = 0
+      @setVolume(0)
 
   secondsToHuman: (seconds) ->
     hours = parseInt(seconds / (60*60), 10)
