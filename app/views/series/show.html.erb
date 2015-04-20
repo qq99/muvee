@@ -30,7 +30,7 @@
       <% end %>
 
       <% if @videos.size > 0 %>
-        <%= link_to show_source_video_path(@videos.map(&:id).sample, shuffle: true, series_id: @series.id), class: 'action-button' do %>
+        <%= link_to show_source_video_path(@videos.select(&:local?).map(&:id).sample, shuffle: true, series_id: @series.id), class: 'action-button' do %>
           <i class="fa fa-random"></i> Shuffle
         <% end %>
       <% end %>
