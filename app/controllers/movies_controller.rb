@@ -78,6 +78,9 @@ class MoviesController < ApplicationController
   def find_sources_via_pirate_bay
     @query = params[:q]
     @results = ThePirateBay::Search.new(@query, 0, ThePirateBay::SortBy::Seeders, ThePirateBay::Category::Video).results
+    @results.reject! do |result|
+      result[:seeders] == 0
+    end
     render partial: 'shared/pirate_bay_sources', locals: {sources: @results, video: @movie, download_path: download_movie_path(@movie)}
   end
 

@@ -15,7 +15,13 @@
           <% torrent = Torrent.find_by(source: source[:magnet_link]) %>
           <tr>
             <td><%= source[:title] %></td>
-            <td><%= (source[:seeders].to_f / source[:leechers].to_f).round(2) %></td>
+            <td>
+              <% if source[:leechers].to_f > 0 %>
+                <%= (source[:seeders].to_f / source[:leechers].to_f).round(2) %>
+              <% else %>
+                -
+              <% end %>
+            </td>
             <td><%= source[:seeders] %></td>
             <td><%= source[:leechers] %></td>
             <td>
