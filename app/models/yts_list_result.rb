@@ -4,8 +4,8 @@ class YtsListResult < ExternalMetadata
     :json
   end
 
-  def should_fetch
-    self.updated_at.blank? || (self.updated_at.present? && self.updated_at <= 60.minutes.ago)
+  def staleness_factor
+    1.hour.ago
   end
 
   def self.endpoint_url(page)
