@@ -351,6 +351,7 @@ DEPENDENCIES
   foreman
   guard
   guard-minitest
+  httparty
   hue!
   jbuilder (~> 2.0)
   jquery-rails

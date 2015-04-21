@@ -20,7 +20,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'lodash-rails'
 gem "font-awesome-rails"
-
+gem 'httparty'
 gem 'tubesock'
 gem 'event_bus'
 gem 'redis'
