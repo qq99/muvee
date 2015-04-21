@@ -14,11 +14,15 @@ class ExternalMetadata < ActiveRecord::Base
     result
   end
 
+  def staleness_factor
+    6.hours.ago
+  end
+
   def should_fetch
     last_touched = updated_at.presence || created_at.presence
     never_touched = last_touched.blank?
 
-    never_touched || (last_touched <= 6.hours.ago)
+    never_touched || (last_touched <= staleness_factor)
   end
 
   def fetch_data
