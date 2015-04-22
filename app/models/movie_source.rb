@@ -17,6 +17,7 @@ class MovieSource < Source
   end
 
   def reanalyze
+    super
     guessed = Guesser::Movie.guess_from_filepath(raw_file_path)
     self.quality = guessed[:quality]
     self.is_3d = guessed[:three_d]
