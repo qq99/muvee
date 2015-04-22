@@ -1,18 +1,18 @@
 class YtsQueryService
   def self.query(page)
     query = YtsListResult.get(page).data
-    remote_movies = query[:MovieList]
+    remote_movies = query[:data][:movies]
     return ["error"] if remote_movies.blank?
 
     results = []
     remote_movies.each do |m|
-      if Movie.exists?(imdb_id: m[:ImdbCode])
+      if Movie.exists?(imdb_id: m[:imdb_code])
         results << false
       else
         movie = Movie.create(
           status: "remote",
-          title: m[:MovieTitleClean],
-          imdb_id: m[:ImdbCode]
+          title: m[:title],
+          imdb_id: m[:imdb_code]
         )
         results << movie.persisted?
       end
