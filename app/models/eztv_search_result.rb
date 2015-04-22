@@ -88,7 +88,7 @@ class EztvSearchResult
   end
 
   def self.search(query)
-    query.gsub!(/'/, '')
+    query.gsub!(/[\(\)']/, '')
     instance = self.new
     response = instance.search_eztv(query)
     return [] if response.blank?
