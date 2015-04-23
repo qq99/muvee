@@ -22,16 +22,26 @@ class MoviesController < ApplicationController
 
   def all
     @section = :all
-    @movies = Movie.paginated(cur_page, RESULTS_PER_PAGE).order('random()').to_a
-    render 'index2'
+
+    scope = Movie.paginated(cur_page, RESULTS_PER_PAGE).order('random()')
+
+    @prev_movie, @movies, @next_movie = paged(scope)
+
+    if @movies.size > 0
+      render 'index2', locals: {paginator_path: self.method(:all_movies_path)}
+    else
+      head :not_found
+    end
   end
 
   def newest
     @section = :newest
-    @movies = Movie.paginated(cur_page, RESULTS_PER_PAGE).local_and_downloading.order(created_at: :desc).all.to_a
+    scope = Movie.local_and_downloading.order(created_at: :desc)
+
+    @prev_movie, @movies, @next_movie = paged(scope)
 
     if @movies.size > 0
-      render 'index2'
+      render 'index2', locals: {paginator_path: self.method(:newest_movies_path)}
     else
       head :not_found
     end
@@ -39,9 +49,15 @@ class MoviesController < ApplicationController
 
   def remote
     @section = :discover
-    @movies = Movie.paginated(cur_page, RESULTS_PER_PAGE).remote.order(created_at: :desc).to_a
+    scope = Movie.remote.order(created_at: :desc)
 
-    render 'remote'
+    @prev_movie, @movies, @next_movie = paged(scope)
+
+    if @movies.size > 0
+      render 'remote', locals: {paginator_path: self.method(:remote_movies_path)}
+    else
+      head :not_found
+    end
   end
 
   def genres
@@ -138,6 +154,23 @@ class MoviesController < ApplicationController
   end
 
   private
+
+    def paged(scope)
+      @_is_paged = true
+      @current_page = cur_page
+      @next_page = cur_page + 1
+      @prev_page = cur_page - 1
+
+      prev_offset = (@current_page * RESULTS_PER_PAGE) - 1
+      next_offset = (@current_page * RESULTS_PER_PAGE) + RESULTS_PER_PAGE
+
+      prev_resource = scope.limit(1).offset(prev_offset).first if prev_offset > 0
+      next_resource = scope.limit(1).offset(next_offset).first if next_offset > 0
+      current_resources = scope.paginated(@current_page, RESULTS_PER_PAGE).to_a
+
+      [prev_resource, current_resources, next_resource]
+    end
+
     def cur_page
       page = params[:page].to_i || 0
     end
