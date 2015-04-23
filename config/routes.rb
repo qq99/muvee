@@ -59,11 +59,11 @@ Rails.application.routes.draw do
       get :all
       get :remote
       get :newest
-      get :discover_more
       get :genres
       get 'genres/:type', as: :by_genre, action: :genre
       get :search
       post :movie_search, as: :movie_search, action: :movie_search
+      post :discover_more
     end
     member do
       post :find_sources_via_yts

@@ -2,7 +2,7 @@
   <div class="index-actions__section" define="{findClicked: false}">
     <h3>Discover more movies</h3>
     <span bind-event-click="findClicked = true" bind-show="!findClicked">
-      <%= link_to discover_more_movies_path, class: 'action-button' do %>
+      <%= link_to discover_more_movies_path, class: 'action-button', 'tg-remote' => 'POST' do %>
         <i class="fa fa-binoculars"></i>
         Sure, find me some
       <% end %>
