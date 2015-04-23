@@ -14,7 +14,7 @@
         <% sources.each do |source| %>
           <% torrent = Torrent.find_by(source: source[:magnet_link]) %>
           <tr>
-            <td><%= source[:title] %></td>
+            <td class="long" title="<%= source[:title] %>"><%= source[:title] %></td>
             <td>
               <% if source[:leechers].to_f > 0 %>
                 <%= (source[:seeders].to_f / source[:leechers].to_f).round(2) %>
@@ -24,7 +24,7 @@
             </td>
             <td><%= source[:seeders] %></td>
             <td><%= source[:leechers] %></td>
-            <td>
+            <td class="button-sized">
               <% unless torrent.present? %>
                 <%= form_tag download_path, method: "post" do %>
                   <%= hidden_field_tag :download_url, source[:magnet_link] %>

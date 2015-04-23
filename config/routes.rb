@@ -66,8 +66,8 @@ Rails.application.routes.draw do
       post :movie_search, as: :movie_search, action: :movie_search
     end
     member do
-      get :find_sources_via_yts
-      get :find_sources_via_pirate_bay
+      post :find_sources_via_yts
+      post :find_sources_via_pirate_bay
       post :download
       patch :override_imdb_id
       post :reanalyze

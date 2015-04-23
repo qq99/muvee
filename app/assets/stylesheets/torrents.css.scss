@@ -1,3 +1,29 @@
 // Place all the styles related to the Torrents controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#yts-sources, #tbp-sources {
+  table {
+    width: 100%;
+    font-weight: 200;
+  }
+  thead {
+    font-style: italic;
+    color: #aaa;
+  }
+  td {
+    padding: 0.1em 0.5em 0.1em 0;
+  }
+  td.long {
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 7.5em;
+    text-overflow: ellipsis;
+  }
+  td.button-sized {
+    width: 1em;
+  }
+  .action-button {
+    margin: 0;
+  }
+}

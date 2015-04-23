@@ -1,0 +1,27 @@
+<tr>
+  <td><%= source[:quality] %></td>
+  <td><%= source[:size] %></td>
+  <td><%= (source[:seeds].to_f / source[:peers].to_f).round(2) %></td>
+  <td><%= source[:seeds] %></td>
+  <td><%= source[:peers] %></td>
+  <td class="button-sized">
+    <% torrent = @torrents.find{ |t| t.source == source[:magnet] } %>
+    <% if torrent.present? %>
+      <div context="source-torrent<%= torrent.id %>">
+        <div
+          style='height: 5px;'
+          class="progress-bar__container"
+          define="{torrent: new Muvee.ProgressReporter(this, 'TorrentInformation<%= torrent.id %>')}">
+          <div class="progress-bar__bar animates" bind-attribute="{style: torrent.progressCssWidth()}"></div>
+        </div>
+      </div>
+    <% else %>
+      <%= form_tag download_movie_path(@movie), method: "post" do %>
+        <%= hidden_field_tag :download_url, source[:magnet] %>
+        <%= button_tag type: "submit", class: 'action-button' do %>
+          <i class="fa fa-download"></i>
+        <% end %>
+      <% end %>
+    <% end %>
+  </td>
+</tr>

@@ -106,10 +106,10 @@
         <% end %>
 
         <div id="yts-sources" refresh="yts-sources">
-          <%= link_to "Search YTS", find_sources_via_yts_movie_path(@movie, q: @movie.title), "tg-remote" => "GET", "refresh-on-success" => "yts-sources", class: "yts-logo tracker-logo" %>
+          <%= link_to "Search YTS", find_sources_via_yts_movie_path(@movie, q: @movie.title), "tg-remote" => "POST", "refresh-on-success" => "yts-sources", class: "yts-logo tracker-logo" %>
         </div>
         <div id="tbp-sources" refresh="tbp-sources">
-          <%= link_to "Search the Pirate Bay", find_sources_via_pirate_bay_movie_path(@movie, q: @movie.title), "tg-remote" => "GET", "refresh-on-success" => "tbp-sources", class: "tbp-logo tracker-logo" %>
+          <%= link_to "Search the Pirate Bay", find_sources_via_pirate_bay_movie_path(@movie, q: @movie.title), "tg-remote" => "POST", "refresh-on-success" => "tbp-sources", class: "tbp-logo tracker-logo" %>
         </div>
       </div>
     </div>

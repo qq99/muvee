@@ -1,5 +1,16 @@
 class TorrentManagerService
 
+  TRACKERS = %w(
+    udp://open.demonii.com:1337
+    udp://tracker.istole.it:80
+    http://tracker.yify-torrents.com/announce
+    udp://tracker.publicbt.com:80
+    udp://tracker.openbittorrent.com:80
+    udp://tracker.coppersurfer.tk:6969
+    udp://exodus.desync.com:6969
+    http://exodus.desync.com:6969/announce
+  ).freeze
+
   def initialize
     config = APP_CONFIG
     @start_path = config.torrent_start_path
@@ -68,11 +79,19 @@ class TorrentManagerService
   end
 
   def self.find_sources(remote_movie)
-    sources = YtsFindResult.get(remote_movie.fetch_imdb_id).data[:MovieList] || []
-    sources.sort_by {|s| s[:Quality].to_i} # TODO this doesn't work
-    sources.group_by do |source|
-      source[:Quality]
+    sources = YtsFindResult.get(remote_movie.fetch_imdb_id).data[:data].try(:[], :movies).try(:first).try(:[], :torrents) || []
+
+    # construct magnets
+    sources.each do |source|
+      source[:magnet] = self.construct_magnet_link(source[:hash], remote_movie.title)
     end
+
+    sources
+  end
+
+  def self.construct_magnet_link(torrent_hash, name)
+    trackers = TRACKERS.map{|t| CGI.escape(t)}.join("&tr=")
+    "magnet:?xt=urn:btih:#{torrent_hash}&dn=#{CGI.escape(name)}&tr=#{trackers}"
   end
 
   def download_tv_show(url, remote_video = nil)

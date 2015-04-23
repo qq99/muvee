@@ -9,7 +9,7 @@ class YtsFindResult < ExternalMetadata
   end
 
   def self.endpoint_url(imdb_id)
-    "https://yts.re/api/listimdb.json?imdb_id=#{imdb_id}"
+    "https://yts.to/api/v2/list_movies.json?query_term=#{imdb_id}"
   end
 
 end
