@@ -1,15 +1,32 @@
-<div id="results" refresh="results" style="padding: 1em;">
-  <% if @series.present? %>
-  <div class="tile-list" <% if @_is_paged %>define="{pager: new Muvee.Pager(this)}"<% end %>>
-    <% @series.each_slice(6) do |series_slice| %>
-      <div class="tile-row">
-        <% series_slice.each do |serie| %>
-          <%= render 'shared/poster', show_path: series_path(serie), poster_url: serie.poster_url, title: serie.title %>
-        <% end %>
-      </div>
+<div id="results" refresh="results" <% if @_is_paged %>define="{pager: new Muvee.Pager(this)}"<% end %> style="padding: 1em;">
+
+  <% if @prev_series.present? %>
+    <%= link_to paginator_path.call(page: @prev_page), class: 'pretty-pager top js-prev-page' do %>
+      <span class="pretty-pager__text">&lsaquo; Previous</span>
+      <div class="tile__background" style="background-image: url(<%= @prev_series.fanart_url %>);"></div>
+      <div class="pretty-pager__autoscroll-indicator" bind-attribute="{style: pager.prevProgressCssWidth()}"></div>
     <% end %>
-  </div>
+  <% end %>
+
+  <% if @series.present? %>
+    <div class="tile-list" >
+      <% @series.each_slice(6) do |series_slice| %>
+        <div class="tile-row">
+          <% series_slice.each do |serie| %>
+            <%= render 'shared/poster', show_path: series_path(serie), poster_url: serie.poster_url, title: serie.title %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   <% else %>
     <div>No series found.</div>
+  <% end %>
+
+  <% if @next_series.present? %>
+    <%= link_to paginator_path.call(page: @next_page), class: 'pretty-pager bottom js-next-page' do %>
+      <span class="pretty-pager__text">Next &rsaquo;</span>
+      <div class="tile__background" style="background-image: url(<%= @next_series.fanart_url %>);"></div>
+      <div class="pretty-pager__autoscroll-indicator" bind-attribute="{style: pager.nextProgressCssWidth()}"></div>
+    <% end %>
   <% end %>
 </div>

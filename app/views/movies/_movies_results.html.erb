@@ -1,4 +1,4 @@
-<div id="results" class="tile-list" define="{pager: new Muvee.Pager(this)}" refresh="results">
+<div id="results" refresh="results" class="tile-list" <% if @_is_paged %>define="{pager: new Muvee.Pager(this)}"<% end %>>
 
   <% if @prev_movie.present? %>
     <%= link_to paginator_path.call(page: @prev_page), class: 'pretty-pager top js-prev-page' do %>
