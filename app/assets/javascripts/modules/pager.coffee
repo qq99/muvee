@@ -34,11 +34,20 @@ class Muvee.Pager
     Twine.refresh()
 
   queuePrevPage: ->
+    @prevTicks += 1
+    if @prevTicks > NUM_TICKS
+      $(".js-prev-page")[0]?.click()
+      @destructor()
 
   queueNextPage: ->
     @nextTicks += 1
     if @nextTicks > NUM_TICKS
       $(".js-next-page")[0]?.click()
+      @destructor()
+
+  prevProgressCssWidth: =>
+    percentage = (@prevTicks / NUM_TICKS) * 100
+    "width: #{percentage}%"
 
   nextProgressCssWidth: =>
     percentage = (@nextTicks / NUM_TICKS) * 100

@@ -9,26 +9,28 @@ class MoviesController < ApplicationController
 
   def search
     query = "%#{params[:query]}%".downcase
-    @movies = Movie.paginated(cur_page, RESULTS_PER_PAGE).where('lower(title) like :q', q: query).to_a
+    scope = Movie.where('lower(title) like :q', q: query)
 
-    if cur_page == 0 && @movies.size == 1
+    @prev_movie, @movies, @next_movie = paged(scope)
+
+    if @current_page == 0 && @movies.size == 1
       response.headers['X-Next-Redirect'] = movie_path(@movies.first)
       head :found
       return
     end
     response.headers['X-XHR-Redirected-To'] = request.env['REQUEST_URI']
-    render 'index2'
+    render 'search'
   end
 
   def all
     @section = :all
 
-    scope = Movie.paginated(cur_page, RESULTS_PER_PAGE).order('random()')
+    scope = Movie.order('random()')
 
     @prev_movie, @movies, @next_movie = paged(scope)
 
     if @movies.size > 0
-      render 'index2', locals: {paginator_path: self.method(:all_movies_path)}
+      render 'all'
     else
       head :not_found
     end
@@ -41,7 +43,7 @@ class MoviesController < ApplicationController
     @prev_movie, @movies, @next_movie = paged(scope)
 
     if @movies.size > 0
-      render 'index2', locals: {paginator_path: self.method(:newest_movies_path)}
+      render 'newest'
     else
       head :not_found
     end
@@ -54,7 +56,7 @@ class MoviesController < ApplicationController
     @prev_movie, @movies, @next_movie = paged(scope)
 
     if @movies.size > 0
-      render 'remote', locals: {paginator_path: self.method(:remote_movies_path)}
+      render 'remote'
     else
       head :not_found
     end
@@ -70,7 +72,7 @@ class MoviesController < ApplicationController
     name = Genre.normalized_name(params[:type])
     @genre = Genre.find_by(name: name)
     @movies = @genre.movies.all.to_a # TODO: figure out pagination here
-    render 'index2'
+    render 'genre'
   end
 
   def discover_more

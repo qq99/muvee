@@ -4,7 +4,7 @@
     <%= link_to paginator_path.call(page: @prev_page), class: 'pretty-pager top js-prev-page' do %>
       <span class="pretty-pager__text">&lsaquo; Previous</span>
       <div class="tile__background" style="background-image: url(<%= @prev_movie.fanarts.sample.try(:url) %>);"></div>
-      <div class="pretty-pager__autoscroll-indicator" bind-style="{width: pager.autoPrevPercent}"></div>
+      <div class="pretty-pager__autoscroll-indicator" bind-attribute="{style: pager.prevProgressCssWidth()}"></div>
     <% end %>
   <% end %>
 
