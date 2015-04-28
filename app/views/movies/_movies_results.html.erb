@@ -1,7 +1,7 @@
 <div id="results" refresh="results" class="tile-list" <% if @_is_paged %>define="{pager: new Muvee.Pager(this)}"<% end %>>
 
   <% if @prev_movie.present? %>
-    <%= link_to paginator_path.call(page: @prev_page), class: 'pretty-pager top js-prev-page' do %>
+    <%= link_to paginator_path.call(page: @prev_page, query: params[:query]), class: 'pretty-pager top js-prev-page' do %>
       <span class="pretty-pager__text">&lsaquo; Previous</span>
       <div class="tile__background" style="background-image: url(<%= @prev_movie.fanarts.sample.try(:url) %>);"></div>
       <div class="pretty-pager__autoscroll-indicator" bind-attribute="{style: pager.prevProgressCssWidth()}"></div>
@@ -25,7 +25,7 @@
   <% end %>
 
   <% if @next_movie.present? %>
-    <%= link_to paginator_path.call(page: @next_page), class: 'pretty-pager bottom js-next-page' do %>
+    <%= link_to paginator_path.call(page: @next_page, query: params[:query]), class: 'pretty-pager bottom js-next-page' do %>
       <span class="pretty-pager__text">Next &rsaquo;</span>
       <div class="tile__background" style="background-image: url(<%= @next_movie.fanarts.sample.try(:url) %>);"></div>
       <div class="pretty-pager__autoscroll-indicator" bind-attribute="{style: pager.nextProgressCssWidth()}"></div>
