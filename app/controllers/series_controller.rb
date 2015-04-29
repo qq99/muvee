@@ -75,6 +75,8 @@ class SeriesController < ApplicationController
     end
 
     @seasons = @all_episodes.map{|v| v.season}.uniq.compact.sort
+
+    render 'show'
   end
 
   def show_episode_details
@@ -102,12 +104,14 @@ class SeriesController < ApplicationController
 
   def reanalyze
     SeriesAnalyzerWorker.perform_async(@series.id)
-    render json: {status: "ok"}
+    flash.now[:notice] = "Re-analyzing series in the background"
+    show
   end
 
   def discover_more
     SeriesDiscoveryWorker.perform_async
-    redirect_to discover_series_index_path
+    flash.now[:notice] = "Finding you more series in the background"
+    discover
   end
 
   private

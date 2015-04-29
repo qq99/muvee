@@ -54,47 +54,7 @@ class SettingsController < ApplicationController
     redirect_to reorganize_movies_settings_path
   end
 
-  def scan_for_new_media
-    if existing_jobs.include? "MediaScannerWorker"
-      already_working
-    else
-      MediaScannerWorker.perform_async
-      head :ok
-    end
-  end
-
-  def reanalyze_media
-    if existing_jobs.include? "AnalyzerWorker"
-      already_working
-    else
-      AnalyzerWorker.perform_async({method: :reanalyze})
-      head :ok
-    end
-  end
-
-  def redownload_all_arts
-    if existing_jobs.include? "AnalyzerWorker"
-      already_working
-    else
-      AnalyzerWorker.perform_async({method: :redownload})
-      head :ok
-    end
-  end
-
-  def redownload_missing_arts
-    if existing_jobs.include? "AnalyzerWorker"
-      already_working
-    else
-      AnalyzerWorker.perform_async({method: :redownload_missing})
-      head :ok
-    end
-  end
-
   private
-
-  def already_working
-    render json: {status: "Please wait; this task is already running."}, status: 409
-  end
 
   def reorganize_movies_params
     params[:reorg].values
@@ -113,14 +73,6 @@ class SettingsController < ApplicationController
       return item
     elsif item.is_a?(String)
       item.gsub(/\r/, '').split(/,|\n/).uniq.compact
-    end
-  end
-
-  def existing_jobs
-    jobs = [Sidekiq::ScheduledSet.new.to_a, Sidekiq::RetrySet.new.to_a, Sidekiq::Queue.new("default").to_a, Sidekiq::Queue.new("analyze").to_a, Sidekiq::Queue.new("transcode").to_a]
-    jobs = jobs.inject([]) {|set, el| set.concat el}
-    existing_jobs = jobs.map do |job|
-      job.display_class
     end
   end
 

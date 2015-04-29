@@ -30,10 +30,6 @@ Rails.application.routes.draw do
       get :welcome
       get 'reorganize_movies' => 'settings#reorganize_movies_show'
       post 'reorganize_movies' => 'settings#reorganize_movies_perform'
-      post :scan_for_new_media
-      post :reanalyze_media
-      post :redownload_missing_arts
-      post :redownload_all_arts
     end
   end
 
@@ -83,6 +79,10 @@ Rails.application.routes.draw do
   resources :status, only: [:index] do
     collection do
       get :info
+      post :scan_for_new_media
+      post :reanalyze_media
+      post :redownload_missing_arts
+      post :redownload_all_arts
     end
   end
 

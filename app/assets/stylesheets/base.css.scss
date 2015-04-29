@@ -129,6 +129,44 @@ a {
   }
 }
 
+$flash-transition-duration: 0.25s;
+$flash-padding: 1.5em;
+.flash {
+  position: fixed;
+  transition: all $flash-transition-duration ease-in-out;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  padding: $flash-padding;
+  padding-left: $nav-width + $flash-padding;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  background: #fafafa;
+
+  font-size: 1em;
+  color: #111;
+  font-weight: 200;
+
+  i {
+    color: #aaa;
+    font-size: 2em;
+  }
+
+  > * {
+    font-size: 1.5em;
+    margin-right: 1em;
+  }
+
+  &.is-active {
+    opacity: 1;
+  }
+}
+
+
+
 $fixed-search-transition-duration: 0.25s;
 $fixed-search-padding: 3em;
 .fixed-search {
@@ -193,6 +231,9 @@ $fixed-search-padding: 3em;
   h1, h2, h3, h4, h5 {
     color: $less-radical-blue;
   }
+  .job-reporter {
+    flex-grow: 1;
+  }
 }
 .index-actions__section {
   margin-right: 2em;
@@ -250,4 +291,12 @@ $fixed-search-padding: 3em;
   height: 100%;
   background: rgba(148, 221, 255, 0.5);
   transition: width 0.5s ease-out;
+}
+
+
+.error {
+  color: $error !important;
+}
+.success {
+  color: $success !important;
 }

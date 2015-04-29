@@ -1,7 +1,6 @@
 class MediaScannerWorker
   include Sidekiq::Worker
-  sidekiq_options :retry => false
-  sidekiq_options :queue => :scan
+  sidekiq_options queue: :scan, retry: false
 
   def clean_missing
     klasses = [TvShow, Movie]
