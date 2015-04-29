@@ -53,7 +53,7 @@ Rails.application.routes.draw do
   resources :movies do
     collection do
       get :all
-      get :remote
+      get :discover
       get :newest
       get :genres
       get 'genres/:type', as: :by_genre, action: :genre

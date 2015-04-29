@@ -49,7 +49,7 @@ class MoviesController < ApplicationController
     end
   end
 
-  def remote
+  def discover
     @section = :discover
     scope = Movie.remote.order(created_at: :desc)
 
@@ -76,8 +76,9 @@ class MoviesController < ApplicationController
   end
 
   def discover_more
-    YtsQueryService.find_more
-    redirect_to remote_movies_path
+    MoviesDiscoveryWorker.perform_async
+    flash.now[:notice] = "Finding you more movies in the background"
+    discover
   end
 
   def download

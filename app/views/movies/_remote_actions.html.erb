@@ -1,13 +1,10 @@
 <div class="index-actions">
-  <div class="index-actions__section" define="{findClicked: false}">
+  <div class="index-actions__section">
     <h3>Discover more movies</h3>
-    <span bind-event-click="findClicked = true" bind-show="!findClicked">
-      <%= link_to discover_more_movies_path, class: 'action-button', 'tg-remote' => 'POST' do %>
-        <i class="fa fa-binoculars"></i>
-        Sure, find me some
-      <% end %>
-    </span>
-    <div class="action-button hide" bind-show="findClicked">Finding...</div>
+    <%= link_to discover_more_movies_path, class: 'action-button', 'tg-remote' => 'POST' do %>
+      <i class="fa fa-binoculars"></i>
+      Sure, find me some
+    <% end %>
   </div>
   <div class="index-actions__section">
     <%= form_tag movie_search_movies_path, method: "POST", "tg-remote" => true, "refresh-on-success" => "results" do %>
