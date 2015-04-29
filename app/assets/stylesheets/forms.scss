@@ -54,6 +54,16 @@ form.inline-form {
     border-top-right-radius: $form-element-roundedness;
     border-bottom-right-radius: $form-element-roundedness;
   }
+
+  &.flex {
+    display: flex;
+    .action-button {
+      flex: 1 1 auto;
+    }
+    [type='submit'] {
+      flex-grow: 0;
+    }
+  }
 }
 input[type='text'], textarea {
   &.action-button {
