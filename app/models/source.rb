@@ -16,9 +16,7 @@ class Source < ActiveRecord::Base
   end
 
   def reanalyze
-    if !file_is_present_and_exists?
-      self.destroy
-    end
+
   end
 
   def trigger_post_source_actions
