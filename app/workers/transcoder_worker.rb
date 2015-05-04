@@ -20,8 +20,9 @@ class TranscoderWorker
     transcode_path = Pathname.new(transcode_folder).join(filename).to_s
     eventual_path = File.dirname(input_path) + "/#{filename}"
 
-    #return if Sidekiq::Queue.new("transcode").to_a.length > 0
+    # 2 potential targets:
     webm_path = eventual_path + ".webm"
+    mp4_path = eventual_path + ".mp4"
 
     if Video::SERVABLE_MP4_VIDEO_CODECS.include?(Video.get_video_encoding(input_path))
       transcode_path = transcode_path + ".mp4"
@@ -45,8 +46,7 @@ class TranscoderWorker
       end
     end
 
-
-    if File.exist?(eventual_path) || File.exist?(webm_path) # don't convert it again! webm stuff is legacy and should be removed!
+    if File.exist?(eventual_path) || File.exist?(webm_path) || File.exist?(mp4_path) # don't convert it again!
       notice = "#{eventual_path} already transcoded; creating #{source_type}, please review #{input_path}"
       publish({notice: notice})
       Rails.logger.info notice

@@ -20,13 +20,29 @@ class Video < ActiveRecord::Base
   scope :newest, -> {order(created_at: :desc)}
 
   # https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats
+  VIDEO_CONTAINERS = %w{.m4v .mp4 .webm .avi .mkv}
   SERVABLE_CONTAINERS = %w{.m4v .mp4 .webm}.freeze
   UNSERVABLE_CONTAINERS = %w{.avi .mkv}.freeze
 
   SERVABLE_MP4_VIDEO_CODECS = %w{h264}.freeze
-  SERVABLE_MP4_AUDIO_CODECS = %w{libvorbis mp3 mpeg3 aac}.freeze
-  SERVABLE_WEBM_VIDEO_CODECS = %w{libvpx vp8 vorbis}.freeze # may not be the proper names of said codecs as returned by avprobe
-  SERVABLE_WEBM_AUDIO_CODECS = %w{libvorbis}.freeze
+  SERVABLE_MP4_AUDIO_CODECS = %w{libvorbis vorbis mp3 mpeg3 aac}.freeze
+  SERVABLE_WEBM_VIDEO_CODECS = %w{libvpx vp8 vp9 vorbis}.freeze # may not be the proper names of said codecs as returned by avprobe
+  SERVABLE_WEBM_AUDIO_CODECS = %w{libvorbis vorbis}.freeze
+
+  COMPATIBILITY_MATRIX = {
+    '.mp4': {
+      audio: SERVABLE_MP4_AUDIO_CODECS,
+      video: SERVABLE_MP4_VIDEO_CODECS
+    },
+    '.m4v': {
+      audio: SERVABLE_MP4_AUDIO_CODECS,
+      video: SERVABLE_MP4_VIDEO_CODECS
+    },
+    '.webm': {
+      audio: SERVABLE_WEBM_AUDIO_CODECS,
+      video: SERVABLE_WEBM_VIDEO_CODECS
+    }
+  }.freeze
 
   QUALITIES = /(1080p|720p|HDTV)/i
 
@@ -195,6 +211,24 @@ class Video < ActiveRecord::Base
     result = %x(#{command})
     type = result.strip.downcase
     type
+  end
+
+  def self.needs_transcoding?(path)
+    extension = File.extname(path)
+    allowed = COMPATIBILITY_MATRIX[extension]
+
+    if allowed
+      current_audio = self.get_audio_encoding(path)
+      current_video = self.get_video_encoding(path)
+
+      if allowed[:audio].include?(current_audio) && allowed[:video].include?(current_video)
+        false
+      else
+        true
+      end
+    else # no mapping at all
+      true
+    end
   end
 
   def shellout_and_grab_duration

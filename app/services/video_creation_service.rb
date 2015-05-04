@@ -17,11 +17,11 @@ class VideoCreationService
   end
 
   def eligible_files(files)
-    files.select{|file| Video::SERVABLE_CONTAINERS.include? File.extname(file) }
+    files.select{|file| !Video.needs_transcoding?(file) }
   end
 
   def files_to_transcode(files)
-    files.select{|file| Video::UNSERVABLE_CONTAINERS.include? File.extname(file) }
+    files.select{|file| Video.needs_transcoding?(file) }
   end
 
   def publish(event)
@@ -43,8 +43,16 @@ class VideoCreationService
   def create_videos(klass, folders)
     files = get_files_in_folders(folders)
 
-    create_eligible_sources(klass, eligible_files(files))
-    transcode_ineligible_sources(klass, files_to_transcode(files))
+    files.reject! do |file|
+      !Video::VIDEO_CONTAINERS.include?(File.extname)
+    end
+
+    unsourced_files = files.select do |file|
+      !Source.exists?(raw_file_path: file)
+    end
+
+    create_eligible_sources(klass, eligible_files(unsourced_files))
+    transcode_ineligible_sources(klass, files_to_transcode(unsourced_files))
   end
 
   def create_eligible_sources(klass, files)
