@@ -23,4 +23,9 @@ class Source < ActiveRecord::Base
     self.video.post_sourced_actions
   end
 
+  def move_to(new_path)
+    FileUtils.mv(raw_file_path, new_path)
+    self.update_attribute(:raw_file_path, new_path)
+  end
+
 end

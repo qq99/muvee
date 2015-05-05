@@ -1,42 +1,33 @@
-<h1>Rename Movies</h1>
-<p>The following changes can be made to help you organize your movies better:</p>
+<div class="text-page">
+  <div class="readable-page">
+    <h1>Rename Movies</h1>
+    <p>The following changes can be made to help you organize your movies better:</p>
 
-<%= form_tag reorganize_movies_settings_path, method: "post" do %>
-<table class="rename-table">
-  <thead>
-    <tr>
-      <td>
-        Rename?
-      </td>
-      <td>
-        From file
-      </td>
-      <td>
-
-      </td>
-      <td>
-        To file
-      </td>
-    </tr>
-  </thead>
-  <% @movies.each_with_index do |movie, i| %>
-    <tr>
-      <td>
-        <%= check_box_tag "reorg[#{i}][rename]", "1" %>
-      </td>
-      <td class="from">
-        <%= hidden_field_tag "reorg[#{i}][from]", movie.id %>
-        <span><%= movie.raw_file_path %></span>
-      </td>
-      <td class="to-arrow">
-        →
-      </td>
-      <td class="to">
-        <%= text_field_tag "reorg[#{i}][to_folder]", @folders.first, readonly: true %>
-        <%= text_field_tag "reorg[#{i}][to_filename]", movie.suggested_filename %>
-      </td>
-    </tr>
-  <% end %>
-</table>
-<%= submit_tag "Do it" %>
-<% end %>
+    <%= form_tag reorganize_movies_settings_path, method: "post" do %>
+    <table class="rename-table">
+      <thead>
+        <tr>
+          <td></td>
+          <td>
+          </td>
+        </tr>
+      </thead>
+      <% @sources.each_with_index do |source, i| %>
+        <tr>
+          <td>
+            <%= check_box_tag "reorg[#{i}][rename]", "1" %>
+          </td>
+          <td class="from">
+            <%= hidden_field_tag "reorg[#{i}][from]", source.id %>
+            <span><%= source.raw_file_path %></span>
+            <br>
+            <%= hidden_field_tag "reorg[#{i}][to_folder]", @folders.first, readonly: true %>
+            <%= text_field_tag "reorg[#{i}][to_filename]", source.suggested_filename, class: 'action-button' %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+    <%= button_tag "Save", type: "Submit", class: 'action-button' %>
+    <% end %>
+  </div>
+</div>

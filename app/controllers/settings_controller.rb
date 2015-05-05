@@ -39,7 +39,7 @@ class SettingsController < ApplicationController
   def reorganize_movies_show
     @config = APP_CONFIG
     @folders = @config.movie_sources
-    @movies = Movie.local.all
+    @sources = MovieSource.all
   end
 
   def reorganize_movies_perform
@@ -47,10 +47,11 @@ class SettingsController < ApplicationController
       m["rename"].present?
     end
     to_rename.each do |to_rename|
-      movie = Movie.find(to_rename["from"])
+      source = MovieSource.find(to_rename["from"])
       new_path = to_rename["to_folder"] + to_rename["to_filename"]
-      movie.move_raw_file(new_path)
+      source.move_to(new_path)
     end
+    flash[:notice] = "Renamed #{to_rename.size} sources."
     redirect_to reorganize_movies_settings_path
   end
 
