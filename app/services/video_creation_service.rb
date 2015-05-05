@@ -44,7 +44,7 @@ class VideoCreationService
     files = get_files_in_folders(folders)
 
     files.reject! do |file|
-      !Video::VIDEO_CONTAINERS.include?(File.extname)
+      !Video::VIDEO_CONTAINERS.include?(File.extname(file))
     end
 
     unsourced_files = files.select do |file|
