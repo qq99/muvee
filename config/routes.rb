@@ -29,6 +29,10 @@ Rails.application.routes.draw do
     collection do
       get :welcome
       get 'reorganize_movies' => 'settings#reorganize_movies_show'
+      get :find_dead_files
+      get :find_dead_sources
+      post :destroy_files
+      post :destroy_sources
       post 'reorganize_movies' => 'settings#reorganize_movies_perform'
     end
   end

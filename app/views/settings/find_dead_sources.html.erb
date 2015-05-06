@@ -1,0 +1,19 @@
+<div class="text-page">
+  <div class="readable-page">
+    <h1>Dead Sources</h1>
+    <p>The following list shows sources in μv for which no corresponding file on your harddrive could be found.</p>
+
+    <%= form_tag destroy_sources_settings_path, method: "post", class: 'grouped-form' do %>
+      <div class="action-button js-select-all-checks">Select all</div>
+      <%= submit_tag "Destroy selected", class: "action-button" %>
+      <% @dead_sources.each_with_index do |source, i| %>
+        <div class="dead-file" style='margin-bottom: 0.5em;'>
+          <%= check_box_tag "destroy[#{i}][should_destroy]", "1" %>
+          <%= hidden_field_tag "destroy[#{i}][source_id]", source.id %>
+          <%= label_tag "destroy[#{i}][should_destroy]", source.raw_file_path %>
+        </div>
+      <% end %>
+      <%= submit_tag "Destroy selected above", class: "action-button" %>
+    <% end %>
+  </div>
+</div>

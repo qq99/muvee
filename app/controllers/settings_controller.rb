@@ -55,7 +55,55 @@ class SettingsController < ApplicationController
     redirect_to reorganize_movies_settings_path
   end
 
+  def find_dead_files
+    @dead_files = DeadFileFindingService.new.list_unsourced_files(source_folders)
+  end
+
+  def destroy_files
+    to_destroy = destroy_files_params
+    to_destroy.each do |record|
+      filename = record['file']
+      File.delete(filename) if filename.start_with?(*source_folders)
+    end
+    redirect_to status_index_path, notice: "Deleted #{to_destroy.size} files."
+  end
+
+  def find_dead_sources
+    @dead_sources = DeadFileFindingService.new.list_dead_sources
+  end
+
+  def destroy_sources
+    to_destroy = destroy_sources_params
+    to_destroy.each do |record|
+      Source.destroy(record['source_id'])
+    end
+    redirect_to find_dead_sources_settings_path, notice: "Destroyed #{to_destroy.size} sources.  Re-analyzing your library in the background now."
+  end
+
   private
+
+  def muvee_configuration
+    ApplicationConfiguration.first
+  end
+
+  def source_folders
+    @source_folders ||= muvee_configuration.movie_sources + muvee_configuration.tv_sources
+  end
+
+  def destroy_files_params
+    to_destroy = params[:destroy].values.first.values
+    to_destroy.select do |record|
+      record["should_destroy"].present? &&
+      record["file"].start_with?(*source_folders)
+    end
+  end
+
+  def destroy_sources_params
+    to_destroy = params[:destroy].values
+    to_destroy.select do |record|
+      record["should_destroy"].present?
+    end
+  end
 
   def reorganize_movies_params
     params[:reorg].values

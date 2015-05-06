@@ -12,7 +12,11 @@ class Source < ActiveRecord::Base
   end
 
   def file_is_present_and_exists?
-    raw_file_path.present? && File.exist?(raw_file_path)
+    raw_file_path.present? && file_exists?
+  end
+
+  def file_exists?
+    File.exist?(raw_file_path)
   end
 
   def reanalyze

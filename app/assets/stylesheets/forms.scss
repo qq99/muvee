@@ -73,3 +73,18 @@ input[type='text'], textarea {
     border: 1px solid #555;
   }
 }
+
+.grouped-form {
+  margin-bottom: 3em;
+}
+
+.header-with-buttons {
+  display: flex;
+  align-items: center;
+  > * {
+    margin-right: 1em;
+  }
+  input, button, .action-button {
+    flex: 0 0 auto;
+  }
+}
