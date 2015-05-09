@@ -28,8 +28,12 @@ class Source < ActiveRecord::Base
   end
 
   def move_to(new_path)
-    FileUtils.mv(raw_file_path, new_path)
-    self.update_attribute(:raw_file_path, new_path)
+    begin
+      FileUtils.mv(raw_file_path, new_path)
+      self.update_attribute(:raw_file_path, new_path)
+    rescue => e
+      raise e
+    end
   end
 
 end

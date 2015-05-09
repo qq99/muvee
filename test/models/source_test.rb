@@ -2,20 +2,49 @@ require 'test_helper'
 
 class SourceTest < ActiveSupport::TestCase
 
-  test "#file_is_present_and_exists?" do
-    s = Source.new(type: 'TvShowSource', raw_file_path: '/foo/bar/baz.mp4')
+  setup do
+    @source = Source.new(raw_file_path: '/foo/bar/baz.mp4')
+  end
 
-    refute s.file_is_present_and_exists?
+  test "#file_is_present_and_exists?" do
+    refute @source.file_is_present_and_exists?
 
     File.stubs(:exist?).returns(true)
 
-    assert s.file_is_present_and_exists?
+    assert @source.file_is_present_and_exists?
+  end
+
+  test "#file_is_present_and_exists? does not attempt to look at FS if raw_file_path is blank" do
+    s = Source.new
+
+    File.expects(:exist?).never
+    refute s.file_is_present_and_exists?
   end
 
   test "triggers post_sourced_actions on video after create" do
     Video.any_instance.expects(:shellout_and_grab_duration).once
     Video.any_instance.expects(:create_initial_thumb).once
     s = Source.create(type: 'TvShowSource', raw_file_path: '/foo/bar/baz.mp4')
+  end
+
+  test "#move_to successful move" do
+    new_path = Dir.getwd() + "/tmp/new.path.mp4"
+
+    FileUtils.expects(:mv).with(@source.raw_file_path, new_path)
+    @source.expects(:update_attribute).with(:raw_file_path, new_path)
+
+    @source.move_to(new_path)
+  end
+
+  test "#move_to unsuccessful file move" do
+    new_path = Dir.getwd() + "/tmp/new.path.mp4"
+
+    FileUtils.expects(:mv).with(@source.raw_file_path, new_path).raises(StandardError)
+    @source.expects(:update_attribute).never
+
+    assert_raises StandardError do
+      @source.move_to(new_path)
+    end
   end
 
 end

@@ -5,13 +5,6 @@ class TvShowTest < ActiveSupport::TestCase
     Series.any_instance.stubs(download_images: true)
   end
 
-  test 'can create' do
-    TvShow.any_instance.stubs(:associate_with_series)
-    TvShow.any_instance.stubs(:extract_metadata)
-    show = TvShow.create(raw_file_path: "/foo/bar")
-    assert_equal "TvShow", show.type
-  end
-
   test 'validates that another episode with the same season&episode does not already exist on create' do
     existing = videos(:american_dad_s01_e01)
     new_show = TvShow.new(season: existing.season, episode: existing.episode, series_id: existing.series.id)
@@ -33,7 +26,7 @@ class TvShowTest < ActiveSupport::TestCase
   test 'will create a new series if one does not exist' do
     VCR.use_cassette 'family_guy' do
       assert_difference 'Series.all.length', 1 do
-        TvShow.create(raw_file_path: '/foo/bar/Family.Guy.S11E21.HDTV.x264-LOL.mp4', status: 'local')
+        TvShowSource.create(raw_file_path: '/foo/bar/Family.Guy.S11E21.HDTV.x264-LOL.mp4')
       end
     end
   end
@@ -41,9 +34,9 @@ class TvShowTest < ActiveSupport::TestCase
   test 'will not create duplicate new series' do
     VCR.use_cassette 'family_guy' do
       assert_difference 'Series.all.length', 1 do
-        TvShow.create(raw_file_path: '/foo/bar/Family.Guy.S11E21.HDTV.x264-LOL.mp4', status: 'local')
-        TvShow.create(raw_file_path: '/foo/bar/Family.Guy.S11E22.HDTV.x264-LOL.mp4', status: 'local')
-        TvShow.create(raw_file_path: '/foo/bar/Family.Guy.S11E23.HDTV.x264-LOL.mp4', status: 'local')
+        TvShowSource.create(raw_file_path: '/foo/bar/Family.Guy.S11E21.HDTV.x264-LOL.mp4')
+        TvShowSource.create(raw_file_path: '/foo/bar/Family.Guy.S11E22.HDTV.x264-LOL.mp4')
+        TvShowSource.create(raw_file_path: '/foo/bar/Family.Guy.S11E23.HDTV.x264-LOL.mp4')
       end
     end
   end
