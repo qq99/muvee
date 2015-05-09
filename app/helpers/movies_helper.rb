@@ -7,16 +7,16 @@ module MoviesHelper
     4 => {req_items: 3}
   }.freeze
 
-  def layout(movies)
+  def layout(movies, prng)
     n_layouts = ROW_LAYOUTS.keys.size
-    which_layout = (rand() * n_layouts).to_i + 1
+    which_layout = (prng.rand() * n_layouts).to_i + 1
     layout = ROW_LAYOUTS[which_layout]
 
     number_to_take = layout[:req_items]
     if number_to_take.blank?
       min = layout[:min_items]
       max = layout[:max_items]
-      number_to_take = (rand() * max).to_i + min
+      number_to_take = (prng.rand() * max).to_i + min
     end
 
     # hacky solution to make sure we have a full row at all times:
