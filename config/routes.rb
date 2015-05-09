@@ -29,11 +29,11 @@ Rails.application.routes.draw do
     collection do
       get :welcome
       get 'reorganize_movies' => 'settings#reorganize_movies_show'
+      get :find_dead_files
+      get :find_dead_sources
+      post :destroy_files
+      post :destroy_sources
       post 'reorganize_movies' => 'settings#reorganize_movies_perform'
-      post :scan_for_new_media
-      post :reanalyze_media
-      post :redownload_missing_arts
-      post :redownload_all_arts
     end
   end
 
@@ -57,13 +57,13 @@ Rails.application.routes.draw do
   resources :movies do
     collection do
       get :all
-      get :remote
+      get :discover
       get :newest
-      get :discover_more
       get :genres
       get 'genres/:type', as: :by_genre, action: :genre
       get :search
       post :movie_search, as: :movie_search, action: :movie_search
+      post :discover_more
     end
     member do
       post :find_sources_via_yts
@@ -83,6 +83,10 @@ Rails.application.routes.draw do
   resources :status, only: [:index] do
     collection do
       get :info
+      post :scan_for_new_media
+      post :reanalyze_media
+      post :redownload_missing_arts
+      post :redownload_all_arts
     end
   end
 

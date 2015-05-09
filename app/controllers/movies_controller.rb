@@ -9,39 +9,57 @@ class MoviesController < ApplicationController
 
   def search
     query = "%#{params[:query]}%".downcase
-    @movies = Movie.paginated(cur_page, RESULTS_PER_PAGE).where('lower(title) like :q', q: query).to_a
+    scope = Movie.where('lower(title) like :q', q: query)
 
-    if cur_page == 0 && @movies.size == 1
+    @prev_movie, @movies, @next_movie = paged(scope)
+
+    if @current_page == 0 && @movies.size == 1
       response.headers['X-Next-Redirect'] = movie_path(@movies.first)
       head :found
       return
     end
     response.headers['X-XHR-Redirected-To'] = request.env['REQUEST_URI']
-    render 'index2'
+    render 'search'
   end
 
   def all
     @section = :all
-    @movies = Movie.paginated(cur_page, RESULTS_PER_PAGE).order('random()').to_a
-    render 'index2'
-  end
 
-  def newest
-    @section = :newest
-    @movies = Movie.paginated(cur_page, RESULTS_PER_PAGE).local_and_downloading.order(created_at: :desc).all.to_a
+    scope = Movie.order('random()')
+
+    @prev_movie, @movies, @next_movie = paged(scope)
 
     if @movies.size > 0
-      render 'index2'
+      render 'all'
     else
       head :not_found
     end
   end
 
-  def remote
-    @section = :discover
-    @movies = Movie.paginated(cur_page, RESULTS_PER_PAGE).remote.order(created_at: :desc).to_a
+  def newest
+    @section = :newest
+    scope = Movie.local_and_downloading.order(created_at: :desc)
 
-    render 'remote'
+    @prev_movie, @movies, @next_movie = paged(scope)
+
+    if @movies.size > 0
+      render 'newest'
+    else
+      head :not_found
+    end
+  end
+
+  def discover
+    @section = :discover
+    scope = Movie.remote.order(created_at: :desc)
+
+    @prev_movie, @movies, @next_movie = paged(scope)
+
+    if @movies.size > 0
+      render 'remote'
+    else
+      head :not_found
+    end
   end
 
   def genres
@@ -54,12 +72,13 @@ class MoviesController < ApplicationController
     name = Genre.normalized_name(params[:type])
     @genre = Genre.find_by(name: name)
     @movies = @genre.movies.all.to_a # TODO: figure out pagination here
-    render 'index2'
+    render 'genre'
   end
 
   def discover_more
-    YtsQueryService.find_more
-    redirect_to remote_movies_path
+    MoviesDiscoveryWorker.perform_async
+    flash.now[:notice] = "Finding you more movies in the background"
+    discover
   end
 
   def download
@@ -138,6 +157,23 @@ class MoviesController < ApplicationController
   end
 
   private
+
+    def paged(scope)
+      @_is_paged = true
+      @current_page = cur_page
+      @next_page = cur_page + 1
+      @prev_page = cur_page - 1
+
+      prev_offset = (@current_page * RESULTS_PER_PAGE) - 1
+      next_offset = (@current_page * RESULTS_PER_PAGE) + RESULTS_PER_PAGE
+
+      prev_resource = scope.limit(1).offset(prev_offset).first if prev_offset > 0
+      next_resource = scope.limit(1).offset(next_offset).first if next_offset > 0
+      current_resources = scope.paginated(@current_page, RESULTS_PER_PAGE).to_a
+
+      [prev_resource, current_resources, next_resource]
+    end
+
     def cur_page
       page = params[:page].to_i || 0
     end

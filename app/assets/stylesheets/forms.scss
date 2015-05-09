@@ -54,6 +54,16 @@ form.inline-form {
     border-top-right-radius: $form-element-roundedness;
     border-bottom-right-radius: $form-element-roundedness;
   }
+
+  &.flex {
+    display: flex;
+    .action-button {
+      flex: 1 1 auto;
+    }
+    [type='submit'] {
+      flex-grow: 0;
+    }
+  }
 }
 input[type='text'], textarea {
   &.action-button {
@@ -61,5 +71,20 @@ input[type='text'], textarea {
   }
   &.action-button:focus {
     border: 1px solid #555;
+  }
+}
+
+.grouped-form {
+  margin-bottom: 3em;
+}
+
+.header-with-buttons {
+  display: flex;
+  align-items: center;
+  > * {
+    margin-right: 1em;
+  }
+  input, button, .action-button {
+    flex: 0 0 auto;
   }
 }

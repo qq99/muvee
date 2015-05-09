@@ -13,4 +13,4 @@
   <%= render 'shared/series_discovery_reporter' %>
 </div>
 
-<%= render 'series_results' %>
+<%= render 'series_results', paginator_path: self.method(:discover_series_index_path) %>

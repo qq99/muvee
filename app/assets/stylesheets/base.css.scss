@@ -99,35 +99,55 @@ a {
   border:none;
   border-collapse:collapse;
   border-spacing:0;
+  font-size: 0.8em;
   td {
     padding: 0.5em 1em;
-  }
-  .from, .to {
-    width: 45%;
-    word-break: break-word;
-    font-family: monospace;
-    input, span {
-      display: inline-block;
-      font-size: 1em;
-      font-family: monospace;
-      border: 0;
-      outline: 0;
-      text-align: left;
-      padding: 0;
-      vertical-align: top;
-    }
-    input {
-      background: lightyellow;
-      width: 100%;
-    }
   }
   .to-arrow {
     text-align: center;
   }
   tr:nth-child(2n) {
-    background: #efefef;
+    background: rgba(0,0,0,0.2);
   }
 }
+
+$flash-transition-duration: 0.25s;
+$flash-padding: 1.5em;
+.flash {
+  position: fixed;
+  transition: all $flash-transition-duration ease-in-out;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  padding: $flash-padding;
+  padding-left: $nav-width + $flash-padding;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  background: #fafafa;
+
+  font-size: 1em;
+  color: #111;
+  font-weight: 200;
+
+  i {
+    color: #aaa;
+    font-size: 2em;
+  }
+
+  > * {
+    font-size: 1.5em;
+    margin-right: 1em;
+  }
+
+  &.is-active {
+    opacity: 1;
+  }
+}
+
+
 
 $fixed-search-transition-duration: 0.25s;
 $fixed-search-padding: 3em;
@@ -193,6 +213,9 @@ $fixed-search-padding: 3em;
   h1, h2, h3, h4, h5 {
     color: $less-radical-blue;
   }
+  .job-reporter {
+    flex-grow: 1;
+  }
 }
 .index-actions__section {
   margin-right: 2em;
@@ -215,4 +238,47 @@ $fixed-search-padding: 3em;
   top: 1em;
   right: 1em;
   text-shadow: 0px 0px 2px #333;
+}
+
+.pretty-pager {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 8em;
+  overflow: hidden;
+  &.top {
+    .tile__background {
+      box-shadow: inset 0px -2em 10em 0.25em black;
+    }
+  }
+  &.bottom {
+    .tile__background {
+      box-shadow: inset 0px 2em 10em 0.25em black;
+    }
+  }
+}
+.pretty-pager__text {
+  color: white;
+  z-index: 2;
+  font-size: 2em;
+  font-weight: 200;
+  font-style: italic;
+  text-shadow: 0px 0px 2px #333;
+}
+.pretty-pager__autoscroll-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  background: rgba(148, 221, 255, 0.5);
+  transition: width 0.5s ease-out;
+}
+
+
+.error {
+  color: $error !important;
+}
+.success {
+  color: $success !important;
 }

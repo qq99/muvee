@@ -1,0 +1,37 @@
+<div class="text-page">
+  <div class="readable-page">
+    <h1>Dead Files</h1>
+    <p>The following list shows files in your media folders that aren't associated with a TV show nor movie.  Potentially, they are garbage files (thumbnail or video samples) or remnants from the transcoding process.</p>
+
+    <% grouped_dead_files = @dead_files.group_by{|key, value| File.extname(key)} %>
+
+    <% grouped_dead_files.each_with_index do |(group, dead_files), j| %>
+      <%= form_tag destroy_files_settings_path, method: "post", class: 'grouped-form' do %>
+        <div class="header-with-buttons">
+          <h2><%= group %></h2>
+          <div class="action-button js-select-all-checks">Select all</div>
+          <%= submit_tag "Destroy selected", class: "action-button" %>
+        </div>
+        <% dead_files.each_with_index do |(dead_file_name, data), i| %>
+          <div class="dead-file" style='margin-bottom: 0.5em;'>
+            <%= check_box_tag "destroy[#{j}][#{i}][should_destroy]", "1" %>
+            <%= hidden_field_tag "destroy[#{j}][#{i}][file]", dead_file_name %>
+            <%= label_tag "destroy[#{j}][#{i}][should_destroy]", dead_file_name %>
+            <p>
+              <% source = data[:similar_source] %>
+              <% if source.present? %>
+                potentially transcoded to:
+                <% if source.kind_of? MovieSource %>
+                  <%= link_to source.video.title, movie_path(source.video) %>
+                <% else %>
+                  <%= link_to "#{source.video.title} #{source.video.season_episode}", show_source_video_path(source.video) %>
+                <% end %>
+              <% end %>
+            </p>
+          </div>
+        <% end %>
+        <%= submit_tag "Destroy selected above", class: "action-button" %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

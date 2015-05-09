@@ -2,19 +2,20 @@ class SeriesController < ApplicationController
   before_action :set_series, only: [:show, :find_episode, :download, :reanalyze]
   before_action :set_episode, only: [:show_episode_details, :download]
 
-  RESULTS_PER_PAGE = 18
+  RESULTS_PER_PAGE = 48
 
   def index
-    paged
     @section = :series
-    @series = Series.with_episodes.paginated(cur_page, RESULTS_PER_PAGE).order(title: :asc).all
+    scope = Series.with_episodes.order(title: :asc)
+
+    @prev_series, @series, @next_series = paged(scope)
   end
 
   def search
-    paged
-    query = "%#{params[:query]}%".downcase
     @section = :series
-    @series = Series.paginated(cur_page, RESULTS_PER_PAGE).where('lower(title) like :q', q: query).to_a
+    query = "%#{params[:query]}%".downcase
+    scope = Series.where('lower(title) like :q', q: query)
+    @prev_series, @series, @next_series = paged(scope)
 
     if cur_page == 0 && @series.size == 1
       response.headers['X-Next-Redirect'] = series_path(@series.first)
@@ -22,14 +23,15 @@ class SeriesController < ApplicationController
       return
     end
     response.headers['X-XHR-Redirected-To'] = request.env['REQUEST_URI']
-    render 'index'
+    render 'search'
   end
 
   def discover
-    paged
     @section = :discover
-    @series = Series.without_episodes.paginated(cur_page, RESULTS_PER_PAGE).order(title: :asc).all
-    render 'remote'
+    scope = Series.without_episodes
+    @prev_series, @series, @next_series = paged(scope)
+
+    render 'discover'
   end
 
   def newest_episodes
@@ -73,6 +75,8 @@ class SeriesController < ApplicationController
     end
 
     @seasons = @all_episodes.map{|v| v.season}.uniq.compact.sort
+
+    render 'show'
   end
 
   def show_episode_details
@@ -100,17 +104,32 @@ class SeriesController < ApplicationController
 
   def reanalyze
     SeriesAnalyzerWorker.perform_async(@series.id)
-    render json: {status: "ok"}
+    flash.now[:notice] = "Re-analyzing series in the background"
+    show
   end
 
   def discover_more
     SeriesDiscoveryWorker.perform_async
-    redirect_to discover_series_index_path
+    flash.now[:notice] = "Finding you more series in the background"
+    discover
   end
 
   private
-    def paged
+
+    def paged(scope)
       @_is_paged = true
+      @current_page = cur_page
+      @next_page = cur_page + 1
+      @prev_page = cur_page - 1
+
+      prev_offset = (@current_page * RESULTS_PER_PAGE) - 1
+      next_offset = (@current_page * RESULTS_PER_PAGE) + RESULTS_PER_PAGE
+
+      prev_resource = scope.limit(1).offset(prev_offset).first if prev_offset > 0
+      next_resource = scope.limit(1).offset(next_offset).first if next_offset > 0
+      current_resources = scope.paginated(@current_page, RESULTS_PER_PAGE).to_a
+
+      [prev_resource, current_resources, next_resource]
     end
 
     def cur_page

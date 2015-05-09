@@ -35,3 +35,6 @@ $(document).on "focus mouseenter", ".js-movie-tile", (ev) ->
   ctx = Twine.context(target)
   _.merge(window.context.movieMeta, ctx)
   Twine.refresh()
+
+$(document).on "click", ".js-select-all-checks", (ev) ->
+  $(ev.currentTarget).closest("form").find("[type='checkbox']").prop('checked', true)

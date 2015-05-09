@@ -1,7 +1,6 @@
 class SeriesAnalyzerWorker
   include Sidekiq::Worker
-  sidekiq_options :retry => false
-  sidekiq_options :queue => :analyze
+  sidekiq_options queue: :default, retry: false
 
   def perform(id)
     series = Series.find(id.to_i)

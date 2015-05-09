@@ -3,9 +3,11 @@
 :pidfile: ./tmp/pids/sidekiq.pid
 :concurrency: 25
 # Set timeout to 8 on Heroku, longer if you manage your own systems.
-:timeout: 30
+:timeout: 5
 :queues:
 - [scan, 1]
+- [series_discovery, 7]
+- [movies_discovery, 7]
 - [analyze, 2]
 - [default, 5]
 - [transcode, 2]
@@ -13,3 +15,5 @@
   transcode: 2
   analyze: 2
   scan: 1
+  series_discovery: 1
+  movies_discovery: 1

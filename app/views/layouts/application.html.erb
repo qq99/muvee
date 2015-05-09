@@ -50,6 +50,19 @@
     </div>
   </div>
 
+  <div id='flash' refresh='flash' refresh-always
+    define="{flash: new Muvee.Flash(this)}"
+    class="flash <% if flash[:notice].present? || flash[:error].present? %>js-has-flash<% end %>">
+
+    <% if flash[:notice].present? %>
+      <i class="fa fa-check-circle success"></i>
+      <span><%= flash[:notice] %></span>
+    <% elsif flash[:error].present? %>
+      <i class="fa fa-exclamation-circle error"></i>
+      <span><%= flash[:error] %></span>
+    <% end %>
+  </div>
+
   <div class="error modal">
     <div class="modal-backdrop js-close-modal"></div>
     <div class="modal-box">

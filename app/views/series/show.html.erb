@@ -25,7 +25,7 @@
         <%= @series.overview %>
       </h3>
 
-      <%= link_to reanalyze_series_path(@series), class: 'action-button', 'tg-remote' => 'POST', 'full-refresh' => true do %>
+      <%= link_to reanalyze_series_path(@series), class: 'action-button', 'tg-remote' => 'POST' do %>
         <i class="fa fa-refresh"></i> Refresh
       <% end %>
 

@@ -1,0 +1,3 @@
+<%= render 'subnav' %>
+<%= render 'movies_fixed_search' %>
+<%= render 'movies_results', paginator_path: self.method(:search_movies_path) %>

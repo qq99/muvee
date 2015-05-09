@@ -1,4 +1,5 @@
 class VideoCreationService
+  include FolderFileLister
 
   def initialize(sources)
     default = {tv: [], movies: []}
@@ -17,11 +18,11 @@ class VideoCreationService
   end
 
   def eligible_files(files)
-    files.select{|file| Video::SERVABLE_CONTAINERS.include? File.extname(file) }
+    files.select{|file| !Video.needs_transcoding?(file) }
   end
 
   def files_to_transcode(files)
-    files.select{|file| Video::UNSERVABLE_CONTAINERS.include? File.extname(file) }
+    files.select{|file| Video.needs_transcoding?(file) }
   end
 
   def publish(event)
@@ -30,21 +31,19 @@ class VideoCreationService
     @redis.publish(:sidekiq, event.to_json)
   end
 
-  def get_files_in_folders(folders)
-    files = []
-    folders.each do |folder|
-      folder << "/" if folder[-1] != "/" # append trailing slash if not present
-      all_files_in_folder = Dir["#{folder}**/*.*"]
-      files.push(*all_files_in_folder)
-    end
-    files
-  end
-
   def create_videos(klass, folders)
     files = get_files_in_folders(folders)
 
-    create_eligible_sources(klass, eligible_files(files))
-    transcode_ineligible_sources(klass, files_to_transcode(files))
+    files.reject! do |file|
+      !Video::VIDEO_CONTAINERS.include?(File.extname(file))
+    end
+
+    unsourced_files = files.select do |file|
+      !Source.exists?(raw_file_path: file)
+    end
+
+    create_eligible_sources(klass, eligible_files(unsourced_files))
+    transcode_ineligible_sources(klass, files_to_transcode(unsourced_files))
   end
 
   def create_eligible_sources(klass, files)

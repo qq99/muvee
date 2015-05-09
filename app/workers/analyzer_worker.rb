@@ -1,7 +1,6 @@
 class AnalyzerWorker
   include Sidekiq::Worker
-  sidekiq_options :retry => false
-  sidekiq_options :queue => :analyze
+  sidekiq_options queue: :analyze, retry: false
 
   def perform(opts)
     klasses = [TvShow, Movie]

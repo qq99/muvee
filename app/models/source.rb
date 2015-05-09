@@ -12,17 +12,24 @@ class Source < ActiveRecord::Base
   end
 
   def file_is_present_and_exists?
-    raw_file_path.present? && File.exist?(raw_file_path)
+    raw_file_path.present? && file_exists?
+  end
+
+  def file_exists?
+    File.exist?(raw_file_path)
   end
 
   def reanalyze
-    if !file_is_present_and_exists?
-      self.destroy
-    end
+
   end
 
   def trigger_post_source_actions
     self.video.post_sourced_actions
+  end
+
+  def move_to(new_path)
+    FileUtils.mv(raw_file_path, new_path)
+    self.update_attribute(:raw_file_path, new_path)
   end
 
 end

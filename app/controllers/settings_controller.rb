@@ -39,7 +39,7 @@ class SettingsController < ApplicationController
   def reorganize_movies_show
     @config = APP_CONFIG
     @folders = @config.movie_sources
-    @movies = Movie.local.all
+    @sources = MovieSource.all
   end
 
   def reorganize_movies_perform
@@ -47,53 +47,62 @@ class SettingsController < ApplicationController
       m["rename"].present?
     end
     to_rename.each do |to_rename|
-      movie = Movie.find(to_rename["from"])
+      source = MovieSource.find(to_rename["from"])
       new_path = to_rename["to_folder"] + to_rename["to_filename"]
-      movie.move_raw_file(new_path)
+      source.move_to(new_path)
     end
+    flash[:notice] = "Renamed #{to_rename.size} sources."
     redirect_to reorganize_movies_settings_path
   end
 
-  def scan_for_new_media
-    if existing_jobs.include? "MediaScannerWorker"
-      already_working
-    else
-      MediaScannerWorker.perform_async
-      head :ok
-    end
+  def find_dead_files
+    @dead_files = DeadFileFindingService.new.list_unsourced_files(source_folders)
   end
 
-  def reanalyze_media
-    if existing_jobs.include? "AnalyzerWorker"
-      already_working
-    else
-      AnalyzerWorker.perform_async({method: :reanalyze})
-      head :ok
+  def destroy_files
+    to_destroy = destroy_files_params
+    to_destroy.each do |record|
+      filename = record['file']
+      File.delete(filename) if filename.start_with?(*source_folders)
     end
+    redirect_to status_index_path, notice: "Deleted #{to_destroy.size} files."
   end
 
-  def redownload_all_arts
-    if existing_jobs.include? "AnalyzerWorker"
-      already_working
-    else
-      AnalyzerWorker.perform_async({method: :redownload})
-      head :ok
-    end
+  def find_dead_sources
+    @dead_sources = DeadFileFindingService.new.list_dead_sources
   end
 
-  def redownload_missing_arts
-    if existing_jobs.include? "AnalyzerWorker"
-      already_working
-    else
-      AnalyzerWorker.perform_async({method: :redownload_missing})
-      head :ok
+  def destroy_sources
+    to_destroy = destroy_sources_params
+    to_destroy.each do |record|
+      Source.destroy(record['source_id'])
     end
+    redirect_to find_dead_sources_settings_path, notice: "Destroyed #{to_destroy.size} sources.  Re-analyzing your library in the background now."
   end
 
   private
 
-  def already_working
-    render json: {status: "Please wait; this task is already running."}, status: 409
+  def muvee_configuration
+    ApplicationConfiguration.first
+  end
+
+  def source_folders
+    @source_folders ||= muvee_configuration.movie_sources + muvee_configuration.tv_sources
+  end
+
+  def destroy_files_params
+    to_destroy = params[:destroy].values.first.values
+    to_destroy.select do |record|
+      record["should_destroy"].present? &&
+      record["file"].start_with?(*source_folders)
+    end
+  end
+
+  def destroy_sources_params
+    to_destroy = params[:destroy].values
+    to_destroy.select do |record|
+      record["should_destroy"].present?
+    end
   end
 
   def reorganize_movies_params
@@ -113,14 +122,6 @@ class SettingsController < ApplicationController
       return item
     elsif item.is_a?(String)
       item.gsub(/\r/, '').split(/,|\n/).uniq.compact
-    end
-  end
-
-  def existing_jobs
-    jobs = [Sidekiq::ScheduledSet.new.to_a, Sidekiq::RetrySet.new.to_a, Sidekiq::Queue.new("default").to_a, Sidekiq::Queue.new("analyze").to_a, Sidekiq::Queue.new("transcode").to_a]
-    jobs = jobs.inject([]) {|set, el| set.concat el}
-    existing_jobs = jobs.map do |job|
-      job.display_class
     end
   end
 

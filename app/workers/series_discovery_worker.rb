@@ -1,5 +1,6 @@
 class SeriesDiscoveryWorker
   include Sidekiq::Worker
+  sidekiq_options queue: :series_discovery, retry: false
 
   def publish(event)
     @redis ||= Redis.new
