@@ -4,13 +4,15 @@ class VideoCreationServiceTest < ActiveSupport::TestCase
 
   def setup
     @bigBuck = Dir.getwd() + "/test/fixtures/BigBuckBunny_320x180.mp4"
-    Video.any_instance.stubs(thumbnail_root_path: "/test/scratch/")
+    Video.any_instance.stubs(thumbnail_root_path: Dir.getwd() + "/test/scratch/")
 
     ApplicationConfiguration.destroy_all
     ApplicationConfiguration.create(
       transcode_media: false,
       torrent_start_path: Dir.getwd() + "/tmp/torrents"
     )
+
+    @sample_service = VideoCreationService.new(tv: [], movies: [])
 
     @fakeSuccess = stub({
       response: Net::HTTPSuccess,
@@ -24,32 +26,47 @@ class VideoCreationServiceTest < ActiveSupport::TestCase
   end
 
   def teardown
-    %x{rm #{Dir.getwd() + '/test/scratch/'}*.jpg}
+    %x{rm #{Dir.getwd() + '/test/scratch/'}*.jpg &> /dev/null}
 
     ApplicationConfiguration.destroy_all
   end
 
-  test "the service will create sources for TvShows" do
-    service = VideoCreationService.new({
-      tv: [Dir.getwd() + '/test/fixtures/']
-    })
+  test "#generate calls create_sources on Tv and Movie folders" do
+    tv_folders = ['/tv/foo', '/tv/bar']
+    movie_folders = ['/movies/foo', '/movies/bar']
 
-    assert_difference 'Source.count', +1 do
-      assert_difference 'TvShow.count', +1 do
-        @results = service.generate()
-      end
-    end
+    @service = VideoCreationService.new(
+      tv: tv_folders,
+      movies: movie_folders
+    )
+
+    @service.expects(:create_videos).with(TvShow, tv_folders)
+    @service.expects(:create_videos).with(Movie, movie_folders)
+
+    @service.generate
   end
 
-  test "service will append trailing slashes to any folder supplied to it without trailing slash" do
-    service = VideoCreationService.new({
-      tv: [Dir.getwd() + '/test/fixtures']
-    })
+  test "#create_videos ignores non-video containers, ignores .sample.videos, creates sources for eligible files, and queues transcode for ineligble files" do
+    @sample_service.expects(:get_files_in_folders).returns([
+      '/foo/bar.avi',
+      '/foo/bar.sample.avi',
+      '/foo/bar.sample.jpg',
+      '/foo/bar.mp4',
+      '/foo/bar.SAMPLE.mp4',
+      '/foo/baz.webm'
+    ])
 
-    TvShow.any_instance.expects(:associate_with_series)
+    Video.expects(:needs_transcoding?).with("/foo/bar.avi").once.returns(true)
+    Video.expects(:needs_transcoding?).with("/foo/bar.sample.jpg").never
+    Video.expects(:needs_transcoding?).with("/foo/bar.sample.avi").never
+    Video.expects(:needs_transcoding?).with("/foo/bar.SAMPLE.mp4").never
+    Video.expects(:needs_transcoding?).with("/foo/bar.mp4").once.returns(false)
+    Video.expects(:needs_transcoding?).with("/foo/baz.webm").once.returns(false)
 
-    assert_difference 'TvShow.all.length', 1 do
-      @results = service.generate()
-    end
+    @sample_service.expects(:create_eligible_sources).with(Movie, ['/foo/bar.mp4', '/foo/baz.webm'])
+    @sample_service.expects(:transcode_ineligible_sources).with(Movie, ['/foo/bar.avi'])
+
+    @sample_service.create_videos(Movie, nil)
   end
+
 end
