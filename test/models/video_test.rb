@@ -19,13 +19,13 @@ class VideoTest < ActiveSupport::TestCase
     Source.any_instance.stubs(:metadata).returns(fake_metadata)
     TvShow.any_instance.stubs(:metadata).returns(fake_metadata)
 
-    vid = videos(:american_dad_s01_e01)
+    vid = videos(:american_dad_s01_e02)
     vid.status = nil
     vid.reset_status
 
     assert_equal 'remote', vid.status
 
-    vid.sources << TvShowSource.create(raw_file_path: '/foo/bar/American.Dad.S01E01.mp4')
+    vid.sources << TvShowSource.create(raw_file_path: '/foo/bar/American.Dad.S01E02.mp4')
     vid.reload
     vid.reset_status
 

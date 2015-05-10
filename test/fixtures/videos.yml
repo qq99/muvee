@@ -18,6 +18,7 @@ american_dad_s01_e01:
   duration: 100
   left_off_at: 20
   series: american_dad
+  sources_count: 2
 
 american_dad_s01_e02:
   status: 'local'
@@ -29,6 +30,7 @@ american_dad_s01_e02:
   duration: 100
   left_off_at: 20
   series: american_dad
+  sources_count: 1
 
 american_dad_s01_e03:
   status: 'local'
@@ -40,6 +42,7 @@ american_dad_s01_e03:
   duration: 100
   left_off_at: 20
   series: american_dad
+  sources_count: 1
 
 true_detective_remote:
   status: 'remote'

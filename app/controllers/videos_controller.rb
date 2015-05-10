@@ -14,22 +14,20 @@ class VideosController < ApplicationController
   def show_source
 
     if @video.is_tv?
-      if @video.series.present?
-        @video.series.last_watched_video_id = @video.id
-        @video.series.save
-      end
+      @video.series.update_attribute(:last_watched_video_id, @video.id) if @video.series.present?
 
       if params[:shuffle].present?
-        if params[:series_id].present?
-          @next_episode = Series.find(params[:series_id]).tv_shows.local.sample
+        if (series_id = params[:series_id]).present?
+          @next_episode = Series.find(series_id).tv_shows.local.sample
         else
           @next_episode = TvShow.local.all.sample
         end
       elsif @video.series.present?
-        episodic = @video.series.tv_shows.local.release_order
-        index_of_current_episode = episodic.to_a.find_index{|vid| vid.id == @video.id}
-        @previous_episode = episodic.at(index_of_current_episode - 1) if index_of_current_episode > 0
-        @next_episode = episodic.at(index_of_current_episode + 1) if index_of_current_episode < (episodic.length - 1)
+        episodic_scope = @video.series.tv_shows.local.release_order
+        episodic_ids = episodic_scope.pluck(:id)
+        index_of_current_episode = episodic_ids.find_index{|id| id == @video.id}
+        @previous_episode = episodic_scope.at(index_of_current_episode - 1) if index_of_current_episode > 0
+        @next_episode = episodic_scope.at(index_of_current_episode + 1) if index_of_current_episode < (episodic_ids.size - 1)
       end
     end
     render 'show', layout: 'fullscreen'
