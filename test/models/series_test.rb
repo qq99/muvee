@@ -87,19 +87,12 @@ class SeriesTest < ActiveSupport::TestCase
     Series.any_instance.stubs(:all_episodes_metadata).returns(fake_remote_episodes)
 
     s = series(:american_dad)
-    assert_equal 3, s.tv_shows.local.count
-    assert_equal 0, s.tv_shows.remote.count
-
-    assert_difference 's.tv_shows.count', +3 do
+    assert_difference 's.tv_shows.remote.count', +3 do
       assert_difference 's.tv_shows_count', +3 do
         s.reanalyze
         s.reload
       end
     end
-
-    assert_equal 3, s.tv_shows.local.count
-    assert_equal 3, s.tv_shows.remote.count
-    assert_equal 6, s.tv_shows.count
   end
 
   test "repeated reanalyzation will never add duplicate episodes (wrt Season&Episode)" do
