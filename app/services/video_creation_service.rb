@@ -17,14 +17,6 @@ class VideoCreationService
     return [new_tv_shows, failed_tv_shows, new_movies, failed_movies]
   end
 
-  def eligible_files(files)
-    files.select{|file| !Video.needs_transcoding?(file) }
-  end
-
-  def files_to_transcode(files)
-    files.select{|file| Video.needs_transcoding?(file) }
-  end
-
   def publish(event)
     @redis ||= Redis.new
     event = event.merge(type: 'VideoCreationService')
@@ -35,15 +27,27 @@ class VideoCreationService
     files = get_files_in_folders(folders)
 
     files.reject! do |file|
-      !Video::VIDEO_CONTAINERS.include?(File.extname(file))
+      !Video::VIDEO_CONTAINERS.include?(File.extname(file)) ||
+      file.downcase.include?("sample")
     end
 
     unsourced_files = files.select do |file|
       !Source.exists?(raw_file_path: file)
     end
 
-    create_eligible_sources(klass, eligible_files(unsourced_files))
-    transcode_ineligible_sources(klass, files_to_transcode(unsourced_files))
+    grouped = unsourced_files.inject({}) do |hash, filename|
+      if Video.needs_transcoding?(filename)
+        hash[:to_transcode] ||= []
+        hash[:to_transcode] << filename
+      else
+        hash[:to_source] ||= []
+        hash[:to_source] << filename
+      end
+      hash
+    end
+
+    create_eligible_sources(klass, grouped[:to_source])
+    transcode_ineligible_sources(klass, grouped[:to_transcode])
   end
 
   def create_eligible_sources(klass, files)

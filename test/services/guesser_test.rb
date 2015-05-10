@@ -32,12 +32,12 @@ class GuesserTest < ActiveSupport::TestCase
   test '#guess_from_filepath guesses something when no format matches' do
     filepath = '/foo/bar/Maggie.Simpson.in.The.Longest.Daycare.HDTV.x264-2HD.mp4'
     result = Guesser::TvShow.guess_from_filepath(filepath)
-    assert_equal "Maggie Simpson In The Longest Daycare 2 Hd", result[:title]
+    assert_equal "Maggie Simpson In The Longest Daycare 2hd", result[:title]
     assert_equal "HDTV", result[:quality]
 
     filepath = '/foo/bar/AdventureTimeWithFinnAndJake.HDTV.x264-2HD.mp4'
     result = Guesser::TvShow.guess_from_filepath(filepath)
-    assert_equal "Adventure Time With Finn And Jake 2 Hd", result[:title]
+    assert_equal "Adventure Time With Finn And Jake 2hd", result[:title]
     assert_equal "HDTV", result[:quality]
   end
 
@@ -109,12 +109,12 @@ class GuesserTest < ActiveSupport::TestCase
   test '#guess_from_string guesses something when no format matches' do
     filepath = 'Maggie.Simpson.in.The.Longest.Daycare.HDTV.x264-2HD'
     result = Guesser::TvShow.guess_from_string(filepath)
-    assert_equal "Maggie Simpson In The Longest Daycare Hdtv X264 2 Hd", result[:title]
+    assert_equal "Maggie Simpson In The Longest Daycare Hdtv X264 2hd", result[:title]
     assert_equal "HDTV", result[:quality]
 
     filepath = 'AdventureTimeWithFinnAndJake.HDTV.x264-2HD'
     result = Guesser::TvShow.guess_from_string(filepath)
-    assert_equal "Adventure Time With Finn And Jake Hdtv X264 2 Hd", result[:title]
+    assert_equal "Adventure Time With Finn And Jake Hdtv X264 2hd", result[:title]
     assert_equal "HDTV", result[:quality]
   end
 

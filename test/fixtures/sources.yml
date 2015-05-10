@@ -2,3 +2,23 @@ big_buck_bunny_source:
   video: sourced_movie
   raw_file_path: Dir.getwd() + "/test/fixtures/BigBuckBunny_320x180.mp4"
   type: 'MovieSource'
+
+american_dad_s01e01_source:
+  video: american_dad_s01_e01
+  raw_file_path: '/foo/bar/American.Dad.S01E01.mp4'
+  type: 'TvShowSource'
+
+american_dad_s01e01_alternate_source:
+  video: american_dad_s01_e01
+  raw_file_path: '/foo/bar/American.Dad.S01E01.HDTV.mp4'
+  type: 'TvShowSource'
+
+american_dad_s01e02_source:
+  video: american_dad_s01_e02
+  raw_file_path: '/foo/bar/American.Dad.S01E02.mp4'
+  type: 'TvShowSource'
+
+american_dad_s01e03_source:
+  video: american_dad_s01_e03
+  raw_file_path: '/foo/bar/American.Dad.S01E03.mp4'
+  type: 'TvShowSource'

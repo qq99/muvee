@@ -40,7 +40,7 @@ class TvShowSourceTest < ActiveSupport::TestCase
     Source.any_instance.stubs(:metadata).returns(fake_metadata)
     TvShow.any_instance.stubs(:metadata).returns(fake_metadata)
 
-    s = TvShowSource.new(raw_file_path: '/foo/bar/American.Dad.S01E01.mp4')
+    s = TvShowSource.new(raw_file_path: '/foo/bar/American.Dad.S01E01.HDTV.x264.mp4')
 
     assert_no_difference 'TvShow.count' do
       assert_difference 'TvShowSource.count', +1 do
