@@ -19,13 +19,13 @@ class VideoTest < ActiveSupport::TestCase
     Source.any_instance.stubs(:metadata).returns(fake_metadata)
     TvShow.any_instance.stubs(:metadata).returns(fake_metadata)
 
-    vid = videos(:american_dad_s01_e02)
+    vid = videos(:american_dad_s09_e09_sourceless)
     vid.status = nil
     vid.reset_status
 
     assert_equal 'remote', vid.status
 
-    vid.sources << TvShowSource.create(raw_file_path: '/foo/bar/American.Dad.S01E02.mp4')
+    vid.sources << TvShowSource.create(raw_file_path: '/foo/bar/American.Dad.S09E09.mp4')
     vid.reload
     vid.reset_status
 
@@ -66,7 +66,7 @@ class VideoTest < ActiveSupport::TestCase
   end
 
   test "#create_thumbnail will log an error if it could not create a thumbnail" do
-    vid = Video.create(raw_file_path: "/does/not/exist.mp4")
+    vid = videos(:american_dad_s01_e01)
     vid.stubs(:raw_file_path).returns('/foo/bar')
     Rails.logger.expects(:error).once
     vid.create_thumbnail(1)

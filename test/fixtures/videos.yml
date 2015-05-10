@@ -44,6 +44,15 @@ american_dad_s01_e03:
   series: american_dad
   sources_count: 1
 
+american_dad_s09_e09_sourceless:
+  status: 'remote'
+  title: "American Dad"
+  type: "TvShow"
+  episode: 9
+  season: 9
+  series: american_dad
+  sources_count: 0
+
 true_detective_remote:
   status: 'remote'
   title: 'True Detective'
