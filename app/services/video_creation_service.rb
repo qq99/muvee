@@ -35,12 +35,15 @@ class VideoCreationService
       !Source.exists?(raw_file_path: file)
     end
 
-    grouped = unsourced_files.inject({}) do |hash, filename|
+    grouped = {
+      to_transcode: [],
+      to_source: []
+    }
+
+    grouped = unsourced_files.inject(grouped) do |hash, filename|
       if Video.needs_transcoding?(filename)
-        hash[:to_transcode] ||= []
         hash[:to_transcode] << filename
       else
-        hash[:to_source] ||= []
         hash[:to_source] << filename
       end
       hash

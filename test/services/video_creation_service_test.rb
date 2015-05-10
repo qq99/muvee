@@ -69,4 +69,15 @@ class VideoCreationServiceTest < ActiveSupport::TestCase
     @sample_service.create_videos(Movie, nil)
   end
 
+  test "#create_videos when there are no eligible sources" do
+    @sample_service.expects(:get_files_in_folders).returns([
+      '/foo/bar.sample.jpg',
+    ])
+
+    @sample_service.expects(:create_eligible_sources).with(Movie, [])
+    @sample_service.expects(:transcode_ineligible_sources).with(Movie, [])
+
+    @sample_service.create_videos(Movie, nil)
+  end
+
 end
