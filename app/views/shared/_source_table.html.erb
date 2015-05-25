@@ -13,30 +13,25 @@
     </tr>
   </thead>
   <% sources.each do |source| %>
+
+  <%
+    seed_class = if source[:seeds] && source[:seeds] > good_seed_count_threshold then "success" elsif source[:seeds] == 0 then "error" else "notice" end
+    ratio_class = if source[:ratio] && source[:ratio] > good_ratio_threshold then 'success' elsif source[:ratio] == 0 then 'error' else 'notice' end
+  %>
   <tr>
     <td>
       <% if source[:verified] %>
-        <i class="fa fa-check-circle <% if source[:seeds] > good_seed_count_threshold %>success<% elsif source[:seeds] == 0 %>error<% else %>notice<% end %>" title="Verified"></i>
+        <i class="fa fa-check-circle <%= seed_class %>" title="Verified"></i>
       <% else %>
-        <i class="fa fa-question-circle notice" title="Unverified"></i>
+        <i class="fa fa-question-circle <%= seed_class %>" title="Unverified"></i>
       <% end %>
     </td>
     <td><%= source[:title] %></td>
+    <td><span class="<%= seed_class %>"><%= source[:seeds] || '-' %></span></td>
+    <td><%= source[:peers] || '-' %></td>
     <td>
-      <% if source[:seeds].present? %>
-        <span class="<% if source[:seeds] > good_seed_count_threshold %>success<% elsif source[:seeds] == 0 %>error<% else %>notice<% end %>">
-          <%= source[:seeds] %>
-        </span>
-      <% end %>
-    </td>
-    <td>
-      <% if source[:peers].present? %>
-        <%= source[:peers] %>
-      <% end %>
-    </td>
-    <td>
-      <% if source[:ratio].present? %>
-        <span class="<% if source[:ratio] > good_ratio_threshold %>success<% elsif source[:ratio] == 0 %>error<% else %>notice<% end %>">
+      <span class="<%= ratio_class %>">
+        <% if source[:ratio].present? %>
           <% if source[:ratio].nan? %>
             -
           <% elsif source[:ratio].infinite? %>
@@ -44,8 +39,10 @@
           <% else %>
             <%= number_with_precision(source[:ratio], precision: 2) %>
           <% end %>
-        </span>
-      <% end %>
+        <% else %>
+          -
+        <% end %>
+      </span>
     </td>
     <td>
       <%= link_to download_series_path(video.series, video, download_url: source[:magnet_link]),
