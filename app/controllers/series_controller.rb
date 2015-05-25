@@ -86,7 +86,8 @@ class SeriesController < ApplicationController
       render partial: 'episode', locals: {video: @episode, detailed: true}
     else
       if params[:query].present?
-        @torrent_sources = EztvSearchResult.search(params[:query])
+        @torrent_sources = [] #EztvSearchResult.search(params[:query])
+        @torrent_sources += KickassTorrentsSearchResult.get(params[:query]).results
         @torrent_sources.reject! do |src|
           Torrent.exists?(source: src[:magnet_link]).present?
         end

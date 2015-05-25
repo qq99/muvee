@@ -24,11 +24,17 @@
   overflow: hidden;
 
   .series-information, .video-list {
-    flex: 1 1 50%;
     background: rgba(0,0,0,0.85);
     color: white;
     padding: 3em;
     overflow-y: auto;
+  }
+
+  .series-information  {
+    flex: 1 1 40%;
+  }
+  .video-list {
+    flex: 1 1 60%;
   }
 
   .badges {
