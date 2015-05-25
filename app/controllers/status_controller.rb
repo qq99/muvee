@@ -7,6 +7,12 @@ class StatusController < ApplicationController
     render 'index'
   end
 
+  def destroy_torrent
+    Torrent.find(params[:id]).destroy
+    flash.now[:notice] = "Torrent destroyed"
+    index
+  end
+
   def scan_for_new_media
     if existing_jobs.include? "MediaScannerWorker"
       already_working

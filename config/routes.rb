@@ -87,6 +87,7 @@ Rails.application.routes.draw do
       post :reanalyze_media
       post :redownload_missing_arts
       post :redownload_all_arts
+      delete :destroy_torrent
     end
   end
 

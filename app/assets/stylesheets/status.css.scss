@@ -1,9 +1,9 @@
 #status-page {
-  .job-reporter.torrent, .job-reporter.torrent .job-details {
-    height: 1.1em;
-  }
-
   .job-reporter.torrent {
-    margin: 0.5em 0;
+    margin: 0.15em 0;
+    .action-button {
+      margin: 0;
+      margin-left: 0.25em;
+    }
   }
 }
