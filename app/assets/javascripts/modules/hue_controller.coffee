@@ -9,7 +9,7 @@ class Muvee.HueController
 
     $(@videoEl).on "timeupdate.VideoPlayer", _.throttle =>
       @setHueDynamically()
-    , 5000
+    , 3000
 
     $(@videoEl).on "pause.HueController", =>
       @brightenLights()
