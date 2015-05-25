@@ -63,6 +63,9 @@ class EztvSearchResult
     end
 
     results
+  rescue => e
+    Rails.logger.info e
+    []
   end
 
   def filter_by_query(query, results)
