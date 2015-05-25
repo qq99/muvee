@@ -3,7 +3,7 @@ require 'httparty'
 class EztvSearchResult
   include ActiveSupport::Benchmarkable
 
-  HOST = 'eztv.it'
+  HOST = 'eztv.ch'
   ENDPOINT_URL = "https://#{HOST}/search/"
 
   def logger

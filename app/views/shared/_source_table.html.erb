@@ -1,7 +1,7 @@
 <% good_seed_count_threshold ||= 200 %>
 <% good_ratio_threshold ||= 0.5 %>
 
-<table>
+<table class="series-sources-table">
   <thead>
     <tr>
       <td></td>
@@ -16,30 +16,36 @@
   <tr>
     <td>
       <% if source[:verified] %>
-      <i class="fa fa-check-circle <% if source[:seeds] > good_seed_count_threshold %>success<% elsif source[:seeds] == 0 %>error<% else %>notice<% end %>" title="Verified"></i>
+        <i class="fa fa-check-circle <% if source[:seeds] > good_seed_count_threshold %>success<% elsif source[:seeds] == 0 %>error<% else %>notice<% end %>" title="Verified"></i>
       <% else %>
-      <i class="fa fa-question-circle notice" title="Unverified"></i>
+        <i class="fa fa-question-circle notice" title="Unverified"></i>
       <% end %>
     </td>
     <td><%= source[:title] %></td>
     <td>
-      <span class="<% if source[:seeds] > good_seed_count_threshold %>success<% elsif source[:seeds] == 0 %>error<% else %>notice<% end %>">
-        <%= source[:seeds] %>
-      </span>
+      <% if source[:seeds].present? %>
+        <span class="<% if source[:seeds] > good_seed_count_threshold %>success<% elsif source[:seeds] == 0 %>error<% else %>notice<% end %>">
+          <%= source[:seeds] %>
+        </span>
+      <% end %>
     </td>
     <td>
-      <%= source[:peers] %>
+      <% if source[:peers].present? %>
+        <%= source[:peers] %>
+      <% end %>
     </td>
     <td>
-      <span class="<% if source[:ratio] > good_ratio_threshold %>success<% elsif source[:ratio] == 0 %>error<% else %>notice<% end %>">
-        <% if source[:ratio].nan? %>
-          -
-        <% elsif source[:ratio].infinite? %>
-          ∞
-        <% else %>
-          <%= number_with_precision(source[:ratio], precision: 2) %>
-        <% end %>
-      </span>
+      <% if source[:ratio].present? %>
+        <span class="<% if source[:ratio] > good_ratio_threshold %>success<% elsif source[:ratio] == 0 %>error<% else %>notice<% end %>">
+          <% if source[:ratio].nan? %>
+            -
+          <% elsif source[:ratio].infinite? %>
+            ∞
+          <% else %>
+            <%= number_with_precision(source[:ratio], precision: 2) %>
+          <% end %>
+        </span>
+      <% end %>
     </td>
     <td>
       <%= link_to download_series_path(video.series, video, download_url: source[:magnet_link]),
