@@ -15,7 +15,13 @@ module HasMetadata
       end
 
       def episode_specific_metadata
-        @meta ||= all_episodes_metadata.select { |e|
+        episode_metadata = all_episodes_metadata
+
+        if episode_metadata.kind_of? Hash
+          episode_metadata = [episode_metadata]
+        end
+
+        @meta ||= episode_metadata.select { |e|
           e[:SeasonNumber].to_i == season &&
           e[:EpisodeNumber].to_i == episode
         }.first || {}
