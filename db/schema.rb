@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150401004049) do
+ActiveRecord::Schema.define(version: 20150530215555) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 20150401004049) do
     t.integer  "tv_shows_count",        default: 0
     t.string   "last_sort_value"
     t.string   "last_season_filter"
+    t.boolean  "is_favorite",           default: false
   end
 
   create_table "sources", force: :cascade do |t|

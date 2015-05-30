@@ -1,5 +1,5 @@
 class SeriesController < ApplicationController
-  before_action :set_series, only: [:show, :find_episode, :download, :reanalyze]
+  before_action :set_series, only: [:show, :find_episode, :download, :reanalyze, :favorite, :unfavorite]
   before_action :set_episode, only: [:show_episode_details, :download]
 
   RESULTS_PER_PAGE = 48
@@ -44,6 +44,13 @@ class SeriesController < ApplicationController
     @section = :newest_unwatched
     @shows = TvShow.local.newest.unwatched.limit(50)
     render 'nonepisodic'
+  end
+
+  def favorites
+    @section = :favorites
+    scope = Series.favorites.order(title: :asc)
+
+    @prev_series, @series, @next_series = paged(scope)
   end
 
   def nonepisodic
@@ -101,6 +108,18 @@ class SeriesController < ApplicationController
     service.download_tv_show(params[:download_url], @episode)
 
     show_episode_details
+  end
+
+  def favorite
+    @series.update_attribute(:is_favorite, true)
+    flash.now[:notice] = "This series is now marked as a favorite!"
+    show
+  end
+
+  def unfavorite
+    @series.update_attribute(:is_favorite, false)
+    flash.now[:notice] = "This series is now no longer marked as a favorite."
+    show
   end
 
   def reanalyze

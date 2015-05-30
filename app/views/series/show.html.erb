@@ -29,6 +29,16 @@
         <i class="fa fa-refresh"></i> Refresh
       <% end %>
 
+      <% if @series.is_favorite %>
+        <%= link_to unfavorite_series_path(@series), class: 'action-button', 'tg-remote' => 'POST' do %>
+          <i class="fa fa-heart"></i> Unfavorite
+        <% end %>
+      <% else %>
+        <%= link_to favorite_series_path(@series), class: 'action-button', 'tg-remote' => 'POST' do %>
+          <i class="fa fa-heart-o"></i> Favorite
+        <% end %>
+      <% end %>
+
       <% if @videos.size > 0 %>
         <% random_video = @videos.select(&:local?).map(&:id).sample %>
 

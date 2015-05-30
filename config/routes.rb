@@ -43,6 +43,7 @@ Rails.application.routes.draw do
       get :newest_episodes
       get :newest_unwatched
       get :show_episode_details
+      get :favorites
       get :discover
       get :search
       post :discover_more
@@ -52,6 +53,8 @@ Rails.application.routes.draw do
       post :find_episode
       post 'download/:episode_id', action: :download, as: :download
       post :reanalyze
+      post :favorite
+      post :unfavorite
     end
   end
   resources :movies do

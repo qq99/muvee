@@ -20,6 +20,7 @@ class Series < ActiveRecord::Base
 
   scope :with_episodes, -> {where('tv_shows_count > 0')}
   scope :without_episodes, -> {where('tv_shows_count = 0')}
+  scope :favorites, -> {where(is_favorite: true)}
   scope :paginated, ->(page, results_per_page) { limit(results_per_page).offset(page * results_per_page) }
 
   def extract_metadata

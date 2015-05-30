@@ -10,6 +10,9 @@
     <%= link_to 'Series', series_index_path, class: @section == :series ? 'active' : '' %>
   </li>
   <li>
+    <%= link_to 'Favorites', favorites_series_index_path, class: @section == :favorites ? 'active' : '' %>
+  </li>
+  <li>
     <%= link_to 'Others', nonepisodic_series_index_path, class: @section == :nonepisodic ? 'active' : '' %>
   </li>
   <li>
