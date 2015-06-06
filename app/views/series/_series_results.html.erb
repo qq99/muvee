@@ -10,10 +10,14 @@
 
   <% if @series.present? %>
     <div class="tile-list" >
-      <% @series.each_slice(6) do |series_slice| %>
+      <% @series.in_groups_of(6) do |series_slice| %>
         <div class="tile-row">
           <% series_slice.each do |serie| %>
-            <%= render 'shared/poster', show_path: series_path(serie), poster_url: serie.poster_url, title: serie.title %>
+            <% if serie.present? %>
+              <%= render 'shared/poster', show_path: series_path(serie), poster_url: serie.poster_url, title: serie.title %>
+            <% else %>
+              <div class="poster aspect10x7"></div>
+            <% end %>
           <% end %>
         </div>
       <% end %>
