@@ -59,7 +59,7 @@ class SeriesController < ApplicationController
   end
 
   def show
-    @section = :series
+    @section = if @series.is_favorite then :favorites else :series end
     season = params[:season].presence || @series.last_season_filter.presence
 
     @season = if season == 'all'

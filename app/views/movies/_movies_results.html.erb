@@ -9,7 +9,7 @@
   <% end %>
 
   <% empty = @movies.size == 0 %>
-  <% prng = Random.new(Time.new.floor(10.minutes).to_i + params[:page].to_i) %>
+  <% prng = Random.new(Time.new.floor(16.minutes).to_i + (params[:page].to_i || 0)) %>
 
   <% while @movies.size > 0 %>
     <%= layout(@movies, prng) %>
