@@ -118,7 +118,7 @@ class SeriesController < ApplicationController
 
   def unfavorite
     @series.update_attribute(:is_favorite, false)
-    flash.now[:notice] = "This series is now no longer marked as a favorite."
+    flash.now[:notice] = "This series is no longer marked as a favorite."
     show
   end
 

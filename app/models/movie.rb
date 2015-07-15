@@ -8,6 +8,7 @@ class Movie < Video
   before_destroy :destroy_poster
 
   scope :paginated, ->(page, results_per_page) { limit(results_per_page).offset(page * results_per_page) }
+  scope :favorites, -> {where(is_favorite: true)}
 
   POSTER_FOLDER = Rails.root.join('public', 'posters')
 

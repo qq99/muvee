@@ -62,6 +62,7 @@ Rails.application.routes.draw do
       get :all
       get :discover
       get :newest
+      get :favorites
       get :genres
       get 'genres/:type', as: :by_genre, action: :genre
       get :search
@@ -74,6 +75,8 @@ Rails.application.routes.draw do
       post :download
       patch :override_imdb_id
       post :reanalyze
+      post :favorite
+      post :unfavorite
     end
   end
 

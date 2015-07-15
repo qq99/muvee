@@ -1,10 +1,24 @@
 class MoviesController < ApplicationController
-  before_action :set_movie, only: [:show, :find_sources_via_yts, :destroy, :download, :find_sources_via_pirate_bay, :override_imdb_id, :reanalyze]
+  before_action :set_movie, only: [
+    :show,
+    :find_sources_via_yts,
+    :destroy,
+    :download,
+    :find_sources_via_pirate_bay,
+    :override_imdb_id,
+    :reanalyze,
+    :favorite,
+    :unfavorite
+  ]
 
   RESULTS_PER_PAGE = 24
 
   def index
     all
+  end
+
+  def show
+    render 'show'
   end
 
   def search
@@ -132,7 +146,7 @@ class MoviesController < ApplicationController
   def reanalyze
     @movie.reanalyze
 
-    render 'show'
+    show
   end
 
   def override_imdb_id
@@ -153,7 +167,26 @@ class MoviesController < ApplicationController
     @movie.reanalyze
     @movie.redownload
 
-    render 'show'
+    show
+  end
+
+  def favorites
+    @section = :favorites
+    scope = Movie.favorites.order(title: :asc)
+
+    @prev_movie, @movies, @next_movie = paged(scope)
+  end
+
+  def favorite
+    @movie.update_attribute(:is_favorite, true)
+    flash.now[:notice] = "This movie is now marked as a favorite!"
+    show
+  end
+
+  def unfavorite
+    @movie.update_attribute(:is_favorite, false)
+    flash.now[:notice] = "This movie is no longer marked as a favorite."
+    show
   end
 
   private
