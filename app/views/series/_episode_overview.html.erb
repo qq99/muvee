@@ -40,17 +40,17 @@
   <i class="fa fa-refresh"></i>
 <% end %>
 
-<% if video.released_on.present? %>
-  <span class="flex-fixed released-on" define="{releasedOnToggled: false}">
+<span class="flex-fixed released-on" define="{releasedOnToggled: false}">
+  <% if video.remote? && video.released_on.present? %>
     <span bind-show="releasedOnToggled" bind-event-click="releasedOnToggled = !releasedOnToggled">
       <%= year_month_day(video.released_on) %>
     </span>
     <span bind-show="!releasedOnToggled" bind-event-click="releasedOnToggled = !releasedOnToggled">
       <% if video.released_on < Time.now %>
-      <%= days_ago(video.released_on) %> ago
+        <%= days_ago(video.released_on) %> ago
       <% else %>
-      in <%= days_from_now(video.released_on) %>
+        airs <%= airs_on_time(video.released_on) %>
       <% end %>
     </span>
-  </span>
-<% end %>
+  <% end %>
+</span>

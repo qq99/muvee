@@ -1,6 +1,13 @@
 <div class="video-detailed-summary remote">
+
+  <% if video.released_on.present? %>
+    <p><%= airs_on_summary(video.released_on) %></p>
+  <% end %>
+
   <% if video.overview.present? %>
-    <p class="video-overview"><%= video.overview %></p>
+    <p class="video-overview">
+      <%= video.overview %>
+    </p>
   <% end %>
 
   <% if video.torrents.present? %>

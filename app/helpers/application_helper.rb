@@ -33,12 +33,34 @@ module ApplicationHelper
     end
   end
 
+  def airs_on_time(future_time)
+    if future_time.today?
+      "today"
+    elsif future_time < Time.current + 1.week
+      "this #{future_time.strftime('%A')}"
+    else
+      "in #{days_from_now(future_time)}"
+    end
+  end
+
+  def airs_on_summary(release_date)
+    if release_date < Time.now
+      "Aired #{year_month_day(release_date)} (#{days_ago(release_date)} ago)."
+    else
+      "Airs #{year_month_day(release_date)} (in #{days_from_now(release_date)})."
+    end
+  end
+
   def expected_release_from_now(future_time)
-    ChronicDuration.output(future_time - Time.now, days: true, units: 2, joiner: ', ', format: :long)
+    ChronicDuration.output(future_time - Time.current, days: true, units: 2, joiner: ', ', format: :long)
   end
 
   def days_from_now(future_time)
-    ChronicDuration.output(future_time - Time.now, days: true, units: 1, format: :long)
+    ChronicDuration.output(future_time - Time.current, days: true, units: 1, format: :long)
+  end
+
+  def days_ago(past_time)
+    ChronicDuration.output(Time.current - past_time, days: true, units: 1, format: :long)
   end
 
   def effective_video_path(video)
@@ -47,10 +69,6 @@ module ApplicationHelper
     else
       show_source_video_path(video)
     end
-  end
-
-  def days_ago(past_time)
-    ChronicDuration.output(Time.now - past_time, days: true, units: 1, format: :long)
   end
 
   def year_month_day(time)
