@@ -99,7 +99,7 @@ class SeriesController < ApplicationController
           Torrent.exists?(source: src[:magnet_link]).present?
         end
       end
-      render partial: 'remote_episode', locals: {video: @episode, detailed: true}
+      render partial: 'episode', locals: {video: @episode, detailed: true}
     end
   end
 

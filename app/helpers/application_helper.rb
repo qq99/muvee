@@ -34,10 +34,26 @@ module ApplicationHelper
   end
 
   def expected_release_from_now(future_time)
-    ChronicDuration.output(future_time - Time.now, days: true, units: 2, joiner: ', ')
+    ChronicDuration.output(future_time - Time.now, days: true, units: 2, joiner: ', ', format: :long)
+  end
+
+  def days_from_now(future_time)
+    ChronicDuration.output(future_time - Time.now, days: true, units: 1, format: :long)
+  end
+
+  def effective_video_path(video)
+    if video.left_off_at_percent > 90
+      show_source_video_path(video, t: 0)
+    else
+      show_source_video_path(video)
+    end
+  end
+
+  def days_ago(past_time)
+    ChronicDuration.output(Time.now - past_time, days: true, units: 1, format: :long)
   end
 
   def year_month_day(time)
-    time.try(:strftime, '%Y-%m-%e')
+    time.try(:strftime, '%Y-%m-%d')
   end
 end

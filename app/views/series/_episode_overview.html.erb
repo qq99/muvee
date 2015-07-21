@@ -1,0 +1,56 @@
+<span class="flex-fixed season-and-episode"><%= video.episode %></span>
+
+<% if video.local? %>
+  <%= link_to effective_video_path(video), class: 'flex-fixed icon-link' do %>
+    <i class="fa fa-play-circle"></i>
+  <% end %>
+<% else %>
+  <%= link_to show_episode_details_series_index_path(episode_id: video.id, query: "#{video.title} #{video.season_episode}"),
+    'tg-remote' => 'GET',
+    'refresh-on-success' => "video-#{video.id}",
+    class: 'flex-fixed icon-link' do %>
+    <i class="fa fa-download"></i>
+  <% end %>
+<% end %>
+
+<%= link_to video.episode_name || "No title available",
+  show_episode_details_series_index_path(episode_id: video.id, query: "#{video.title} #{video.season_episode}"),
+  class: 'episode-title',
+  'tg-remote' => 'GET',
+  'refresh-on-success' => "video-#{video.id}" %>
+
+<% if video.downloading? && video.torrents.size > 0 %>
+  <div class="episode-watch-progress torrent-progress progress-bar__container"
+    define="{torrent: new Muvee.ProgressReporter(this, 'TorrentInformation<%= video.torrents.first.id %>')}">
+
+    <div class="progress-bar__bar animates" bind-attribute="{style: torrent.progressCssWidth()}"></div>
+  </div>
+<% elsif video.local? %>
+  <div class="episode-watch-progress progress-bar__container">
+    <div class="progress-bar__bar" title="<%= video.left_off_at %> seconds of <%= video.duration %> total seconds" style="width: <%= video.left_off_at_percent %>%"></div>
+  </div>
+<% end %>
+
+<%= link_to reanalyze_video_path(video),
+  'tg-remote' => 'POST',
+  'full-refresh' => true,
+  'refresh-on-success' => "video-#{video.id}",
+  class: 'icon-link' do %>
+
+  <i class="fa fa-refresh"></i>
+<% end %>
+
+<% if video.released_on.present? %>
+  <span class="flex-fixed released-on" define="{releasedOnToggled: false}">
+    <span bind-show="releasedOnToggled" bind-event-click="releasedOnToggled = !releasedOnToggled">
+      <%= year_month_day(video.released_on) %>
+    </span>
+    <span bind-show="!releasedOnToggled" bind-event-click="releasedOnToggled = !releasedOnToggled">
+      <% if video.released_on < Time.now %>
+      <%= days_ago(video.released_on) %> ago
+      <% else %>
+      in <%= days_from_now(video.released_on) %>
+      <% end %>
+    </span>
+  </span>
+<% end %>

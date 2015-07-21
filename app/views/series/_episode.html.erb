@@ -4,35 +4,12 @@
   refresh="video-<%= video.id %>"
   class="series-episode">
   <div>
-    <%
-    effective_video_path = if video.left_off_at_percent > 90
-      show_source_video_path(video, t: 0)
-    else
-      show_source_video_path(video)
-    end
-    %>
     <div class="video-quick-summary">
-      <span class="flex-fixed season-and-episode"><%= video.episode %></span>
-      <%= link_to effective_video_path, class: 'flex-fixed icon-link' do %>
-        <i class="fa fa-play-circle"></i>
-      <% end %>
-      <%= link_to video.episode_name || "No title available", show_episode_details_series_index_path(episode_id: video.id), class: 'episode-title',
-        'tg-remote' => 'GET',
-        'refresh-on-success' => "video-#{video.id}" %>
-      <div class="episode-watch-progress progress-bar__container">
-        <div class="progress-bar__bar" title="<%= video.left_off_at %> seconds of <%= video.duration %> total seconds" style="width: <%= video.left_off_at_percent %>%"></div>
-      </div>
-      <%= link_to reanalyze_video_path(video),
-        'tg-remote' => 'POST',
-        'full-refresh' => true,
-        'refresh-on-success' => "video-#{video.id}",
-        class: 'icon-link' do %>
-        <i class="fa fa-refresh"></i>
-      <% end %>
+      <%= render 'episode_overview', video: video %>
     </div>
     <% if detailed %>
       <div class="video-detailed-summary">
-        <%= render 'video_tile', video: video, effective_video_path: effective_video_path %>
+        <%= render "episode_details_#{video.status}", video: video %>
       </div>
     <% end %>
   </div>
