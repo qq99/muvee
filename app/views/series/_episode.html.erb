@@ -9,7 +9,7 @@
     </div>
     <% if detailed %>
       <div class="video-detailed-summary">
-        <%= render "episode_details_#{video.status}", video: video %>
+        <%= render "episode_details_#{video.local? ? 'local' : 'remote'}", video: video %>
       </div>
     <% end %>
   </div>
