@@ -8,6 +8,12 @@
           <span><%= local_assigns[:title] || "Unknown" %></span>
         </div>
       <% end %>
+
+      <% if num_unacquired.present? && num_unacquired > 0 %>
+        <span class="num-unacquired">
+          <%= pluralize(num_unacquired, 'new episode') %>
+        </span>
+      <% end %>
     <% end %>
   </div>
 </div>

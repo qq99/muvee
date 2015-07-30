@@ -47,7 +47,7 @@
       <%= year_month_day(video.released_on) %>
     </span>
     <span bind-show="!releasedOnToggled" bind-event-click="releasedOnToggled = !releasedOnToggled">
-      <% if video.released_on < Time.now %>
+      <% if video.released_on < Time.now.to_date %>
         <%= days_ago(video.released_on) %> ago
       <% else %>
         airs <%= airs_on_time(video.released_on) %>
