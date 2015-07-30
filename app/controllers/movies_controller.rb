@@ -43,6 +43,19 @@ class MoviesController < ApplicationController
     @prev_movie, @movies, @next_movie = paged(scope)
   end
 
+  def newest_unwatched
+    @section = :newest_unwatched
+    scope = Movie.local.newest.unwatched
+
+    @prev_movie, @movies, @next_movie = paged(scope)
+
+    if @movies.size > 0
+      render 'newest'
+    else
+      head :not_found
+    end
+  end
+
   def newest
     @section = :newest
     scope = Movie.local_and_downloading.order(created_at: :desc)

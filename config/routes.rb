@@ -63,6 +63,7 @@ Rails.application.routes.draw do
       get :all
       get :discover
       get :newest
+      get :newest_unwatched
       get :favorites
       get :genres
       get 'genres/:type', as: :by_genre, action: :genre
