@@ -30,7 +30,7 @@ gem 'figaro'
 gem "autoprefixer-rails"
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbograft', '0.1.16'
+gem 'turbograft', github: 'Shopify/turbograft', branch: 'fix-historystate-bug'
 gem 'twine-rails', '0.0.16'
 gem 'jquery-turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
