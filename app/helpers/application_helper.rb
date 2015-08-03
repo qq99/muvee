@@ -49,6 +49,10 @@ module ApplicationHelper
   end
 
   def airs_on_summary(release_date)
+    if release_date == release_date.beginning_of_day
+      release_date = release_date.end_of_day # data marks released_on as start of day, but that's not great for comparisons to now
+    end
+
     if release_date < Time.now
       "Aired #{year_month_day(release_date)} (#{days_ago(release_date)} ago)."
     else
