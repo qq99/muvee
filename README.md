@@ -3,8 +3,6 @@
 
 μv: (pronounced: mew-vee, somewhat like "movie")
 
-[Join in the developer chat](https://chat.echoplex.us/muv)
-
 This project is something like Netflix, but run on a server in your own home.  It aims to be an open source alternative to Plex
 
 At the moment, it's a media manager that presents a web UI reminiscent of Netflix.  It grabs metadata, posters, and fanart, and displays it all in a nice to consume format from any device in your household.
@@ -13,8 +11,9 @@ I started it because I wanted to view my media on my PS4 (but as of late, I've j
 
 WIP
 
-[YouTube video of current design](https://www.youtube.com/watch?v=1tevKG6u1qM&html5=1)
-[Old pictures of an earlier design](http://imgur.com/a/2wBvh)
+[YouTube video of a recent revision](https://www.youtube.com/watch?v=1tevKG6u1qM&html5=1)
+
+[Pictures of the project in very early stages](http://imgur.com/a/2wBvh)
 
 To install and use on Linux
 ---
