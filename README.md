@@ -3,20 +3,65 @@
 
 μv: (pronounced: mew-vee, somewhat like "movie")
 
-This project is something like Netflix, but run on a server in your own home.  It aims to be an open source alternative to Plex
+This project is something like Netflix, but run on a server in your own home.  It aims to be an open source alternative to Plex. It can attempt to reach out to the Internet to find sources for media that you legally own, but do not yet possess backups of.
 
 At the moment, it's a media manager that presents a web UI reminiscent of Netflix.  It grabs metadata, posters, and fanart, and displays it all in a nice to consume format from any device in your household.
 
-I started it because I wanted to view my media on my PS4 (but as of late, I've just been using Chrome on a mac mini connected to my TV)
+I started it because I wanted to view my media on my PS4.  Since then, PS4 added DLNA and I've modified muvee so much that this project won't even work with the PS4 browser (alas, it can't handle flexbox).  It works quite nicely on a Mac Mini connected to your TV.
 
-WIP
+[Recent pictures](http://imgur.com/a/DwAuU)
 
 [YouTube video of a recent revision](https://www.youtube.com/watch?v=1tevKG6u1qM&html5=1)
 
 [Pictures of the project in very early stages](http://imgur.com/a/2wBvh)
 
+Pictures
+---
+![](http://i.imgur.com/hF34OQD.jpg)
+_Movies index_
+
+![](http://i.imgur.com/KYXjST4.jpg)
+_Detailed movie view page, when movie is sourced (you have a copy)_
+
+![](http://i.imgur.com/HXxaBe5.jpg)
+_Detailed movie view page, when movie is not yet sourced (you don't have a copy)_
+
+![](http://i.imgur.com/CofpprC.jpg)
+_Attempting to find copies via YTS (high quality, solid releases) or TPB_
+
+![](http://i.imgur.com/DyqHsKO.jpg)
+_Discover movies from the YTS archives, or search for them on the net_
+
+![](http://i.imgur.com/e8WO4k4.jpg)
+_Pressing the `t` key on any index page lets you quickly search the movies muvee knows about_
+
+![](http://i.imgur.com/D6QYoF4.jpg)
+_Series index page_
+
+![](http://i.imgur.com/uoTOnwQ.jpg)
+_Series details page_
+
+![](http://i.imgur.com/x7wyRSz.jpg)
+_Series details page, trying to find a source_
+
+![](http://i.imgur.com/dddCOoB.jpg)
+_On deck, your latest unwatched episodes_
+
+![](http://i.imgur.com/JvXkr5e.jpg)
+_Viewing more details about a particular episode in a season_
+
+![](http://i.imgur.com/FAetn4G.png)
+_Settings and configuration_
+
+![](http://i.imgur.com/jjRnc1E.png)
+_Status page, any progress bars of currently executing jobs_
+
+![](http://i.imgur.com/KO5dUKM.jpg)
+_The player itself_
+
 To install and use on Linux
 ---
+0. Install the Transmission bittorrent client, and enable web access (restricting it to 127.0.0.1 is fine). This is required to run muvee atm until I code around errors thrown when it is not running.
 1. `sudo apt-get install postgresql-9.3 libpq-dev libav-tools nginx imagemagick libffi-dev libphash0 libphash0-dev redis` or if on OSX, `brew install postgresql redis nginx libav`
 2. `bundle install`
 3. `bundle exec rake database:create` (or manually create a postgres role and set up your `database.yml`, e.g., `psql -c "create role muvee with createdb login password 'password1'"`)
@@ -33,6 +78,8 @@ To install and use on Linux
 Integration with Hue lights
 ---
 
+`muvee` can control your lights!  Your lights will brighten when playback is paused/stopped, and dim when playback is starts.  Additionally, there is a setting to have it sample the picture periodically to change the hue to approximate the colours of the scene.
+
 If you haven't played with the Ruby `hue` gem yet, you'll need to create a group with the API (easiest in `bundle exec rails console`):
 
 ```ruby
@@ -46,8 +93,6 @@ group.create!
 ```
 
 At the moment, `muvee` uses `client.groups.first` as the set of lights it will dim and brighten throughout playback.  This will hopefully change as the project grows and matures to be configurable from within the UI.
-
-With this set up in place, your group will brighten when playback is paused or stopped, and dim when playback is in progress.
 
 Dependencies (and tested with):
 ---
@@ -69,10 +114,11 @@ Dependencies (and tested with):
 Hotkeys
 ---
 - `spacebar`: pause
-- `left arrow`: Jump 30s back in time
-- `right arrow`: Jump 30s forward in time
-- `up arrow`: Decrease volume by 5%
-- `down arrow`: Increase volume by 5%
+- `left arrow`: Jump back in time
+- `right arrow`: Jump forward in time
+- `up arrow`: Increase volume
+- `down arrow`: Decrease volume
+- `t` (on series/movie index pages): Bring up a quick search bar
 
 Definitions of terms
 ---
