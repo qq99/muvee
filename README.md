@@ -113,11 +113,11 @@ Dependencies (and tested with):
 - libav-tools
   - avconv version 9.14-6:9.14-0ubuntu0.14.04.1
   - avprobe version 9.14-6:9.14-0ubuntu0.14.04.1
-- node.js 0.10.25+
+- node.js 0.10.25+ (**deprecated?**)
 - nginx version: nginx/1.4.6 (Ubuntu)
   - globally available on your path
-- ImageMagick 6.7.7-10 2014-03-06 Q16
-- libffi-dev libphash0 libphash0-dev (for determining 3D-ness of movies)
+- ImageMagick 6.7.7-10 2014-03-06 Q16 (**deprecated** for now)
+- libffi-dev libphash0 libphash0-dev (for determining 3D-ness of movies; **deprecated**)
   - `sudo apt-get install libffi-dev libphash0 libphash0-dev`
 
 Hotkeys
