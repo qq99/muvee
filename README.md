@@ -32,6 +32,12 @@ _Attempting to find copies via YTS (high quality, solid releases) or TPB_
 ![](http://i.imgur.com/DyqHsKO.jpg)
 _Discover movies from the YTS archives, or search for them on the net_
 
+![](http://i.imgur.com/SjCLDzW.jpg)
+_Movies index while downloading, blue progress bar appears_
+
+![](http://i.imgur.com/guLrAhy.png)
+_Detailed movie page while downloading, blue progress bar appears_
+
 ![](http://i.imgur.com/e8WO4k4.jpg)
 _Pressing the `t` key on any index page lets you quickly search the movies muvee knows about_
 
@@ -39,10 +45,13 @@ _Pressing the `t` key on any index page lets you quickly search the movies muvee
 _Series index page_
 
 ![](http://i.imgur.com/uoTOnwQ.jpg)
-_Series details page_
+_Series details page, green bars represent your watching progress_
 
 ![](http://i.imgur.com/x7wyRSz.jpg)
 _Series details page, trying to find a source_
+
+![](http://i.imgur.com/8s1RNqD.jpg)
+_Series details page while downloading, blue progress bar appears_
 
 ![](http://i.imgur.com/dddCOoB.jpg)
 _On deck, your latest unwatched episodes_
