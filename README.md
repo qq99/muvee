@@ -70,7 +70,8 @@ _The player itself_
 
 To install and use on Linux
 ---
-0. Install the Transmission bittorrent client, and enable web access (restricting it to 127.0.0.1 is fine). This is required to run muvee atm until I code around errors thrown when it is not running.
+0. Install the Transmission bittorrent client, and enable web access (restricting it to 127.0.0.1 is fine). This is required to run muvee atm until I code around errors thrown when it is not running.  Your remote settings should look like this for muvee to interact with Transmission.  You can set your other client settings however you like.
+![](http://imgur.com/wjzDzVI.jpg)
 1. `sudo apt-get install postgresql-9.3 libpq-dev libav-tools nginx imagemagick libffi-dev libphash0 libphash0-dev redis` or if on OSX, `brew install postgresql redis nginx libav`
 2. `bundle install`
 3. `bundle exec rake database:create` (or manually create a postgres role and set up your `database.yml`, e.g., `psql -c "create role muvee with createdb login password 'password1'"`)
