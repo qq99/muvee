@@ -6,6 +6,10 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+def is_server_or_sidekiq_context?
+  !(Rails.env.test? || $rails_rake_task || defined?(Rails::Console))
+end
+
 module MuvRails
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.

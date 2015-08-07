@@ -1,5 +1,6 @@
-if Rails.env.test?
-  HUE_CLIENT = {}
+HUE_CLIENT = if is_server_or_sidekiq_context?
+  puts '=> initializers/hue: Initializing Hue client'
+  Hue::Client.new
 else
-  HUE_CLIENT = Hue::Client.new
+  {}
 end
