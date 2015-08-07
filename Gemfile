@@ -25,6 +25,7 @@ gem 'tubesock'
 gem 'event_bus'
 gem 'redis'
 gem 'color'
+gem 'figaro'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbograft', '0.1.16'
