@@ -42,6 +42,7 @@ class MoviesController < ApplicationController
     scope = Movie.order('random()')
 
     @prev_movie, @movies, @next_movie = paged(scope)
+    render 'all'
   end
 
   def newest
