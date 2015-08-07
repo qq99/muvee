@@ -3,7 +3,7 @@ class SettingsController < ApplicationController
   skip_before_filter :check_if_first_use
 
   def index
-    @config = APP_CONFIG
+    @config = muvee_configuration
     render layout: 'application'
   end
 
@@ -11,7 +11,8 @@ class SettingsController < ApplicationController
     if ApplicationConfiguration.count > 0
       redirect_to settings_path
     end
-    @config = APP_CONFIG || ApplicationConfiguration.new
+    @config = muvee_configuration || ApplicationConfiguration.new
+    render layout: 'fullscreen'
   end
 
   def create
@@ -21,17 +22,15 @@ class SettingsController < ApplicationController
 
     @config = ApplicationConfiguration.new(config_params)
     if success = @config.save
-      redirect_to videos_path
-    else
       render 'welcome'
+    else
+      render 'welcome', layout: 'fullscreen'
     end
   end
 
   def update
     @config = ApplicationConfiguration.find(params[:id])
     if @config.update(config_params)
-      redirect_to videos_path
-    else
       render 'welcome'
     end
   end
