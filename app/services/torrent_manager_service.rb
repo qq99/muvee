@@ -12,7 +12,7 @@ class TorrentManagerService
   ).freeze
 
   def initialize
-    config = APP_CONFIG
+    config = ApplicationConfiguration.first
     @start_path = config.torrent_start_path
     throw "No initial path for torrent download" if @start_path.blank?
   end

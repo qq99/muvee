@@ -3,7 +3,7 @@ class SettingsController < ApplicationController
   skip_before_filter :check_if_first_use
 
   def index
-    @config = APP_CONFIG
+    @config = muvee_configuration
     render layout: 'application'
   end
 
@@ -11,7 +11,7 @@ class SettingsController < ApplicationController
     if ApplicationConfiguration.count > 0
       redirect_to settings_path
     end
-    @config = APP_CONFIG || ApplicationConfiguration.new
+    @config = muvee_configuration || ApplicationConfiguration.new
   end
 
   def create
