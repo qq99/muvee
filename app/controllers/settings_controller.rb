@@ -12,6 +12,7 @@ class SettingsController < ApplicationController
       redirect_to settings_path
     end
     @config = muvee_configuration || ApplicationConfiguration.new
+    render layout: 'fullscreen'
   end
 
   def create
@@ -21,17 +22,15 @@ class SettingsController < ApplicationController
 
     @config = ApplicationConfiguration.new(config_params)
     if success = @config.save
-      redirect_to videos_path
-    else
       render 'welcome'
+    else
+      render 'welcome', layout: 'fullscreen'
     end
   end
 
   def update
     @config = ApplicationConfiguration.find(params[:id])
     if @config.update(config_params)
-      redirect_to videos_path
-    else
       render 'welcome'
     end
   end

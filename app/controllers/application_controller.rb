@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   def check_if_first_use
     silence_action do
       if ApplicationConfiguration.count == 0
-        redirect_to welcome_settings_path, layout: false
+        redirect_to welcome_settings_path
       end
     end
   end

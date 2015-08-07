@@ -42,12 +42,6 @@ class MoviesController < ApplicationController
     scope = Movie.order('random()')
 
     @prev_movie, @movies, @next_movie = paged(scope)
-
-    if @movies.size > 0
-      render 'all'
-    else
-      head :not_found
-    end
   end
 
   def newest
@@ -55,12 +49,6 @@ class MoviesController < ApplicationController
     scope = Movie.local_and_downloading.order(created_at: :desc)
 
     @prev_movie, @movies, @next_movie = paged(scope)
-
-    if @movies.size > 0
-      render 'newest'
-    else
-      head :not_found
-    end
   end
 
   def discover
@@ -69,11 +57,7 @@ class MoviesController < ApplicationController
 
     @prev_movie, @movies, @next_movie = paged(scope)
 
-    if @movies.size > 0
-      render 'remote'
-    else
-      head :not_found
-    end
+    render 'remote' # TODO: change partial to discover
   end
 
   def genres
@@ -86,7 +70,6 @@ class MoviesController < ApplicationController
     name = Genre.normalized_name(params[:type])
     @genre = Genre.find_by(name: name)
     @movies = @genre.movies.all.to_a # TODO: figure out pagination here
-    render 'genre'
   end
 
   def discover_more

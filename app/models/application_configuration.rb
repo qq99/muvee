@@ -22,12 +22,14 @@ class ApplicationConfiguration < ActiveRecord::Base
   end
 
   def transcode_folder_exists?
+    return unless transcode_folder.present?
     if !File.exists?(transcode_folder.to_s)
       self.errors.add transcode_folder || "Transcode folder", "does not exist, or we don't have access to it"
     end
   end
 
   def torrent_download_folder_exists?
+    return unless torrent_start_path.present?
     if !File.exists?(torrent_start_path.to_s)
       self.errors.add torrent_start_path || "Torrent storage path", "does not exist, or we don't have access to it"
     end
