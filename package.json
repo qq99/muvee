@@ -1,0 +1,25 @@
+{
+  "name": "muvee",
+  "version": "0.0.0",
+  "description": "μv (aka muv aka muvee) ===",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/qq99/muvee.git"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/qq99/muvee/issues"
+  },
+  "dependencies": {
+    "express": "~4.13.3",
+    "coffee-script": "~1.9.3"
+  }
+}

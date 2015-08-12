@@ -27,3 +27,5 @@ public/posters/*
 public/fanart/*
 public/profiles/*
 muvee.nginx.conf
+
+node_modules

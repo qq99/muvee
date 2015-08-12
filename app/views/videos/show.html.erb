@@ -15,7 +15,9 @@
     <%= render 'video_upnext', next_episode: @next_episode, previous_episode: @previous_episode if @next_episode %>
   <% end %>
   <div class="video-container">
-    <video src="<%= stream_source_video_path(@video, @source) %>"
+    <video
+      src="http://watch.muvee:7070/stream"
+      fsrc="<%= stream_source_video_path(@video, @source) %>"
       id="video"
       class="video-<%= @video.id %>"
       data-resume-from="<%= @video.left_off_at %>"
