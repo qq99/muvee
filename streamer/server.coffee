@@ -15,23 +15,26 @@ live_transcoder = null
 app.get '/stream', (req, res) ->
 
   filepath = '/media/sf_TV/Rick.and.Morty.S02E03.Auto.Erotic.Assimilation.WEBRip.AAC2.0.H.264-RARBG/Rick.and.Morty.S02E03.Auto.Erotic.Assimilation.WEBRip.AAC2.0.H.264-RARBG.mp4'
+  # filepath = './test2.mp4'
   #avconv -i /media/sf_TV/Rick.and.Morty.S02E03.Auto.Erotic.Assimilation.WEBRip.AAC2.0.H.264-RARBG/Rick.and.Morty.S02E03.Auto.Erotic.Assimilation.WEBRip.AAC2.0.H.264-RARBG.mp4 -c:v libx264 -crf 23 -preset ultrafast -vsync 1 -r 25 -c:a aac -strict -2 -b:a 16k -ar 16000 -ac 1 -f h264 test.webm
 
   if live_transcoder == null
     live_transcoder = child_process.spawn('avconv', [
       '-i', filepath,
-      '-movflags', 'faststart',
+      '-movflags', 'frag_keyframe+empty_moov',
       '-c:v', 'libx264',
+      # '-c:v', 'copy',
       '-crf', '23',
       '-preset', 'ultrafast',
       '-vsync', '1',
       '-r', '25',
       '-c:a', 'aac',
+      # '-c:a', 'copy',
       '-strict', '-2',
       '-b:a', '16k',
       '-ar', '16000',
       '-ac', '1',
-      '-f', 'h264',
+      '-f', 'mp4',
       '-' # output to stdout
     ], {detached: false})
 
@@ -74,10 +77,10 @@ app.get '/stream', (req, res) ->
   header =
     "Cache-Control": "public; max-age=0"
     "Connection": "keep-alive"
-    #"Content-Type": info.mime
+    # "Content-Type": info.mime
     "Content-Disposition": "inline; filename=test.mp4;"
     # "Pragma": "public"
-    # "Last-Modified": info.modified.toUTCString()
+    "Last-Modified": info.modified.toUTCString()
     "Content-Transfer-Encoding": "binary",
     "Accept-Ranges": "bytes",
     "Content-Type": "video/mp4"
@@ -89,11 +92,11 @@ app.get '/stream', (req, res) ->
   #   code = 206
   #   header["Status"] = "206 Partial Content"
   #   header["Accept-Ranges"] = "bytes"
-  #   # header["Content-Range"] = "bytes #{info.start}-#{info.end}/#{info.size}"
+  #   header["Content-Range"] = "bytes #{info.start}-#{info.end}/#{info.size}"
 
   res.writeHead(code, header)
 
-  # stream = fs.createReadStream info.path,
+  # stream = fs.createReadStream filepath,
   #   flags: "r"
   #   start: info.start
   #   end: info.end
