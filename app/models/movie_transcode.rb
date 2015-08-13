@@ -1,0 +1,3 @@
+class MovieTranscode < Transcode
+
+end

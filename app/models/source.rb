@@ -1,11 +1,17 @@
 class Source < ActiveRecord::Base
+  include AssociatesSelfWithVideo
   include HasMetadata
   belongs_to :video, counter_cache: true
 
   validates :raw_file_path, uniqueness: true
+  before_validation :set_quality, on: :create
   before_validation :associate_self_with_video, on: :create
 
   after_create :trigger_post_source_actions
+
+  def set_quality
+    self.quality = guessed[:quality]
+  end
 
   def is_3d?
     is_3d.present?

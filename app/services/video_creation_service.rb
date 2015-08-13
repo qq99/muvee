@@ -69,15 +69,24 @@ class VideoCreationService
 
   def transcode_ineligible_sources(klass, files)
     return unless should_transcode?
-    files.each do |path|
-      TranscoderWorker.perform_async(klass, path)
+    files.each do |filepath|
+      create_transcode(klass, filepath)
+    end
+    TranscoderWorker.perform_async
+  end
+
+  def create_transcode(klass, filepath)
+    return false if Transcode.exists?(raw_file_path: filepath)
+    begin
+      Transcode.create(type: "#{klass}Transcode", raw_file_path: filepath)
+    rescue ActiveRecord::RecordNotUnique => e
+      Rails.logger.info "Video/Transcode already existed, so transcode was not created: #{e}"
     end
   end
 
   def create_source(klass, filepath)
     return false if Source.exists?(raw_file_path: filepath)
-    source = Source.new(type: "#{klass}Source", raw_file_path: filepath)
-    source.save
+    Source.create(type: "#{klass}Source", raw_file_path: filepath)
   end
 
 end
