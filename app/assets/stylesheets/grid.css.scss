@@ -82,6 +82,7 @@ $tile-transition-delay: 0.30s;
   background: rgba(0,0,0,0.7);
   transition: opacity $tile-transition-delay ease-in-out;
   z-index: -1;
+  will-change: opacity;
 }
 .tile:hover .tile__meta-backdrop {
   opacity: 1;
@@ -188,6 +189,7 @@ $tile-transition-delay: 0.30s;
   color: white;
   padding: 1em;
   height: 130px;
+  will-change: height, border;
   p { color: inherit; }
 
   transition: all $tile-transition-delay ease-in-out;
@@ -216,6 +218,7 @@ $tile-transition-delay: 0.30s;
     transition: all $tile-transition-delay ease-in-out;
     font-size: 0.95em;
     font-weight: 200;
+    will-change: opacity;
   }
 
 
