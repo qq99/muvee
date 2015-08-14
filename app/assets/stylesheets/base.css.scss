@@ -210,6 +210,7 @@ $fixed-search-padding: 3em;
   color: white;
   background: linear-gradient(to bottom, black, #111);
   display: flex;
+  position: relative;
   h1, h2, h3, h4, h5 {
     color: $less-radical-blue;
   }
@@ -284,4 +285,23 @@ $fixed-search-padding: 3em;
 }
 .notice {
   color: $notice !important;
+}
+
+.alpha-picker {
+  display: flex;
+  padding: 0 1em;
+  margin: 1.25em 0 0 0;
+  color: white;
+  width: 100%;
+  justify-content: center;
+  .alpha {
+    flex: 1;
+    text-align: center;
+    font-style: italic;
+    padding-bottom: 0.25em;
+    &.active {
+      color: $radical-blue;
+      border-bottom: 2px solid $less-radical-blue;
+    }
+  }
 }
