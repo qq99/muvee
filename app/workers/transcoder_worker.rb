@@ -3,6 +3,6 @@ class TranscoderWorker
   sidekiq_options :queue => :transcode
 
   def perform
-    Transcode.ready.sample.transcode
+    Transcode.ready.sample.try(:transcode) # may be none
   end
 end
