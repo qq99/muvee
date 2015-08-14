@@ -1,10 +1,7 @@
-require 'httparty'
-
 class EztvSearchResult
   include ActiveSupport::Benchmarkable
 
-  HOST = 'eztv.ch'
-  ENDPOINT_URL = "https://#{HOST}/search/"
+  ENDPOINT_URL = "https://#{Figaro.env.eztv_domain}/search/"
 
   def logger
     @logger ||= Logger.new(STDOUT)
@@ -26,7 +23,7 @@ class EztvSearchResult
           'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
           'Accept-Language' => 'en-US,en;q=0.5',
           'Accept-Encoding' => 'gzip, deflate',
-          'Referer' => 'https://eztv.it/',
+          'Referer' => "https://#{Figaro.env.eztv_domain}/",
           'User-Agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:37.0) Gecko/20100101 Firefox/37.0'
         }
 
