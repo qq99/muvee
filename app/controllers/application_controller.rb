@@ -23,4 +23,12 @@ class ApplicationController < ActionController::Base
     ApplicationConfiguration.first
   end
 
+  def alpha_filter_scope(scope)
+    if params[:alpha].present?
+      alpha = "#{params[:alpha]}%".downcase
+      scope = scope.alphabetical.where('lower(title) like :q', q: alpha)
+    end
+    scope
+  end
+
 end

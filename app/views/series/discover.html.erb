@@ -15,7 +15,7 @@
 
 <div class="alpha-picker">
   <% ('a'..'z').each do |letter| %>
-  <%= link_to letter, discover_series_index_path(alpha: letter), class: "alpha #{'active' if params[:alpha] == letter}" %>
+    <%= link_to letter, discover_series_index_path(alpha: letter), class: "alpha #{'active' if params[:alpha] == letter}" %>
   <% end %>
 </div>
 

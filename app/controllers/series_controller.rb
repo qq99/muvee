@@ -29,10 +29,8 @@ class SeriesController < ApplicationController
   def discover
     @section = :discover
     scope = Series.without_episodes
-    if params[:alpha].present?
-      alpha = "#{params[:alpha]}%".downcase
-      scope = scope.where('lower(title) like :q', q: alpha)
-    end
+    scope = alpha_filter_scope(scope)
+
     @prev_series, @series, @next_series = paged(scope)
 
     render 'discover'

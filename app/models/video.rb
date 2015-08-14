@@ -10,6 +10,7 @@ class Video < ActiveRecord::Base
 
   validates_uniqueness_of :imdb_id, allow_nil: true, allow_blank: true
 
+  scope :alphabetical, -> {order(title: :asc)}
   scope :local, -> {where('sources_count > 0')}
   scope :remote, -> {where('sources_count = 0')}
   scope :downloading, -> {where(status: 'downloading')}
