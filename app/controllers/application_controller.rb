@@ -19,4 +19,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def app_config
+    ApplicationConfiguration.first
+  end
+
 end

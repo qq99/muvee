@@ -3,7 +3,7 @@ class SettingsController < ApplicationController
   skip_before_filter :check_if_first_use
 
   def index
-    @config = muvee_configuration
+    @config = app_config
     render layout: 'application'
   end
 
@@ -11,7 +11,7 @@ class SettingsController < ApplicationController
     if ApplicationConfiguration.count > 0
       redirect_to settings_path
     end
-    @config = muvee_configuration || ApplicationConfiguration.new
+    @config = app_config || ApplicationConfiguration.new
     render layout: 'fullscreen'
   end
 
@@ -36,8 +36,7 @@ class SettingsController < ApplicationController
   end
 
   def reorganize_movies_show
-    @config = APP_CONFIG
-    @folders = @config.movie_sources
+    @folders = app_config.movie_sources
     @sources = MovieSource.all
   end
 
@@ -81,12 +80,8 @@ class SettingsController < ApplicationController
 
   private
 
-  def muvee_configuration
-    ApplicationConfiguration.first
-  end
-
   def source_folders
-    @source_folders ||= muvee_configuration.movie_sources + muvee_configuration.tv_sources
+    @source_folders ||= app_config.movie_sources + app_config.tv_sources
   end
 
   def destroy_files_params
