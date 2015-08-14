@@ -64,9 +64,6 @@ $tile-transition-delay: 0.30s;
   left: 0;
   background-color: black;
   background: no-repeat center center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
   background-size: cover;
   transition: all $tile-transition-delay ease-in-out;
 }

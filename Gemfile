@@ -27,6 +27,8 @@ gem 'redis'
 gem 'color'
 gem 'figaro'
 
+gem "autoprefixer-rails"
+
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbograft', '0.1.16'
 gem 'twine-rails', '0.0.16'
