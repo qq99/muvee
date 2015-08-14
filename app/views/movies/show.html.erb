@@ -124,6 +124,8 @@
         define="{torrent: new Muvee.ProgressReporter(this, 'TorrentInformation<%= @movie.torrents.first.id %>')}">
         <div class="progress-bar__bar animates" bind-attribute="{style: torrent.progressCssWidth()}"></div>
       </div>
+    <% elsif @movie.transcoding? %>
+      <div class="torrent-progress progress-bar__container indeterminate" title="Transcoding now..."></div>
     <% end %>
 
   </div>

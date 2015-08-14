@@ -2,6 +2,7 @@ class Video < ActiveRecord::Base
   has_many :sources, dependent: :destroy
   has_many :thumbnails, dependent: :destroy
   has_many :fanarts, dependent: :destroy
+  has_many :transcodes
 
   has_many :genres_videos
   has_many :genres, through: :genres_videos
@@ -57,6 +58,10 @@ class Video < ActiveRecord::Base
 
   def remote?
     sources_count == 0
+  end
+
+  def transcoding?
+    remote? && self.transcodes.present?
   end
 
   def post_sourced_actions
