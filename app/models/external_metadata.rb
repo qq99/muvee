@@ -30,7 +30,7 @@ class ExternalMetadata < ActiveRecord::Base
   end
 
   def query_remote(uri)
-    HTTParty.get(uri.to_s)
+    fetch(uri.to_s)
   end
 
   def fetch_data
