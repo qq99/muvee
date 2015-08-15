@@ -87,9 +87,6 @@ $preview-height: 45%;
   width: 100%;
   position: absolute;
 }
-h3.year {
-  margin-bottom: 0.4em;
-}
 
 .movies-index__container {
   position: relative;
@@ -144,17 +141,17 @@ h3.year {
 }
 
 .movie-poster {
-  float: left;
+  flex: 0 0 auto;
   width: auto;
-  height: 10.7em;
+  height: 13em;
   margin: 0 1em 1em 0;
   border-radius: 3px;
   box-shadow: 2px 2px 4px rgba(0,0,0, 0.8);
 }
 
 #ImdbLogoSvg {
-  height: 50px;
-  width: 101px;
+  height: 30px;
+  width: 60px;
 }
 #TmdbLogoSvg {
   height: 50px;
@@ -294,8 +291,28 @@ h3.year {
   }
 }
 
+.movie-information-header {
+  display: flex;
+
+  .year, .duration {
+    i.fa {
+      color: #777;
+    }
+  }
+  .duration, .year, .star-rating {
+    font-size: 1em;
+    font-weight: 100;
+  }
+}
+.movie-information-header__row {
+  margin-bottom: 0.4rem;
+}
 .movie-title {
   color: $radical-blue;
+}
+.movie-tagline {
+  font-size: 1.4em;
+  margin: 0 0 0.4em 0;
 }
 
 #all_movies_by_genre {
@@ -323,4 +340,16 @@ h3.year {
       color: $radical-blue;
     }
   }
+}
+
+.flex-columns {
+  display: flex;
+  align-items: center;
+  > * {
+    margin-right: 0.5em !important;
+  }
+}
+
+.imdb-logo-link {
+  display: inline-block;
 }

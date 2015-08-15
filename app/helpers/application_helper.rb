@@ -19,7 +19,7 @@ module ApplicationHelper
 
   def released_on_human(released_on)
     if released_on
-      released_on.strftime("%Y %b %-d")
+      released_on.strftime("%Y-%m-%d")
     else
       ''
     end
