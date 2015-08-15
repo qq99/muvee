@@ -9,7 +9,7 @@ class OmdbSearchResult < ExternalMetadata
   end
 
   def found?
-    data['Response'] != 'False'
+    data.present? && data['Response'] != 'False'
   end
 
 end

@@ -43,8 +43,8 @@ class Movie < Video
     self.runtime_minutes = metadata[:runtime]
     self.year = released_on.try(:year)
     self.tagline = metadata[:tagline]
-    self.vote_count = metadata[:vote_count]
-    self.vote_average = metadata[:vote_average]
+    self.vote_count = metadata[:vote_count] if metadata[:vote_count].to_i >= vote_count.to_i
+    self.vote_average = metadata[:vote_average] if metadata[:vote_count].to_i >= vote_count.to_i
     self.overview = metadata[:overview]
     self.language = metadata[:spoken_languages].map{|d| d.values.first}.flatten.join(", ")
     self.country = metadata[:production_countries].map{|d| d.values.last}.flatten.join(", ")
