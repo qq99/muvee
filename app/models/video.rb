@@ -31,15 +31,15 @@ class Video < ActiveRecord::Base
   SERVABLE_WEBM_AUDIO_CODECS = %w{libvorbis vorbis}.freeze
 
   COMPATIBILITY_MATRIX = {
-    '.mp4': {
+    '.mp4' => {
       audio: SERVABLE_MP4_AUDIO_CODECS,
       video: SERVABLE_MP4_VIDEO_CODECS
     },
-    '.m4v': {
+    '.m4v' => {
       audio: SERVABLE_MP4_AUDIO_CODECS,
       video: SERVABLE_MP4_VIDEO_CODECS
     },
-    '.webm': {
+    '.webm' => {
       audio: SERVABLE_WEBM_AUDIO_CODECS,
       video: SERVABLE_WEBM_VIDEO_CODECS
     }
