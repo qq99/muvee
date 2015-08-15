@@ -49,7 +49,6 @@ class ExternalMetadata < ActiveRecord::Base
           end
         elsif result_format == :json
           begin
-            self.raw_value.try(:gsub!, "\"Type\":\"movie,", '') # fix for OMDB, really hacky that it's in here
             self.raw_value = JSON.parse(self.raw_value).try(:with_indifferent_access) || {}
           rescue => e
             self.raw_value = {}

@@ -5,7 +5,7 @@ class OmdbSearchResult < ExternalMetadata
   end
 
   def self.endpoint_url(imdb_id)
-    "http://www.omdbapi.com/?i=#{imdb_id}"
+    "http://www.omdbapi.com/?i=#{imdb_id}&plot=full&r=json"
   end
 
   def found?
