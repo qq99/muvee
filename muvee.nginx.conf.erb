@@ -77,7 +77,7 @@ http {
       internal;
     }
 
-    location ~ ^/(fonts|fanart|banners|posters|thumbnails) {
+    location ~ ^/(fonts|fanart|banners|posters|thumbnails|profiles) {
       expires 30d;
       add_header Pragma public;
       add_header Cache-Control "public";

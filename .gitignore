@@ -25,4 +25,5 @@ public/thumbnails/*
 public/banners/*
 public/posters/*
 public/fanart/*
+public/profiles/*
 muvee.nginx.conf

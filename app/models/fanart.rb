@@ -21,7 +21,6 @@ class Fanart < ActiveRecord::Base
   private
 
   def download_image_file
-    binding.pry
     return if @remote_location.blank?
     output_filename = UUID.generate(:compact) + File.extname(@remote_location)
     output_path = output_folder.join(output_filename)
