@@ -26,12 +26,16 @@ class Actor < ActiveRecord::Base
     results = search_results.data["results"]
 
     results.select!{|entry| entry['name'] == name} # filter list to exact matches
-    @profile_pic = "http://image.tmdb.org/t/p/original/" + results.first['profile_path']
-    results.first['id']
+    result = results.first
+    profile = result.try(:[], 'profile_path')
+    id = result.try(:[], 'id')
+    @profile_pic = "http://image.tmdb.org/t/p/original/#{profile}" if profile.present?
+    id
   end
 
   def reanalyze
-    self.tmdb_person_id = fetch_tmdb_person_id
+    tmdb_id = fetch_tmdb_person_id
+    self.tmdb_person_id = tmdb_id if tmdb_id.present?
     if @profile_pic.present? && self.fanarts.blank? # todo make an association to profile pics
       self.fanarts << ProfilePictureFanart.create(remote_location: @profile_pic)
     end

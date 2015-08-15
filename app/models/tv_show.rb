@@ -41,7 +41,7 @@ class TvShow < Video
   def associate_with_genres
     return if series_metadata[:Genre].blank?
 
-    self.genres.destroy_all
+    self.genres = []
 
     listed_genres = compute_genres(series_metadata[:Genre])
     listed_genres.each do |genre_name|
