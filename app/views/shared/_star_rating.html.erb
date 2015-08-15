@@ -1,7 +1,7 @@
 <%
   full_stars, half_stars, empty_stars = of_N_stars(rating, rating_max, new_scale)
 %>
-<span class="user-vote-rating" title="<%= rating %>">
+<span class="user-vote-rating" title="<%= number_with_precision(rating, precision: 2) %> from <%= number_with_delimiter(vote_count) %> votes">
   <% full_stars.times do %>
     <i class="fa fa-star"></i>
   <% end %>

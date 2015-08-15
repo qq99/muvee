@@ -63,9 +63,9 @@
       <%= render 'genre_badge_listing', genres: @movie.genres %>
 
       <p class="movie-rating">
-        <%= render 'shared/star_rating', rating: @movie.vote_average || 0, rating_max: 10.0, new_scale: 5 %>
+        <%= render 'shared/star_rating', vote_count: @movie.vote_count, rating: @movie.vote_average || 0, rating_max: 10.0, new_scale: 5 %>
         <% if @movie.vote_count.present? %>
-          from <%= @movie.vote_count %> votes
+          from <%= number_with_delimiter(@movie.vote_count) %> votes
         <% end %>
       </p>
       <p>

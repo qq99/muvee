@@ -49,6 +49,14 @@ class Movie < Video
     self.language = metadata[:spoken_languages].map{|d| d.values.first}.flatten.join(", ")
     self.country = metadata[:production_countries].map{|d| d.values.last}.flatten.join(", ")
     self.imdb_id = metadata[:imdb_id] unless imdb_id.present?
+
+    omdb_metadata = OmdbSearchResult.get(imdb_id)
+    if omdb_metadata.found?
+      self.parental_guidance_rating = omdb_metadata.data['Rated']
+      self.vote_average = omdb_metadata.data['imdbRating']
+      self.vote_count = omdb_metadata.data['imdbVotes']
+    end
+
     self.save
   end
 

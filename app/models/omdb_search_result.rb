@@ -8,4 +8,8 @@ class OmdbSearchResult < ExternalMetadata
     "http://www.omdbapi.com/?i=#{imdb_id}"
   end
 
+  def found?
+    data['Response'] != 'False'
+  end
+
 end
