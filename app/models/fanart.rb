@@ -15,7 +15,7 @@ class Fanart < ActiveRecord::Base
   attr_writer :remote_location
 
   def url
-    "/fanart/#{File.basename(raw_file_path)}"
+    "/#{self.class::SUB_FOLDER}/#{File.basename(raw_file_path)}"
   end
 
   private
