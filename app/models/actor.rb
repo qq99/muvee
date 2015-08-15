@@ -6,6 +6,8 @@ class Actor < ActiveRecord::Base
 
   has_many :fanarts, dependent: :destroy
 
+  after_create :extract_metadata
+
   # before_validation :sanitize_name
   validates :name, presence: true, uniqueness: {case_sensitive: true}
 
@@ -33,12 +35,16 @@ class Actor < ActiveRecord::Base
     id
   end
 
-  def reanalyze
+  def extract_metadata
     tmdb_id = fetch_tmdb_person_id
     self.tmdb_person_id = tmdb_id if tmdb_id.present?
     if @profile_pic.present? && self.fanarts.blank? # todo make an association to profile pics
       self.fanarts << ProfilePictureFanart.create(remote_location: @profile_pic)
     end
+  end
+
+  def reanalyze
+    extract_metadata
   end
 
   def query_tmdb_images

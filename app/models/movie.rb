@@ -4,6 +4,7 @@ class Movie < Video
   after_commit :queue_download_job, on: :create
   after_create :extract_metadata
   after_create :associate_with_genres
+  after_create :associate_with_actors
   after_create :download_poster
   before_destroy :destroy_poster
 
