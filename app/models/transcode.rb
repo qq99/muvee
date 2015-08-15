@@ -128,8 +128,8 @@ class Transcode < ActiveRecord::Base
 
     false
   ensure
-    unless complete?
-      self.update_attribute(:status, 'failed') unless complete?
+    unless complete? || transcoding?
+      self.update_attribute(:status, 'failed')
       delete_transcoding_file!
     end
   end

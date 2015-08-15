@@ -3,7 +3,7 @@ require 'test_helper'
 class TranscodeTest < ActiveSupport::TestCase
 
   setup do
-    @transcode = Transcode.create(raw_file_path: '/foo/bar/baz.avi', video: videos(:american_dad_s09_e09_sourceless))
+    @transcode = transcodes(:example)
     ApplicationConfiguration.stubs(:first).returns(stub(transcode_folder: '/tmp/transcoding'))
   end
 
@@ -101,16 +101,16 @@ class TranscodeTest < ActiveSupport::TestCase
     assert_equal "avconv -threads auto -i /foo/bar/baz.avi -loglevel quiet -c:v libvpx -qmin 0 -qmax 50 -b:v 1M -c:a libvorbis -q:a 4 /tmp/transcoding/baz.muv-transcoding.webm", @transcode.transcode_command
   end
 
-  test "#move_transcoded_file returns false when transcoding file does not exist" do
+  test "#move_transcoded_file! returns false when transcoding file does not exist" do
     File.expects(:exist?).with(@transcode.transcode_path).returns(false)
     FileUtils.expects(:mv).never
-    refute @transcode.move_transcoded_file
+    refute @transcode.move_transcoded_file!
   end
 
-  test "#move_transcoded_file attempts to move the transcode_path to the eventual_path" do
+  test "#move_transcoded_file! attempts to move the transcode_path to the eventual_path" do
     File.expects(:exist?).with(@transcode.transcode_path).returns(true)
     FileUtils.expects(:mv).with(@transcode.transcode_path, @transcode.eventual_path).returns(true)
-    assert @transcode.move_transcoded_file
+    assert @transcode.move_transcoded_file!
   end
 
   test "#transcode returns early when complete?" do
@@ -118,7 +118,7 @@ class TranscodeTest < ActiveSupport::TestCase
 
     @transcode.expects(:perform).never
     @transcode.expects(:perform_transcode_subprocess).never
-    @transcode.expects(:move_transcoded_file).never
+    @transcode.expects(:move_transcoded_file!).never
 
     assert @transcode.transcode
     assert @transcode.complete?
@@ -130,7 +130,7 @@ class TranscodeTest < ActiveSupport::TestCase
     @transcode.expects(:transcoding_file_exists?).once.returns(true)
     @transcode.expects(:perform).never
     @transcode.expects(:perform_transcode_subprocess).never
-    @transcode.expects(:move_transcoded_file).once
+    @transcode.expects(:move_transcoded_file!).once
 
     assert @transcode.transcode
     assert @transcode.complete?
@@ -141,7 +141,7 @@ class TranscodeTest < ActiveSupport::TestCase
 
     @transcode.expects(:perform).never
     @transcode.expects(:perform_transcode_subprocess).never
-    @transcode.expects(:move_transcoded_file).never
+    @transcode.expects(:move_transcoded_file!).never
 
     assert @transcode.transcode
     assert @transcode.transcoding?
@@ -150,10 +150,10 @@ class TranscodeTest < ActiveSupport::TestCase
   test "#transcode deletes transcoding file when Transcode has failed, and transcoding file still exists, performs the transcode, and moves the succesful result" do
     @transcode.update_attribute(:status, 'failed')
 
-    @transcode.expects(:transcoding_file_exists?).returns(true)
+    @transcode.expects(:transcoding_file_exists?).at_least_once.returns(true)
     File.expects(:delete).with(@transcode.transcode_path).once.returns(true)
     @transcode.expects(:perform_transcode_subprocess).once.returns(true)
-    @transcode.expects(:move_transcoded_file).once
+    @transcode.expects(:move_transcoded_file!).once
 
     assert @transcode.transcode
     assert @transcode.complete?
@@ -161,7 +161,7 @@ class TranscodeTest < ActiveSupport::TestCase
 
   test "#transcode does not try to move the result if #perform_transcode_work was unsuccessful" do
     @transcode.expects(:perform_transcode_subprocess).once.returns(false)
-    @transcode.expects(:move_transcoded_file).never
+    @transcode.expects(:move_transcoded_file!).never
 
     refute @transcode.transcode
     assert @transcode.failed?

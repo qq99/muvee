@@ -21,9 +21,10 @@ module AssociatesSelfWithVideo
   def associate_self_with_tv_show
     series_title = metadata(guessed[:title])[:SeriesName]
     series = Series.find_or_create_by(title: series_title)
+    title = series_title || guessed[:title]
 
     show = TvShow.find_or_initialize_by(
-      series: series,
+      title: title,
       season: guessed[:season],
       episode: guessed[:episode]
     )
