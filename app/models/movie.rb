@@ -50,7 +50,6 @@ class Movie < Video
     self.country = metadata[:production_countries].map{|d| d.values.last}.flatten.join(", ")
     self.imdb_id = metadata[:imdb_id] unless imdb_id.present?
 
-    omdb_metadata = OmdbSearchResult.get(imdb_id)
     if omdb_metadata.found?
       self.parental_guidance_rating = omdb_metadata.data['Rated']
       self.vote_average = omdb_metadata.data['imdbRating']
@@ -58,6 +57,10 @@ class Movie < Video
     end
 
     self.save
+  end
+
+  def omdb_metadata
+    @omdb_metadata ||= OmdbSearchResult.get(imdb_id)
   end
 
   def download_poster
@@ -150,11 +153,24 @@ class Movie < Video
     self.save if listed_genres.any?
   end
 
+  def associate_with_actors
+    return unless omdb_metadata.data['Actors'].present?
+
+    listed_actors = compute_actors(omdb_metadata.data['Actors'])
+    self.actors = []
+    listed_actors.each do |actor_name|
+      actor = Actor.where('lower(name) like :q', q: "%#{actor_name.downcase}%").first || Actor.create(name: actor_name)
+      self.actors << actor
+    end
+    self.save if listed_actors.any?
+  end
+
   def reanalyze
     super
     old_imdb_id = imdb_id
     extract_metadata
     associate_with_genres
+    associate_with_actors
     redownload_missing
     if imdb_id != old_imdb_id
       redownload
