@@ -2,10 +2,15 @@ class Fanart < ActiveRecord::Base
   include DownloadFile
 
   belongs_to :video
+  belongs_to :actor
   before_create :download_image_file
   before_destroy :destroy_image_file
 
-  FANART_FOLDER = Rails.root.join('public', 'fanart')
+  SUB_FOLDER = 'fanart'
+
+  def output_folder
+    Rails.root.join('public', self.class::SUB_FOLDER)
+  end
 
   attr_writer :remote_location
 
@@ -16,9 +21,10 @@ class Fanart < ActiveRecord::Base
   private
 
   def download_image_file
+    binding.pry
     return if @remote_location.blank?
     output_filename = UUID.generate(:compact) + File.extname(@remote_location)
-    output_path = FANART_FOLDER.join(output_filename)
+    output_path = output_folder.join(output_filename)
     if download_file(@remote_location, output_path)
       self.raw_file_path = output_path.to_s
     else
@@ -27,14 +33,14 @@ class Fanart < ActiveRecord::Base
   end
 
   def fanart_path
-    FANART_FOLDER.join(self.raw_file_path)
+    output_folder.join(self.raw_file_path)
   end
 
   def destroy_image_file
     begin
       File.delete(fanart_path)
     rescue => e
-      Rails.logger.info "Series#destroy_images: #{e}"
+      Rails.logger.info "Fanart#destroy_image_file: #{e}"
     end
   end
 end

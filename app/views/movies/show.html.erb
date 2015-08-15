@@ -100,12 +100,21 @@
       </p>
       <% if @movie.actors.any? %>
         <h2>Actors</h2>
-        <ul>
+        <div class="flex-columns">
           <% @movie.actors.each do |actor| %>
-            <li><%= link_to actor.name, by_actor_movies_path(actor) %></li>
+            <div class='actor-tile'>
+              <% profile = actor.fanarts.first %>
+              <% if profile.present? %>
+                <%= link_to by_actor_movies_path(actor), class: 'actor-profile-picture' do %>
+                  <div class="actor-profile-picture" style="background-image: url(<%= profile.url %>)"></div>
+                <% end %>
+              <% end %>
+              <%= link_to actor.name, by_actor_movies_path(actor), class: "actor-name #{'full' if profile.blank?}" %>
+            </div>
           <% end %>
-        </ul>
+        </div>
       <% end %>
+      <br>
     </div>
 
     <div class="movie-actions">

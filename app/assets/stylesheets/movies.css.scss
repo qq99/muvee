@@ -353,3 +353,41 @@ $preview-height: 45%;
 .imdb-logo-link {
   display: inline-block;
 }
+
+.actor-tile {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 25%;
+  height: 15em;
+  margin-right: 0 !important;
+  overflow: hidden;
+  &:hover {
+    .actor-name {
+      color: $less-radical-blue;
+    }
+  }
+}
+.actor-profile-picture {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: 50% 50%;
+  z-index: 1;
+}
+.actor-name {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.7);
+  width: 100%;
+  padding: 1em;
+  font-size: 0.8em;
+  z-index: 2;
+  &.full {
+    height: 100%;
+  }
+}
