@@ -98,6 +98,14 @@
       <p>
         <%= @movie.overview %>
       </p>
+      <% if @movie.actors.any? %>
+        <h2>Actors</h2>
+        <ul>
+          <% @movie.actors.each do |actor| %>
+            <li><%= link_to actor.name, by_actor_movies_path(actor) %></li>
+          <% end %>
+        </ul>
+      <% end %>
     </div>
 
     <div class="movie-actions">

@@ -65,6 +65,7 @@ Rails.application.routes.draw do
       get :favorites
       get :genres
       get 'genres/:type', as: :by_genre, action: :genre
+      get 'actors/:actor', as: :by_actor, action: :actor
       get :search
       post :movie_search, as: :movie_search, action: :movie_search
       post :discover_more
