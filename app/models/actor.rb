@@ -5,6 +5,7 @@ class Actor < ActiveRecord::Base
   has_many :tv_shows, -> { where(videos: {type: 'TvShow'}) }, through: :actors_videos, source: :video
 
   has_many :fanarts, dependent: :destroy
+  has_one :profile_picture_fanart
 
   after_create :extract_metadata
 
@@ -37,9 +38,20 @@ class Actor < ActiveRecord::Base
 
   def extract_metadata
     tmdb_id = fetch_tmdb_person_id
-    self.tmdb_person_id = tmdb_id if tmdb_id.present?
-    if @profile_pic.present? && self.fanarts.blank? # todo make an association to profile pics
-      self.fanarts << ProfilePictureFanart.create(remote_location: @profile_pic)
+    if tmdb_id.present?
+      tmdb_result = TmdbPersonResult.get(tmdb_id)
+
+      self.birthday = Date.parse(tmdb_result.data[:birthday]) if tmdb_result[:birthday].present?
+      self.deathday = Date.parse(tmdb_result.data[:deathday]) if tmdb_result[:deathday].present?
+      self.bio = tmdb_result.data[:biography]
+      self.aliases = tmdb_result.data[:also_known_as]
+      self.tmdb_person_id = tmdb_id
+      self.imdb_id = tmdb_result.data[:imdb_id]
+      self.place_of_birth = tmdb_result.data[:place_of_birth]
+      if @profile_pic.present? && profile_picture_fanart.blank?
+        self.fanarts << ProfilePictureFanart.create(remote_location: @profile_pic)
+      end
+      self.save
     end
   end
 

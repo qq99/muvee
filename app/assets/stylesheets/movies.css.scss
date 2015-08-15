@@ -344,8 +344,10 @@ $preview-height: 45%;
   > * {
     margin-right: 0.5em !important;
   }
+  &.flex-columns--top {
+    align-items: flex-start;
+  }
 }
-
 .imdb-logo-link {
   display: inline-block;
 }
@@ -385,5 +387,19 @@ $preview-height: 45%;
   z-index: 2;
   &.full {
     height: 100%;
+  }
+}
+
+.actor-details {
+  color: white;
+  margin: 1em;
+  .actor-profile-picture {
+    height: 24em;
+    width: 14em;
+  }
+  p {
+    font-size: 1.2em;
+    font-weight: 100;
+    margin: 1em 0;
   }
 }
