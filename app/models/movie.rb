@@ -53,8 +53,8 @@ class Movie < Video
 
     if omdb_metadata.found?
       self.parental_guidance_rating = omdb_metadata.data['Rated']
-      self.vote_average = omdb_metadata.data['imdbRating']
-      self.vote_count = omdb_metadata.data['imdbVotes']
+      self.vote_average = omdb_metadata.data['imdbRating'].try(:to_f)
+      self.vote_count = omdb_metadata.data['imdbVotes'].try(:gsub, /[^\d]/, '').try(:to_i)
     end
 
     self.save
