@@ -9,7 +9,6 @@ class Actor < ActiveRecord::Base
 
   after_create :extract_metadata
 
-  # before_validation :sanitize_name
   validates :name, presence: true, uniqueness: {case_sensitive: true}
 
   def fetch_tmdb_person_id

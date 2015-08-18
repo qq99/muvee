@@ -36,7 +36,7 @@ class ExternalMetadata < ActiveRecord::Base
   def fetch_data
     if should_query_remote?
       Rails.logger.info "Fetching #{self.endpoint}"
-      http_get = query_remote(URI.parse(self.endpoint))
+      http_get = query_remote(URI.parse(self.endpoint)) # HTTParty.get will throw on error, we'd rather continue to the next lines, for now, at least
       if http_get.present? && http_get.response.kind_of?(Net::HTTPSuccess)
         Rails.logger.info "Fetched #{self.endpoint}"
         self.raw_value = http_get.body.to_s#.encode('UTF-8', {:invalid => :replace, :undef => :replace, :replace => '?'})
