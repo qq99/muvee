@@ -1,8 +1,8 @@
 class Actor < ActiveRecord::Base
+  include HasVideo
+
   has_many :actors_videos
-  has_many :videos, through: :actors_videos
-  has_many :movies, -> { where(videos: {type: 'Movie'}) }, through: :actors_videos, source: :video
-  has_many :tv_shows, -> { where(videos: {type: 'TvShow'}) }, through: :actors_videos, source: :video
+  has_videos(through: :actors_videos)
 
   has_many :fanarts, dependent: :destroy
   has_one :profile_picture_fanart
@@ -11,18 +11,6 @@ class Actor < ActiveRecord::Base
 
   # before_validation :sanitize_name
   validates :name, presence: true, uniqueness: {case_sensitive: true}
-
-  def has_movies?
-    movies.count > 0
-  end
-
-  def has_local_movies?
-    movies.local.count > 0
-  end
-
-  def has_tv_shows?
-    tv_shows.count > 0
-  end
 
   def fetch_tmdb_person_id
     search_results = TmdbPersonSearchResult.get(name)
@@ -59,32 +47,4 @@ class Actor < ActiveRecord::Base
     extract_metadata
   end
 
-  def query_tmdb_images
-    # return [] if fetch_imdb_id.blank?
-
-    # images_result = TmdbImageResult.get(fetch_imdb_id).data
-    # posters = images_result[:posters]
-    # posters = posters.map do |poster|
-    #   path = poster.try(:[], :file_path)
-    #   if path
-    #     path.gsub!(/^\//, '') # trim beginning slash
-    #     "http://image.tmdb.org/t/p/original/#{path}"
-    #   else
-    #     nil
-    #   end
-    # end
-    # posters
-  end
-
-  # def self.normalized_name(name)
-  #   name = name.strip.titleize
-  #   SAME_THINGS.each do |key, val|
-  #     name = val if name.downcase == key
-  #   end
-  #   name
-  # end
-  #
-  # def sanitize_name
-  #   self.name = Genre.normalized_name(name)
-  # end
 end
