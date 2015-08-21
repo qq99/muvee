@@ -96,6 +96,7 @@ class Movie < Video
 
     images_result = TmdbImageResult.get(fetch_imdb_id).data
     backgrounds = images_result[:backdrops]
+    return [] if backgrounds.blank?
     backgrounds = backgrounds.map do |bg|
       path = bg.try(:[], :file_path)
       if path
@@ -113,6 +114,7 @@ class Movie < Video
 
     images_result = TmdbImageResult.get(fetch_imdb_id).data
     posters = images_result[:posters]
+    return [] if posters.blank?
     posters = posters.map do |poster|
       path = poster.try(:[], :file_path)
       if path
