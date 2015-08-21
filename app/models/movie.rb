@@ -47,8 +47,8 @@ class Movie < Video
     self.vote_count = metadata[:vote_count] if metadata[:vote_count].to_i >= vote_count.to_i
     self.vote_average = metadata[:vote_average] if metadata[:vote_count].to_i >= vote_count.to_i
     self.overview = metadata[:overview]
-    self.language = metadata[:spoken_languages].map{|d| d.values.first}.flatten.join(", ")
-    self.country = metadata[:production_countries].map{|d| d.values.last}.flatten.join(", ")
+    self.language = metadata[:spoken_languages].map{|d| d.values.first}.flatten.join(", ") if metadata[:spoken_languages].present?
+    self.country = metadata[:production_countries].map{|d| d.values.last}.flatten.join(", ") if metadata[:production_countries].present?
     self.imdb_id = metadata[:imdb_id] unless imdb_id.present?
 
     if omdb_metadata.found?
