@@ -33,6 +33,12 @@
   font-weight: 300;
   src: local('Fira Sans Light Italic'), local('FiraSans-Italic'), url(/fonts/FiraSans-LightItalic.woff) format('woff');
 }
+@font-face {
+  font-family: 'Gotham Bold';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Gotham Bold'), url(/fonts/GothamBold.woff) format('woff');
+}
 
 #debug {
   width: 100%;

@@ -89,7 +89,10 @@
           </div>
 
           <div class="movie-information-header__row flex-columns">
-            <%= link_to imdb_link(@movie.imdb_id), class: 'imdb-icon-link', target: :_blank do %>
+            <div class="parental-guidance-rating flex-coluns">
+              <%= @movie.parental_guidance_rating || "N/A" %>
+            </div>
+            <%= link_to imdb_link(@movie.imdb_id), class: 'imdb-icon-link flex-columns', target: :_blank do %>
               <%= render 'shared/imdb_logo' %>
             <% end %>
           </div>
