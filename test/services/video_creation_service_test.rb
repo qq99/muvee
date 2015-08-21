@@ -12,7 +12,7 @@ class VideoCreationServiceTest < ActiveSupport::TestCase
       torrent_start_path: Dir.getwd() + "/tmp/torrents"
     )
 
-    @sample_service = VideoCreationService.new(tv: [], movies: [])
+    @sample_service = VideoCreationService.new(sources: {tv: [], movies: []})
 
     @fakeSuccess = stub({
       response: Net::HTTPSuccess,
@@ -35,10 +35,10 @@ class VideoCreationServiceTest < ActiveSupport::TestCase
     tv_folders = ['/tv/foo', '/tv/bar']
     movie_folders = ['/movies/foo', '/movies/bar']
 
-    @service = VideoCreationService.new(
+    @service = VideoCreationService.new(sources: {
       tv: tv_folders,
       movies: movie_folders
-    )
+    })
 
     @service.expects(:create_videos).with(TvShow, tv_folders)
     @service.expects(:create_videos).with(Movie, movie_folders)

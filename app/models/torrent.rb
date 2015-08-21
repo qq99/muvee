@@ -42,7 +42,7 @@ class Torrent < ActiveRecord::Base
     largest_file = files_by_size.first[:name]
     resulting_file = post_move_filepath(largest_file)
 
-    VideoCreationService.create_source_for_video(video: video, raw_file_path: resulting_file)
+    VideoCreationService.new.create_source_for_video(video: video, raw_file_path: resulting_file)
 
     self.destroy # remove the torrent
   ensure

@@ -1,7 +1,7 @@
 class VideoCreationService
   include FolderFileLister
 
-  def initialize(sources)
+  def initialize(sources: {})
     default = {tv: [], movies: []}
     sources = default.merge!(sources)
     @sources = sources
@@ -54,7 +54,7 @@ class VideoCreationService
   end
 
   # for existing videos, e.g., when Torrent completes, it already knows the Video to link the source to
-  def self.create_source_for_video(video:, raw_file_path:)
+  def create_source_for_video(video:, raw_file_path:)
     return if Source.exists?(raw_file_path: raw_file_path)
 
     if Video.needs_transcoding?(raw_file_path)
