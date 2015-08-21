@@ -83,7 +83,6 @@ class VideoCreationService
     files.each do |filepath|
       create_transcode(type: "#{klass}Transcode", raw_file_path: filepath)
     end
-    TranscoderWorker.perform_async
   end
 
   def create_transcode(opts)

@@ -1,3 +1,7 @@
 torrent_completion_worker:
   cron: "*/1 * * * *"
   class: "TorrentCompletionWorker"
+
+transcoder_worker:
+  cron: "*/1 * * * *"
+  class: "TranscoderWorker"
