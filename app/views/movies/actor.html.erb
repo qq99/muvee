@@ -1,0 +1,22 @@
+<div class="actor-details flex-columns flex-columns--top">
+  <% if @actor.profile_picture_fanart.present? %>
+    <div class="actor-profile-picture" style="flex: 0 0 auto; margin-right: 2em !important; background-image: url(<%= @actor.profile_picture_fanart.url %>)"></div>
+  <% end %>
+  <div>
+    <h1><%= @actor.name %></h1>
+    <p class="flex-columns">
+      <% if @actor.birthday %>
+        <span><i class="fa fa-calendar"></i> Born on <%= @actor.birthday %></span>
+      <% end %>
+      <% if @actor.deathday %>
+        <span><i class="fa fa-calendar"></i> Died on <%= @actor.deathday %></span>
+      <% end %>
+    </p>
+    <% (@actor.bio || '').split("\n").reject(&:blank?).compact.each do |paragraph| %>
+      <p><%= paragraph %></p>
+    <% end %>
+  </div>
+</div>
+<%= render 'subnav' %>
+<%= render 'movies_fixed_search' %>
+<%= render 'movies_results' %>

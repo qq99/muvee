@@ -29,55 +29,92 @@
   <div class="movie-information">
     <div class="movie-information-meta">
 
-      <img class="movie-poster" src="<%= @movie.poster_url %>">
+      <div class="movie-information-header">
+        <img class="movie-poster" src="<%= @movie.poster_url %>">
 
-      <h3 class="video-type">Movie</h3>
-      <% if @movie.downloading? %>
-        <h3 class='video-status'>Downloading Now</h3>
-      <% end %>
-      <h1 class="movie-title">
-        <span class="title"><%= @movie.title %></span>
-        <span class="three-d <% unless @movie.is_3d? %>hide<% end %>">3D</span>
-      </h1>
+        <div class="movie-information-header-text">
 
-      <h3 class="year">
-        <i class="fa fa-calendar"></i>
-        <%= @movie.year %>
-
-        <i class="fa fa-clock-o"></i>
-        <%= runtime_human(@movie.duration, @movie.runtime_minutes) %>
-      </h3>
-
-      <% if @movie.sources.size > 0 %>
-        <% @movie.sources.each do |source| %>
-          <% if source.quality.present? %>
-            <span class="badge quality-<%= source.quality %>" title="<%= source.raw_file_path %>">
-              <%= source.quality %>
-              <% if source.is_3d? %>
-                <span class="3d">3D</span>
-              <% end %>
-            </span>
+          <h3 class="video-type">Movie</h3>
+          <% if @movie.downloading? %>
+            <h3 class='video-status'>Downloading</h3>
+          <% elsif @movie.transcoding? %>
+            <h3 class='video-status'>Transcoding</h3>
+          <% elsif @movie.remote? %>
+            <h3 class='video-status'>Remote</h3>
           <% end %>
-        <% end %>
-      <% end %>
-      <%= render 'genre_badge_listing', genres: @movie.genres %>
+          <h1 class="movie-title">
+            <span class="title"><%= @movie.title %></span>
+            <span class="three-d <% unless @movie.is_3d? %>hide<% end %>">3D</span>
+          </h1>
 
-      <p class="movie-rating">
-        <%= render 'shared/star_rating', vote_count: @movie.vote_count, rating: @movie.vote_average || 0, rating_max: 10.0, new_scale: 5 %>
-        <% if @movie.vote_count.present? %>
-          from <%= number_with_delimiter(@movie.vote_count) %> votes
-        <% end %>
-      </p>
+          <div class="movie-information-header__row">
+            <% if @movie.tagline.present? %>
+              <h2 class="movie-tagline"><%= @movie.tagline %></h2>
+            <% end %>
+          </div>
+
+          <div class="movie-information-header__row">
+            <% if @movie.sources.size > 0 %>
+              <% @movie.sources.each do |source| %>
+                <% if source.quality.present? %>
+                  <span class="badge quality-<%= source.quality %>" title="<%= source.raw_file_path %>">
+                    <%= source.quality %>
+                    <% if source.is_3d? %>
+                      <span class="3d">3D</span>
+                    <% end %>
+                  </span>
+                <% end %>
+              <% end %>
+            <% end %>
+            <%= render 'genre_badge_listing', genres: @movie.genres %>
+          </div>
+
+          <div class="movie-information-header__row flex-columns">
+            <div class="year">
+              <% if @movie.released_on || @movie.year %>
+                <i class="fa fa-calendar"></i>
+                <%= released_on_human(@movie.released_on) || @movie.year %>
+              <% end %>
+            </div>
+            <div class="duration">
+              <i class="fa fa-clock-o"></i>
+              <%= runtime_human(@movie.duration, @movie.runtime_minutes) %>
+            </div>
+            <div class="star-rating">
+              <%= render 'shared/star_rating', vote_count: @movie.vote_count, rating: @movie.vote_average || 0, rating_max: 10.0, new_scale: 5 %>
+              <% if @movie.vote_count.present? %>
+                from <%= number_with_delimiter(@movie.vote_count) %> votes
+              <% end %>
+            </div>
+          </div>
+
+          <div class="movie-information-header__row flex-columns">
+            <%= link_to imdb_link(@movie.imdb_id), class: 'imdb-icon-link', target: :_blank do %>
+              <%= render 'shared/imdb_logo' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
       <p>
         <%= @movie.overview %>
       </p>
-
-      <p>
-        <%= link_to imdb_link(@movie.imdb_id), target: :_blank do %>
-          <%= render 'shared/imdb_logo' %>
-        <% end %>
-        <%= render 'shared/tmdb_logo' %>
-      </p>
+      <% if @movie.actors.any? %>
+        <h2>Actors</h2>
+        <div class="flex-columns">
+          <% @movie.actors.each do |actor| %>
+            <div class='actor-tile'>
+              <% profile = actor.profile_picture_fanart %>
+              <% if profile.present? %>
+                <%= link_to by_actor_movies_path(actor), class: 'actor-profile-picture' do %>
+                  <div class="actor-profile-picture" style="background-image: url(<%= profile.url %>)"></div>
+                <% end %>
+              <% end %>
+              <%= link_to actor.name, by_actor_movies_path(actor), class: "actor-name #{'full' if profile.blank?}" %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+      <br>
     </div>
 
     <div class="movie-actions">
@@ -124,6 +161,8 @@
         define="{torrent: new Muvee.ProgressReporter(this, 'TorrentInformation<%= @movie.torrents.first.id %>')}">
         <div class="progress-bar__bar animates" bind-attribute="{style: torrent.progressCssWidth()}"></div>
       </div>
+    <% elsif @movie.transcoding? %>
+      <div class="torrent-progress progress-bar__container indeterminate" title="Transcoding now..."></div>
     <% end %>
 
   </div>

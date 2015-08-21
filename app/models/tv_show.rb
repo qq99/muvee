@@ -22,7 +22,7 @@ class TvShow < Video
   def associate_with_series
     old_series = self.series.presence
 
-    new_series = Series.find_or_create_by(title: self.title)
+    new_series = Series.find_or_create_by(title: title)
     self.series = new_series
     self.save
 
@@ -41,7 +41,7 @@ class TvShow < Video
   def associate_with_genres
     return if series_metadata[:Genre].blank?
 
-    self.genres.destroy_all
+    self.genres = []
 
     listed_genres = compute_genres(series_metadata[:Genre])
     listed_genres.each do |genre_name|

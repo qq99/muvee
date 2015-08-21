@@ -64,9 +64,6 @@ $tile-transition-delay: 0.30s;
   left: 0;
   background-color: black;
   background: no-repeat center center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
   background-size: cover;
   transition: all $tile-transition-delay ease-in-out;
 }
@@ -85,6 +82,7 @@ $tile-transition-delay: 0.30s;
   background: rgba(0,0,0,0.7);
   transition: opacity $tile-transition-delay ease-in-out;
   z-index: -1;
+  will-change: opacity;
 }
 .tile:hover .tile__meta-backdrop {
   opacity: 1;
@@ -115,7 +113,7 @@ $tile-transition-delay: 0.30s;
   font-weight: 200;
   margin: 0.2em 0;
   padding: 0.3em 1em;
-  background: rgba(255,255,255,0);
+  background: rgba(0,0,0,0.2);
   border: 1px solid #666;
   text-decoration: none;
   color: white;
@@ -191,6 +189,7 @@ $tile-transition-delay: 0.30s;
   color: white;
   padding: 1em;
   height: 130px;
+  will-change: height, border;
   p { color: inherit; }
 
   transition: all $tile-transition-delay ease-in-out;
@@ -219,6 +218,7 @@ $tile-transition-delay: 0.30s;
     transition: all $tile-transition-delay ease-in-out;
     font-size: 0.95em;
     font-weight: 200;
+    will-change: opacity;
   }
 
 

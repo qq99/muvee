@@ -5,11 +5,11 @@ class OmdbSearchResult < ExternalMetadata
   end
 
   def self.endpoint_url(imdb_id)
-    "http://www.omdbapi.com/?i=#{imdb_id}"
+    "http://www.omdbapi.com/?i=#{imdb_id}&plot=full&r=json"
   end
 
   def found?
-    data['Response'] != 'False'
+    data.present? && data['Response'] != 'False'
   end
 
 end

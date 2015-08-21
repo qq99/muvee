@@ -4,6 +4,7 @@ class Movie < Video
   after_commit :queue_download_job, on: :create
   after_create :extract_metadata
   after_create :associate_with_genres
+  after_create :associate_with_actors
   after_create :download_poster
   before_destroy :destroy_poster
 
@@ -43,21 +44,24 @@ class Movie < Video
     self.runtime_minutes = metadata[:runtime]
     self.year = released_on.try(:year)
     self.tagline = metadata[:tagline]
-    self.vote_count = metadata[:vote_count]
-    self.vote_average = metadata[:vote_average]
+    self.vote_count = metadata[:vote_count] if metadata[:vote_count].to_i >= vote_count.to_i
+    self.vote_average = metadata[:vote_average] if metadata[:vote_count].to_i >= vote_count.to_i
     self.overview = metadata[:overview]
     self.language = metadata[:spoken_languages].map{|d| d.values.first}.flatten.join(", ")
     self.country = metadata[:production_countries].map{|d| d.values.last}.flatten.join(", ")
     self.imdb_id = metadata[:imdb_id] unless imdb_id.present?
 
-    omdb_metadata = OmdbSearchResult.get(imdb_id)
     if omdb_metadata.found?
       self.parental_guidance_rating = omdb_metadata.data['Rated']
-      self.vote_average = omdb_metadata.data['imdbRating']
-      self.vote_count = omdb_metadata.data['imdbVotes']
+      self.vote_average = omdb_metadata.data['imdbRating'].try(:to_f)
+      self.vote_count = omdb_metadata.data['imdbVotes'].try(:gsub, /[^\d]/, '').try(:to_i)
     end
 
     self.save
+  end
+
+  def omdb_metadata
+    @omdb_metadata ||= OmdbSearchResult.get(imdb_id)
   end
 
   def download_poster
@@ -150,11 +154,27 @@ class Movie < Video
     self.save if listed_genres.any?
   end
 
+  def associate_with_actors
+    return unless omdb_metadata.data['Actors'].present?
+
+    listed_actors = compute_actors(omdb_metadata.data['Actors'])
+    self.actors = []
+    listed_actors.each do |actor_name|
+      actor = Actor.where('lower(name) like :q', q: "%#{actor_name.downcase}%").first || Actor.create(name: actor_name)
+      self.actors << actor
+    end
+    self.save if listed_actors.any?
+  end
+
   def reanalyze
     super
     old_imdb_id = imdb_id
     extract_metadata
     associate_with_genres
+    associate_with_actors
+    actors.each do |actor|
+      actor.reanalyze
+    end
     redownload_missing
     if imdb_id != old_imdb_id
       redownload

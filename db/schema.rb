@@ -11,10 +11,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150715040748) do
+ActiveRecord::Schema.define(version: 20150815222152) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "actors", force: :cascade do |t|
+    t.integer  "video_id"
+    t.string   "name"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.string   "tmdb_person_id"
+    t.string   "imdb_id"
+    t.text     "bio"
+    t.string   "place_of_birth"
+    t.date     "birthday"
+    t.date     "deathday"
+    t.string   "homepage"
+    t.text     "aliases",        default: [],              array: true
+  end
+
+  add_index "actors", ["name"], name: "index_actors_on_name", unique: true, using: :btree
+
+  create_table "actors_videos", force: :cascade do |t|
+    t.integer "video_id"
+    t.integer "actor_id"
+  end
 
   create_table "application_configurations", force: :cascade do |t|
     t.text     "tv_sources",            default: [],    array: true
@@ -44,6 +66,8 @@ ActiveRecord::Schema.define(version: 20150715040748) do
     t.datetime "updated_at"
     t.string   "raw_file_path"
     t.integer  "video_id"
+    t.integer  "actor_id"
+    t.string   "type"
   end
 
   create_table "genres", force: :cascade do |t|
@@ -110,6 +134,17 @@ ActiveRecord::Schema.define(version: 20150715040748) do
     t.integer  "video_id"
     t.string   "video_type"
   end
+
+  create_table "transcodes", force: :cascade do |t|
+    t.integer  "video_id"
+    t.string   "type"
+    t.string   "status",        default: "pending"
+    t.string   "raw_file_path"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+  end
+
+  add_index "transcodes", ["raw_file_path"], name: "index_transcodes_on_raw_file_path", unique: true, using: :btree
 
   create_table "tv_shows", force: :cascade do |t|
     t.datetime "created_at"

@@ -1,0 +1,3 @@
+class TvShowTranscode < Transcode
+
+end

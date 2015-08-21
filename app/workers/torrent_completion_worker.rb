@@ -10,6 +10,7 @@ class TorrentCompletionWorker
         Rails.logger.info "Torrent complete, moving"
         torrent.finalize
       end
+      torrent.video.try(:reanalyze)
     end
   end
 end

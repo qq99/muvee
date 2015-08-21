@@ -2,9 +2,13 @@ class Video < ActiveRecord::Base
   has_many :sources, dependent: :destroy
   has_many :thumbnails, dependent: :destroy
   has_many :fanarts, dependent: :destroy
+  has_many :transcodes
 
   has_many :genres_videos
   has_many :genres, through: :genres_videos
+
+  has_many :actors_videos
+  has_many :actors, through: :actors_videos
 
   has_many :torrents
 
@@ -57,6 +61,10 @@ class Video < ActiveRecord::Base
 
   def remote?
     sources_count == 0
+  end
+
+  def transcoding?
+    remote? && self.transcodes.present?
   end
 
   def post_sourced_actions
@@ -180,8 +188,17 @@ class Video < ActiveRecord::Base
     dedupe_genre_array(genre_array)
   end
 
+  def compute_actors(actors_string)
+    actors_array = actors_string.split(/,|\|/)
+    dedupe_actor_array(actors_array)
+  end
+
   def dedupe_genre_array(genre_array)
     genre_array.compact.map(&:strip).map(&:titleize).uniq.reject(&:blank?)
+  end
+
+  def dedupe_actor_array(actor_array)
+    actor_array.compact.map(&:strip).uniq.reject(&:blank?)
   end
 
   def avconv_create_thumbnail_command(at_seconds, output_path)

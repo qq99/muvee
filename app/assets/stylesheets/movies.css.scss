@@ -12,12 +12,12 @@
   margin-left: -20em;
 }
 .inline-movie-preview {
-  position: absolute;
+  position: relative;
   z-index: 2;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 40%;
   overflow: hidden;
 }
 $preview-height: 45%;
@@ -87,9 +87,6 @@ $preview-height: 45%;
   width: 100%;
   position: absolute;
 }
-h3.year {
-  margin-bottom: 0.4em;
-}
 
 .movies-index__container {
   position: relative;
@@ -144,17 +141,17 @@ h3.year {
 }
 
 .movie-poster {
-  float: left;
+  flex: 0 0 auto;
   width: auto;
-  height: 10.7em;
+  height: 13em;
   margin: 0 1em 1em 0;
   border-radius: 3px;
   box-shadow: 2px 2px 4px rgba(0,0,0, 0.8);
 }
 
 #ImdbLogoSvg {
-  height: 50px;
-  width: 101px;
+  height: 30px;
+  width: 60px;
 }
 #TmdbLogoSvg {
   height: 50px;
@@ -165,12 +162,8 @@ h3.year {
 }
 
 .movie-information {
-  position: absolute;
+  position: relative;
   z-index: 3;
-  bottom: 0%;
-  left: 0;
-  height: 65%;
-  width: 100%;
   background: $mostly-black-darker;
   color: white;
   overflow: hidden;
@@ -294,8 +287,28 @@ h3.year {
   }
 }
 
+.movie-information-header {
+  display: flex;
+
+  .year, .duration {
+    i.fa {
+      color: #777;
+    }
+  }
+  .duration, .year, .star-rating {
+    font-size: 1em;
+    font-weight: 100;
+  }
+}
+.movie-information-header__row {
+  margin-bottom: 0.4rem;
+}
 .movie-title {
   color: $radical-blue;
+}
+.movie-tagline {
+  font-size: 1.4em;
+  margin: 0 0 0.4em 0;
 }
 
 #all_movies_by_genre {
@@ -322,5 +335,71 @@ h3.year {
     &:hover, &:focus {
       color: $radical-blue;
     }
+  }
+}
+
+.flex-columns {
+  display: flex;
+  align-items: center;
+  > * {
+    margin-right: 0.5em !important;
+  }
+  &.flex-columns--top {
+    align-items: flex-start;
+  }
+}
+.imdb-logo-link {
+  display: inline-block;
+}
+
+.actor-tile {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 25%;
+  height: 15em;
+  margin-right: 0 !important;
+  overflow: hidden;
+  &:hover {
+    .actor-name {
+      color: $less-radical-blue;
+    }
+  }
+}
+.actor-profile-picture {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: 50% 50%;
+  z-index: 1;
+}
+.actor-name {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.7);
+  width: 100%;
+  padding: 1em;
+  font-size: 0.8em;
+  z-index: 2;
+  &.full {
+    height: 100%;
+  }
+}
+
+.actor-details {
+  color: white;
+  margin: 1em;
+  .actor-profile-picture {
+    height: 24em;
+    width: 14em;
+  }
+  p {
+    font-size: 1.2em;
+    font-weight: 100;
+    margin: 1em 0;
   }
 }
