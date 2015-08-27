@@ -33,7 +33,6 @@ class MoviesController < ApplicationController
       return
     end
     response.headers['X-XHR-Redirected-To'] = request.env['REQUEST_URI']
-    render 'search'
   end
 
   def all
@@ -42,7 +41,6 @@ class MoviesController < ApplicationController
     scope = Movie.order('random()')
 
     @prev_movie, @movies, @next_movie = paged(scope)
-    render 'all'
   end
 
   def newest
@@ -58,8 +56,6 @@ class MoviesController < ApplicationController
     scope = alpha_filter_scope(scope)
 
     @prev_movie, @movies, @next_movie = paged(scope)
-
-    render 'remote' # TODO: change partial to discover
   end
 
   def genres
@@ -116,16 +112,16 @@ class MoviesController < ApplicationController
 
     results.each do |result|
       movie = Movie.find_by(imdb_id: result[:imdbID])
-      movie ||= Movie.create(
+      movie = Movie.create(
         status: "remote",
         title: result[:Title],
         imdb_id: result[:imdbID]
-      )
+      ) unless movie.present?
       @movies << movie
     end
     @movies = @movies.compact.reject{ |m| m.id.blank? }
 
-    render 'remote'
+    render 'discover'
   end
 
   def destroy

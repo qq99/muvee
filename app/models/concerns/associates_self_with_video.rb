@@ -11,6 +11,7 @@ module AssociatesSelfWithVideo
   end
 
   def associate_self_with_video
+    return if video.present?
     if type.include?('Movie')
       associate_self_with_movie
     elsif type.include?('TvShow')
