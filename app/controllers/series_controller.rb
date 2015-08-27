@@ -28,7 +28,7 @@ class SeriesController < ApplicationController
 
   def discover
     @section = :discover
-    scope = Series.without_episodes
+    scope = Series.alphabetical.without_episodes
     scope = alpha_filter_scope(scope)
 
     @prev_series, @series, @next_series = paged(scope)
