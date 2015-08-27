@@ -48,12 +48,6 @@ class MoviesController < ApplicationController
     scope = Movie.local.newest.unwatched
 
     @prev_movie, @movies, @next_movie = paged(scope)
-
-    if @movies.size > 0
-      render 'newest'
-    else
-      head :not_found
-    end
   end
 
   def newest
