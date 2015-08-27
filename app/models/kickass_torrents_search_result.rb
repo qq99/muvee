@@ -1,8 +1,7 @@
 class KickassTorrentsSearchResult < ExternalMetadata
   include ActiveSupport::Benchmarkable
 
-  HOST = 'kat.cr'
-  ENDPOINT_URL = "https://#{HOST}/usearch/"
+  ENDPOINT_URL = "https://#{Figaro.env.kickass_domain}/usearch/"
 
   def result_format
     :xml
