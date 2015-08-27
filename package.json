@@ -21,5 +21,8 @@
   "dependencies": {
     "express": "~4.13.3",
     "coffee-script": "~1.9.3"
+  },
+  "devDependencies": {
+    "async": "^1.4.2"
   }
 }

@@ -14,26 +14,25 @@ live_transcoder = null
 
 app.get '/stream', (req, res) ->
 
-  filepath = '/media/sf_TV/Rick.and.Morty.S02E03.Auto.Erotic.Assimilation.WEBRip.AAC2.0.H.264-RARBG/Rick.and.Morty.S02E03.Auto.Erotic.Assimilation.WEBRip.AAC2.0.H.264-RARBG.mp4'
-  # filepath = './test2.mp4'
-  #avconv -i /media/sf_TV/Rick.and.Morty.S02E03.Auto.Erotic.Assimilation.WEBRip.AAC2.0.H.264-RARBG/Rick.and.Morty.S02E03.Auto.Erotic.Assimilation.WEBRip.AAC2.0.H.264-RARBG.mp4 -c:v libx264 -crf 23 -preset ultrafast -vsync 1 -r 25 -c:a aac -strict -2 -b:a 16k -ar 16000 -ac 1 -f h264 test.webm
+  filepath = '/foo/bar/baz.mp4'
 
   if live_transcoder == null
-    live_transcoder = child_process.spawn('avconv', [
+    live_transcoder = child_process.spawn('ffmpeg', [
       '-i', filepath,
-      '-movflags', 'frag_keyframe+empty_moov',
+      '-movflags', 'empty_moov+faststart',
       '-c:v', 'libx264',
       # '-c:v', 'copy',
-      '-crf', '23',
+      '-crf', '20',
       '-preset', 'ultrafast',
-      '-vsync', '1',
-      '-r', '25',
-      '-c:a', 'aac',
+      '-pix_fmt', 'yuv420p',
+      # '-vsync', '1',
+      # '-r', '25',
+      # '-c:a', 'aac',
       # '-c:a', 'copy',
       '-strict', '-2',
-      '-b:a', '16k',
-      '-ar', '16000',
-      '-ac', '1',
+      # '-b:a', '16k',
+      # '-ar', '16000',
+      # '-ac', '1',
       '-f', 'mp4',
       '-' # output to stdout
     ], {detached: false})
