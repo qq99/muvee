@@ -63,6 +63,7 @@ class MoviesController < ApplicationController
     scope = alpha_filter_scope(scope)
 
     @prev_movie, @movies, @next_movie = paged(scope)
+    render 'discover'
   end
 
   def genres
