@@ -8,7 +8,10 @@ class TranscoderWorker
 
   def perform
     return if num_currently_transcoding >= 2
-    Transcode.ready.sample.try(:transcode) # may be none
-    MediaScannerWorker.perform_async
+    transcode = Transcode.ready.sample
+    if transcode.present?
+      transcode.transcode # may be none
+      MediaScannerWorker.perform_async
+    end
   end
 end
