@@ -123,6 +123,7 @@ class Transcode < ActiveRecord::Base
     if complete?
       sleep 10 # let the file handle close (?)
       move_transcoded_file!
+      sleep 5 # let the file handle close (?)
       return true
     end
 
