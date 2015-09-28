@@ -11,6 +11,10 @@ class KickassTorrentsSearchResult < ExternalMetadata
     "#{ENDPOINT_URL}#{URI.escape(query)}/?rss=1"
   end
 
+  def staleness_factor
+    10.minutes.ago
+  end
+
   def results
     entries = data.try(:[], :rss).try(:[], :channel).try(:[], :item) || []
 
