@@ -31,8 +31,11 @@ class SettingsController < ApplicationController
   def update
     @config = ApplicationConfiguration.find(params[:id])
     if @config.update(config_params)
-      render 'welcome'
+      flash.now[:notice] = "Updated your settings"
+    else
+      flash.now[:error] = "Error updating your settings"
     end
+    render 'welcome'
   end
 
   def reorganize_movies_show
