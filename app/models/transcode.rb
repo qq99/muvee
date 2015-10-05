@@ -9,6 +9,9 @@ class Transcode < ActiveRecord::Base
   scope :not_working, -> {where.not(status: 'transcoding')}
   scope :ready, -> {where.not(status: 'transcoding').where.not(status: 'complete').where.not(status: 'started')}
 
+  TRANSCODING_FILE_DESIGNATOR = 'muv-transcoding'
+  TRANSCODED_FILE_DESIGNATOR = 'muv-transcoded'
+
   def config
     @config ||= ApplicationConfiguration.first
   end
@@ -66,11 +69,11 @@ class Transcode < ActiveRecord::Base
   end
 
   def transcode_path # /tmp/transcoding/foo
-    Pathname.new(transcode_folder).join("#{filename}.muv-transcoding#{transcode_parameters[:container]}").to_s
+    Pathname.new(transcode_folder).join("#{filename}.#{TRANSCODING_FILE_DESIGNATOR}#{transcode_parameters[:container]}").to_s
   end
 
   def eventual_path
-    "#{File.dirname(raw_file_path)}/#{filename}.muv-transcoded#{transcode_parameters[:container]}"
+    "#{File.dirname(raw_file_path)}/#{filename}.#{TRANSCODED_FILE_DESIGNATOR}#{transcode_parameters[:container]}"
   end
 
   def started?
@@ -93,6 +96,11 @@ class Transcode < ActiveRecord::Base
     status == 'pending'
   end
 
+  def is_already_transcoded_by_muvee?
+    raw_file_path.include?(TRANSCODING_FILE_DESIGNATOR) ||
+    raw_file_path.include?(TRANSCODED_FILE_DESIGNATOR)
+  end
+
   def transcoded_file_exists?
     File.exist?(eventual_path)
   end
@@ -101,7 +109,16 @@ class Transcode < ActiveRecord::Base
     File.exist?(transcode_path)
   end
 
+  def origin_file_exists?
+    File.exist?(raw_file_path)
+  end
+
   def transcode
+    if !origin_file_exists?
+      self.destroy
+      return false
+    end
+    return false if is_already_transcoded_by_muvee?
     return false if started?
     if complete? # don't convert it again!
       move_transcoded_file! if transcoding_file_exists?
@@ -123,13 +140,14 @@ class Transcode < ActiveRecord::Base
     if complete?
       sleep 10 # let the file handle close (?)
       move_transcoded_file!
+      sleep 5 # let the file handle close (?)
       return true
     end
 
     false
   ensure
     unless complete? || transcoding?
-      self.update_attribute(:status, 'failed')
+      self.update_attribute(:status, 'failed') if self.persisted?
       delete_transcoding_file!
     end
   end

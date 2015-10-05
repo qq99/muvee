@@ -4,6 +4,9 @@
     <%= link_to 'All', all_movies_path, class: @section == :all ? 'active' : '' %>
   </li>
   <li>
+    <%= link_to 'On deck', newest_unwatched_movies_path, class: @section == :newest_unwatched ? 'active' : '' %>
+  </li>
+  <li>
     <%= link_to 'Newest', newest_movies_path, class: @section == :newest ? 'active' : '' %>
   </li>
   <li>

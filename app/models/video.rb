@@ -22,7 +22,7 @@ class Video < ActiveRecord::Base
   scope :movies, -> {where(type: "Movie")}
   scope :tv_shows, -> {where(type: "TvShow")}
   scope :unwatched, -> {where(left_off_at: nil)}
-  scope :newest, -> {order(created_at: :desc)}
+  scope :newest, -> {order(sourced_at: :desc)}
 
   # https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats
   VIDEO_CONTAINERS = %w{.m4v .mp4 .webm .avi .mkv}
@@ -77,6 +77,13 @@ class Video < ActiveRecord::Base
 
   def reset_status
     Video.reset_counters(id, :sources) if id.present?
+
+    if sources.present?
+      self.sourced_at = sources.first.created_at
+    else
+      self.sourced_at = nil
+    end
+
     if torrents.count > 0
       self.status = 'downloading'
     elsif sources.count > 0

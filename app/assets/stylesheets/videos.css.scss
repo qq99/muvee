@@ -147,7 +147,7 @@ a.back {
   }
 }
 .poster-link:focus, .poster-link:hover {
-  > * {
+  > img, > .no-poster-available {
     outline: 5px solid $radical-blue;
   }
 }

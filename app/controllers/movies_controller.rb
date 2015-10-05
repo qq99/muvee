@@ -43,6 +43,13 @@ class MoviesController < ApplicationController
     @prev_movie, @movies, @next_movie = paged(scope)
   end
 
+  def newest_unwatched
+    @section = :newest_unwatched
+    scope = Movie.local.newest.unwatched
+
+    @prev_movie, @movies, @next_movie = paged(scope)
+  end
+
   def newest
     @section = :newest
     scope = Movie.local_and_downloading.order(created_at: :desc)
@@ -56,6 +63,7 @@ class MoviesController < ApplicationController
     scope = alpha_filter_scope(scope)
 
     @prev_movie, @movies, @next_movie = paged(scope)
+    render 'discover'
   end
 
   def genres

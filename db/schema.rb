@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150815222152) do
+ActiveRecord::Schema.define(version: 20150827225727) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -193,6 +193,7 @@ ActiveRecord::Schema.define(version: 20150815222152) do
     t.integer  "runtime_minutes"
     t.integer  "sources_count",            default: 0
     t.boolean  "is_favorite",              default: false
+    t.datetime "sourced_at"
   end
 
   add_index "videos", ["series_id", "season", "episode"], name: "index_videos_on_series_id_and_season_and_episode", unique: true, using: :btree

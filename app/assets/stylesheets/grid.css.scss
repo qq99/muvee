@@ -176,7 +176,7 @@ $tile-transition-delay: 0.30s;
   }
 }
 
-
+$fixed-meta-offset: 0.5em;
 .tile__meta {
   position: absolute;
   bottom: 0;
@@ -188,7 +188,7 @@ $tile-transition-delay: 0.30s;
   border-bottom: 5px solid rgba(0,0,0,0.8);
   color: white;
   padding: 1em;
-  height: 130px;
+  height: 140px;
   will-change: height, border;
   p { color: inherit; }
 
@@ -203,12 +203,12 @@ $tile-transition-delay: 0.30s;
   }
   .video-genres {
     position: absolute;
-    bottom: 0.5em;
+    bottom: $fixed-meta-offset;
     right: 1em;
   }
   .user-vote-rating {
     position: absolute;
-    bottom: 0.5em;
+    bottom: $fixed-meta-offset;
     left: 1em;
   }
   .video-description {

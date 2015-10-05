@@ -8,6 +8,10 @@ class TranscoderWorker
 
   def perform
     return if num_currently_transcoding >= 2
-    Transcode.ready.sample.try(:transcode) # may be none
+    transcode = Transcode.ready.sample
+    if transcode.present?
+      transcode.transcode
+      VideoCreationService.new.create_source_for_video(video: transcode.video, raw_file_path: transcode.eventual_path) if transcode.complete?
+    end
   end
 end

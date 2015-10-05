@@ -1,8 +1,7 @@
 class KickassTorrentsSearchResult < ExternalMetadata
   include ActiveSupport::Benchmarkable
 
-  HOST = 'kickass.to'
-  ENDPOINT_URL = "https://#{HOST}/usearch/"
+  ENDPOINT_URL = "https://#{Figaro.env.kickass_domain}/usearch/"
 
   def result_format
     :xml
@@ -10,6 +9,10 @@ class KickassTorrentsSearchResult < ExternalMetadata
 
   def self.endpoint_url(query)
     "#{ENDPOINT_URL}#{URI.escape(query)}/?rss=1"
+  end
+
+  def staleness_factor
+    10.minutes.ago
   end
 
   def results
