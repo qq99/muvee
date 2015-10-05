@@ -109,7 +109,15 @@ class Transcode < ActiveRecord::Base
     File.exist?(transcode_path)
   end
 
+  def origin_file_exists?
+    File.exist?(raw_file_path)
+  end
+
   def transcode
+    if !origin_file_exists?
+      self.destroy
+      return false
+    end
     return false if is_already_transcoded_by_muvee?
     return false if started?
     if complete? # don't convert it again!
@@ -139,7 +147,7 @@ class Transcode < ActiveRecord::Base
     false
   ensure
     unless complete? || transcoding?
-      self.update_attribute(:status, 'failed')
+      self.update_attribute(:status, 'failed') if self.persisted?
       delete_transcoding_file!
     end
   end
