@@ -46,8 +46,7 @@ class SettingsController < ApplicationController
     end
     to_rename.each do |to_rename|
       source = MovieSource.find(to_rename["from"])
-      new_path = to_rename["to_folder"] + to_rename["to_filename"]
-      source.move_to(new_path)
+      source.rename(to_rename["to_filename"])
     end
     flash[:notice] = "Renamed #{to_rename.size} sources."
     redirect_to reorganize_movies_settings_path

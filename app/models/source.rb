@@ -29,8 +29,26 @@ class Source < ActiveRecord::Base
 
   end
 
+  def filename
+    File.basename(raw_file_path)
+  end
+
+  def containing_folder
+    raw_file_path.remove(filename)
+  end
+
+  def extension
+    File.extname(raw_file_path)[1..-1]
+  end
+
   def trigger_post_source_actions
     self.video.post_sourced_actions
+  end
+
+  def rename(new_name)
+    new_path = File.join(containing_folder, new_name).to_s
+    FileUtils.mv(raw_file_path, new_path)
+    self.update_attribute(:raw_file_path, new_path)
   end
 
   def move_to(new_path)

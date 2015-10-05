@@ -47,4 +47,23 @@ class SourceTest < ActiveSupport::TestCase
     end
   end
 
+  test "#filename" do
+    assert_equal 'baz.mp4', @source.filename
+  end
+
+  test "#containing_folder" do
+    assert_equal '/foo/bar/', @source.containing_folder
+  end
+
+  test "#extension" do
+    assert_equal 'mp4', @source.extension
+  end
+
+  test '#rename successful' do
+    new_path = '/foo/bar/wat.mp4'
+    FileUtils.expects(:mv).with(@source.raw_file_path, new_path)
+    @source.expects(:update_attribute).with(:raw_file_path, new_path)
+    @source.rename('wat.mp4')
+  end
+
 end
