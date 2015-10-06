@@ -3,65 +3,28 @@
     <h1 class="flashy-banner">μv status</h1>
 
     <div class="section">
-      <%= link_to 'Organize movies', reorganize_movies_settings_path, class: 'action-button' %>
-      <%= link_to 'Find dead files', find_dead_files_settings_path, class: 'action-button' %>
-      <%= link_to 'Find dead sources', find_dead_sources_settings_path, class: 'action-button' %>
-      <%= link_to 'Scan for new media', scan_for_new_media_status_index_path, 'tg-remote' => 'POST', class: 'action-button' %>
-      <%= link_to 'Reanalyze media library', reanalyze_media_status_index_path, 'tg-remote' => 'POST', class: 'action-button' %>
-      <%= link_to 'Download missing posters and fanart', redownload_missing_arts_status_index_path, 'tg-remote' => 'POST', class: 'action-button' %>
-      <%= link_to 'Re-download all posters and fanart', redownload_all_arts_status_index_path, 'tg-remote' => 'POST', class: 'action-button' %>
-    </div>
-
-    <div class="section">
       <h3>Background job status</h3>
-      <p>The progress and statuses of various activities will appear here.</p>
+      <p>The progress and statuses of various tasks will appear here.</p>
 
       <%= render 'shared/video_creation_reporter' %>
       <%= render 'shared/series_discovery_reporter' %>
     </div>
 
-    <div class="section">
-      <h3>Torrent Status</h3>
-      <% @torrents.each do |torrent| %>
-        <div class='job-reporter torrent' context='torrent<%= torrent.id %>'>
-          <div
-            class="job-reporter-grid"
-            define="{torrent: new Muvee.ProgressReporter(this, 'TorrentInformation<%= torrent.id %>')}">
-            <div class="job-name">
-              <% if torrent.video.present? %>
-                <% if torrent.video.try(:is_tv?) %>
-                  <span title="<%= torrent.video.title %> <%= torrent.video.season_episode %>">
-                    <%= torrent.video.title %>
-                    <%= torrent.video.season_episode %>
-                  </span>
-                <% else %>
-                  <%= torrent.video.title %>
-                <% end %>
-              <% else %>
-                Unknown
-              <% end %>
-            </div>
-            <div class="job-details">
-              <div class="torrent-progress progress-bar__container">
-                <div class=" progress-bar__bar animates" bind-attribute="{style: torrent.progressCssWidth()}"></div>
+    <%= render 'torrent_status', torrents: @torrents %>
 
-                <div class="job-info">
-                  <div class="job-progress" bind="torrent.progressPercent()"></div>
-                </div>
-              </div>
-            </div>
-            <div class="flex-fixed">
-              <%= render 'destroy_torrent_button', torrent_id: torrent.id %>
-            </div>
-          </div>
-        </div>
-      <% end %>
+    <div class="section">
+      <h3>Library Cleaning</h3>
+      <%= link_to 'Organize movies', reorganize_movies_settings_path, class: 'action-button' %>
+      <%= link_to 'Find dead files', find_dead_files_settings_path, class: 'action-button' %>
+      <%= link_to 'Find dead sources', find_dead_sources_settings_path, class: 'action-button' %>
     </div>
 
     <div class="section">
-      <h3>Notices</h3>
-      <p>Notices can provide recommendations and suggestions for you to take with your operation of μv</p>
-      <p>Not implemented yet.</p>
+      <h3>Library Maintenance</h3>
+      <%= link_to 'Scan for new media', scan_for_new_media_status_index_path, 'tg-remote' => 'POST', class: 'action-button' %>
+      <%= link_to 'Reanalyze media library', reanalyze_media_status_index_path, 'tg-remote' => 'POST', class: 'action-button' %>
+      <%= link_to 'Download missing posters and fanart', redownload_missing_arts_status_index_path, 'tg-remote' => 'POST', class: 'action-button' %>
+      <%= link_to 'Re-download all posters and fanart', redownload_all_arts_status_index_path, 'tg-remote' => 'POST', class: 'action-button' %>
     </div>
   </div>
 </div>

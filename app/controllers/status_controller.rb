@@ -3,7 +3,6 @@ class StatusController < ApplicationController
 
   def index
     @torrents = Torrent.all
-
     render 'index'
   end
 

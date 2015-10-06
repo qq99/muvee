@@ -1,7 +1,8 @@
 <div class="text-page">
   <div class="readable-page">
-    <h1>Rename Movies</h1>
-    <p>The following changes can be made to help you organize your movies better:</p>
+    <h1>Reorganize Movies</h1>
+    <p>The following changes can be made to help you organize your movies better.</p>
+    <p>Adding the IMDB ID to the filename will help <%= app_name %> better recognize the title in the future.</p>
 
     <%= form_tag reorganize_movies_settings_path, method: "post" do %>
     <table class="rename-table">
@@ -21,7 +22,6 @@
             <%= hidden_field_tag "reorg[#{i}][from]", source.id %>
             <span><%= source.raw_file_path %></span>
             <br>
-            <%= hidden_field_tag "reorg[#{i}][to_folder]", @folders.first, readonly: true %>
             <%= text_field_tag "reorg[#{i}][to_filename]", source.suggested_filename, class: 'action-button' %>
           </td>
         </tr>

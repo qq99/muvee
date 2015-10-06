@@ -49,13 +49,9 @@ class VideosController < ApplicationController
 
   # GET /videos/1/stream
   def stream_source
-    filepath = @source.raw_file_path
-
-    video_extension = File.extname(filepath)[1..-1]
-
-    send_file filepath,
-      filename: File.basename(filepath),
-      type: Mime::Type.lookup_by_extension(video_extension),
+    send_file @source.raw_file_path,
+      filename: @source.filename,
+      type: Mime::Type.lookup_by_extension(@source.extension),
       disposition: 'inline',
       stream: true,
       buffer_size: 4096

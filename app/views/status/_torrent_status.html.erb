@@ -1,0 +1,41 @@
+<div class="section">
+  <h3>Torrent Status</h3>
+  <% if @torrents.present? %>
+    <% torrents.each do |torrent| %>
+      <div class='job-reporter torrent' context='torrent<%= torrent.id %>'>
+        <div
+          class="job-reporter-grid"
+          define="{torrent: new Muvee.ProgressReporter(this, 'TorrentInformation<%= torrent.id %>')}">
+          <div class="job-name">
+            <% if torrent.video.present? %>
+              <% if torrent.video.try(:is_tv?) %>
+                <span title="<%= torrent.video.title %> <%= torrent.video.season_episode %>">
+                  <%= torrent.video.title %>
+                  <%= torrent.video.season_episode %>
+                </span>
+              <% else %>
+                <%= torrent.video.title %>
+              <% end %>
+            <% else %>
+              Unknown
+            <% end %>
+          </div>
+          <div class="job-details">
+            <div class="torrent-progress progress-bar__container">
+              <div class=" progress-bar__bar animates" bind-attribute="{style: torrent.progressCssWidth()}"></div>
+
+              <div class="job-info">
+                <div class="job-progress" bind="torrent.progressPercent()"></div>
+              </div>
+            </div>
+          </div>
+          <div class="flex-fixed">
+            <%= render 'destroy_torrent_button', torrent_id: torrent.id %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <p>No torrents are currently downloading.</p>
+  <% end %>
+</div>

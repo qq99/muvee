@@ -1,4 +1,9 @@
 module ApplicationHelper
+
+  def app_name
+    "μv"
+  end
+
   def human_duration(seconds)
     ChronicDuration.output(seconds, format: :chrono)
   end

@@ -31,12 +31,14 @@ class SettingsController < ApplicationController
   def update
     @config = ApplicationConfiguration.find(params[:id])
     if @config.update(config_params)
-      render 'welcome'
+      flash.now[:notice] = "Updated your settings"
+    else
+      flash.now[:error] = "Error updating your settings"
     end
+    render 'welcome'
   end
 
   def reorganize_movies_show
-    @folders = app_config.movie_sources
     @sources = MovieSource.all
   end
 
@@ -46,8 +48,7 @@ class SettingsController < ApplicationController
     end
     to_rename.each do |to_rename|
       source = MovieSource.find(to_rename["from"])
-      new_path = to_rename["to_folder"] + to_rename["to_filename"]
-      source.move_to(new_path)
+      source.rename(to_rename["to_filename"])
     end
     flash[:notice] = "Renamed #{to_rename.size} sources."
     redirect_to reorganize_movies_settings_path
