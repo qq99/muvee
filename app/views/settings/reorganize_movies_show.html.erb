@@ -22,7 +22,6 @@
             <%= hidden_field_tag "reorg[#{i}][from]", source.id %>
             <span><%= source.raw_file_path %></span>
             <br>
-            <%= hidden_field_tag "reorg[#{i}][to_folder]", @folders.first, readonly: true %>
             <%= text_field_tag "reorg[#{i}][to_filename]", source.suggested_filename, class: 'action-button' %>
           </td>
         </tr>

@@ -39,7 +39,6 @@ class SettingsController < ApplicationController
   end
 
   def reorganize_movies_show
-    @folders = app_config.movie_sources
     @sources = MovieSource.all
   end
 
