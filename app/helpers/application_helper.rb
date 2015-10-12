@@ -38,18 +38,17 @@ module ApplicationHelper
     end
   end
 
-  def airs_on_time(future_time)
-
-    if future_time == future_time.beginning_of_day
-      future_time = future_time.end_of_day # data marks released_on as start of day, but that's not great for comparisons to now
+  def airs_on_time(release_date)
+    if release_date == release_date.beginning_of_day
+      release_date = release_date.end_of_day # data marks released_on as start of day, but that's not great for comparisons to now
     end
 
-    if Time.now.to_date == future_time.to_date
+    if Time.now.to_date == release_date.to_date
       "today"
-    elsif future_time < Time.current + 1.week
-      "next #{future_time.strftime('%A')}"
+    elsif release_date < Time.current + 1.week
+      "next #{release_date.strftime('%A')}"
     else
-      "in #{days_from_now(future_time)}"
+      "in #{distance_of_time_in_words(release_date, Time.now)}"
     end
   end
 
@@ -59,18 +58,10 @@ module ApplicationHelper
     end
 
     if release_date < Time.now
-      "Aired #{year_month_day(release_date)} (#{days_ago(release_date)} ago)."
+      "Aired #{year_month_day(release_date)} (#{distance_of_time_in_words(release_date, Time.now)} ago)."
     else
-      "Airs #{year_month_day(release_date)} (in #{days_from_now(release_date)})."
+      "Airs #{year_month_day(release_date)} (in #{distance_of_time_in_words(release_date, Time.now)})."
     end
-  end
-
-  def days_from_now(future_time)
-    ChronicDuration.output(future_time - Time.current, days: true, units: 1, format: :long)
-  end
-
-  def days_ago(past_time)
-    ChronicDuration.output(Time.current - past_time, days: true, units: 1, format: :long)
   end
 
   def number_of_released_episodes_unacquired(series)
