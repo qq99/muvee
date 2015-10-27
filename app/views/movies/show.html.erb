@@ -1,4 +1,5 @@
 <%= render 'subnav' %>
+
 <div class="inline-movie-preview" define="{backgroundArtSlideshow: new Muvee.AutoSlideshow(this).transition().start()}">
   <div class="js-slideshow featured-image">
     <% if @movie.fanarts.present? %>
@@ -7,100 +8,96 @@
       <% end %>
     <% end %>
   </div>
-</div>
 
-<div id="movie_show">
+  <% if @movie.left_off_at_percent > 0 %>
+    <div class="watch-progress progress-bar__container">
+      <span class="progress-bar__bar" title="<%= @movie.left_off_at %> seconds of <%= @movie.duration %> total seconds" style="width: <%= @movie.left_off_at_percent %>%"></span>
+    </div>
+  <% elsif @movie.downloading? %>
+    <div
+      class="torrent-progress progress-bar__container"
+      define="{torrent: new Muvee.ProgressReporter(this, 'TorrentInformation<%= @movie.torrents.first.id %>')}">
+      <div class="progress-bar__bar animates" bind-attribute="{style: torrent.progressCssWidth()}"></div>
+    </div>
+  <% elsif @movie.transcoding? %>
+    <div class="torrent-progress progress-bar__container indeterminate" title="Transcoding now..."></div>
+  <% end %>
 
-  <div class="action-badges">
+  <div class="bg-overlay">
+    <div class="top-scrim">
+      <%= render 'genre_badge_listing', genres: @movie.genres %>
+      <div class="action-badges">
 
-    <%= link_to @movie.is_favorite ? unfavorite_movie_path(@movie) : favorite_movie_path(@movie), class: 'badge', "tg-remote" => "POST" do %>
-      <i class="fa <% if @movie.is_favorite %>fa-heart<% else %>fa-heart-o<% end %>"></i>
-    <% end %>
+        <%= link_to @movie.is_favorite ? unfavorite_movie_path(@movie) : favorite_movie_path(@movie), class: 'badge linked-badge', "tg-remote" => "POST" do %>
+          <i class="fa <% if @movie.is_favorite %>fa-heart<% else %>fa-heart-o<% end %>"></i>
+        <% end %>
 
-    <%= link_to reanalyze_movie_path(@movie), class: 'badge', "tg-remote" => "POST" do %>
-      <i class="fa fa-refresh"></i>
-    <% end %>
+        <%= link_to reanalyze_movie_path(@movie), class: 'badge linked-badge', "tg-remote" => "POST" do %>
+          <i class="fa fa-refresh"></i>
+        <% end %>
 
-    <% if @movie.remote? %>
-      <%= render 'delete_movie_button', movie: @movie %>
-    <% end %>
-  </div>
+        <% if @movie.remote? %>
+          <%= render 'delete_movie_button', movie: @movie %>
+        <% end %>
+      </div>
+    </div>
 
-  <div class="movie-information">
-    <div class="movie-information-meta">
-
-      <div class="movie-information-header">
-        <img class="movie-poster" src="<%= @movie.poster_url %>">
-
-        <div class="movie-information-header-text">
-
-          <h3 class="video-type">Movie</h3>
-          <% if @movie.downloading? %>
-            <h3 class='video-status'>Downloading</h3>
-          <% elsif @movie.transcoding? %>
-            <h3 class='video-status'>Transcoding</h3>
-          <% elsif @movie.remote? %>
-            <h3 class='video-status'>Remote</h3>
+    <% if @movie.local? %>
+      <div class="play-icon">
+        <% @movie.sources.each do |source| %>
+          <%= link_to show_source_video_path(@movie, source), class: 'play-icon-link' do %>
+            <i class="fa fa-play-circle"></i>
+            <div class="source-quality">
+              <%= source.quality %>
+              <% if source.is_3d? %>
+                <span class="3d">3D</span>
+              <% end %>
+            </div>
           <% end %>
-          <h1 class="movie-title">
-            <span class="title"><%= @movie.title %></span>
-            <span class="three-d <% unless @movie.is_3d? %>hide<% end %>">3D</span>
-          </h1>
+        <% end %>
+      </div>
+    <% end %>
 
-          <div class="movie-information-header__row">
-            <% if @movie.tagline.present? %>
-              <h2 class="movie-tagline"><%= @movie.tagline %></h2>
-            <% end %>
-          </div>
-
-          <div class="movie-information-header__row">
-            <% if @movie.sources.size > 0 %>
-              <% @movie.sources.each do |source| %>
-                <% if source.quality.present? %>
-                  <span class="badge quality-<%= source.quality %>" title="<%= source.raw_file_path %>">
-                    <%= source.quality %>
-                    <% if source.is_3d? %>
-                      <span class="3d">3D</span>
-                    <% end %>
-                  </span>
-                <% end %>
-              <% end %>
-            <% end %>
-            <%= render 'genre_badge_listing', genres: @movie.genres %>
-          </div>
-
-          <div class="movie-information-header__row flex-columns">
-            <div class="year">
-              <% if @movie.released_on || @movie.year %>
-                <i class="fa fa-calendar"></i>
-                <%= released_on_human(@movie.released_on) || @movie.year %>
-              <% end %>
-            </div>
-            <div class="duration">
-              <i class="fa fa-clock-o"></i>
-              <%= runtime_human(@movie.duration, @movie.runtime_minutes) %>
-            </div>
-            <div class="star-rating">
-              <%= render 'shared/star_rating', vote_count: @movie.vote_count, rating: @movie.vote_average || 0, rating_max: 10.0, new_scale: 5 %>
-              <% if @movie.vote_count.present? %>
-                from <%= number_with_delimiter(@movie.vote_count) %> votes
-              <% end %>
-            </div>
-          </div>
-
-          <div class="movie-information-header__row flex-columns">
-            <div class="parental-guidance-rating flex-coluns">
-              <%= @movie.parental_guidance_rating || "N/A" %>
-            </div>
-            <%= link_to imdb_link(@movie.imdb_id), class: 'imdb-icon-link flex-columns', target: :_blank do %>
-              <%= render 'shared/imdb_logo' %>
-            <% end %>
-          </div>
+    <div class="cover-scrim">
+      <img class="movie-poster" src="<%= @movie.poster_url %>">
+      <div class="movie-meta">
+        <h1><%= @movie.title %> <span class="three-d <% unless @movie.is_3d? %>hide<% end %>">3D</span></h1>
+        <% if @movie.tagline.present? %>
+          <h2><%= @movie.tagline %></h2>
+        <% end %>
+        <p>
+          <%= @movie.overview %>
+        </p>
+      </div>
+      <div class="movie-meta movie-meta--right flex-rows flex-rows--around">
+        <div>
+          <% if @movie.released_on || @movie.year %>
+            <i class="subdued fa fa-calendar"></i>
+            <%= released_on_human(@movie.released_on) || @movie.year %>
+          <% end %>
+        </div>
+        <div>
+          <i class="subdued fa fa-clock-o"></i>
+          <%= runtime_human(@movie.duration, @movie.runtime_minutes) %>
+        </div>
+        <div style='text-align: right'>
+          <%= render 'shared/star_rating', vote_count: @movie.vote_count, rating: @movie.vote_average || 0, rating_max: 10.0, new_scale: 5 %>
+          <br>
+          <% if @movie.vote_count.present? %>
+            from <%= number_with_delimiter(@movie.vote_count) %> votes
+          <% end %>
+        </div>
+        <div class="parental-guidance-rating">
+          <%= @movie.parental_guidance_rating || "N/A" %>
         </div>
       </div>
-      <p>
-        <%= @movie.overview %>
-      </p>
+    </div>
+
+  </div>
+</div>
+<div class="movie-information">
+  <div class="movie-information-meta">
+    <div class="movie-information-meta__section">
       <% if @movie.actors.any? %>
         <h2>Actors</h2>
         <div class="flex-columns">
@@ -117,56 +114,41 @@
           <% end %>
         </div>
       <% end %>
-      <br>
     </div>
+    <div class="movie-information-meta__section">
 
-    <div class="movie-actions">
-      <div class="movie-actions-contents">
-        <% if @movie.local? %>
-          <%= render 'thumbnail_play', movie: @movie %>
+      <% if @movie.local? %>
+        <%= link_to imdb_link(@movie.imdb_id), class: 'imdb-icon-link flex-columns', target: :_blank do %>
+          <%= render 'shared/imdb_logo' %>
         <% end %>
-        <div class="inline-buttons">
-          <% if @movie.local? %>
-            <%= form_for @movie, url: override_imdb_id_movie_path(@movie), html: {'tg-remote' => true, class: 'inline-form'} do |f| %>
-              <div class="action-button-group">
-                <%= f.text_field :imdb_id, class: 'action-button' %><%= f.submit "Override IMDB ID", class: 'action-button' %>
-              </div>
-            <% end %>
-          <% end %>
-        </div>
+        <%= form_for @movie, url: override_imdb_id_movie_path(@movie), html: {'tg-remote' => true, class: 'inline-form'} do |f| %>
+          <div class="action-button-group">
+            <%= f.text_field :imdb_id, class: 'action-button' %><%= f.submit "Override IMDB ID", class: 'action-button' %>
+          </div>
+        <% end %>
+      <% end %>
 
-        <% if @movie.sources.size > 0 %>
-          <h2>Download more sources</h2>
+      <% if @movie.sources.size > 0 %>
+        <h2>Download more sources</h2>
+      <% else %>
+        <h2>Download this movie</h2>
+      <% end %>
+
+      <% if @movie.downloading? %>
+        <% if @movie.torrents.count > 0 %>
+          <p>Download in progress. There's <%= pluralize(@movie.torrents.size, 'torrent') %> associated with this movie.</p>
         <% else %>
-          <h2>Download this movie</h2>
+          <p>Finalizing download.</p>
         <% end %>
+      <% end %>
 
-        <% if @movie.downloading? %>
-          <% if @movie.torrents.count > 0 %>
-            <p>Download in progress. There's <%= pluralize(@movie.torrents.size, 'torrent') %> associated with this movie.</p>
-          <% else %>
-            <p>Finalizing download.</p>
-          <% end %>
-        <% end %>
-
-        <div id="yts-sources" refresh="yts-sources">
-          <%= link_to "Search YTS", find_sources_via_yts_movie_path(@movie, q: @movie.title), "tg-remote" => "POST", "refresh-on-success" => "yts-sources", class: "yts-logo tracker-logo" %>
-        </div>
-        <div id="tbp-sources" refresh="tbp-sources">
-          <%= link_to "Search the Pirate Bay", find_sources_via_pirate_bay_movie_path(@movie, q: @movie.title), "tg-remote" => "POST", "refresh-on-success" => "tbp-sources", class: "tbp-logo tracker-logo" %>
-        </div>
+      <div id="yts-sources" refresh="yts-sources">
+        <%= link_to "Search YTS", find_sources_via_yts_movie_path(@movie, q: @movie.title), "tg-remote" => "POST", "refresh-on-success" => "yts-sources", class: "yts-logo tracker-logo" %>
+      </div>
+      <div id="tbp-sources" refresh="tbp-sources">
+        <%= link_to "Search the Pirate Bay", find_sources_via_pirate_bay_movie_path(@movie, q: @movie.title), "tg-remote" => "POST", "refresh-on-success" => "tbp-sources", class: "tbp-logo tracker-logo" %>
       </div>
     </div>
-
-    <% if @movie.downloading? %>
-      <div
-        class="torrent-progress progress-bar__container"
-        define="{torrent: new Muvee.ProgressReporter(this, 'TorrentInformation<%= @movie.torrents.first.id %>')}">
-        <div class="progress-bar__bar animates" bind-attribute="{style: torrent.progressCssWidth()}"></div>
-      </div>
-    <% elsif @movie.transcoding? %>
-      <div class="torrent-progress progress-bar__container indeterminate" title="Transcoding now..."></div>
-    <% end %>
-
   </div>
+
 </div>

@@ -4,31 +4,14 @@
 .movies-bg {
   background: black;
 }
-.empty-state {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 40em;
-  margin-left: -20em;
-}
 .inline-movie-preview {
   position: relative;
   z-index: 2;
   top: 0;
   left: 0;
   width: 100%;
-  height: 40%;
+  height: 100%;
   overflow: hidden;
-}
-$preview-height: 45%;
-.movies-index {
-  position: absolute;
-  top: 100% - $preview-height;
-  left: 0;
-  height: $preview-height;
-  width: 70%;
-  overflow-y: scroll;
-  z-index: 3;
 }
 
 .movie-background {
@@ -48,28 +31,6 @@ $preview-height: 45%;
 
 
 
-.movie-meta {
-  position: absolute;
-  top: 100% - $preview-height;
-  left: 70%;
-  height: $preview-height;
-  width: 30%;
-  z-index: 2;
-  right: 0;
-  color: white;
-  padding: 1.5em 3em;
-  overflow-y: auto;
-  h1 {
-    line-height: 1em;
-  }
-  p {
-    margin: 0.5em 0;
-  }
-  .movie-year {
-    font-size: 1em;
-    color: white;
-  }
-}
 
 .three-d {
   color: $less-radical-blue;
@@ -94,59 +55,73 @@ $preview-height: 45%;
   height: 100%;
 }
 
-.movies-index--full {
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-  $remote-movie-preview-height: 60%;
-  .movies-index {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 70%;
-    overflow-y: scroll;
-    z-index: 3;
-  }
-  .movie-meta {
-    top: 0;
-    height: 100%;
-  }
-  .movie-actions {
-    padding: 2rem;
-    position: absolute;
-    top: 50%;
-    height: 50%;
-    left: 70%;
-    width: 30%;
-    &.full {
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      padding: 10rem;
-    }
-  }
+.action-badges {
+  float: right;
 }
 
-.movie-actions-contents {
-  width: 100%;
-  height: 100%;
-  max-width: 100%;
-  max-height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-  word-wrap: break-word;
-  padding: 1em;
+.inline-movie-preview {
+  .progress-bar__container {
+    height: 5px;
+    position: absolute;
+    bottom: 0;
+    z-index: 200;
+  }
+
 }
 
-.movie-poster {
+.bg-overlay {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .play-icon {
+    font-size: 1.3em;
+    color: white;
+    text-shadow: 1px 1px 1px black;
+    position: relative;
+  }
+}
+.top-scrim {
+  z-index: 100;
+  width: 100%;
   flex: 0 0 auto;
+  padding: 1rem;
+  background: linear-gradient(0deg, rgba(0,0,0,0), rgba(0,0,0,0.3));
+}
+.cover-scrim {
+  z-index: 100;
+  width: 100%;
+  flex: 0 0 auto;
+  padding: 1.25rem;
+  display: flex;
+  background: linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,0.75));
+  justify-content: center;
+}
+.movie-meta {
+  color: white;
+  padding-left: 1rem;
+  font-size: 0.8em;
+  width: 40em;
+}
+.movie-meta--right {
+  width: 12em;
+  font-size: 1em;
+  padding-left: 2rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  flex-direction: column;
+}
+i.subdued {
+  color: #aaa;
+}
+.movie-poster {
   width: auto;
   height: 13em;
-  margin: 0 1em 1em 0;
   border-radius: 3px;
   box-shadow: 2px 2px 4px rgba(0,0,0, 0.8);
+  flex: 0 0 auto;
 }
 
 #ImdbLogoSvg {
@@ -167,7 +142,9 @@ $preview-height: 45%;
   background: $mostly-black-darker;
   color: white;
   overflow: hidden;
-  display: flex;
+  width: 55em;
+  margin: 1em auto;
+  padding: 1em;
 
   .torrent-progress {
     position: absolute;
@@ -179,11 +156,6 @@ $preview-height: 45%;
     margin: 1em 0;
   }
   .movie-information-meta {
-    margin: 1em;
-    padding: 1em;
-    width: 50%;
-    height: 100%;
-    overflow-y: auto;
     h1 {
       font-size: 2.3em;
     }
@@ -206,10 +178,6 @@ $preview-height: 45%;
   .video-thumbnail { min-height: 200px; }
   .movie-actions {
     background: transparent;
-    width: 50%;
-    height: 100%;
-    margin: 1em;
-    overflow-y: auto;
   }
   .watch-progress {
     position: absolute;
@@ -217,6 +185,10 @@ $preview-height: 45%;
     left: 0;
     height: 8px;
   }
+}
+
+.movie-information-meta__section {
+  margin: 1em 0;
 }
 
 .fa-star, .fa-star-half-o {
@@ -359,7 +331,7 @@ $preview-height: 45%;
   justify-content: center;
   align-items: center;
   width: 25%;
-  height: 15em;
+  height: 20em;
   margin-right: 0 !important;
   overflow: hidden;
   &:hover {
@@ -406,6 +378,7 @@ $preview-height: 45%;
 }
 
 .parental-guidance-rating {
+  display: inline-block;
   font-family: 'Gothic Bold', serif;
   text-transform: uppercase;
   font-weight: bold;
