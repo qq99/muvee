@@ -32,7 +32,7 @@
           <i class="fa <% if @movie.is_favorite %>fa-heart<% else %>fa-heart-o<% end %>"></i>
         <% end %>
 
-        <%= link_to reanalyze_movie_path(@movie), class: 'badge linked-badge', "tg-remote" => "POST" do %>
+        <%= link_to reanalyze_movie_path(@movie), class: 'badge linked-badge', "tg-remote" => "POST", 'define' => "{autoRefresher: new Muvee.AutoRefresher(this, #{@movie.updated_at < 1.day.ago})}" do %>
           <i class="fa fa-refresh"></i>
         <% end %>
 
