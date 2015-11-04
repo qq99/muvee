@@ -13,10 +13,5 @@
   <%= render 'shared/series_discovery_reporter' %>
 </div>
 
-<div class="alpha-picker">
-  <% ('a'..'z').each do |letter| %>
-    <%= link_to letter, discover_series_index_path(alpha: letter), class: "alpha #{'active' if params[:alpha] == letter}" %>
-  <% end %>
-</div>
-
+<%= render 'shared/alpha_picker', paginator_path: self.method(:discover_series_index_path) %>
 <%= render 'series_results', paginator_path: self.method(:discover_series_index_path) %>

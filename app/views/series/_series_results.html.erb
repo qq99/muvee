@@ -1,4 +1,4 @@
-<div id="results" refresh="results" <% if @_is_paged %>define="{pager: new Muvee.Pager(this)}"<% end %> style="margin: 1em;">
+<div id="results" refresh="results" <% if @_is_paged %>define="{pager: new Muvee.Pager(this)}"<% end %> style='padding: 1em;'>
 
   <% if @prev_series.present? %>
     <%= link_to paginator_path.call(page: @prev_page, query: params[:query], alpha: params[:alpha]), class: 'pretty-pager top js-prev-page' do %>
