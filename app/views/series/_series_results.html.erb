@@ -1,4 +1,12 @@
-<div id="results" refresh="results" <% if @_is_paged %>define="{pager: new Muvee.Pager(this)}"<% end %> style='padding: 1em;'>
+<%
+  empty = !@series.present?
+  was_empty_search = empty && params[:query].present?
+%>
+<div id="results" refresh="results" <% if @_is_paged %>define="{pager: new Muvee.Pager(this)}"<% end %> style='margin: 1em;'>
+
+  <% unless was_empty_search %>
+    <%= render 'shared/alpha_picker', paginator_path: paginator_path %>
+  <% end %>
 
   <% if @prev_series.present? %>
     <%= link_to paginator_path.call(page: @prev_page, query: params[:query], alpha: params[:alpha]), class: 'pretty-pager top js-prev-page' do %>
@@ -18,8 +26,18 @@
         <% end %>
       <% end %>
     </div>
-  <% else %>
-    <div>No series found.</div>
+  <% end %>
+
+  <% if was_empty_search %>
+    <div class="index-notice">
+      <h3>
+        Unfortunately, <%= app_name %> doesn't know about <span class="note"><%= params[:query] %></span>.
+      </h3>
+    </div>
+  <% elsif empty %>
+    <div class="index-notice">
+      <h3>Nothing here.</h3>
+    </div>
   <% end %>
 
   <% if @next_series.present? %>

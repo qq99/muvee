@@ -21,7 +21,15 @@ class Muvee.FixedSearch
   clear: ->
     $(INPUT_SELECTOR).val('')
 
+  toggle: ->
+    if @showing
+      @hide()
+    else
+      @show()
+    false
+
   show: ->
+    @showing = true
     $(@node).removeClass('hide')
     @clearGlobalListener()
     @clear()
@@ -31,6 +39,7 @@ class Muvee.FixedSearch
     , 250
 
   hide: =>
+    @showing = false
     @bindGlobalListener()
     $(@node).removeClass('is-active')
     setTimeout =>

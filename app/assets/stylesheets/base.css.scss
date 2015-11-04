@@ -35,6 +35,7 @@
 }
 
 a {
+  cursor: pointer;
   text-decoration: none; color: inherit;
   &:hover {
     color: $radical-blue;

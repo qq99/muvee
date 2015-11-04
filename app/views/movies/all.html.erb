@@ -1,4 +1,2 @@
 <%= render 'subnav' %>
-<%= render 'movies_fixed_search' %>
-<%= render 'shared/alpha_picker', paginator_path: self.method(:all_movies_path) %>
 <%= render 'movies_results', paginator_path: self.method(:all_movies_path) %>

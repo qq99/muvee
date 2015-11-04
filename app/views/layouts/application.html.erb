@@ -10,8 +10,21 @@
 </head>
 <body>
 
+  <% if controller_name == 'movies' %>
+    <%= render 'movies/movies_fixed_search' %>
+  <% elsif controller_name == 'series' %>
+    <%= render 'series/series_fixed_search' %>
+  <% else %>
+    <%= render 'movies/movies_fixed_search' %>
+  <% end %>
+
   <header class="main-navigation">
     <ul class="main-navigation__items">
+      <li>
+        <a bind-event-click="fixedSearch.toggle()">
+          <i class="fa fa-search"></i>
+        </a>
+      </li>
       <li <% if controller_name == 'movies' %>class="active" <% end %>>
         <%= link_to movies_path, class: 'top-nav-button' do %>
           <i class="fa fa-film"></i>

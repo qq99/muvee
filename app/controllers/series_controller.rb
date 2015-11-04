@@ -7,6 +7,7 @@ class SeriesController < ApplicationController
   def index
     @section = :series
     scope = Series.with_episodes.order(title: :asc)
+    scope = alpha_filter_scope(scope)
 
     @prev_series, @series, @next_series = paged(scope)
   end
@@ -15,6 +16,7 @@ class SeriesController < ApplicationController
     @section = :series
     query = "%#{params[:query]}%".downcase
     scope = Series.where('lower(title) like :q', q: query)
+    scope = alpha_filter_scope(scope)
     @prev_series, @series, @next_series = paged(scope)
 
     if cur_page == 0 && @series.size == 1
@@ -51,6 +53,7 @@ class SeriesController < ApplicationController
   def favorites
     @section = :favorites
     scope = Series.favorites.order(title: :asc)
+    scope = alpha_filter_scope(scope)
 
     @prev_series, @series, @next_series = paged(scope)
   end
