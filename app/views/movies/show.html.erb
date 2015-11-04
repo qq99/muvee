@@ -103,7 +103,7 @@
     <div class="movie-information-meta__section">
       <% if @movie.actors.any? %>
         <h2>Actors</h2>
-        <div class="flex-columns">
+        <div class="flex-columns flex-wrap">
           <% @movie.actors.each do |actor| %>
             <div class='actor-tile'>
               <% profile = actor.profile_picture_fanart %>

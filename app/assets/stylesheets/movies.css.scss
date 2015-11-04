@@ -70,6 +70,7 @@
 
 .bg-overlay {
   display: flex;
+  flex: 1;
   flex-direction: column;
   justify-content: space-between;
   .play-icon {
@@ -276,14 +277,14 @@ i.subdued {
 }
 
 .actor-tile {
-  flex: 1 0 auto;
+  flex: 1 0 10em;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 25%;
   height: 20em;
-  margin-right: 0 !important;
+  margin: 0 !important;
   overflow: hidden;
   &:hover {
     .actor-name {

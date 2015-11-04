@@ -37,6 +37,9 @@ $tile-transition-delay: 0.30s;
 .flex-down {
   flex-direction: column;
 }
+.flex-wrap {
+  flex-wrap: wrap;
+}
 
 .flex-columns {
   display: flex;

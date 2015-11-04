@@ -296,13 +296,14 @@ $fixed-search-padding: 3em;
 
 .alpha-picker {
   display: flex;
+  flex-wrap: wrap;
   padding: 0 1em;
   margin: 1.25em 0 1.25em 0;
   color: white;
   width: 100%;
   justify-content: center;
   .alpha {
-    flex: 1;
+    flex: 1 0 2em;
     text-align: center;
     font-style: italic;
     padding-bottom: 0.25em;
