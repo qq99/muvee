@@ -3,6 +3,21 @@
 .inline-block {
   display: inline-block;
 }
+.flex {
+  display: flex;
+}
+.st {
+  margin-top: 0.5em;
+}
+.sst {
+  margin-top: 1em;
+}
+.sb {
+  margin-bottom: 0.5em;
+}
+.ssb {
+  margin-bottom: 1em;
+}
 
 #nprogress {
   pointer-events: none;

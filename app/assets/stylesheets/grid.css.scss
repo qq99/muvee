@@ -38,6 +38,20 @@ $tile-transition-delay: 0.30s;
   flex-direction: column;
 }
 
+.flex-columns {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  > * {
+    flex: 0 0 auto;
+    margin-right: 1em;
+    margin-bottom: 0.5em;
+  }
+  &.flex-columns--top {
+    align-items: flex-start;
+  }
+}
+
 .tile {
   overflow: hidden;
   margin: 0;

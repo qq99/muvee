@@ -10,13 +10,14 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   overflow: hidden;
 }
 
 .movie-background {
   background-repeat: no-repeat;
   background-size: cover !important;
+  background-position: 50% 50%;
   width: 100%;
   height: 100%;
   position: absolute;
@@ -60,22 +61,19 @@
 }
 
 .inline-movie-preview {
+  display: flex;
   .progress-bar__container {
     height: 5px;
-    position: absolute;
-    bottom: 0;
-    z-index: 200;
   }
 
 }
 
 .bg-overlay {
-  position: relative;
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   .play-icon {
+    flex: 1 0 20em;
     font-size: 1.3em;
     color: white;
     text-shadow: 1px 1px 1px black;
@@ -92,17 +90,13 @@
 .cover-scrim {
   z-index: 100;
   width: 100%;
-  flex: 0 0 auto;
-  padding: 1.25rem;
-  display: flex;
   background: linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,0.75));
-  justify-content: center;
 }
 .movie-meta {
   color: white;
   padding-left: 1rem;
   font-size: 0.8em;
-  width: 40em;
+  flex: 1 1 auto;
 }
 .movie-meta--right {
   width: 12em;
@@ -112,6 +106,7 @@
   justify-content: space-around;
   align-items: flex-end;
   flex-direction: column;
+  flex: 0 0 auto;
 }
 i.subdued {
   color: #aaa;
@@ -136,44 +131,6 @@ i.subdued {
   }
 }
 
-.movie-information {
-  position: relative;
-  z-index: 3;
-  background: $mostly-black-darker;
-  color: white;
-  overflow: hidden;
-  width: 55em;
-  margin: 1em auto;
-  padding: 1em;
-
-  .torrent-progress {
-    position: absolute;
-    height: 7px;
-    left: 0;
-    top: 0;
-  }
-  p {
-    margin: 1em 0;
-  }
-  .movie-information-meta {
-    h1 {
-      font-size: 2.3em;
-    }
-  }
-  .movie-rating {
-    font-size: 0.9em;
-  }
-  a {
-    color: white;
-    &:visited {
-      color: white;
-    }
-    &:hover, &:focus {
-      color: $radical-blue;
-    }
-  }
-}
-
 #movie_show {
   .video-thumbnail { min-height: 200px; }
   .movie-actions {
@@ -188,7 +145,10 @@ i.subdued {
 }
 
 .movie-information-meta__section {
-  margin: 1em 0;
+  padding: 1em;
+  margin: 1em auto;
+  flex: 0 1 60em;
+  color: #ccc;
 }
 
 .fa-star, .fa-star-half-o {
@@ -310,16 +270,7 @@ i.subdued {
   }
 }
 
-.flex-columns {
-  display: flex;
-  align-items: center;
-  > * {
-    margin-right: 0.5em !important;
-  }
-  &.flex-columns--top {
-    align-items: flex-start;
-  }
-}
+
 .imdb-logo-link {
   display: inline-block;
 }
