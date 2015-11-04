@@ -1,6 +1,6 @@
-<div class="actor-details flex-columns flex-columns--top">
+<div class="actor-details flex">
   <% if @actor.profile_picture_fanart.present? %>
-    <div class="actor-profile-picture" style="flex: 0 0 auto; margin-right: 2em !important; background-image: url(<%= @actor.profile_picture_fanart.url %>)"></div>
+    <div class="actor-profile-picture" style="flex: 0 0 auto; margin-right: 1em !important; background-image: url(<%= @actor.profile_picture_fanart.url %>)"></div>
   <% end %>
   <div>
     <h1><%= @actor.name %></h1>
