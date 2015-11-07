@@ -1,0 +1,45 @@
+<% if object.is_a? Movie %>
+  <div class="tile" context="tile<%= object.id %>">
+    <div class="tile__meta">
+      <h3 class="video-year"><%= object.year %></h3>
+      <h3 class="video-type">Movie</h3>
+      <% if object.downloading? %>
+        <h3 class='video-status'>Downloading Now</h3>
+      <% elsif object.transcoding? %>
+        <h3 class='video-status'>Transcoding</h3>
+      <% elsif object.remote? %>
+        <h3 class='video-status'>Remote</h3>
+      <% end %>
+      <h1 class="video-title"><%= link_to object.title, object %></h1>
+      <p class="video-description">
+        <%= object.overview %>
+      </p>
+      <%= render 'genre_badge_listing', genres: object.genres.sample(2) %>
+      <% if object.downloading? %>
+        <div
+          class="torrent-progress progress-bar__container"
+          define="{torrent: new Muvee.ProgressReporter(this, 'TorrentInformation<%= object.torrents.first.id %>')}">
+          <div class="progress-bar__bar animates" bind-attribute="{style: torrent.progressCssWidth()}"></div>
+        </div>
+      <% elsif object.transcoding? %>
+        <div class="torrent-progress progress-bar__container indeterminate" title="Transcoding now..."></div>
+      <% end %>
+      <%= render 'shared/star_rating', vote_count: object.vote_count, rating: object.vote_average || 0, rating_max: 10.0, new_scale: 5 %>
+      <div class="tile__meta-backdrop"></div>
+    </div>
+    <div class="tile__background" style="background-image: url(<%= object.fanarts.sample.try(:url) %>);"></div>
+  </div>
+<% elsif object.is_a? Series %>
+  <div class="tile" context="tile<%= object.id %>">
+    <div class="tile__meta">
+      <h3 class="video-type">Movie</h3>
+      <h1 class="video-title"><%= link_to object.title, object %></h1>
+      <p class="video-description">
+        <%= object.overview %>
+      </p>
+      <%= render 'shared/star_rating', vote_count: object.tvdb_rating_count, rating: object.tvdb_rating || 0, rating_max: 10.0, new_scale: 5 %>
+      <div class="tile__meta-backdrop"></div>
+    </div>
+    <div class="tile__background" style="background-image: url(<%= object.fanart_url %>);"></div>
+  </div>
+<% end %>

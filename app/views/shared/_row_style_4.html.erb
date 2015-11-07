@@ -1,0 +1,30 @@
+<div class='tile-row'>
+
+  <% if rand() > 0.5 %>
+    <div class='col-2-3 flex-down'>
+      <% next_objects = objects.shift(1) %>
+      <% next_objects.each do |object| %>
+        <%= render 'shared/tile', object: object %>
+      <% end %>
+    </div>
+    <div class='col-1-3 flex-down'>
+      <% next_objects = objects.shift(2) %>
+      <% next_objects.each do |object| %>
+        <%= render 'shared/tile', object: object %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class='col-1-3 flex-down'>
+      <% next_objects = objects.shift(2) %>
+      <% next_objects.each do |object| %>
+      <%= render 'shared/tile', object: object %>
+      <% end %>
+    </div>
+    <div class='col-2-3 flex-down'>
+      <% next_objects = objects.shift(1) %>
+      <% next_objects.each do |object| %>
+      <%= render 'shared/tile', object: object %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
