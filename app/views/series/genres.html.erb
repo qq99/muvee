@@ -1,0 +1,17 @@
+<%= render 'subnav' %>
+
+<div class="tile-list">
+  <% @genres.each_slice(3) do |genres| %>
+    <div class="tile-row tile-row--banner">
+
+      <% genres.each do |genre| %>
+        <div class="tile">
+          <%= link_to by_genre_series_index_path(genre.name.parameterize), class: 'tile__meta--banner' do %>
+            <h1><%= genre.name %></h1>
+          <% end %>
+          <div class="tile__background" style="background-image: url(<%= genre.series.sample.try(:fanart_url) %>);"></div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

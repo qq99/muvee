@@ -14,7 +14,7 @@
       <p class="video-description">
         <%= object.overview %>
       </p>
-      <%= render 'shared/genre_badge_listing', genres: object.genres.sample(2) %>
+      <%= render 'shared/genre_badge_listing', genres: object.genres.sample(2), paginator_path: self.method(:by_genre_movies_path) %>
       <% if object.downloading? %>
         <div
           class="torrent-progress progress-bar__container"
@@ -46,7 +46,7 @@
       <p class="video-description">
         <%= object.overview %>
       </p>
-      <%= render 'shared/genre_badge_listing', genres: object.genres.sample(2) %>
+      <%= render 'shared/genre_badge_listing', genres: object.genres.sample(2), paginator_path: self.method(:by_genre_series_index_path) %>
       <%= render 'shared/star_rating', vote_count: object.tvdb_rating_count, rating: object.tvdb_rating || 0, rating_max: 10.0, new_scale: 5 %>
       <div class="tile__meta-backdrop"></div>
     </div>

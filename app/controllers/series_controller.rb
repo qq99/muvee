@@ -58,6 +58,18 @@ class SeriesController < ApplicationController
     @prev_series, @series, @next_series = paged(scope)
   end
 
+  def genres
+    @section = :genres
+    @genres = Genre.order(name: :asc).select { |genre| genre.has_series? }
+  end
+
+  def genre
+    @section = :genres
+    name = Genre.normalized_name(params[:type])
+    @genre = Genre.find_by(name: name)
+    @series = @genre.series.all.to_a # TODO: figure out pagination here
+  end
+
   def nonepisodic
     @section = :nonepisodic
     @shows = TvShow.where(series_id: nil).all

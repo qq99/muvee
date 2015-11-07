@@ -16,6 +16,10 @@ module HasVideo
       movies.local.count > 0
     end
 
+    def has_series?
+      series.count > 0
+    end
+
     def has_tv_shows?
       tv_shows.count > 0
     end

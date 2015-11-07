@@ -13,8 +13,18 @@
 
     <div class="bg-overlay">
       <div class="top-scrim">
-        <%= render 'shared/genre_badge_listing', genres: @series.genres %>
+        <%= render 'shared/genre_badge_listing', genres: @series.genres, paginator_path: self.method(:by_genre_series_index_path) %>
         <div class="action-badges">
+
+          <% if @videos.size > 0 %>
+            <% random_video = @videos.select(&:local?).map(&:id).sample %>
+
+            <% if random_video.present? %>
+              <%= link_to show_source_video_path(@videos.select(&:local?).map(&:id).sample, shuffle: true, series_id: @series.id), class: 'badge linked-badge' do %>
+                <i class="fa fa-random"></i>
+              <% end %>
+            <% end %>
+          <% end %>
 
           <%= link_to @series.is_favorite ? unfavorite_series_path(@series) : favorite_series_path(@series), class: 'badge linked-badge', "tg-remote" => "POST" do %>
             <i class="fa <% if @series.is_favorite %>fa-heart<% else %>fa-heart-o<% end %>"></i>
@@ -48,35 +58,40 @@
     </div>
   </div>
 
-  <div class="flex">
+  <div class="flex" id='episode-listing-toggle' refresh='episode-listing'>
     <div class="movie-information-meta__section">
       <div class="badges">
         <div class="badge-listing">
-          <%= link_to "Latest", series_path(@series, season: @season, sort: :latest), class: "badge linked-badge #{'active' if @sort == :latest}" %>
-          <%= link_to "Unwatched", series_path(@series, season: @season, sort: :unwatched), class: "badge linked-badge #{'active' if @sort == :unwatched}" %>
-          <%= link_to "In order", series_path(@series, season: @season, sort: :release_order), class: "badge linked-badge #{'active' if @sort == :release_order}" %>
+          <%= link_to "Latest", series_path(@series, season: @season, sort: :latest),
+                class: "badge linked-badge #{'active' if @sort == :latest}",
+                'tg-remote' => 'GET',
+                'refresh-on-success' => 'episode-listing' %>
+          <%= link_to "Unwatched", series_path(@series, season: @season, sort: :unwatched),
+                class: "badge linked-badge #{'active' if @sort == :unwatched}",
+                'tg-remote' => 'GET',
+                'refresh-on-success' => 'episode-listing' %>
+          <%= link_to "In order", series_path(@series, season: @season, sort: :release_order),
+                class: "badge linked-badge #{'active' if @sort == :release_order}",
+                'tg-remote' => 'GET',
+                'refresh-on-success' => 'episode-listing' %>
         </div>
         <div class="badge-listing">
-          <%= link_to "All", series_path(@series, season: 'all', sort: @sort), class: "badge #{'active' if @season.blank?}" %>
+          <%= link_to "All", series_path(@series, season: 'all', sort: @sort),
+                class: "badge #{'active' if @season.blank?}",
+                'tg-remote' => 'GET',
+                'refresh-on-success' => 'episode-listing' %>
           <% @seasons.each do |s| %>
-            <%= link_to "S#{s}", series_path(@series, season: s, sort: @sort), class: "badge linked-badge #{'active' if @season == s}" %>
+            <%= link_to "S#{s}", series_path(@series, season: s, sort: @sort),
+                class: "badge linked-badge #{'active' if @season == s}",
+                'tg-remote' => 'GET',
+                'refresh-on-success' => 'episode-listing' %>
           <% end %>
         </div>
-
-        <% if @videos.size > 0 %>
-          <% random_video = @videos.select(&:local?).map(&:id).sample %>
-
-          <% if random_video.present? %>
-            <%= link_to show_source_video_path(@videos.select(&:local?).map(&:id).sample, shuffle: true, series_id: @series.id), class: 'action-button' do %>
-              <i class="fa fa-random"></i> Shuffle
-            <% end %>
-          <% end %>
-        <% end %>
       </div>
     </div>
   </div>
 
-  <div class="flex">
+  <div class="flex" id='episode-listing' refresh='episode-listing'>
     <div class="movie-information-meta__section">
       <%
         grouped_by_season = @videos.group_by{|v| v.season}
