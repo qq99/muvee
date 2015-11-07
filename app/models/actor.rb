@@ -16,6 +16,7 @@ class Actor < ActiveRecord::Base
   def fetch_tmdb_person_id
     search_results = TmdbPersonSearchResult.get(name)
     results = search_results.data["results"]
+    return nil if results.blank?
 
     results.select!{|entry| entry['name'] == name} # filter list to exact matches
     result = results.first
