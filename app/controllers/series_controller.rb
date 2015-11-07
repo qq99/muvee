@@ -1,5 +1,5 @@
 class SeriesController < ApplicationController
-  before_action :set_series, only: [:show, :find_episode, :download, :reanalyze, :favorite, :unfavorite]
+  before_action :set_series, only: [:show, :download, :reanalyze, :favorite, :unfavorite]
   before_action :set_episode, only: [:show_episode_details, :download]
 
   RESULTS_PER_PAGE = 48

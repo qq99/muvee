@@ -136,19 +136,6 @@ i.subdued {
   }
 }
 
-#movie_show {
-  .video-thumbnail { min-height: 200px; }
-  .movie-actions {
-    background: transparent;
-  }
-  .watch-progress {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 8px;
-  }
-}
-
 .movie-information-meta__section {
   padding: 1em;
   margin: 1em auto;
@@ -161,15 +148,6 @@ i.subdued {
 }
 .fa-star-o {
   color: #777;
-}
-
-.torrent-source {
-  float: left;
-  margin-right: 1em;
-  font-size: 1em;
-  h3 {
-    margin: 0.5em 0;
-  }
 }
 
 .torrent-progress-meter {
