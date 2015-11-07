@@ -7,16 +7,16 @@
   display: flex;
 }
 .st {
-  margin-top: 0.5em;
+  margin-top: $basic-padding / 2;
 }
 .sst {
-  margin-top: 1em;
+  margin-top: $basic-padding;
 }
 .sb {
-  margin-bottom: 0.5em;
+  margin-bottom: $basic-padding / 2;
 }
 .ssb {
-  margin-bottom: 1em;
+  margin-bottom: $basic-padding;
 }
 
 #nprogress {
@@ -42,29 +42,11 @@ a {
   }
 }
 
-.tracker-logo {
-  display: block;
-  width: 100px;
-  height: 50px;
-  text-indent: -99em;
-  background-size: contain !important;
-}
-.tbp-logo {
-  background: url(/tbp_logo.png) no-repeat;
-}
-.yts-logo {
-  background: url(/yts_logo.png) no-repeat;
-}
-
 .hide {
   display: none !important;
 }
 .fr {
   float: right;
-}
-
-.box-content {
-  padding: 1rem;
 }
 
 .ralign {
@@ -99,11 +81,7 @@ a {
 }
 
 .scrolling-panel {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  @extend .mbox;
   overflow-y: auto;
 }
 
@@ -295,22 +273,23 @@ $fixed-search-padding: 3em;
   color: $notice !important;
 }
 
-.alpha-picker {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0 1em;
-  margin: 1.25em 0 1.25em 0;
-  color: white;
-  width: 100%;
-  justify-content: center;
-  .alpha {
-    flex: 1 0 2em;
-    text-align: center;
-    font-style: italic;
-    padding-bottom: 0.25em;
-    &.active {
-      color: $radical-blue;
-      border-bottom: 2px solid $less-radical-blue;
-    }
-  }
+.tracker-logo {
+  display: block;
+  width: 100px;
+  height: 50px;
+  text-indent: -99em;
+  background-size: contain !important;
+}
+.tbp-logo {
+  background: url(/tbp_logo.png) no-repeat;
+}
+.yts-logo {
+  background: url(/yts_logo.png) no-repeat;
+}
+
+.fa-star, .fa-star-half-o {
+  color: gold;
+}
+.fa-star-o {
+  color: #777;
 }
