@@ -13,7 +13,7 @@
     text-align: center;
     font-style: italic;
     padding-bottom: 0.25em;
-    &.active {
+    &.is-active {
       color: $radical-blue;
       border-bottom: 2px solid $less-radical-blue;
     }

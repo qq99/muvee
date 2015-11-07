@@ -32,7 +32,7 @@ body {
     text-align: center;
     font-size: 1.1em;
     border-bottom: 1px solid $nav-border-color;
-    &.active, &:hover {
+    &.is-active, &:hover {
       background: rgba(0,0,0,0.9);
       color: $radical-blue;
     }
@@ -44,7 +44,7 @@ body {
       width: 100%;
       height: 100%;
 
-      &.active {
+      &.is-active {
         color: $radical-blue;
       }
     }

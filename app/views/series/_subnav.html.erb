@@ -1,22 +1,22 @@
 <% content_for :series_subnav do %>
 <ul class="subnav">
   <li>
-    <%= link_to 'On deck', newest_unwatched_series_index_path, class: @section == :newest_unwatched ? 'active' : '' %>
+    <%= link_to 'On deck', newest_unwatched_series_index_path, class: @section == :newest_unwatched ? 'is-active' : '' %>
   </li>
   <li>
-    <%= link_to 'Newest', newest_episodes_series_index_path, class: @section == :newest ? 'active' : '' %>
+    <%= link_to 'Newest', newest_episodes_series_index_path, class: @section == :newest ? 'is-active' : '' %>
   </li>
   <li>
-    <%= link_to 'Series', series_index_path, class: @section == :series ? 'active' : '' %>
+    <%= link_to 'Series', series_index_path, class: @section == :series ? 'is-active' : '' %>
   </li>
   <li>
-    <%= link_to 'Favorites', favorites_series_index_path, class: @section == :favorites ? 'active' : '' %>
+    <%= link_to 'Favorites', favorites_series_index_path, class: @section == :favorites ? 'is-active' : '' %>
   </li>
   <li>
-    <%= link_to 'Others', nonepisodic_series_index_path, class: @section == :nonepisodic ? 'active' : '' %>
+    <%= link_to 'Others', nonepisodic_series_index_path, class: @section == :nonepisodic ? 'is-active' : '' %>
   </li>
   <li>
-    <%= link_to 'Discover', discover_series_index_path, class: @section == :discover ? 'active' : '' %>
+    <%= link_to 'Discover', discover_series_index_path, class: @section == :discover ? 'is-active' : '' %>
   </li>
 </ul>
 <% end %>
