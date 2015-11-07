@@ -1,12 +1,12 @@
-// Place all the styles related to the settings controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+@import 'variables';
+@import 'utility';
+
 .job-reporter-grid {
   display: flex;
   align-items: center;
 }
 .job-name {
-  padding-right: 1em;
+  padding-right: $basic-padding;
   font-weight: 200;
   width: 30%;
   overflow: hidden;
@@ -37,13 +37,9 @@
   text-overflow: ellipsis;
 }
 .job-info {
+  @extend .mbox;
   display: flex;
   align-items: center;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
   font-size: 0.7em;
   > * {
     flex-grow: 1;

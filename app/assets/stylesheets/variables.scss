@@ -11,5 +11,23 @@ $notice: rgb(255, 255, 167);
 $golden: rgb(242, 190, 92);
 $nav-border-color: rgba(255,255,255,0.1);
 $progressive-green: rgb(29, 132, 29);
+$basic-padding: 1em;
 
 $topnav-height: 6em;
+
+// forms
+$form-element-padding: 0.4em 0.75em;
+$form-element-margin: 0.5em 0;
+$form-element-roundedness: 3px;
+
+// movie tiles
+$fixed-meta-offset: $basic-padding / 2;
+$tile-transition-delay: 0.30s;
+
+// flash
+$flash-transition-duration: 0.25s;
+$flash-padding: 1.5em;
+
+// fixed search
+$fixed-search-transition-duration: 0.25s;
+$fixed-search-padding: 3em;

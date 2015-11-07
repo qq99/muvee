@@ -1,15 +1,13 @@
 @import 'base';
 @import 'variables';
+@import 'utility';
+
+#movie-show {
+  height: 100%;
+}
 
 .movies-bg {
   background: black;
-}
-.empty-state {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 40em;
-  margin-left: -20em;
 }
 .inline-movie-preview {
   position: relative;
@@ -17,28 +15,15 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 40%;
+  min-height: 100%;
   overflow: hidden;
-}
-$preview-height: 45%;
-.movies-index {
-  position: absolute;
-  top: 100% - $preview-height;
-  left: 0;
-  height: $preview-height;
-  width: 70%;
-  overflow-y: scroll;
-  z-index: 3;
 }
 
 .movie-background {
+  @extend .mbox;
   background-repeat: no-repeat;
   background-size: cover !important;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
+  background-position: 50% 50%;
   transition: all 0.5s ease-in-out;
   opacity: 1;
   &.hidden {
@@ -48,44 +33,16 @@ $preview-height: 45%;
 
 
 
-.movie-meta {
-  position: absolute;
-  top: 100% - $preview-height;
-  left: 70%;
-  height: $preview-height;
-  width: 30%;
-  z-index: 2;
-  right: 0;
-  color: white;
-  padding: 1.5em 3em;
-  overflow-y: auto;
-  h1 {
-    line-height: 1em;
-  }
-  p {
-    margin: 0.5em 0;
-  }
-  .movie-year {
-    font-size: 1em;
-    color: white;
-  }
-}
 
 .three-d {
   color: $less-radical-blue;
 }
 
 .featured-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  @extend .mbox;
 }
 .slideshow-pool {
-  height: 100%;
-  width: 100%;
-  position: absolute;
+  @extend .mbox;
 }
 
 .movies-index__container {
@@ -94,59 +51,68 @@ $preview-height: 45%;
   height: 100%;
 }
 
-.movies-index--full {
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-  $remote-movie-preview-height: 60%;
-  .movies-index {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 70%;
-    overflow-y: scroll;
-    z-index: 3;
-  }
-  .movie-meta {
-    top: 0;
-    height: 100%;
-  }
-  .movie-actions {
-    padding: 2rem;
-    position: absolute;
-    top: 50%;
-    height: 50%;
-    left: 70%;
-    width: 30%;
-    &.full {
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      padding: 10rem;
-    }
-  }
+.action-badges {
+  float: right;
 }
 
-.movie-actions-contents {
-  width: 100%;
-  height: 100%;
-  max-width: 100%;
-  max-height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-  word-wrap: break-word;
-  padding: 1em;
+.inline-movie-preview {
+  display: flex;
+  .progress-bar__container {
+    height: 5px;
+  }
+
 }
 
-.movie-poster {
+.bg-overlay {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  .play-icon {
+    flex: 1 0 10em;
+    font-size: 1.3em;
+    color: white;
+    text-shadow: 1px 1px 1px black;
+    position: relative;
+  }
+}
+.top-scrim {
+  z-index: 100;
+  width: 100%;
   flex: 0 0 auto;
+  padding: 1rem;
+  background: linear-gradient(0deg, rgba(0,0,0,0), rgba(0,0,0,0.3));
+}
+.cover-scrim {
+  z-index: 100;
+  width: 100%;
+  background: linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,0.75));
+}
+.movie-meta {
+  color: white;
+  padding-left: 1rem;
+  font-size: 0.8em;
+  flex: 1 1 auto;
+}
+.movie-meta--right {
+  width: 12em;
+  font-size: 1em;
+  padding-left: 2rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  flex-direction: column;
+  flex: 0 0 auto;
+}
+i.subdued {
+  color: #aaa;
+}
+.movie-poster {
   width: auto;
   height: 13em;
-  margin: 0 1em 1em 0;
   border-radius: 3px;
   box-shadow: 2px 2px 4px rgba(0,0,0, 0.8);
+  flex: 0 0 auto;
 }
 
 #ImdbLogoSvg {
@@ -161,110 +127,12 @@ $preview-height: 45%;
   }
 }
 
-.movie-information {
-  position: relative;
-  z-index: 3;
-  background: $mostly-black-darker;
-  color: white;
-  overflow: hidden;
-  display: flex;
-
-  .torrent-progress {
-    position: absolute;
-    height: 7px;
-    left: 0;
-    top: 0;
-  }
-  p {
-    margin: 1em 0;
-  }
-  .movie-information-meta {
-    margin: 1em;
-    padding: 1em;
-    width: 50%;
-    height: 100%;
-    overflow-y: auto;
-    h1 {
-      font-size: 2.3em;
-    }
-  }
-  .movie-rating {
-    font-size: 0.9em;
-  }
-  a {
-    color: white;
-    &:visited {
-      color: white;
-    }
-    &:hover, &:focus {
-      color: $radical-blue;
-    }
-  }
+.movie-information-meta__section {
+  padding: 1em;
+  margin: 1em auto;
+  flex: 0 1 60em;
+  color: #ccc;
 }
-
-#movie_show {
-  .video-thumbnail { min-height: 200px; }
-  .movie-actions {
-    background: transparent;
-    width: 50%;
-    height: 100%;
-    margin: 1em;
-    overflow-y: auto;
-  }
-  .watch-progress {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 8px;
-  }
-}
-
-.fa-star, .fa-star-half-o {
-  color: gold;
-}
-.fa-star-o {
-  color: #777;
-}
-
-.torrent-source {
-  float: left;
-  margin-right: 1em;
-  font-size: 1em;
-  h3 {
-    margin: 0.5em 0;
-  }
-}
-
-.torrent-progress-meter {
-  margin-top: 0.5em;
-  width: 100%;
-  height: 2em;
-  position: relative;
-  background: #333;
-  padding: 0.5em 1em;
-  color: white;
-  .torrent-progress {
-    position: absolute;
-    z-index: 1;
-    background: green;
-    height: 100%;
-    width: 0;
-    top: 0;
-    left: 0;
-  }
-  .downloading {
-    font-size: 0.75em;
-    position: absolute;
-    top: 0;
-    left: 0;
-    line-height: 2.6em;
-    width: 100%;
-    z-index: 2;
-    text-align: center;
-    text-shadow: 1px 1px 1px #111;
-  }
-}
-
 
 .no-poster-available {
   @extend .mbox;
@@ -338,29 +206,20 @@ $preview-height: 45%;
   }
 }
 
-.flex-columns {
-  display: flex;
-  align-items: center;
-  > * {
-    margin-right: 0.5em !important;
-  }
-  &.flex-columns--top {
-    align-items: flex-start;
-  }
-}
+
 .imdb-logo-link {
   display: inline-block;
 }
 
 .actor-tile {
-  flex: 1 0 auto;
+  flex: 1 0 10em;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 25%;
-  height: 15em;
-  margin-right: 0 !important;
+  height: 20em;
+  margin: 0 !important;
   overflow: hidden;
   &:hover {
     .actor-name {
@@ -406,6 +265,7 @@ $preview-height: 45%;
 }
 
 .parental-guidance-rating {
+  display: inline-block;
   font-family: 'Gothic Bold', serif;
   text-transform: uppercase;
   font-weight: bold;

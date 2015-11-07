@@ -1,0 +1,5 @@
+<div class="alpha-picker">
+  <% ('a'..'z').each do |letter| %>
+    <%= link_to letter, paginator_path.call(alpha: letter), class: "alpha #{'is-active' if params[:alpha] == letter}" %>
+  <% end %>
+</div>

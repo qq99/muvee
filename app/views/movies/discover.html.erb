@@ -1,11 +1,3 @@
 <%= render 'subnav' %>
-<%= render 'movies_fixed_search' %>
 <%= render 'remote_actions' %>
-
-<div class="alpha-picker">
-  <% ('a'..'z').each do |letter| %>
-    <%= link_to letter, discover_movies_path(alpha: letter), class: "alpha #{'active' if params[:alpha] == letter}" %>
-  <% end %>
-</div>
-
 <%= render 'movies_results', paginator_path: self.method(:discover_movies_path) %>

@@ -1,8 +1,17 @@
 @import 'variables';
 
-$form-element-padding: 0.4em 0.75em;
-$form-element-margin: 0.5em 0;
-$form-element-roundedness: 3px;
+button {
+  border: inherit;
+  background: transparent;
+  font-size: inherit;
+  color: inherit;
+  line-height: inherit;
+  cursor: pointer;
+  outline: 0;
+  &:focus {
+    outline: 0;
+  }
+}
 
 .action-button {
   cursor: pointer;

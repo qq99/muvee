@@ -2,11 +2,12 @@
   <i class="fa fa-search"></i>
   <%= form_tag search_movies_path,
     method: 'GET',
-    'tg-remote' => true,
-    'refresh-on-success' => 'results' do %>
+    'tg-remote' => true do %>
 
     <input class="fixed-search__input" type="text" name="query" value="" autocomplete="off" placeholder="Which movie do you want to see today?">
   <% end %>
 
-  <i class="fa fa-close" bind-event-click="fixedSearch.hide()"></i>
+  <a>
+    <i class="fa fa-close" bind-event-click="fixedSearch.hide()"></i>
+  </a>
 </div>

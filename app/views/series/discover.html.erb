@@ -1,8 +1,6 @@
 <%= render 'subnav' %>
 
-<%= render 'series_fixed_search' %>
-
-<div class="index-actions" define="{findClicked: false}">
+<div class="index-actions flex-wrap" define="{findClicked: false}">
   <div class="index-actions__section">
     <h3>Discover more shows</h3>
     <%= link_to discover_more_series_index_path, class: 'action-button', 'tg-remote' => 'POST' do %>
@@ -11,12 +9,6 @@
     <% end %>
   </div>
   <%= render 'shared/series_discovery_reporter' %>
-</div>
-
-<div class="alpha-picker">
-  <% ('a'..'z').each do |letter| %>
-    <%= link_to letter, discover_series_index_path(alpha: letter), class: "alpha #{'active' if params[:alpha] == letter}" %>
-  <% end %>
 </div>
 
 <%= render 'series_results', paginator_path: self.method(:discover_series_index_path) %>

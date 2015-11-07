@@ -1,4 +1,12 @@
-<div id="results" refresh="results" <% if @_is_paged %>define="{pager: new Muvee.Pager(this)}"<% end %> style="margin: 1em;">
+<%
+  empty = !@series.present?
+  was_empty_search = empty && params[:query].present?
+%>
+<div id="results" refresh="results" <% if @_is_paged %>define="{pager: new Muvee.Pager(this)}"<% end %> style='margin: 1em;'>
+
+  <% unless was_empty_search %>
+    <%= render 'shared/alpha_picker', paginator_path: paginator_path %>
+  <% end %>
 
   <% if @prev_series.present? %>
     <%= link_to paginator_path.call(page: @prev_page, query: params[:query], alpha: params[:alpha]), class: 'pretty-pager top js-prev-page' do %>
@@ -9,21 +17,27 @@
   <% end %>
 
   <% if @series.present? %>
-    <div class="tile-list" >
-      <% @series.in_groups_of(6) do |series_slice| %>
-        <div class="tile-row">
-          <% series_slice.each do |serie| %>
-            <% if serie.present? %>
-              <%= render 'shared/poster', show_path: series_path(serie), poster_url: serie.poster_url, title: serie.title, num_unacquired: number_of_released_episodes_unacquired(serie) %>
-            <% else %>
-              <div class="poster aspect10x7"></div>
-            <% end %>
-          <% end %>
-        </div>
+    <div class="flex flex-wrap">
+      <% @series.each do |serie| %>
+        <% if serie.present? %>
+          <%= render 'shared/poster', show_path: series_path(serie), poster_url: serie.poster_url, title: serie.title, num_unacquired: number_of_released_episodes_unacquired(serie) %>
+        <% else %>
+          <div class="poster aspect10x7"></div>
+        <% end %>
       <% end %>
     </div>
-  <% else %>
-    <div>No series found.</div>
+  <% end %>
+
+  <% if was_empty_search %>
+    <div class="index-notice">
+      <h3>
+        Unfortunately, <%= app_name %> doesn't know about <span class="note"><%= params[:query] %></span>.
+      </h3>
+    </div>
+  <% elsif empty %>
+    <div class="index-notice">
+      <h3>Nothing here.</h3>
+    </div>
   <% end %>
 
   <% if @next_series.present? %>

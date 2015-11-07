@@ -162,6 +162,7 @@ class Video < ActiveRecord::Base
   end
 
   def reanalyze
+    self.touch
     sources.each do |source|
       source.reanalyze
     end

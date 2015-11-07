@@ -39,6 +39,7 @@ class MoviesController < ApplicationController
     @section = :all
 
     scope = Movie.order('random()')
+    scope = alpha_filter_scope(scope)
 
     @prev_movie, @movies, @next_movie = paged(scope)
   end
@@ -46,6 +47,7 @@ class MoviesController < ApplicationController
   def newest_unwatched
     @section = :newest_unwatched
     scope = Movie.local.newest.unwatched
+    scope = alpha_filter_scope(scope)
 
     @prev_movie, @movies, @next_movie = paged(scope)
   end
@@ -53,6 +55,7 @@ class MoviesController < ApplicationController
   def newest
     @section = :newest
     scope = Movie.local_and_downloading.order(created_at: :desc)
+    scope = alpha_filter_scope(scope)
 
     @prev_movie, @movies, @next_movie = paged(scope)
   end
@@ -168,6 +171,7 @@ class MoviesController < ApplicationController
   def favorites
     @section = :favorites
     scope = Movie.favorites.order(title: :asc)
+    scope = alpha_filter_scope(scope)
 
     @prev_movie, @movies, @next_movie = paged(scope)
   end

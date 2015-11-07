@@ -10,16 +10,29 @@
 </head>
 <body>
 
+  <% if controller_name == 'movies' %>
+    <%= render 'movies/movies_fixed_search' %>
+  <% elsif controller_name == 'series' %>
+    <%= render 'series/series_fixed_search' %>
+  <% else %>
+    <%= render 'movies/movies_fixed_search' %>
+  <% end %>
+
   <header class="main-navigation">
     <ul class="main-navigation__items">
-      <li <% if controller_name == 'movies' %>class="active" <% end %>>
+      <li>
+        <a bind-event-click="fixedSearch.toggle()">
+          <i class="fa fa-search"></i>
+        </a>
+      </li>
+      <li <% if controller_name == 'movies' %>class="is-active" <% end %>>
         <%= link_to movies_path, class: 'top-nav-button' do %>
           <i class="fa fa-film"></i>
         <% end %>
 
         <%= yield :movies_subnav %>
       </li>
-      <li <% if controller_name == 'series' %>class="active" <% end %>>
+      <li <% if controller_name == 'series' %>class="is-active" <% end %>>
         <%= link_to series_index_path, class: 'top-nav-button' do %>
           <i class="fa fa-desktop"></i>
         <% end %>
@@ -31,12 +44,12 @@
           <i class="fa fa-random"></i>
         <% end %>
       </li>
-      <li <% if controller_name == 'settings' %>class="active" <% end %>>
+      <li <% if controller_name == 'settings' %>class="is-active" <% end %>>
         <%= link_to settings_path, class: 'top-nav-button' do %>
           <i class="fa fa-cogs"></i>
         <% end %>
       </li>
-      <li <% if controller_name == 'status' %>class="active" <% end %>>
+      <li <% if controller_name == 'status' %>class="is-active" <% end %>>
         <%= link_to status_index_path, class: 'top-nav-button' do %>
           <i class='fa fa-stethoscope'></i>
         <% end %>

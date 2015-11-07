@@ -1,98 +1,49 @@
 @import 'variables';
-
-.inline-block {
-  display: inline-block;
-}
-
-#nprogress {
-  pointer-events: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 20000;
-  width: 100%;
-  height: 5px;
-  .bar {
-    background: $radical-blue;
-    height: 100%;
-    width: 100%;
-  }
-}
+@import 'utility';
 
 a {
+  cursor: pointer;
   text-decoration: none; color: inherit;
   &:hover {
     color: $radical-blue;
   }
 }
 
-.tracker-logo {
-  display: block;
-  width: 100px;
-  height: 50px;
-  text-indent: -99em;
-  background-size: contain !important;
+ul {
+  list-style-type: none;
 }
-.tbp-logo {
-  background: url(/tbp_logo.png) no-repeat;
+p {
+  font-size: 1.3em;
+  color: #ccc;
 }
-.yts-logo {
-  background: url(/yts_logo.png) no-repeat;
+h2, h3, h4, h5 {
+  font-weight: 300;
 }
-
-.hide {
-  display: none !important;
+h1 {
+  font-size: 2.5em;
 }
-.fr {
-  float: right;
+h2 {
+  font-size: 2em;
 }
-
-.box-content {
-  padding: 1rem;
+h3 {
+  font-size: 1.5em;
 }
-
-.ralign {
-  text-align: right;
-}
-.lalign {
-  text-align: left;
-}
-.italic {
+em {
   font-style: italic;
-}
 
-.mbox {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  color: rgb(188, 242, 255);
+}
+em.smaller {
+  font-size:0.75em;
 }
 
 .panel {
   padding: 1em !important;
 }
 
-.window-box {
-  position: relative;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
 .scrolling-panel {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  @extend .mbox;
   overflow-y: auto;
-}
-
-.fl {
-  float: left;
 }
 
 .rename-table {
@@ -111,172 +62,6 @@ a {
   }
 }
 
-$flash-transition-duration: 0.25s;
-$flash-padding: 1.5em;
-.flash {
-  position: fixed;
-  transition: all $flash-transition-duration ease-in-out;
-  bottom: 0;
-  left: 0;
-  opacity: 0;
-  padding: $flash-padding;
-  padding-left: $nav-width + $flash-padding;
-  z-index: 2000;
-  display: flex;
-  align-items: center;
-
-  width: 100%;
-  background: #fafafa;
-
-  font-size: 1em;
-  color: #111;
-  font-weight: 200;
-
-  i {
-    color: #aaa;
-    font-size: 2em;
-  }
-
-  > * {
-    font-size: 1.5em;
-    margin-right: 1em;
-  }
-
-  &.is-active {
-    opacity: 1;
-  }
-}
-
-
-
-$fixed-search-transition-duration: 0.25s;
-$fixed-search-padding: 3em;
-.fixed-search {
-  position: fixed;
-  transition: all $fixed-search-transition-duration ease-in-out;
-  top: 0;
-  right: 0;
-  opacity: 0;
-  padding: $fixed-search-padding;
-  padding-left: $nav-width + $fixed-search-padding;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-
-  width: 100%;
-  background: #fafafa;
-
-  font-size: 1em;
-  color: #111;
-  font-weight: 200;
-
-  i {
-    color: #aaa;
-  }
-
-  > * {
-    font-size: 1.5em;
-    margin-right: 1em;
-  }
-  > form {
-    flex-grow: 1;
-  }
-
-  &.is-active {
-    opacity: 1;
-  }
-}
-
-.fixed-search__input {
-  transition: all $fixed-search-transition-duration ease-in-out;
-  display: inline-block;
-  height: 100%;
-  width: 100%;
-  font-size: inherit;
-  font-weight: 200;
-  border: 0;
-  border-bottom: 2px solid transparent;
-  background: none;
-  outline: 0;
-  color: $less-radical-blue;
-  padding: 0.25em;
-  &:hover, &:focus {
-    border-bottom: 2px solid #999;
-  }
-}
-
-.index-actions {
-  padding: 2em;
-  color: white;
-  background: linear-gradient(to bottom, black, #111);
-  display: flex;
-  position: relative;
-  h1, h2, h3, h4, h5 {
-    color: $less-radical-blue;
-  }
-  .job-reporter {
-    flex-grow: 1;
-  }
-}
-.index-actions__section {
-  margin-right: 2em;
-  text-align: left;
-}
-
-.index-notice {
-  display: flex;
-  height: 20em;
-  width: 100%;
-  color: white;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.action-badges {
-  position: fixed;
-  z-index: 10;
-  top: 1em;
-  right: 1em;
-  text-shadow: none !important;
-}
-
-.pretty-pager {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 8em;
-  overflow: hidden;
-  &.top {
-    .tile__background {
-      box-shadow: inset 0px -2em 10em 0.25em black;
-    }
-  }
-  &.bottom {
-    .tile__background {
-      box-shadow: inset 0px 2em 10em 0.25em black;
-    }
-  }
-}
-.pretty-pager__text {
-  color: white;
-  z-index: 2;
-  font-size: 2em;
-  font-weight: 200;
-  font-style: italic;
-  text-shadow: 0px 0px 2px #333;
-}
-.pretty-pager__autoscroll-indicator {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 100%;
-  background: rgba(148, 221, 255, 0.5);
-  transition: width 0.5s ease-out;
-}
-
-
 .error {
   color: $error !important;
 }
@@ -287,21 +72,26 @@ $fixed-search-padding: 3em;
   color: $notice !important;
 }
 
-.alpha-picker {
-  display: flex;
-  padding: 0 1em;
-  margin: 1.25em 0 1.25em 0;
-  color: white;
-  width: 100%;
-  justify-content: center;
-  .alpha {
-    flex: 1;
-    text-align: center;
-    font-style: italic;
-    padding-bottom: 0.25em;
-    &.active {
-      color: $radical-blue;
-      border-bottom: 2px solid $less-radical-blue;
-    }
-  }
+.tracker-logo {
+  display: block;
+  width: 100px;
+  height: 50px;
+  text-indent: -99em;
+  background-size: contain !important;
+}
+.tbp-logo {
+  background: url(/tbp_logo.png) no-repeat;
+}
+.yts-logo {
+  background: url(/yts_logo.png) no-repeat;
+}
+
+.fa-star, .fa-star-half-o {
+  color: gold;
+}
+.fa-star-o {
+  color: #777;
+}
+.fa-heart {
+  color: rgb(255, 0, 92);
 }
