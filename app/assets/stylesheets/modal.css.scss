@@ -1,4 +1,5 @@
 @import 'variables';
+@import 'utility';
 
 .modal {
   opacity: 0;
@@ -35,12 +36,8 @@
     }
   }
   .modal-backdrop {
+    @extend .mbox;
     background: rgba(0,0,0,0.7);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
   }
   .modal-box {
     position: absolute;

@@ -1,8 +1,6 @@
 @import 'variables';
 @import 'utility';
 
-$tile-transition-delay: 0.30s;
-
 .tile-list {
   height: 100%;
   width: 100%;
@@ -186,7 +184,6 @@ $tile-transition-delay: 0.30s;
   }
 }
 
-$fixed-meta-offset: 0.5em;
 .tile__meta {
   position: absolute;
   bottom: 0;

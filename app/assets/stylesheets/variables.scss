@@ -15,6 +15,15 @@ $basic-padding: 1em;
 
 $topnav-height: 6em;
 
+// forms
+$form-element-padding: 0.4em 0.75em;
+$form-element-margin: 0.5em 0;
+$form-element-roundedness: 3px;
+
+// movie tiles
+$fixed-meta-offset: $basic-padding / 2;
+$tile-transition-delay: 0.30s;
+
 // flash
 $flash-transition-duration: 0.25s;
 $flash-padding: 1.5em;

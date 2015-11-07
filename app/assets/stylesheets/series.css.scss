@@ -1,7 +1,7 @@
 @import "variables";
 
 #series_overview {
-  margin: 1rem 0;
+  padding: $basic-padding 0;
   font-size: 1em;
   h3 { font-size: 1.2em; }
   .torrent-source {

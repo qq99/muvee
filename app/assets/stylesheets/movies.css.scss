@@ -1,5 +1,6 @@
 @import 'base';
 @import 'variables';
+@import 'utility';
 
 #movie-show {
   height: 100%;
@@ -19,14 +20,10 @@
 }
 
 .movie-background {
+  @extend .mbox;
   background-repeat: no-repeat;
   background-size: cover !important;
   background-position: 50% 50%;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
   transition: all 0.5s ease-in-out;
   opacity: 1;
   &.hidden {
@@ -42,16 +39,10 @@
 }
 
 .featured-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  @extend .mbox;
 }
 .slideshow-pool {
-  height: 100%;
-  width: 100%;
-  position: absolute;
+  @extend .mbox;
 }
 
 .movies-index__container {
@@ -142,37 +133,6 @@ i.subdued {
   flex: 0 1 60em;
   color: #ccc;
 }
-
-.torrent-progress-meter {
-  margin-top: 0.5em;
-  width: 100%;
-  height: 2em;
-  position: relative;
-  background: #333;
-  padding: 0.5em 1em;
-  color: white;
-  .torrent-progress {
-    position: absolute;
-    z-index: 1;
-    background: green;
-    height: 100%;
-    width: 0;
-    top: 0;
-    left: 0;
-  }
-  .downloading {
-    font-size: 0.75em;
-    position: absolute;
-    top: 0;
-    left: 0;
-    line-height: 2.6em;
-    width: 100%;
-    z-index: 2;
-    text-align: center;
-    text-shadow: 1px 1px 1px #111;
-  }
-}
-
 
 .no-poster-available {
   @extend .mbox;
