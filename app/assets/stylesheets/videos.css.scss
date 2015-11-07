@@ -118,14 +118,6 @@ a.back {
   background: $sleek-black;
 }
 
-#all_series {
-  min-height: 100%;
-  background: $sleek-black;
-  .poster-container {
-    padding: 4em 8em;
-  }
-}
-
 .poster-link, .poster img { display: block; }
 .poster {
   position: relative;
@@ -146,25 +138,6 @@ a.back {
   > img, > .no-poster-available {
     outline: 5px solid $radical-blue;
   }
-}
-
-button {
-  border: inherit;
-  background: transparent;
-  font-size: inherit;
-  color: inherit;
-  line-height: inherit;
-  cursor: pointer;
-  outline: 0;
-  &:focus {
-    outline: 0;
-  }
-}
-
-.fave-heart {
-  font-size: 2em;
-  padding: 10px;
-  text-shadow: 0px 0px 5px rgba(0,0,0,0.8);
 }
 
 .poster-button {
@@ -254,22 +227,5 @@ button {
     left: 0em;
     padding: 0.25em 0.5em;
     background: rgba(0,0,0,0.55);
-  }
-}
-
-
-.inline-sources {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 3;
-  height: 100%;
-  width: 100%;
-  font-size: 0.5em;
-  color: white;
-  background: rgba(0,0,0,0.9);
-  padding: 1em;
-  .source {
-    display: block;
   }
 }

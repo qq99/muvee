@@ -1,5 +1,18 @@
 @import 'variables';
 
+button {
+  border: inherit;
+  background: transparent;
+  font-size: inherit;
+  color: inherit;
+  line-height: inherit;
+  cursor: pointer;
+  outline: 0;
+  &:focus {
+    outline: 0;
+  }
+}
+
 .action-button {
   cursor: pointer;
   display: inline-block;
