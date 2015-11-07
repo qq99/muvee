@@ -1,2 +1,2 @@
 <%= render 'subnav' %>
-<%= render 'movies_results' %>
+<%= render 'movies_results', paginator_path: self.method(:by_genre_movies_path), show_alpha_picker: false %>

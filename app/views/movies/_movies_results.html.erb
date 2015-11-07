@@ -1,10 +1,12 @@
 <%
   empty = !@movies.present?
   was_empty_search = empty && params[:query].present?
+  show_alpha_picker = local_assigns[:show_alpha_picker]
+  show_alpha_picker = !was_empty_search if show_alpha_picker.nil?
 %>
 <div id="results" refresh="results" class="tile-list" <% if @_is_paged %>define="{pager: new Muvee.Pager(this)}"<% end %>>
 
-  <% unless was_empty_search %>
+  <% if show_alpha_picker %>
     <%= render 'shared/alpha_picker', paginator_path: paginator_path %>
   <% end %>
 
