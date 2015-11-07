@@ -1,5 +1,15 @@
 @import 'variables';
 
+.clearfix {
+  &::after {
+    content: "";
+    display: block;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+    clear: both;
+  }
+}
 .inline-block {
   display: inline-block;
 }
@@ -18,7 +28,6 @@
 .ssb {
   margin-bottom: $basic-padding;
 }
-
 .hide {
   display: none !important;
 }
@@ -28,7 +37,6 @@
 .fl {
   float: left;
 }
-
 .ralign {
   text-align: right;
 }
@@ -38,7 +46,6 @@
 .italic {
   font-style: italic;
 }
-
 .mbox {
   position: absolute;
   top: 0;

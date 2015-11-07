@@ -9,6 +9,34 @@ a {
   }
 }
 
+ul {
+  list-style-type: none;
+}
+p {
+  font-size: 1.3em;
+  color: #ccc;
+}
+h2, h3, h4, h5 {
+  font-weight: 300;
+}
+h1 {
+  font-size: 2.5em;
+}
+h2 {
+  font-size: 2em;
+}
+h3 {
+  font-size: 1.5em;
+}
+em {
+  font-style: italic;
+
+  color: rgb(188, 242, 255);
+}
+em.smaller {
+  font-size:0.75em;
+}
+
 .panel {
   padding: 1em !important;
 }
@@ -63,4 +91,7 @@ a {
 }
 .fa-star-o {
   color: #777;
+}
+.fa-heart {
+  color: rgb(255, 0, 92);
 }
