@@ -1,0 +1,35 @@
+@import 'variables';
+
+.flash {
+  position: fixed;
+  transition: all $flash-transition-duration ease-in-out;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  padding: $flash-padding;
+  padding-left: $nav-width + $flash-padding;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  background: #fafafa;
+
+  font-size: 1em;
+  color: #111;
+  font-weight: 200;
+
+  i {
+    color: #aaa;
+    font-size: 2em;
+  }
+
+  > * {
+    font-size: 1.5em;
+    margin-right: 1em;
+  }
+
+  &.is-active {
+    opacity: 1;
+  }
+}

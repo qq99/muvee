@@ -1,0 +1,48 @@
+@import 'variables';
+
+.inline-block {
+  display: inline-block;
+}
+.flex {
+  display: flex;
+}
+.st {
+  margin-top: $basic-padding / 2;
+}
+.sst {
+  margin-top: $basic-padding;
+}
+.sb {
+  margin-bottom: $basic-padding / 2;
+}
+.ssb {
+  margin-bottom: $basic-padding;
+}
+
+.hide {
+  display: none !important;
+}
+.fr {
+  float: right;
+}
+.fl {
+  float: left;
+}
+
+.ralign {
+  text-align: right;
+}
+.lalign {
+  text-align: left;
+}
+.italic {
+  font-style: italic;
+}
+
+.mbox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}

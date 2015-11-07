@@ -1,0 +1,29 @@
+@import 'variables';
+
+.index-actions {
+  padding: $basic-padding;
+  color: white;
+  background: linear-gradient(to bottom, black, #111);
+  display: flex;
+  position: relative;
+  h1, h2, h3, h4, h5 {
+    color: $less-radical-blue;
+  }
+  .job-reporter {
+    flex-grow: 1;
+  }
+}
+.index-actions__section {
+  margin-right: 2em;
+  text-align: left;
+}
+
+.index-notice {
+  display: flex;
+  height: 20em;
+  width: 100%;
+  color: white;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

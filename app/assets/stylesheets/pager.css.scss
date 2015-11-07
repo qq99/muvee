@@ -1,0 +1,36 @@
+@import 'variables';
+
+.pretty-pager {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 8em;
+  overflow: hidden;
+  &.top {
+    .tile__background {
+      box-shadow: inset 0px -2em 10em 0.25em black;
+    }
+  }
+  &.bottom {
+    .tile__background {
+      box-shadow: inset 0px 2em 10em 0.25em black;
+    }
+  }
+}
+.pretty-pager__text {
+  color: white;
+  z-index: 2;
+  font-size: 2em;
+  font-weight: 200;
+  font-style: italic;
+  text-shadow: 0px 0px 2px #333;
+}
+.pretty-pager__autoscroll-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  background: rgba(148, 221, 255, 0.5);
+  transition: width 0.5s ease-out;
+}

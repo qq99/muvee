@@ -1,4 +1,5 @@
 @import 'variables';
+@import 'utility';
 
 $tile-transition-delay: 0.30s;
 
@@ -74,11 +75,7 @@ $tile-transition-delay: 0.30s;
   }
 }
 .tile__background {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
+  @extend .mbox;
   background-color: black;
   background: no-repeat center center;
   background-size: cover;
@@ -90,11 +87,7 @@ $tile-transition-delay: 0.30s;
   height: 200px;
 }
 .tile__meta-backdrop {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  @extend .mbox;
   opacity: 0;
   background: rgba(0,0,0,0.7);
   transition: opacity $tile-transition-delay ease-in-out;
