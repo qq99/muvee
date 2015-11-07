@@ -13,7 +13,7 @@
 
     <div class="bg-overlay">
       <div class="top-scrim">
-        <%= render 'genre_badge_listing', genres: @movie.genres %>
+        <%= render 'shared/genre_badge_listing', genres: @movie.genres %>
         <div class="action-badges">
 
           <%= link_to @movie.is_favorite ? unfavorite_movie_path(@movie) : favorite_movie_path(@movie), class: 'badge linked-badge', "tg-remote" => "POST" do %>

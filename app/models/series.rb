@@ -3,8 +3,16 @@ class Series < ActiveRecord::Base
   include DownloadFile
 
   after_create :download_images
+  after_create :associate_with_genres
+  after_create :associate_with_actors
   before_destroy :destroy_images
   before_validation :extract_metadata, on: :create
+
+  has_many :genres_series
+  has_many :genres, through: :genres_series
+
+  has_many :actors_series
+  has_many :actors, through: :actors_series
 
   validates :title, presence: true
 
@@ -114,6 +122,8 @@ class Series < ActiveRecord::Base
 
   def reanalyze
     extract_metadata
+    associate_with_genres
+    associate_with_actors
     self.save
     all_episodes_metadata.each do |ep|
       show = TvShow.find_or_initialize_by(
@@ -133,5 +143,30 @@ class Series < ActiveRecord::Base
 
       result = show.save
     end
+  end
+
+  def associate_with_genres
+    return unless series_metadata[:Genre].present?
+
+    listed_genres = series_metadata[:Genre].split("|").reject(&:blank?).uniq.compact
+    self.genres = []
+    listed_genres.each do |genre_name|
+      normalized = Genre.normalized_name(genre_name)
+      genre = Genre.find_by_name(normalized) || Genre.create(name: normalized)
+      self.genres << genre
+    end
+    self.save if listed_genres.any?
+  end
+
+  def associate_with_actors
+    return unless series_metadata[:Actors].present?
+
+    listed_actors = series_metadata[:Actors].split("|").reject(&:blank?).uniq.compact
+    self.actors = []
+    listed_actors.each do |actor_name|
+      actor = Actor.where('lower(name) like :q', q: "%#{actor_name.downcase}%").first || Actor.create(name: actor_name)
+      self.actors << actor
+    end
+    self.save if listed_actors.any?
   end
 end
