@@ -30,9 +30,18 @@
     <div class="tile__background" style="background-image: url(<%= object.fanarts.sample.try(:url) %>);"></div>
   </div>
 <% elsif object.is_a? Series %>
+  <% num_unacquired = number_of_released_episodes_unacquired(object) %>
   <div class="tile" context="tile<%= object.id %>">
     <div class="tile__meta">
-      <h3 class="video-type">Movie</h3>
+      <h3 class="video-type">Series</h3>
+      <h3 class='video-status'><%= object.status %></h3>
+      <% if num_unacquired.present? && num_unacquired > 0 %>
+        <h3 class="video-status num-unacquired">
+          <%= pluralize(num_unacquired, 'new episode') %>
+        </h3>
+      <% end %>
+
+
       <h1 class="video-title"><%= link_to object.title, object %></h1>
       <p class="video-description">
         <%= object.overview %>

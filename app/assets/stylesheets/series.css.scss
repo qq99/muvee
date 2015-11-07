@@ -198,18 +198,3 @@
     width: 50px;
   }
 }
-
-.num-unacquired {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  display: block;
-  width: 100%;
-  text-align: center;
-  z-index: 10;
-  padding: 0.5rem;
-  background: rgba(0, 0, 0, 0.75);
-  font-size: 0.75em;
-  color: white !important;
-  text-shadow: none !important;
-}
