@@ -1,4 +1,5 @@
 @import 'variables';
+@import 'utility';
 
 .index-actions {
   padding: $basic-padding;
@@ -26,4 +27,133 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+// movie#show, series#show
+.showpage-container {
+  height: 100%;
+}
+.showpage-header {
+  position: relative;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  display: flex;
+  .progress-bar__container {
+    height: 5px;
+  }
+}
+.showpage-header__featured-image-slideshow {
+  @extend .mbox;
+}
+.showpage-header__overlay {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  .play-icon {
+    flex: 1 0 10em;
+    font-size: 1.3em;
+    color: white;
+    text-shadow: 1px 1px 1px black;
+    position: relative;
+  }
+}
+.showpage-header__overlay__top-scrim {
+  z-index: 100;
+  width: 100%;
+  flex: 0 0 auto;
+  padding: 1rem;
+  background: linear-gradient(0deg, rgba(0,0,0,0), rgba(0,0,0,0.3));
+}
+.showpage-header__overlay__bottom-scrim {
+  z-index: 100;
+  width: 100%;
+  background: linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,0.75));
+}
+.showpage-header__featured-image-slideshow__slide {
+  @extend .mbox;
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-position: 50% 50%;
+  transition: all 0.5s ease-in-out;
+  opacity: 1;
+  &.hidden {
+    opacity: 0;
+  }
+}
+.showpage__section {
+  padding: 1em;
+  margin: 1em auto;
+  flex: 0 1 60em;
+  color: #ccc;
+}
+.showpage__meta {
+  color: white;
+  padding-left: 1rem;
+  font-size: 0.8em;
+  flex: 1 1 auto;
+}
+.showpage__poster {
+  width: auto;
+  height: 13em;
+  border-radius: 3px;
+  box-shadow: 2px 2px 4px rgba(0,0,0, 0.8);
+  flex: 0 0 auto;
+}
+
+
+.actor-tile {
+  flex: 1 0 10em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 25%;
+  height: 20em;
+  margin: 0 !important;
+  overflow: hidden;
+  &:hover {
+    .actor-name {
+      color: $less-radical-blue;
+    }
+  }
+}
+.actor-profile-picture {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: 50% 50%;
+  z-index: 1;
+  flex: 1;
+}
+.actor-name {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.7);
+  width: 100%;
+  padding: 1em;
+  font-size: 0.8em;
+  z-index: 2;
+  &.full {
+    height: 100%;
+  }
+}
+.actor-details {
+  color: white;
+  margin: 1em;
+  .actor-profile-picture {
+    height: 24em;
+    width: 14em;
+  }
+  p {
+    font-size: 1.2em;
+    font-weight: 100;
+    margin: 1em 0;
+  }
 }

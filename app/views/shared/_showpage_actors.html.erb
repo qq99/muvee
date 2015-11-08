@@ -1,0 +1,20 @@
+<div class="flex">
+  <div class="showpage__section">
+    <% if actors.present? %>
+      <h2>Actors</h2>
+      <div class="flex-columns flex-wrap">
+        <% actors.each do |actor| %>
+          <div class='actor-tile'>
+            <% profile = actor.profile_picture_fanart %>
+            <% if profile.present? %>
+              <%= link_to paginator_path.call(actor), class: 'actor-profile-picture' do %>
+                <div class="actor-profile-picture" style="background-image: url(<%= profile.url %>)"></div>
+              <% end %>
+            <% end %>
+            <%= link_to actor.name, paginator_path.call(actor), class: "actor-name #{'full' if profile.blank?}" %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

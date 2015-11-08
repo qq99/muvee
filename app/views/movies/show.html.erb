@@ -1,20 +1,20 @@
 <%= render 'subnav' %>
 
-<div id="movie-show" refresh='movie-show'>
+<div class="showpage-container" id="movie-show" refresh='movie-show'>
 
-  <div class="inline-movie-preview" define="{backgroundArtSlideshow: new Muvee.AutoSlideshow(this).transition().start()}">
-    <div class="js-slideshow featured-image">
+  <div class="showpage-header" define="{backgroundArtSlideshow: new Muvee.AutoSlideshow(this).transition().start()}">
+    <div class="showpage-header__featured-image-slideshow js-slideshow">
       <% if @movie.fanarts.present? %>
         <% @movie.fanarts.shuffle.each do |art| %>
-          <div class="js-slide movie-background hidden" data-background-url="<%= art.url %>"></div>
+          <div class="showpage-header__featured-image-slideshow__slide js-slide hidden" data-background-url="<%= art.url %>"></div>
         <% end %>
       <% end %>
     </div>
 
-    <div class="bg-overlay">
-      <div class="top-scrim">
+    <div class="showpage-header__overlay">
+      <div class="showpage-header__overlay__top-scrim">
         <%= render 'shared/genre_badge_listing', genres: @movie.genres, paginator_path: self.method(:by_genre_movies_path) %>
-        <div class="action-badges">
+        <div class="fr">
 
           <%= link_to @movie.is_favorite ? unfavorite_movie_path(@movie) : favorite_movie_path(@movie), class: 'badge linked-badge', "tg-remote" => "POST" do %>
             <i class="fa <% if @movie.is_favorite %>fa-heart<% else %>fa-heart-o<% end %>"></i>
@@ -46,7 +46,7 @@
         </div>
       <% end %>
 
-      <div class="cover-scrim flex flex-down">
+      <div class="showpage-header__overlay__bottom-scrim flex flex-down">
         <% if @movie.left_off_at_percent > 0 %>
           <div class="watch-progress progress-bar__container">
             <span class="progress-bar__bar" title="<%= @movie.left_off_at %> seconds of <%= @movie.duration %> total seconds" style="width: <%= @movie.left_off_at_percent %>%"></span>
@@ -62,9 +62,9 @@
         <% end %>
 
         <div class="flex">
-          <div class="movie-information-meta__section flex">
-            <img class="movie-poster" src="<%= @movie.poster_url %>">
-            <div class="movie-meta">
+          <div class="showpage__section flex">
+            <img class="showpage__poster" src="<%= @movie.poster_url %>">
+            <div class="showpage__meta">
               <h1><%= @movie.title %> <span class="three-d <% unless @movie.is_3d? %>hide<% end %>">3D</span></h1>
               <% if @movie.tagline.present? %>
                 <h2><%= @movie.tagline %></h2>
@@ -101,29 +101,10 @@
     </div>
   </div>
 
-  <div class="flex">
-    <div class="movie-information-meta__section">
-      <% if @movie.actors.any? %>
-        <h2>Actors</h2>
-        <div class="flex-columns flex-wrap">
-          <% @movie.actors.each do |actor| %>
-            <div class='actor-tile'>
-              <% profile = actor.profile_picture_fanart %>
-              <% if profile.present? %>
-                <%= link_to by_actor_movies_path(actor), class: 'actor-profile-picture' do %>
-                  <div class="actor-profile-picture" style="background-image: url(<%= profile.url %>)"></div>
-                <% end %>
-              <% end %>
-              <%= link_to actor.name, by_actor_movies_path(actor), class: "actor-name #{'full' if profile.blank?}" %>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
-  </div>
+  <%= render 'shared/showpage_actors', actors: @movie.actors, paginator_path: self.method(:by_actor_movies_path) %>
 
   <div class="flex">
-    <div class="movie-information-meta__section">
+    <div class="showpage__section">
 
       <% if @movie.local? %>
         <%= link_to imdb_link(@movie.imdb_id), class: 'imdb-icon-link flex-columns', target: :_blank do %>

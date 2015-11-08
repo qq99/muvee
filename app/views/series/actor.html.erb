@@ -1,0 +1,3 @@
+<%= render 'shared/actor_details', actor: @actor %>
+<%= render 'subnav' %>
+<%= render 'series_results', paginator_path: self.method(:by_actor_series_index_path), show_alpha_picker: false %>

@@ -1,20 +1,18 @@
 <%= render 'subnav' %>
 
-<div id="movie-show" refresh='movie-show'>
+<div class="showpage-container" id="series-show" refresh='series-show'>
 
-  <div class="inline-movie-preview" define="{backgroundArtSlideshow: new Muvee.AutoSlideshow(this).transition().start()}">
-    <div class="js-slideshow featured-image">
+  <div class="showpage-header" define="{backgroundArtSlideshow: new Muvee.AutoSlideshow(this).transition().start()}">
+    <div class="showpage-header__featured-image-slideshow js-slideshow">
       <% if @series.fanart_url.present? %>
-        <%# @movie.fanarts.shuffle.each do |art| %>
-          <div class="js-slide movie-background hidden" data-background-url="<%= @series.fanart_url %>"></div>
-        <%# end %>
+        <div class="showpage-header__featured-image-slideshow__slide js-slide hidden" data-background-url="<%= @series.fanart_url %>"></div>
       <% end %>
     </div>
 
-    <div class="bg-overlay">
-      <div class="top-scrim">
+    <div class="showpage-header__overlay">
+      <div class="showpage-header__overlay__top-scrim">
         <%= render 'shared/genre_badge_listing', genres: @series.genres, paginator_path: self.method(:by_genre_series_index_path) %>
-        <div class="action-badges">
+        <div class="fr">
 
           <% if @videos.size > 0 %>
             <% random_video = @videos.select(&:local?).map(&:id).sample %>
@@ -36,11 +34,11 @@
         </div>
       </div>
 
-      <div class="cover-scrim flex flex-down">
+      <div class="showpage-header__overlay__bottom-scrim flex flex-down">
         <div class="flex">
-          <div class="movie-information-meta__section flex">
-            <img class="movie-poster" src="<%= @series.poster_url %>">
-            <div class="movie-meta">
+          <div class="showpage__section flex">
+            <img class="showpage__poster" src="<%= @series.poster_url %>">
+            <div class="showpage__meta">
               <h1><%= @series.title %></h1>
               <p class="st">
                 <%= @series.overview %>
@@ -59,7 +57,7 @@
   </div>
 
   <div class="flex" id='episode-listing-toggle' refresh='episode-listing'>
-    <div class="movie-information-meta__section">
+    <div class="showpage__section">
       <div class="badges">
         <div class="badge-listing">
           <%= link_to "Latest", series_path(@series, season: @season, sort: :latest),
@@ -92,7 +90,7 @@
   </div>
 
   <div class="flex" id='episode-listing' refresh='episode-listing'>
-    <div class="movie-information-meta__section">
+    <div class="showpage__section">
       <%
         grouped_by_season = @videos.group_by{|v| v.season}
       %>
@@ -113,25 +111,6 @@
     </div>
   </div>
 
-  <div class="flex">
-    <div class="movie-information-meta__section">
-      <% if @series.actors.any? %>
-        <h2>Actors</h2>
-        <div class="flex-columns flex-wrap">
-          <% @series.actors.each do |actor| %>
-            <div class='actor-tile'>
-              <% profile = actor.profile_picture_fanart %>
-              <% if profile.present? %>
-                <%= link_to by_actor_movies_path(actor), class: 'actor-profile-picture' do %>
-                  <div class="actor-profile-picture" style="background-image: url(<%= profile.url %>)"></div>
-                <% end %>
-              <% end %>
-              <%= link_to actor.name, by_actor_movies_path(actor), class: "actor-name #{'full' if profile.blank?}" %>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
-  </div>
+  <%= render 'shared/showpage_actors', actors: @series.actors, paginator_path: self.method(:by_actor_series_index_path) %>
 
 </div>
