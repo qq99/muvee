@@ -1,0 +1,5 @@
+<div class="showpage-header__featured-image-slideshow" define="{backgroundArtSlideshow: new Muvee.AutoSlideshow(this).transition().start()}">
+  <% urls.each do |url| %>
+    <div class="showpage-header__featured-image-slideshow__slide js-slide hidden" data-background-url="<%= url %>"></div>
+  <% end %>
+</div>
