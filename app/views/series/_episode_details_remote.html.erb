@@ -1,7 +1,10 @@
 <div class="video-detailed-summary remote">
 
   <% if video.released_on.present? %>
-    <p><%= airs_on_summary(video.released_on) %></p>
+    <p>
+      <i class="subdued fa fa-calendar"></i>
+      <%= airs_on_summary(video.released_on) %>
+    </p>
   <% end %>
 
   <% if video.overview.present? %>

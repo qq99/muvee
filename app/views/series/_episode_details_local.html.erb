@@ -1,5 +1,6 @@
-<div class="video video-tile">
+<div class="video video-tile flex-wrap">
   <a
+    class="video-link ssb"
     define="{
       <% unless video.has_set_of_thumbnails? %>
       thumbnailRetriever: new Muvee.ThumbnailRetriever(this, '<%= thumbnails_video_path(video) %>', '.js-thumbnail'),
@@ -8,7 +9,7 @@
     }"
     bind-event-mouseenter="thumbnailSlideshow.start()"
     bind-event-mouseleave="thumbnailSlideshow.stop()"
-    href="<%= effective_video_path(video) %>" class="video-link">
+    href="<%= effective_video_path(video) %>">
     <div class="thumbnail-area">
       <div class="js-thumbnail-container thumbnails">
         <% video.thumbnails.each_with_index do |thumb, i| %>
@@ -16,6 +17,7 @@
         <% end %>
       </div>
       <div class="duration">
+        <i class="subdued fa fa-clock-o"></i>
         <%= human_duration(video.duration) %>
       </div>
     </div>
@@ -23,7 +25,7 @@
   <div class="video-overview">
     <p><%= video.overview %></p>
     <% if video.released_on.present? %>
-      <p><%= airs_on_summary(video.released_on) %></p>
+      <p><i class="subdued fa fa-calendar"></i> <%= airs_on_summary(video.released_on) %></p>
     <% end %>
   </div>
 </div>
