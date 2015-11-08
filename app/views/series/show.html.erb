@@ -9,17 +9,6 @@
       <div class="showpage-header__overlay__top-scrim">
         <%= render 'shared/genre_badge_listing', genres: @series.genres, paginator_path: self.method(:by_genre_series_index_path) %>
         <div class="fr">
-
-          <% if @videos.size > 0 %>
-            <% random_video = @videos.select(&:local?).map(&:id).sample %>
-
-            <% if random_video.present? %>
-              <%= link_to show_source_video_path(@videos.select(&:local?).map(&:id).sample, shuffle: true, series_id: @series.id), class: 'badge linked-badge' do %>
-                <i class="fa fa-random"></i>
-              <% end %>
-            <% end %>
-          <% end %>
-
           <%= link_to @series.is_favorite ? unfavorite_series_path(@series) : favorite_series_path(@series),
                 id: 'fav-button',
                 refresh: 'fav-button',
@@ -39,6 +28,14 @@
           <% end %>
         </div>
       </div>
+
+      <% if @series.has_local_episodes %>
+        <div class="play-icon">
+          <%= link_to shuffle_series_path(@series), class: 'play-icon-link' do %>
+            <i class="fa fa-random"></i>
+          <% end %>
+        </div>
+      <% end %>
 
       <div class="showpage-header__overlay__bottom-scrim flex flex-down">
         <div class="flex">
@@ -62,61 +59,63 @@
     </div>
   </div>
 
-  <div class="flex" id='episode-listing-toggle' refresh='episode-listing'>
-    <div class="showpage__section">
-      <div class="badges">
-        <div class="badge-listing">
-          <%= link_to "Latest", series_path(@series, season: @season, sort: :latest),
-                class: "badge linked-badge #{'active' if @sort == :latest}",
-                'tg-remote' => 'GET',
-                'refresh-on-success' => 'episode-listing' %>
-          <%= link_to "Unwatched", series_path(@series, season: @season, sort: :unwatched),
-                class: "badge linked-badge #{'active' if @sort == :unwatched}",
-                'tg-remote' => 'GET',
-                'refresh-on-success' => 'episode-listing' %>
-          <%= link_to "In order", series_path(@series, season: @season, sort: :release_order),
-                class: "badge linked-badge #{'active' if @sort == :release_order}",
-                'tg-remote' => 'GET',
-                'refresh-on-success' => 'episode-listing' %>
-        </div>
-        <div class="badge-listing">
-          <%= link_to "All", series_path(@series, season: 'all', sort: @sort),
-                class: "badge #{'active' if @season.blank?}",
-                'tg-remote' => 'GET',
-                'refresh-on-success' => 'episode-listing' %>
-          <% @seasons.each do |s| %>
-            <%= link_to "S#{s}", series_path(@series, season: s, sort: @sort),
-                class: "badge linked-badge #{'active' if @season == s}",
-                'tg-remote' => 'GET',
-                'refresh-on-success' => 'episode-listing' %>
-          <% end %>
+  <% if @all_episodes.any? %>
+    <div class="flex" id='episode-listing-toggle' refresh='episode-listing'>
+      <div class="showpage__section">
+        <div class="badges">
+          <div class="badge-listing">
+            <%= link_to "Latest", series_path(@series, season: @season, sort: :latest),
+                  class: "badge linked-badge #{'active' if @sort == :latest}",
+                  'tg-remote' => 'GET',
+                  'refresh-on-success' => 'episode-listing' %>
+            <%= link_to "Unwatched", series_path(@series, season: @season, sort: :unwatched),
+                  class: "badge linked-badge #{'active' if @sort == :unwatched}",
+                  'tg-remote' => 'GET',
+                  'refresh-on-success' => 'episode-listing' %>
+            <%= link_to "In order", series_path(@series, season: @season, sort: :release_order),
+                  class: "badge linked-badge #{'active' if @sort == :release_order}",
+                  'tg-remote' => 'GET',
+                  'refresh-on-success' => 'episode-listing' %>
+          </div>
+          <div class="badge-listing">
+            <%= link_to "All", series_path(@series, season: 'all', sort: @sort),
+                  class: "badge #{'active' if @season.blank?}",
+                  'tg-remote' => 'GET',
+                  'refresh-on-success' => 'episode-listing' %>
+            <% @seasons.each do |s| %>
+              <%= link_to "S#{s}", series_path(@series, season: s, sort: @sort),
+                  class: "badge linked-badge #{'active' if @season == s}",
+                  'tg-remote' => 'GET',
+                  'refresh-on-success' => 'episode-listing' %>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="flex" id='episode-listing' refresh='episode-listing'>
-    <div class="showpage__section">
-      <%
-        grouped_by_season = @videos.group_by{|v| v.season}
-      %>
-      <% grouped_by_season.keys.each do |season| %>
-        <div class="series-season">
-          <h3>Season <%= season %></h3>
+    <div class="flex" id='episode-listing' refresh='episode-listing'>
+      <div class="showpage__section">
+        <%
+          grouped_by_season = @videos.group_by{|v| v.season}
+        %>
+        <% grouped_by_season.keys.each do |season| %>
+          <div class="series-season">
+            <h3>Season <%= season %></h3>
 
-          <% grouped_by_season[season].each do |video| %>
-            <%= render 'episode', video: video, detailed: false %>
-          <% end %>
-        </div>
+            <% grouped_by_season[season].each do |video| %>
+              <%= render 'episode', video: video, detailed: false %>
+            <% end %>
+          </div>
 
-      <% end %>
+        <% end %>
 
-      <% if @videos.size == 0 && @sort == :unwatched %>
-        <h2>It looks like you've seen everything!</h2>
-      <% end %>
+        <% if @videos.size == 0 && @sort == :unwatched %>
+          <h2>It looks like you've seen everything!</h2>
+        <% end %>
+      </div>
     </div>
-  </div>
+  <% end %>
 
-  <%= render 'shared/showpage_actors', actors: @series.actors, paginator_path: self.method(:by_actor_series_index_path) %>
+  <%= render 'shared/showpage_actors', actors: @series.actors, paginator_path: self.method(:by_actor_series_index_path) if @series.actors.present? %>
 
 </div>

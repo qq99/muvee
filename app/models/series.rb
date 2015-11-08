@@ -27,6 +27,7 @@ class Series < ActiveRecord::Base
   has_one :last_watched_video, class_name: "Video", primary_key: "last_watched_video_id", foreign_key: "id"
 
   scope :alphabetical, -> {order(title: :asc)}
+  scope :local, -> {where('has_local_episodes = true')}
   scope :with_episodes, -> {where('tv_shows_count > 0')}
   scope :without_episodes, -> {where('tv_shows_count = 0')}
   scope :favorites, -> {where(is_favorite: true)}

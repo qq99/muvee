@@ -1,12 +1,12 @@
 class SeriesController < ApplicationController
-  before_action :set_series, only: [:show, :download, :reanalyze, :favorite, :unfavorite]
+  before_action :set_series, only: [:show, :shuffle, :download, :reanalyze, :favorite, :unfavorite]
   before_action :set_episode, only: [:show_episode_details, :download]
 
   RESULTS_PER_PAGE = 48
 
   def index
     @section = :series
-    scope = Series.with_episodes.order(title: :asc)
+    scope = Series.local.order(title: :asc)
     scope = alpha_filter_scope(scope)
 
     @prev_series, @series, @next_series = paged(scope)
@@ -107,6 +107,16 @@ class SeriesController < ApplicationController
     @seasons = @all_episodes.map{|v| v.season}.uniq.compact.sort
 
     render 'show'
+  end
+
+  def shuffle
+    random_episode_id = @series.tv_shows.local.try(:sample).try(:id)
+
+    if random_episode_id.present?
+      redirect_to show_source_video_path(random_episode_id, shuffle: true, series_id: @series.id)
+    else
+      redirect_to series_path(@series)
+    end
   end
 
   def show_episode_details

@@ -52,6 +52,7 @@ Rails.application.routes.draw do
       post :discover_more
     end
     member do
+      get :shuffle
       post 'download/:episode_id', action: :download, as: :download
       post :reanalyze
       post :favorite
