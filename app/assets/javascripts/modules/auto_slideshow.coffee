@@ -1,11 +1,10 @@
 class Muvee.AutoSlideshow
 
-  SLIDESHOW_CONTAINER_CLASS: 'js-slideshow'
   SLIDE_CLASS: 'js-slide'
   SLIDE_HIDDEN_CLASS: 'hidden'
 
   constructor: (@node, @interval = 7000) ->
-    @$slideshow = $(".#{@SLIDESHOW_CONTAINER_CLASS}", @node)
+    @$slideshow = $(@node)
 
     Page.onReplace(@node, @destructor.bind(this))
 

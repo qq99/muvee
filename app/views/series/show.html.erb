@@ -2,8 +2,8 @@
 
 <div class="showpage-container" id="series-show" refresh='series-show'>
 
-  <div class="showpage-header" define="{backgroundArtSlideshow: new Muvee.AutoSlideshow(this).transition().start()}">
-    <div class="showpage-header__featured-image-slideshow js-slideshow">
+  <div class="showpage-header">
+    <div class="showpage-header__featured-image-slideshow" define="{backgroundArtSlideshow: new Muvee.AutoSlideshow(this).transition().start()}">
       <% if @series.fanart_url.present? %>
         <div class="showpage-header__featured-image-slideshow__slide js-slide hidden" data-background-url="<%= @series.fanart_url %>"></div>
       <% end %>

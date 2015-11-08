@@ -10,7 +10,7 @@
     bind-event-mouseleave="thumbnailSlideshow.stop()"
     href="<%= effective_video_path(video) %>" class="video-link">
     <div class="thumbnail-area">
-      <div class="js-slideshow js-thumbnail-container thumbnails">
+      <div class="js-thumbnail-container thumbnails">
         <% video.thumbnails.each_with_index do |thumb, i| %>
           <img class="js-slide js-thumbnail video-thumbnail <% if i>0 %>hidden<% end %>" <% if i <= 2 %>src="<%= thumb.url %>"<% end %> data-src="<%= thumb.url %>">
         <% end %>
