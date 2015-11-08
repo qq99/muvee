@@ -14,13 +14,18 @@
                 id: 'fav-button',
                 refresh: 'fav-button',
                 class: 'badge linked-badge',
-                "tg-remote" => "POST",
+                'tg-remote' => 'POST',
                 'refresh-on-success' => 'fav-button' do %>
 
             <i class="fa <% if @movie.is_favorite %>fa-heart<% else %>fa-heart-o<% end %>"></i>
           <% end %>
 
-          <%= link_to reanalyze_movie_path(@movie), class: 'badge linked-badge', "tg-remote" => "POST", 'refresh-on-success' => 'movie-show', 'define' => "{autoRefresher: new Muvee.AutoRefresher(this, #{@movie.updated_at < 1.day.ago})}" do %>
+          <%= link_to reanalyze_movie_path(@movie),
+                class: 'badge linked-badge',
+                'tg-remote' => 'POST',
+                'refresh-on-success' => 'movie-show',
+                'define' => "{autoRefresher: new Muvee.AutoRefresher(this, #{@movie.updated_at < 1.day.ago})}" do %>
+
             <i class="fa fa-refresh"></i>
           <% end %>
 
@@ -132,10 +137,16 @@
       <% end %>
 
       <div id="yts-sources" refresh="yts-sources">
-        <%= link_to "Search YTS", find_sources_via_yts_movie_path(@movie, q: @movie.title), "tg-remote" => "POST", "refresh-on-success" => "yts-sources", class: "yts-logo tracker-logo" %>
+        <%= link_to "Search YTS", find_sources_via_yts_movie_path(@movie, q: @movie.title),
+              class: "yts-logo tracker-logo",
+              'tg-remote' => 'POST',
+              'refresh-on-success' => 'yts-sources' %>
       </div>
       <div id="tbp-sources" refresh="tbp-sources">
-        <%= link_to "Search the Pirate Bay", find_sources_via_pirate_bay_movie_path(@movie, q: @movie.title), "tg-remote" => "POST", "refresh-on-success" => "tbp-sources", class: "tbp-logo tracker-logo" %>
+        <%= link_to "Search the Pirate Bay", find_sources_via_pirate_bay_movie_path(@movie, q: @movie.title),
+              class: "tbp-logo tracker-logo",
+              'tg-remote' => 'POST',
+              'refresh-on-success' => 'tbp-sources' %>
       </div>
     </div>
   </div>

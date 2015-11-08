@@ -24,13 +24,17 @@
                 id: 'fav-button',
                 refresh: 'fav-button',
                 class: 'badge linked-badge',
-                "tg-remote" => "POST",
+                'tg-remote' => "POST",
                 'refresh-on-success' => 'fav-button' do %>
 
             <i class="fa <% if @series.is_favorite %>fa-heart<% else %>fa-heart-o<% end %>"></i>
           <% end %>
 
-          <%= link_to reanalyze_series_path(@series), class: 'badge linked-badge', 'tg-remote' => 'POST' do %>
+          <%= link_to reanalyze_series_path(@series),
+                class: 'badge linked-badge',
+                'tg-remote' => 'POST',
+                'refresh-on-success' => 'series-show' do %>
+
             <i class="fa fa-refresh"></i>
           <% end %>
         </div>
