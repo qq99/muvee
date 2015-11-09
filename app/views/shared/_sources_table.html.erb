@@ -22,9 +22,9 @@
   <tr>
     <td>
       <% if source[:verified] %>
-        <i class="fa fa-check-circle <%= seed_class %>" title="Verified"></i>
+        <i class="fa fa-check-circle success" title="Verified"></i>
       <% else %>
-        <i class="fa fa-question-circle <%= seed_class %>" title="Unverified"></i>
+        <i class="fa fa-question-circle" title="Unverified"></i>
       <% end %>
     </td>
     <td><%= source[:source] %></td>
