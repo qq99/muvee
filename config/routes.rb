@@ -75,8 +75,7 @@ Rails.application.routes.draw do
       post :discover_more
     end
     member do
-      post :find_sources_via_yts
-      post :find_sources_via_pirate_bay
+      get :find_sources
       post :download
       patch :override_imdb_id
       post :reanalyze

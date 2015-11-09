@@ -47,10 +47,10 @@
       </span>
     </td>
     <td>
-      <%= link_to download_series_path(video.series, video, download_url: source[:magnet_link]),
+      <%= link_to download_path.call(*download_path_args, download_url: source[:magnet_link]),
       class: 'action-button flex-fixed',
         'tg-remote' => "post",
-        'refresh-on-success' => "video-#{video.id}" do %>
+        'refresh-on-success' => object_unique_id do %>
         <i class="fa fa-download"></i>
         <% end %>
         <a class="flex-fixed action-button" href="<%= source[:magnet_link] %>">

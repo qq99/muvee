@@ -136,17 +136,13 @@
         <% end %>
       <% end %>
 
-      <div id="yts-sources" refresh="yts-sources">
-        <%= link_to "Search YTS", find_sources_via_yts_movie_path(@movie, q: @movie.title),
-              class: "yts-logo tracker-logo",
-              'tg-remote' => 'POST',
-              'refresh-on-success' => 'yts-sources' %>
-      </div>
-      <div id="tbp-sources" refresh="tbp-sources">
-        <%= link_to "Search the Pirate Bay", find_sources_via_pirate_bay_movie_path(@movie, q: @movie.title),
-              class: "tbp-logo tracker-logo",
-              'tg-remote' => 'POST',
-              'refresh-on-success' => 'tbp-sources' %>
+
+
+      <div id="torrent-sources" refresh='torrent-sources'>
+        <%= link_to 'Find sources', find_sources_movie_path(@movie, query: @movie.title),
+              class: 'action-button',
+              'tg-remote' => 'GET',
+              'refresh-on-success' => 'torrent-sources' %>
       </div>
     </div>
   </div>
