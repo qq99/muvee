@@ -1,13 +1,14 @@
-<% good_seed_count_threshold ||= 200 %>
+<% good_seed_count_threshold ||= 50 %>
 <% good_ratio_threshold ||= 0.5 %>
 
 <table class="torrent-sources-table">
   <thead>
     <tr>
       <td></td>
+      <td>Source</td>
       <td width='50%'>Title</td>
-      <td>Seeds</td>
-      <td>Peers</td>
+      <td>Seeders</td>
+      <td>Leechers</td>
       <td>Ratio</td>
       <td width="100px"></td>
     </tr>
@@ -15,7 +16,7 @@
   <% sources.each do |source| %>
 
   <%
-    seed_class = if source[:seeds] && source[:seeds] > good_seed_count_threshold then "success" elsif source[:seeds] == 0 then "error" else "notice" end
+    seed_class = if source[:seeders] && source[:seeders] > good_seed_count_threshold then "success" elsif source[:seeders] == 0 then "error" else "notice" end
     ratio_class = if source[:ratio] && source[:ratio] > good_ratio_threshold then 'success' elsif source[:ratio] == 0 then 'error' else 'notice' end
   %>
   <tr>
@@ -26,9 +27,10 @@
         <i class="fa fa-question-circle <%= seed_class %>" title="Unverified"></i>
       <% end %>
     </td>
+    <td><%= source[:source] %></td>
     <td><%= source[:title] %></td>
-    <td><span class="<%= seed_class %>"><%= source[:seeds] || '-' %></span></td>
-    <td><%= source[:peers] || '-' %></td>
+    <td><span class="<%= seed_class %>"><%= source[:seeders] || '-' %></span></td>
+    <td><%= source[:leechers] || '-' %></td>
     <td>
       <span class="<%= ratio_class %>">
         <% if source[:ratio].present? %>
