@@ -96,6 +96,7 @@ class Video < ActiveRecord::Base
     else
       self.status = 'remote'
     end
+    self.save if self.changed?
   end
 
   def downloading?
