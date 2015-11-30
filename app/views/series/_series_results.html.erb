@@ -1,10 +1,12 @@
 <%
   empty = !@series.present?
   was_empty_search = empty && params[:query].present?
+  show_alpha_picker = local_assigns[:show_alpha_picker]
+  show_alpha_picker = !was_empty_search if show_alpha_picker.nil?
 %>
-<div id="results" refresh="results" <% if @_is_paged %>define="{pager: new Muvee.Pager(this)}"<% end %> style='margin: 1em;'>
+<div id="results" refresh="results" class="tile-list" <% if @_is_paged %>define="{pager: new Muvee.Pager(this)}"<% end %>>
 
-  <% unless was_empty_search %>
+  <% if show_alpha_picker %>
     <%= render 'shared/alpha_picker', paginator_path: paginator_path %>
   <% end %>
 
@@ -16,16 +18,10 @@
     <% end %>
   <% end %>
 
-  <% if @series.present? %>
-    <div class="flex flex-wrap">
-      <% @series.each do |serie| %>
-        <% if serie.present? %>
-          <%= render 'shared/poster', show_path: series_path(serie), poster_url: serie.poster_url, title: serie.title, num_unacquired: number_of_released_episodes_unacquired(serie) %>
-        <% else %>
-          <div class="poster aspect10x7"></div>
-        <% end %>
-      <% end %>
-    </div>
+  <% prng = Random.new(Time.new.floor(16.minutes).to_i + (params[:page].to_i || 0)) %>
+
+  <% while @series.size > 0 %>
+    <%= layout(@series, prng) %>
   <% end %>
 
   <% if was_empty_search %>

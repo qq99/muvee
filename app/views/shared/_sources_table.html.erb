@@ -1,13 +1,14 @@
-<% good_seed_count_threshold ||= 200 %>
+<% good_seed_count_threshold ||= 50 %>
 <% good_ratio_threshold ||= 0.5 %>
 
 <table class="torrent-sources-table">
   <thead>
     <tr>
       <td></td>
+      <td>Source</td>
       <td width='50%'>Title</td>
-      <td>Seeds</td>
-      <td>Peers</td>
+      <td>Seeders</td>
+      <td>Leechers</td>
       <td>Ratio</td>
       <td width="100px"></td>
     </tr>
@@ -15,20 +16,21 @@
   <% sources.each do |source| %>
 
   <%
-    seed_class = if source[:seeds] && source[:seeds] > good_seed_count_threshold then "success" elsif source[:seeds] == 0 then "error" else "notice" end
+    seed_class = if source[:seeders] && source[:seeders] > good_seed_count_threshold then "success" elsif source[:seeders] == 0 then "error" else "notice" end
     ratio_class = if source[:ratio] && source[:ratio] > good_ratio_threshold then 'success' elsif source[:ratio] == 0 then 'error' else 'notice' end
   %>
   <tr>
     <td>
       <% if source[:verified] %>
-        <i class="fa fa-check-circle <%= seed_class %>" title="Verified"></i>
+        <i class="fa fa-check-circle success" title="Verified"></i>
       <% else %>
-        <i class="fa fa-question-circle <%= seed_class %>" title="Unverified"></i>
+        <i class="fa fa-question-circle" title="Unverified"></i>
       <% end %>
     </td>
+    <td><%= source[:source] %></td>
     <td><%= source[:title] %></td>
-    <td><span class="<%= seed_class %>"><%= source[:seeds] || '-' %></span></td>
-    <td><%= source[:peers] || '-' %></td>
+    <td><span class="<%= seed_class %>"><%= source[:seeders] || '-' %></span></td>
+    <td><%= source[:leechers] || '-' %></td>
     <td>
       <span class="<%= ratio_class %>">
         <% if source[:ratio].present? %>
@@ -45,10 +47,10 @@
       </span>
     </td>
     <td>
-      <%= link_to download_series_path(video.series, video, download_url: source[:magnet_link]),
+      <%= link_to download_path.call(*download_path_args, download_url: source[:magnet_link]),
       class: 'action-button flex-fixed',
         'tg-remote' => "post",
-        'refresh-on-success' => "video-#{video.id}" do %>
+        'refresh-on-success' => object_unique_id do %>
         <i class="fa fa-download"></i>
         <% end %>
         <a class="flex-fixed action-button" href="<%= source[:magnet_link] %>">

@@ -84,6 +84,11 @@ class Video < ActiveRecord::Base
       self.sourced_at = nil
     end
 
+    # the following should probably be moved to series#reanalyze, scan all series.tv_shows.any?(&:local?):
+    if series_id.present? && sources.present?
+      self.series.update_attribute(:has_local_episodes, true)
+    end
+
     if torrents.count > 0
       self.status = 'downloading'
     elsif sources.count > 0
@@ -91,6 +96,7 @@ class Video < ActiveRecord::Base
     else
       self.status = 'remote'
     end
+    self.save if self.changed?
   end
 
   def downloading?

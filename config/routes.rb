@@ -45,10 +45,14 @@ Rails.application.routes.draw do
       get :show_episode_details
       get :favorites
       get :discover
+      get :genres
+      get 'genres/:type', as: :by_genre, action: :genre
+      get 'actors/:actor', as: :by_actor, action: :actor
       get :search
       post :discover_more
     end
     member do
+      get :shuffle
       post 'download/:episode_id', action: :download, as: :download
       post :reanalyze
       post :favorite
@@ -71,8 +75,7 @@ Rails.application.routes.draw do
       post :discover_more
     end
     member do
-      post :find_sources_via_yts
-      post :find_sources_via_pirate_bay
+      get :find_sources
       post :download
       patch :override_imdb_id
       post :reanalyze

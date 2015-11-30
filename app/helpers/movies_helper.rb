@@ -7,7 +7,7 @@ module MoviesHelper
     4 => {req_items: 3}
   }.freeze
 
-  def layout(movies, prng)
+  def layout(objects, prng)
     n_layouts = ROW_LAYOUTS.keys.size
     which_layout = (prng.rand() * n_layouts).to_i + 1
     layout = ROW_LAYOUTS[which_layout]
@@ -20,14 +20,14 @@ module MoviesHelper
     end
 
     # hacky solution to make sure we have a full row at all times:
-    if number_to_take > movies.size
-      if movies.size <= 4 # take some and stick in layout 1
+    if number_to_take > objects.size
+      if objects.size <= 4 # take some and stick in layout 1
         which_layout = 1
-        number_to_take = [4, movies.size].min
+        number_to_take = [4, objects.size].min
       end
     end
 
-    render "row_style_#{which_layout}", movies: movies.shift(number_to_take)
+    render "shared/row_style_#{which_layout}", objects: objects.shift(number_to_take)
   end
 
 end

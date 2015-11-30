@@ -1,10 +1,9 @@
 class MoviesController < ApplicationController
   before_action :set_movie, only: [
     :show,
-    :find_sources_via_yts,
+    :find_sources,
     :destroy,
     :download,
-    :find_sources_via_pirate_bay,
     :override_imdb_id,
     :reanalyze,
     :favorite,
@@ -99,20 +98,10 @@ class MoviesController < ApplicationController
     redirect_to movie_path(@movie)
   end
 
-  def find_sources_via_yts
-    @query = params[:q]
-    @sources = TorrentManagerService.find_sources(@movie)
-    @torrents = Torrent.all
-    render partial: 'yts_sources', locals: {sources: @sources}
-  end
-
-  def find_sources_via_pirate_bay
-    @query = params[:q]
-    @results = ThePirateBay::Search.new(@query, 0, ThePirateBay::SortBy::Seeders, ThePirateBay::Category::Video).results
-    @results.reject! do |result|
-      result[:seeders] == 0
-    end
-    render partial: 'shared/pirate_bay_sources', locals: {sources: @results, video: @movie, download_path: download_movie_path(@movie)}
+  def find_sources
+    @torrent_sources = TorrentFinderService.new(params[:query]).search
+    @torrent_sources.reject! { |src| Torrent.exists?(source: src[:magnet_link]).present? }
+    render partial: 'sources', locals: {sources: @torrent_sources}
   end
 
   def movie_search

@@ -1,0 +1,7 @@
+<div id="torrent-sources" refresh="torrent-sources">
+  <%= render 'shared/sources_table',
+        sources: @torrent_sources,
+        object_unique_id: "movie-show",
+        download_path: self.method(:download_movie_path),
+        download_path_args: [@movie] %>
+</div>

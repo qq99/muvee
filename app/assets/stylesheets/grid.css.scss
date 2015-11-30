@@ -75,7 +75,7 @@
 .tile__background {
   @extend .mbox;
   background-color: black;
-  background: no-repeat center center;
+  background: no-repeat center 20%;
   background-size: cover;
   transition: all $tile-transition-delay ease-in-out;
 }
@@ -109,6 +109,9 @@
 }
 .video-status {
   color: #cacaca;
+}
+.num-unacquired {
+  color: $golden;
 }
 .video-year {
   float: right;

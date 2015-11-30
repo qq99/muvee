@@ -1,12 +1,12 @@
 class SeriesController < ApplicationController
-  before_action :set_series, only: [:show, :download, :reanalyze, :favorite, :unfavorite]
+  before_action :set_series, only: [:show, :shuffle, :download, :reanalyze, :favorite, :unfavorite]
   before_action :set_episode, only: [:show_episode_details, :download]
 
   RESULTS_PER_PAGE = 48
 
   def index
     @section = :series
-    scope = Series.with_episodes.order(title: :asc)
+    scope = Series.local.order(title: :asc)
     scope = alpha_filter_scope(scope)
 
     @prev_series, @series, @next_series = paged(scope)
@@ -58,6 +58,24 @@ class SeriesController < ApplicationController
     @prev_series, @series, @next_series = paged(scope)
   end
 
+  def genres
+    @section = :genres
+    @genres = Genre.order(name: :asc).select { |genre| genre.has_series? }
+  end
+
+  def genre
+    @section = :genres
+    name = Genre.normalized_name(params[:type])
+    @genre = Genre.find_by(name: name)
+    @series = @genre.series.all.to_a # TODO: figure out pagination here
+  end
+
+  def actor
+    @section = :actor
+    @actor = Actor.find(params[:actor])
+    @series = @actor.series.all.to_a # TODO: figure out pagination here
+  end
+
   def nonepisodic
     @section = :nonepisodic
     @shows = TvShow.where(series_id: nil).all
@@ -91,6 +109,16 @@ class SeriesController < ApplicationController
     render 'show'
   end
 
+  def shuffle
+    random_episode_id = @series.tv_shows.local.try(:sample).try(:id)
+
+    if random_episode_id.present?
+      redirect_to show_source_video_path(random_episode_id, shuffle: true, series_id: @series.id)
+    else
+      redirect_to series_path(@series)
+    end
+  end
+
   def show_episode_details
     @episode = TvShow.find(params[:episode_id])
 
@@ -98,8 +126,8 @@ class SeriesController < ApplicationController
       render partial: 'episode', locals: {video: @episode, detailed: true}
     else
       if params[:query].present?
-        @torrent_sources = EztvSearchResult.search(params[:query])
-        @torrent_sources += KickassTorrentsSearchResult.get(params[:query]).results
+
+        @torrent_sources = TorrentFinderService.new(params[:query]).search
         @torrent_sources.reject! do |src|
           Torrent.exists?(source: src[:magnet_link]).present?
         end

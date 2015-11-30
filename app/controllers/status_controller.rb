@@ -7,7 +7,9 @@ class StatusController < ApplicationController
   end
 
   def destroy_torrent
-    Torrent.find(params[:id]).destroy
+    torrent = Torrent.find(params[:id])
+    torrent.destroy # TODO: this needs to actually destroy the files from transmission
+    torrent.video.reset_status
     flash.now[:notice] = "Torrent destroyed"
     index
   end

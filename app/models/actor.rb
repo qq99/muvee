@@ -3,6 +3,8 @@ class Actor < ActiveRecord::Base
 
   has_many :actors_videos
   has_videos(through: :actors_videos)
+  has_many :actors_series
+  has_many :series, through: :actors_series
 
   has_many :fanarts, dependent: :destroy
   has_one :profile_picture_fanart
@@ -14,6 +16,7 @@ class Actor < ActiveRecord::Base
   def fetch_tmdb_person_id
     search_results = TmdbPersonSearchResult.get(name)
     results = search_results.data["results"]
+    return nil if results.blank?
 
     results.select!{|entry| entry['name'] == name} # filter list to exact matches
     result = results.first

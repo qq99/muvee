@@ -3,6 +3,8 @@ class Genre < ActiveRecord::Base
 
   has_many :genres_videos
   has_videos(through: :genres_videos)
+  has_many :genres_series
+  has_many :series, through: :genres_series
 
   before_validation :sanitize_name
   validates :name, presence: true, uniqueness: {case_sensitive: false}

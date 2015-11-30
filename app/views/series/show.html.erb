@@ -1,72 +1,121 @@
 <%= render 'subnav' %>
-<div id="series">
-  <div class="series-featured-image" style="background:url(<%= @series.fanart_url %>); background-size: cover;"></div>
-  <div class="series-information">
-    <h1 class="series-name">
-      <%= @series.title  %>
-    </h1>
 
-    <div class="badges">
-      <div class="badge-listing">
-        <%= link_to "Latest", series_path(@series, season: @season, sort: :latest), class: "badge linked-badge #{'active' if @sort == :latest}" %>
-        <%= link_to "Unwatched", series_path(@series, season: @season, sort: :unwatched), class: "badge linked-badge #{'active' if @sort == :unwatched}" %>
-        <%= link_to "In order", series_path(@series, season: @season, sort: :release_order), class: "badge linked-badge #{'active' if @sort == :release_order}" %>
-      </div>
-      <div class="badge-listing">
-        <%= link_to "All", series_path(@series, season: 'all', sort: @sort), class: "badge #{'active' if @season.blank?}" %>
-        <% @seasons.each do |s| %>
-          <%= link_to "S#{s}", series_path(@series, season: s, sort: @sort), class: "badge linked-badge #{'active' if @season == s}" %>
-        <% end %>
-      </div>
-    </div>
+<div class="showpage-container" id="series-show" refresh='series-show'>
 
-    <div id="series_overview" refresh="series_overview">
-      <h3 class="series-overview">
-        <%= @series.overview %>
-      </h3>
+  <div class="showpage-header">
+    <%= render 'shared/showpage_slideshow', urls: @series.fanart_url.present? ? [@series.fanart_url] : [] %>
 
-      <%= link_to reanalyze_series_path(@series), class: 'action-button', 'tg-remote' => 'POST' do %>
-        <i class="fa fa-refresh"></i> Refresh
-      <% end %>
+    <div class="showpage-header__overlay">
+      <div class="showpage-header__overlay__top-scrim">
+        <%= render 'shared/genre_badge_listing', genres: @series.genres, paginator_path: self.method(:by_genre_series_index_path) %>
+        <div class="fr">
+          <%= link_to @series.is_favorite ? unfavorite_series_path(@series) : favorite_series_path(@series),
+                id: 'fav-button',
+                refresh: 'fav-button',
+                class: 'badge linked-badge',
+                'tg-remote' => "POST",
+                'refresh-on-success' => 'fav-button' do %>
 
-      <% if @series.is_favorite %>
-        <%= link_to unfavorite_series_path(@series), class: 'action-button', 'tg-remote' => 'POST' do %>
-          <i class="fa fa-heart"></i> Unfavorite
-        <% end %>
-      <% else %>
-        <%= link_to favorite_series_path(@series), class: 'action-button', 'tg-remote' => 'POST' do %>
-          <i class="fa fa-heart-o"></i> Favorite
-        <% end %>
-      <% end %>
-
-      <% if @videos.size > 0 %>
-        <% random_video = @videos.select(&:local?).map(&:id).sample %>
-
-        <% if random_video.present? %>
-          <%= link_to show_source_video_path(@videos.select(&:local?).map(&:id).sample, shuffle: true, series_id: @series.id), class: 'action-button' do %>
-            <i class="fa fa-random"></i> Shuffle
+            <i class="fa <% if @series.is_favorite %>fa-heart<% else %>fa-heart-o<% end %>"></i>
           <% end %>
-        <% end %>
-      <% end %>
-    </div>
-  </div>
-  <div class="video-list">
-    <%
-      grouped_by_season = @videos.group_by{|v| v.season}
-    %>
-    <% grouped_by_season.keys.each do |season| %>
-      <div class="series-season">
-        <h3>Season <%= season %></h3>
 
-        <% grouped_by_season[season].each do |video| %>
-          <%= render 'episode', video: video, detailed: false %>
-        <% end %>
+          <%= link_to reanalyze_series_path(@series),
+                class: 'badge linked-badge',
+                'tg-remote' => 'POST',
+                'refresh-on-success' => 'series-show' do %>
+
+            <i class="fa fa-refresh"></i>
+          <% end %>
+        </div>
       </div>
 
-    <% end %>
+      <% if @series.has_local_episodes %>
+        <div class="play-icon">
+          <%= link_to shuffle_series_path(@series), class: 'play-icon-link' do %>
+            <i class="fa fa-random"></i>
+          <% end %>
+        </div>
+      <% end %>
 
-    <% if @videos.size == 0 && @sort == :unwatched %>
-      <h2>It looks like you've seen everything!</h2>
-    <% end %>
+      <div class="showpage-header__overlay__bottom-scrim flex flex-down">
+        <div class="flex">
+          <div class="showpage__section flex">
+            <img class="showpage__poster" src="<%= @series.poster_url %>">
+            <div class="showpage__meta">
+              <h1><%= @series.title %></h1>
+              <p class="st">
+                <%= @series.overview %>
+              </p>
+              <div class="flex-columns sst">
+                <div>
+                  <%= render 'shared/star_rating', vote_count: @series.tvdb_rating_count, rating: @series.tvdb_rating || 0, rating_max: 10.0, new_scale: 5 %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
+
+  <% if @all_episodes.any? %>
+    <div class="flex" id='episode-listing-toggle' refresh='episode-listing'>
+      <div class="showpage__section">
+        <div class="badges">
+          <div class="badge-listing">
+            <%= link_to "Latest", series_path(@series, season: @season, sort: :latest),
+                  class: "badge linked-badge #{'active' if @sort == :latest}",
+                  'tg-remote' => 'GET',
+                  'refresh-on-success' => 'episode-listing' %>
+            <%= link_to "Unwatched", series_path(@series, season: @season, sort: :unwatched),
+                  class: "badge linked-badge #{'active' if @sort == :unwatched}",
+                  'tg-remote' => 'GET',
+                  'refresh-on-success' => 'episode-listing' %>
+            <%= link_to "In order", series_path(@series, season: @season, sort: :release_order),
+                  class: "badge linked-badge #{'active' if @sort == :release_order}",
+                  'tg-remote' => 'GET',
+                  'refresh-on-success' => 'episode-listing' %>
+          </div>
+          <div class="badge-listing">
+            <%= link_to "All", series_path(@series, season: 'all', sort: @sort),
+                  class: "badge #{'active' if @season.blank?}",
+                  'tg-remote' => 'GET',
+                  'refresh-on-success' => 'episode-listing' %>
+            <% @seasons.each do |s| %>
+              <%= link_to "S#{s}", series_path(@series, season: s, sort: @sort),
+                  class: "badge linked-badge #{'active' if @season == s}",
+                  'tg-remote' => 'GET',
+                  'refresh-on-success' => 'episode-listing' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex" id='episode-listing' refresh='episode-listing'>
+      <div class="showpage__section">
+        <%
+          grouped_by_season = @videos.group_by{|v| v.season}
+        %>
+        <% grouped_by_season.keys.each do |season| %>
+          <div class="series-season">
+            <h3>Season <%= season %></h3>
+
+            <% grouped_by_season[season].each do |video| %>
+              <%= render 'episode', video: video, detailed: false %>
+            <% end %>
+          </div>
+
+        <% end %>
+
+        <% if @videos.size == 0 && @sort == :unwatched %>
+          <h2>It looks like you've seen everything!</h2>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <%= render 'shared/showpage_actors', actors: @series.actors, paginator_path: self.method(:by_actor_series_index_path) if @series.actors.present? %>
+
 </div>
