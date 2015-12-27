@@ -20,14 +20,17 @@ class Movie < Video
   end
 
   def search_tmdb_for_id
+    Rails.logger.info "[search_tmdb_for_id] Searching TMDB for an ID for: #{title}"
     tmdb_movie = TmdbMovieSearchResult.get(title).sorted_by_popularity.first
-    tmdb_id = tmdb_movie[:id]
+    tmdb_id = tmdb_movie.try(:[], :id)
   end
 
   def search_for_imdb_id
     return imdb_id if imdb_id.present?
     Rails.logger.info "[search_for_imdb_id] Searching TMDB for an ID for: #{title}"
-    imdb_id = TmdbMovieResult.get(search_tmdb_for_id).data.try(:[], :imdb_id)
+    tmdb_id = search_tmdb_for_id
+    return nil if tmdb_id.blank?
+    imdb_id = TmdbMovieResult.get(tmdb_id).data.try(:[], :imdb_id)
   end
 
   def poster_url
