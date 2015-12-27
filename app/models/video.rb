@@ -49,7 +49,7 @@ class Video < ActiveRecord::Base
     }
   }.freeze
 
-  QUALITIES = /(1080p|720p|HDTV)/i
+  QUALITIES = /(1080p|720p|HDTV|BDRip|BRRip)/i
 
   # convert to webm:
   # http://superuser.com/questions/556463/converting-video-to-webm-with-ffmpeg-avconv

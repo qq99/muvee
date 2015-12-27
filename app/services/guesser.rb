@@ -72,8 +72,14 @@ class Guesser
 
     FORMATS = {
       name_and_year: %r{
-        ([\w\-\.\_\s !]*)
-        [\(\ \_\.\[]{1}([\d]{4})[\)\ \_\.\[]?
+        (
+          [a-zA-Z\-\s\.]*
+          [\s123]?
+        )
+        (?:\D)*?
+        [\(\ \_\.\[]?
+        ([\d]{4})
+        [\)\ \_\.\[]?
         }xi
     }.freeze
 
@@ -94,6 +100,11 @@ class Guesser
       results
     end
 
+    def self.guess_from_string(from)
+      results = guess(from).delete_if {|k,v| v.blank? }
+      results
+    end
+
     private
     def self.guess(from)
       results = {}
@@ -101,14 +112,13 @@ class Guesser
       Movie::FORMATS.each do |name, regex|
         matches = regex.match(from)
         if matches.present?
-          results = {
-            title: Guesser.pretty_title(matches[1]),
-            year: matches[2].try(:to_i)
-          }
+          results[:title] = Guesser.pretty_title(matches[1])
           break
         end
       end
 
+      results[:quality] = Guesser.guess_quality(from)
+      results[:year] = Guesser.guess_year(from)
       results
     end
 
@@ -117,6 +127,15 @@ class Guesser
   def self.containing_folder(filepath)
     return '' unless filepath.present?
     filepath.split("/")[-2]
+  end
+
+  def self.guess_year(from)
+    year_regex = /(20\d{2}|19\d{2})/# assume bias of 1900-2000s
+    matches = year_regex.match(from)
+    if matches.present?
+      year = matches[0].to_i
+      year if year <= (Time.now.year + 1)
+    end
   end
 
   def self.guess_quality(from)
