@@ -35,10 +35,10 @@ class GuesserTest < ActiveSupport::TestCase
     assert_equal "Maggie Simpson In The Longest Daycare 2hd", result[:title]
     assert_equal "HDTV", result[:quality]
 
-    filepath = '/foo/bar/AdventureTimeWithFinnAndJake.HDTV.x264-2HD.mp4'
-    result = Guesser::TvShow.guess_from_filepath(filepath)
-    assert_equal "Adventure Time With Finn And Jake 2hd", result[:title]
-    assert_equal "HDTV", result[:quality]
+    # filepath = '/foo/bar/AdventureTimeWithFinnAndJake.HDTV.x264-2HD.mp4'
+    # result = Guesser::TvShow.guess_from_filepath(filepath)
+    # assert_equal "Adventure Time With Finn And Jake 2hd", result[:title]
+    # assert_equal "HDTV", result[:quality]
   end
 
   test '#guess_from_filepath guesses standard format correctly' do
@@ -112,10 +112,10 @@ class GuesserTest < ActiveSupport::TestCase
     assert_equal "Maggie Simpson In The Longest Daycare Hdtv X264 2hd", result[:title]
     assert_equal "HDTV", result[:quality]
 
-    filepath = 'AdventureTimeWithFinnAndJake.HDTV.x264-2HD'
-    result = Guesser::TvShow.guess_from_string(filepath)
-    assert_equal "Adventure Time With Finn And Jake Hdtv X264 2hd", result[:title]
-    assert_equal "HDTV", result[:quality]
+    # filepath = 'AdventureTimeWithFinnAndJake.HDTV.x264-2HD'
+    # result = Guesser::TvShow.guess_from_string(filepath)
+    # assert_equal "Adventure Time With Finn And Jake Hdtv X264 2hd", result[:title]
+    # assert_equal "HDTV", result[:quality]
   end
 
   test '#guess_from_string guesses standard format correctly' do
@@ -156,93 +156,151 @@ class GuesserTest < ActiveSupport::TestCase
     assert_equal 2, result[:episode]
   end
 
-  test '#guess_from_string guesses fov format' do
-    filepath = "Rick and Morty - 1x11 - Ricksy Business.webm"
-    result = Guesser::TvShow.guess_from_string(filepath)
-    assert_equal "Rick And Morty", result[:title]
-    assert_equal 1, result[:season]
-    assert_equal 11, result[:episode]
+  tv_fov_format_to_guess = [{
+    string: 'Rick and Morty - 1x11 - Ricksy Business.webm',
+    title: 'Rick And Morty',
+    season: 1,
+    episode: 11
+  }, {
+    string: 'Rick and Morty - 1x06 - Rick Potion #9.webm',
+    title: 'Rick And Morty',
+    season: 1,
+    episode: 6
+  }, {
+    string: 'Archer (2009) - 1x08 - The Rock.mp4',
+    title: 'Archer (2009)',
+    season: 1,
+    episode: 8
+  }, {
+    string: 'The Simpsons [21x15] Stealing First Base.mp4',
+    title: 'The Simpsons',
+    season: 21,
+    episode: 15
+  }]
 
-    filepath = "Rick and Morty - 1x06 - Rick Potion #9.webm"
-    result = Guesser::TvShow.guess_from_string(filepath)
-    assert_equal "Rick And Morty", result[:title]
-    assert_equal 1, result[:season]
-    assert_equal 6, result[:episode]
-
-    filepath = "Archer (2009) - 1x08 - The Rock.mp4"
-    result = Guesser::TvShow.guess_from_string(filepath)
-    assert_equal "Archer (2009)", result[:title]
-    assert_equal 1, result[:season]
-    assert_equal 8, result[:episode]
-
-    filepath = "The Simpsons [21x15] Stealing First Base.mp4"
-    result = Guesser::TvShow.guess_from_string(filepath)
-    assert_equal "The Simpsons", result[:title]
-    assert_equal 21, result[:season]
-    assert_equal 15, result[:episode]
+  tv_fov_format_to_guess.each do |tv|
+    test "#guess_from_string guesses fov format with #{tv[:string]}" do
+      guessed = Guesser::TvShow.guess_from_string(tv[:string])
+      assert_equal tv[:title], guessed[:title]
+      assert_equal tv[:season], guessed[:season]
+      assert_equal tv[:episode], guessed[:episode]
+    end
   end
 
   ### Movie
 
-  test '#guess_from_filepath on movies' do
-    filepath = "/foo/bar/Disconnect.2012.HDTV.XviD.spinzes.mp4"
-    result = Guesser::Movie.guess_from_filepath(filepath)
-    assert_equal "Disconnect", result[:title]
-    assert_equal 2012, result[:year]
-    assert_equal 'HDTV', result[:quality]
+  movie_filepaths_to_guess = [{
+    filepath: "/foo/bar/Disconnect.2012.HDTV.XviD.spinzes.mp4",
+    title: 'Disconnect',
+    year: 2012,
+    quality: 'HDTV'
+  }, {
+    filepath: '/foo/bar/Frozen.2013.1080p.BluRay.x264.YIFY.mp4',
+    title: 'Frozen',
+    year: 2013,
+    quality: '1080p'
+  }, {
+    filepath: '/foo/bar/Glengarry.Glen.Ross.1992.720p.HDTV.x264.YIFY.mp4',
+    title: 'Glengarry Glen Ross',
+    year: 1992,
+    quality: '720p'
+  }, {
+    filepath: '/foo/bar/Stoker 2013.mp4',
+    title: 'Stoker',
+    year: 2013,
+    quality: nil
+  }, {
+    filepath: '/foo/bar/The Nines[2007]DvDrip[Eng]-FXG.avi',
+    title: 'The Nines',
+    year: 2007,
+    quality: nil
+  }, {
+    filepath: '/foo/bar/The.Amazing.Spiderman.2012.1080p.BrRip.x264.YIFY.mp4',
+    title: 'The Amazing Spiderman',
+    year: 2012,
+    quality: '1080p'
+  }, {
+    filepath: '/foo/bar/Inside Job.mp4',
+    title: 'Inside Job',
+    year: nil,
+    quality: nil
+  }, {
+    filepath: '/foo/bar/Khumba.2013.1080p.3D.HSBS.BluRay.x264.YIFY.mp4',
+    title: 'Khumba',
+    year: 2013,
+    quality: '1080p'
+  }, {
+    filepath: '/foo/bar/Khumba.2013/movie.mp4',
+    title: 'Khumba',
+    year: 2013,
+    quality: nil
+  }]
 
-    filepath = "/foo/bar/Frozen.2013.1080p.BluRay.x264.YIFY.mp4"
-    result = Guesser::Movie.guess_from_filepath(filepath)
-    assert_equal "Frozen", result[:title]
-    assert_equal 2013, result[:year]
-    assert_equal '1080p', result[:quality]
-
-    filepath = "/foo/bar/Glengarry.Glen.Ross.1992.720p.HDTV.x264.YIFY.mp4"
-    result = Guesser::Movie.guess_from_filepath(filepath)
-    assert_equal "Glengarry Glen Ross", result[:title]
-    assert_equal 1992, result[:year]
-    assert_equal "720p", result[:quality]
-
-    filepath = "/foo/bar/Stoker 2013.mp4"
-    result = Guesser::Movie.guess_from_filepath(filepath)
-    assert_equal "Stoker", result[:title]
-    assert_equal 2013, result[:year]
-    assert_equal nil, result[:quality]
-
-    filepath = "/foo/bar/The Nines[2007]DvDrip[Eng]-FXG.avi"
-    result = Guesser::Movie.guess_from_filepath(filepath)
-    assert_equal "The Nines", result[:title]
-    assert_equal 2007, result[:year]
-    assert_equal nil, result[:quality]
-
-    filepath = "/foo/bar/The.Amazing.Spiderman.2012.1080p.BrRip.x264.YIFY.mp4"
-    result = Guesser::Movie.guess_from_filepath(filepath)
-    assert_equal "The Amazing Spiderman", result[:title]
-    assert_equal 2012, result[:year]
-    assert_equal "1080p", result[:quality]
-
-    filepath = "/foo/bar/Inside Job.mp4"
-    result = Guesser::Movie.guess_from_filepath(filepath)
-    assert_equal "Inside Job", result[:title]
-    assert_equal nil, result[:year]
-    assert_equal nil, result[:quality]
-
-    filepath = "/foo/bar/Khumba.2013.1080p.3D.HSBS.BluRay.x264.YIFY.mp4"
-    result = Guesser::Movie.guess_from_filepath(filepath)
-    assert_equal "Khumba", result[:title]
-    assert_equal 2013, result[:year]
-    assert_equal "1080p", result[:quality]
-
-    filepath = "/foo/bar/Khumba.2013/movie.mp4"
-    result = Guesser::Movie.guess_from_filepath(filepath)
-    assert_equal "Khumba", result[:title]
-    assert_equal 2013, result[:year]
-    assert_equal nil, result[:quality]
+  movie_filepaths_to_guess.each do |movie|
+    test "#guess_from_filepath on #{movie[:filepath]}" do
+      guessed = Guesser::Movie.guess_from_filepath(movie[:filepath])
+      assert_equal movie[:title], guessed[:title]
+      assert_equal movie[:quality], guessed[:quality]
+      assert_equal movie[:year], guessed[:year]
+    end
   end
 
   test 'Movie#guess_from_filepath on nil or blank string' do
     result = Guesser::Movie.guess_from_filepath(nil)
     assert_equal '', result[:title]
+    assert_equal nil, result[:quality]
+    assert_equal nil, result[:year]
+  end
+
+  movie_strings_to_guess = [{
+    string: 'Hotel Transylvania 2 2015 1080p BluRay x264 AAC-ETRG',
+    title: 'Hotel Transylvania 2',
+    year: 2015,
+    quality: '1080p'
+  }, {
+    string: 'The Walk 2015 720p BluRay x265-HaxxOr',
+    title: 'The Walk',
+    year: 2015,
+    quality: '720p'
+  }, {
+    string: 'Daniel 1983 iNTERNAL BDRip x264-LiBRARiANS[rarbg]',
+    title: 'Daniel',
+    year: 1983,
+    quality: 'BDRip'
+  }, {
+    string: 'Duologia Kill Bill 2003-2004 BluRay 720p x264 AC3 2.0 BLUDV',
+    title: 'Duologia Kill Bill',
+    year: 2003,
+    quality: '720p'
+  }, {
+    string: 'Extraction 2015 1080p WEB-DL x264 AC3-JYK',
+    title: 'Extraction',
+    year: 2015,
+    quality: '1080p'
+  }, {
+    string: 'The Young Black Stallion (Family Film 2003) 720p HD',
+    title: 'The Young Black Stallion',
+    year: 2003,
+    quality: '720p'
+  }]
+
+  movie_strings_to_guess.each do |movie|
+
+    test "Movie#guess_from_string with #{movie[:string]}" do
+      guessed = Guesser::Movie.guess_from_string(movie[:string])
+      assert_equal movie[:title], guessed[:title]
+      assert_equal movie[:year], guessed[:year]
+      assert_equal movie[:quality], guessed[:quality]
+    end
+  end
+
+
+  test '#guess_year with a variety of years' do
+    assert_equal 1990, Guesser.guess_year('1990')
+    assert_equal 2015, Guesser.guess_year('2015')
+    assert_equal 2016, Guesser.guess_year('2016')
+    assert_equal nil, Guesser.guess_year('2048') # too far in future
+    assert_equal nil, Guesser.guess_year('1890') # too far in the past
   end
 
 end

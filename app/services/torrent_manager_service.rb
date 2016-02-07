@@ -78,17 +78,6 @@ class TorrentManagerService
     nil
   end
 
-  def self.find_sources(remote_movie)
-    sources = YtsFindResult.get(remote_movie.fetch_imdb_id).data[:data].try(:[], :movies).try(:first).try(:[], :torrents) || []
-
-    # construct magnets
-    sources.each do |source|
-      source[:magnet] = self.construct_magnet_link(source[:hash], remote_movie.title)
-    end
-
-    sources
-  end
-
   def self.construct_magnet_link(torrent_hash, name)
     trackers = TRACKERS.map{|t| CGI.escape(t)}.join("&tr=")
     "magnet:?xt=urn:btih:#{torrent_hash}&dn=#{CGI.escape(name)}&tr=#{trackers}"

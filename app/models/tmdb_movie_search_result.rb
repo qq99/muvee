@@ -9,7 +9,7 @@ class TmdbMovieSearchResult < ExternalMetadata
   end
 
   def results
-    data[:results]
+    data[:results] || []
   end
 
   def sorted_by_popularity

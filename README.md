@@ -27,10 +27,10 @@ _Detailed movie view page, when movie is sourced (you have a copy)_
 _Detailed movie view page, when movie is not yet sourced (you don't have a copy)_
 
 ![](http://i.imgur.com/CofpprC.jpg)
-_Attempting to find copies via YTS (high quality, solid releases) or TPB_
+_Attempting to find copies_
 
 ![](http://i.imgur.com/DyqHsKO.jpg)
-_Discover movies from the YTS archives, or search for them on the net_
+_Discover movies, or search for them on the net_
 
 ![](http://i.imgur.com/SjCLDzW.jpg)
 _Movies index while downloading, blue progress bar appears_
