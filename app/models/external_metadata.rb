@@ -35,12 +35,12 @@ class ExternalMetadata < ActiveRecord::Base
     Rails.logger.info "Fetching #{self.endpoint}"
     response = fetch(self.endpoint)
 
-    return self unless response.present?
+    return self unless response.present? && response.body.present?
 
     self.raw_value = if result_format == :xml
-      Hash.from_xml(response).try(:with_indifferent_access) || {}
+      Hash.from_xml(response.body).try(:with_indifferent_access) || {}
     elsif result_format == :json
-      JSON.parse(response).try(:with_indifferent_access) || {}
+      JSON.parse(response.body).try(:with_indifferent_access) || {}
     end
 
     self
