@@ -18,23 +18,10 @@ module DownloadFile
     true
   end
 
-  def fetch(uri_str, limit = 5)
-    raise ArgumentError, 'too many HTTP redirects' if limit == 0
-
+  def fetch(uri_str)
     begin
-      #Net::HTTP.read_timeout = 5 # 5 seconds sounds reasonable
-      response = Net::HTTP.get_response(URI(uri_str))
-
-      case response
-      when Net::HTTPSuccess then
-        response
-      when Net::HTTPRedirection then
-        location = response['location']
-        warn "redirected to #{location}"
-        fetch(location, limit - 1)
-      else
-        response.value
-      end
+      response = ExternalMetadataRequest.get(uri_str)
+      response
     rescue
       nil
     end

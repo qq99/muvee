@@ -29,36 +29,24 @@ class ExternalMetadata < ActiveRecord::Base
     self.raw_value.blank?
   end
 
-  def query_remote(uri)
-    fetch(uri.to_s)
-  end
-
   def fetch_data
-    if should_query_remote?
-      Rails.logger.info "Fetching #{self.endpoint}"
-      http_get = query_remote(URI.parse(self.endpoint)) # HTTParty.get will throw on error, we'd rather continue to the next lines, for now, at least
-      if http_get.present? && http_get.response.kind_of?(Net::HTTPSuccess)
-        Rails.logger.info "Fetched #{self.endpoint}"
-        self.raw_value = http_get.body.to_s#.encode('UTF-8', {:invalid => :replace, :undef => :replace, :replace => '?'})
-        if result_format == :xml
-          begin
-            self.raw_value = Hash.from_xml(self.raw_value).try(:with_indifferent_access) || {}
-          rescue => e
-            self.raw_value = {}
-            Rails.logger.error "ExternalMetadata#fetch_data as XML for #{self.endpoint} failed: #{e}"
-          end
-        elsif result_format == :json
-          begin
-            self.raw_value = JSON.parse(self.raw_value).try(:with_indifferent_access) || {}
-          rescue => e
-            self.raw_value = {}
-            Rails.logger.error "ExternalMetadata#fetch_data as JSON for #{self.endpoint} failed: #{e}"
-          end
-        end
-      end
+    return self unless should_query_remote?
+
+    Rails.logger.info "Fetching #{self.endpoint}"
+    response = fetch(self.endpoint)
+
+    return self unless response.present? && response.body.present?
+
+    self.raw_value = if result_format == :xml
+      Hash.from_xml(response.body).try(:with_indifferent_access) || {}
+    elsif result_format == :json
+      JSON.parse(response.body).try(:with_indifferent_access) || {}
     end
 
     self
+  rescue => e
+    self.raw_value = {}
+    Rails.logger.error "ExternalMetadata#fetch_data failed to parse response: #{e}"
   end
 
   def data
