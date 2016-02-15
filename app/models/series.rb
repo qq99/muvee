@@ -34,13 +34,12 @@ class Series < ActiveRecord::Base
   scope :paginated, ->(page, results_per_page) { limit(results_per_page).offset(page * results_per_page) }
 
   def extract_metadata
-    self.title = series_metadata[:SeriesName]
+    self.title = series_metadata[:SeriesName].presence || self.title
     self.tvdb_id = series_metadata[:id].to_i
-    self.overview = series_metadata[:Overview]
-    self.tvdb_rating = series_metadata[:Rating]
-    self.tvdb_rating_count = series_metadata[:RatingCount]
-    self.status = series_metadata[:Status]
-    #self.tvdb_series_result = episode_metadata_search
+    self.overview = series_metadata[:Overview].presence || self.overview
+    self.tvdb_rating = series_metadata[:Rating].presence || self.tvdb_rating
+    self.tvdb_rating_count = series_metadata[:RatingCount].presence || self.tvdb_rating_count
+    self.status = series_metadata[:Status].presence || self.status
     self
   end
 

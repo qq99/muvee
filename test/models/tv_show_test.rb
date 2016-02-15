@@ -68,6 +68,47 @@ class TvShowTest < ActiveSupport::TestCase
     show.expects(:extract_metadata).never
   end
 
+  test 'reanalyze on a TvShow with no series and no sources will delete that TvShow record' do
+    show = videos(:show_with_no_series_and_no_sources)
+    assert show.series.blank?
+    assert_equal 0, show.sources.count
+
+    show.reanalyze
+    assert show.destroyed?
+  end
+
+  test 'reanalyze on a TvShow with no series, but has sources, will not delete that TvShow record' do
+    show = videos(:show_with_no_series_but_has_sources)
+    assert show.series.blank?
+    assert show.sources.present?
+
+    Source.any_instance.expects(:file_exists?).returns(true)
+    show.reanalyze
+    show.reload
+    assert show.persisted?
+  end
+
+  test 'reanalyze on a TvShow without a series, that looks episodic (has season/episode), will associate to a series' do
+    show = videos(:show_with_no_series_and_no_sources)
+    assert show.series.blank?
+    show.episode = 1
+    show.season = 1
+
+    show.reanalyze
+    assert show.series.present?
+    assert_equal show.series.title, show.title
+  end
+
+  test 'reanalyze on a TvShow without a title or series will attempt to grab title from source' do
+    show = videos(:show_with_no_title_no_series_one_source)
+    assert show.title.blank?
+
+    Source.any_instance.expects(:file_exists?).returns(true)
+    show.reanalyze
+    show.reload
+    assert_equal 'Another Nonseries Show', show.title
+  end
+
   test 'can get to episodic metadata' do
     VCR.use_cassette 'american_dad' do
       show = TvShow.create(title: 'American Dad', season: 5, episode: 10)

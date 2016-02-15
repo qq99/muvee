@@ -48,4 +48,12 @@ class TvShowSourceTest < ActiveSupport::TestCase
       end
     end
   end
+
+  test '#reanalzye when file does not exist, deletes self' do
+    source = sources(:tv_source_with_missing_raw_file_path)
+    source.expects(:file_exists?).returns(false)
+
+    refute source.reanalyze
+    assert source.destroyed?
+  end
 end

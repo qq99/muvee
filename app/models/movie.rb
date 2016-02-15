@@ -177,9 +177,7 @@ class Movie < Video
     extract_metadata
     associate_with_genres
     associate_with_actors
-    actors.each do |actor|
-      actor.reanalyze
-    end
+    actors.each(&:reanalyze)
     redownload_missing
     if imdb_id != old_imdb_id
       redownload

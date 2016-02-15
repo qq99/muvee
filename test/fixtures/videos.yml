@@ -53,6 +53,20 @@ american_dad_s09_e09_sourceless:
   series: american_dad
   sources_count: 0
 
+show_with_no_series_and_no_sources:
+  status: 'local'
+  title: "A filename interpreted as a title"
+  type: "TvShow"
+
+show_with_no_series_but_has_sources:
+  status: 'local'
+  title: 'A filename interpreted as a title'
+  type: 'TvShow'
+
+show_with_no_title_no_series_one_source:
+  status: 'local'
+  type: 'TvShow'
+
 true_detective_remote:
   status: 'remote'
   title: 'True Detective'
@@ -76,6 +90,9 @@ poorly_analyzed_american_dad:
 big_buck_bunny:
   type: 'Movie'
   title: 'Big Buck Bunny'
+
+sourced_movie:
+  type: 'Movie'
 
 unsourced_movie:
   type: 'Movie'

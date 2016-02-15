@@ -2,7 +2,7 @@ class Video < ActiveRecord::Base
   has_many :sources, dependent: :destroy
   has_many :thumbnails, dependent: :destroy
   has_many :fanarts, dependent: :destroy
-  has_many :transcodes
+  has_many :transcodes, dependent: :destroy
 
   has_many :genres_videos
   has_many :genres, through: :genres_videos
@@ -169,9 +169,7 @@ class Video < ActiveRecord::Base
 
   def reanalyze
     self.touch
-    sources.each do |source|
-      source.reanalyze
-    end
+    sources.each(&:reanalyze)
     reset_status
     shellout_and_grab_duration if duration.blank? || duration == 0
     if empty_or_missing_thumbnails?
