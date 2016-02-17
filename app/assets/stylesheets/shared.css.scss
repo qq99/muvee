@@ -123,15 +123,19 @@
 }
 
 .actor-tile {
+  @include aspect-ratio(7,11);
   flex: 1 0 10em;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 25%;
-  height: 20em;
-  margin: 0 !important;
   overflow: hidden;
+
+  .actor-name {
+    position: absolute;
+    bottom: 0;
+  }
   &:hover {
     .actor-name {
       color: $less-radical-blue;
