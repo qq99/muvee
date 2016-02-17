@@ -1,6 +1,7 @@
 class Movie < Video
   include DownloadFile
   include AssociatesSelfWithActors
+  include AssociatesSelfWithGenres
 
   after_commit :queue_download_job, on: :create
   after_create :extract_metadata
@@ -149,20 +150,12 @@ class Movie < Video
 
   def associate_with_genres
     return unless metadata[:genres].present?
-
-    listed_genres = dedupe_genre_array(metadata[:genres].map{|g| g[:name]})
-    self.genres = []
-    listed_genres.each do |genre_name|
-      normalized = Genre.normalized_name(genre_name)
-      genre = Genre.find_by_name(normalized) || Genre.create(name: normalized)
-      self.genres << genre
-    end
-    self.save if listed_genres.any?
+    genres = metadata[:genres].map{|g| g[:name]}
+    associate_self_with_genres(genres)
   end
 
   def associate_with_actors
     return unless omdb_metadata.data['Actors'].present?
-
     actors = omdb_metadata.data['Actors'].split(/,|\|/)
     associate_self_with_actors(actors)
   end

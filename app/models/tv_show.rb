@@ -1,5 +1,6 @@
 class TvShow < Video
   include HasMetadata
+  include AssociatesSelfWithGenres
 
   belongs_to :series, counter_cache: true
   after_create :extract_metadata, unless: :reanalyzing_series
@@ -43,14 +44,8 @@ class TvShow < Video
 
   def associate_with_genres
     return if series_metadata[:Genre].blank?
-
-    self.genres = []
-
-    listed_genres = compute_genres(series_metadata[:Genre])
-    listed_genres.each do |genre_name|
-      self.genres << Genre.find_or_create_by(name: genre_name)
-    end
-    self.save if listed_genres.any?
+    genres = series_metadata[:Genre].split(/,|\|/)
+    associate_self_with_genres(genres)
   end
 
   def extract_metadata

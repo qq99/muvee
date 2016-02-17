@@ -2,6 +2,7 @@ class Series < ActiveRecord::Base
   include HasMetadata
   include DownloadFile
   include AssociatesSelfWithActors
+  include AssociatesSelfWithGenres
 
   after_create :download_images
   after_create :associate_with_genres
@@ -148,15 +149,8 @@ class Series < ActiveRecord::Base
 
   def associate_with_genres
     return unless series_metadata[:Genre].present?
-
-    listed_genres = series_metadata[:Genre].split("|").reject(&:blank?).uniq.compact
-    self.genres = []
-    listed_genres.each do |genre_name|
-      normalized = Genre.normalized_name(genre_name)
-      genre = Genre.find_by_name(normalized) || Genre.create(name: normalized)
-      self.genres << genre
-    end
-    self.save if listed_genres.any?
+    genres = series_metadata[:Genre].split("|")
+    associate_self_with_genres(genres)
   end
 
   def associate_with_actors

@@ -195,15 +195,6 @@ class Video < ActiveRecord::Base
     #File.delete(raw_file_path)
   end
 
-  def compute_genres(genre_string)
-    genre_array = genre_string.split(/,|\|/)
-    dedupe_genre_array(genre_array)
-  end
-
-  def dedupe_genre_array(genre_array)
-    genre_array.compact.map(&:strip).map(&:titleize).uniq.reject(&:blank?)
-  end
-
   def avconv_create_thumbnail_command(at_seconds, output_path)
     "avconv -loglevel quiet -ss " + at_seconds.to_s.shellescape + " -i " + raw_file_path.shellescape + " -qscale 1 -vsync 1 -vframes 1 -y " + output_path.shellescape
   end
