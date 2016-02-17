@@ -26,7 +26,7 @@ class Movie < Video
   end
 
   def youtube_trailers
-    trailers.select{ |trailer| trailer[:site].downcase == 'youtube' }
+    (trailers || []).select{ |trailer| trailer[:site].downcase == 'youtube' }
   end
 
   def search_tmdb_for_id
