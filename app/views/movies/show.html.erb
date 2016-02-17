@@ -23,8 +23,7 @@
           <%= link_to reanalyze_movie_path(@movie),
                 class: 'badge linked-badge',
                 'tg-remote' => 'POST',
-                'refresh-on-success' => 'movie-show',
-                'define' => "{autoRefresher: new Muvee.AutoRefresher(this, #{@movie.updated_at < 1.day.ago})}" do %>
+                'refresh-on-success' => 'movie-show' do %>
 
             <i class="fa fa-refresh"></i>
           <% end %>
