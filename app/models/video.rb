@@ -200,17 +200,8 @@ class Video < ActiveRecord::Base
     dedupe_genre_array(genre_array)
   end
 
-  def compute_actors(actors_string)
-    actors_array = actors_string.split(/,|\|/)
-    dedupe_actor_array(actors_array)
-  end
-
   def dedupe_genre_array(genre_array)
     genre_array.compact.map(&:strip).map(&:titleize).uniq.reject(&:blank?)
-  end
-
-  def dedupe_actor_array(actor_array)
-    actor_array.compact.map(&:strip).uniq.reject(&:blank?)
   end
 
   def avconv_create_thumbnail_command(at_seconds, output_path)

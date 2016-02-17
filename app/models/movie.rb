@@ -1,5 +1,6 @@
 class Movie < Video
   include DownloadFile
+  include AssociatesSelfWithActors
 
   after_commit :queue_download_job, on: :create
   after_create :extract_metadata
@@ -162,13 +163,8 @@ class Movie < Video
   def associate_with_actors
     return unless omdb_metadata.data['Actors'].present?
 
-    listed_actors = compute_actors(omdb_metadata.data['Actors'])
-    self.actors = []
-    listed_actors.each do |actor_name|
-      actor = Actor.where('lower(name) like :q', q: "%#{actor_name.downcase}%").first || Actor.create(name: actor_name)
-      self.actors << actor
-    end
-    self.save if listed_actors.any?
+    actors = omdb_metadata.data['Actors'].split(/,|\|/)
+    associate_self_with_actors(actors)
   end
 
   def reanalyze

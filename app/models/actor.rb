@@ -18,12 +18,17 @@ class Actor < ActiveRecord::Base
     results = search_results.data["results"]
     return nil if results.blank?
 
-    results.select!{|entry| entry['name'] == name} # filter list to exact matches
+    # TODO: should be sorting by ascending Ldistance, maybe even the popularity stat
+    results.select! do |entry|
+      Ldistance.compute(entry['name'].downcase, name.downcase) <= 3
+    end # filter list to very close matches
     result = results.first
-    profile = result.try(:[], 'profile_path')
     id = result.try(:[], 'id')
-    @profile_pic = "http://image.tmdb.org/t/p/original/#{profile}" if profile.present?
     id
+  end
+
+  def generate_profile_url(profile_slug)
+    File.join("http://image.tmdb.org/t/p/original/", profile_slug).to_s
   end
 
   def extract_metadata
@@ -38,8 +43,13 @@ class Actor < ActiveRecord::Base
       self.tmdb_person_id = tmdb_id
       self.imdb_id = tmdb_result.data[:imdb_id]
       self.place_of_birth = tmdb_result.data[:place_of_birth]
-      if @profile_pic.present? && profile_picture_fanart.blank?
-        self.fanarts << ProfilePictureFanart.create(remote_location: @profile_pic)
+
+      profile_path = tmdb_result.data[:profile_path]
+
+      if profile_path.present? && profile_picture_fanart.blank?
+        self.fanarts << ProfilePictureFanart.create(
+          remote_location: generate_profile_url(profile_path)
+        )
       end
       self.save
     end

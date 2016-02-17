@@ -1,6 +1,7 @@
 class Series < ActiveRecord::Base
   include HasMetadata
   include DownloadFile
+  include AssociatesSelfWithActors
 
   after_create :download_images
   after_create :associate_with_genres
@@ -160,13 +161,7 @@ class Series < ActiveRecord::Base
 
   def associate_with_actors
     return unless series_metadata[:Actors].present?
-
-    listed_actors = series_metadata[:Actors].split("|").reject(&:blank?).uniq.compact
-    self.actors = []
-    listed_actors.each do |actor_name|
-      actor = Actor.where('lower(name) like :q', q: "%#{actor_name.downcase}%").first || Actor.create(name: actor_name)
-      self.actors << actor
-    end
-    self.save if listed_actors.any?
+    actors = series_metadata[:Actors].split("|")
+    associate_self_with_actors(actors)
   end
 end
