@@ -9,10 +9,17 @@
           <div class="tile__meta">
             <h3 class="video-year"><%= year_month_day(show.released_on) %></h3>
             <h3 class="video-type"><%= show.season_episode %></h3>
-            <% effective_title = show.title || show.sources.first.raw_file_path %>
+            <% path = Pathname.new(show.sources.first.raw_file_path) %>
+            <% effective_title = show.title || path.basename.to_s %>
             <h1 class="video-title" title="<%= effective_title %>"><%= link_to effective_title, show_source_video_path(show) %></h1>
-            <p class="video-description">
+            <p class="video-description" define="{detailed: false}" bind-event-click="detailed = !detailed">
               <%= show.overview %>
+              <span bind-show="!detailed">
+                <%= path.basename.to_s %>
+              </span>
+              <span bind-show="detailed">
+                <%= path.to_s %>
+              </span>
             </p>
             <div class="tile__meta-backdrop"></div>
           </div>
