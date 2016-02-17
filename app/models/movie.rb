@@ -21,6 +21,14 @@ class Movie < Video
     @metadata ||= (TmdbMovieResult.get(@imdb_id).data || {})
   end
 
+  def trailers
+    TmdbVideoResult.get('movie', search_tmdb_for_id).results
+  end
+
+  def youtube_trailers
+    trailers.select{ |trailer| trailer[:site].downcase == 'youtube' }
+  end
+
   def search_tmdb_for_id
     Rails.logger.info "[search_tmdb_for_id] Searching TMDB for an ID for: #{title}"
     tmdb_movie = TmdbMovieSearchResult.get(title).sorted_by_popularity.first

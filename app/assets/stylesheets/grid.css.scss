@@ -52,6 +52,9 @@
   &.flex-columns--top {
     align-items: flex-start;
   }
+  &.flex-columns--centered {
+    justify-content: center;
+  }
 }
 
 .tile {

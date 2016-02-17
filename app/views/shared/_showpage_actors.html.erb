@@ -1,6 +1,6 @@
-<div class="flex">
-  <div class="showpage__section">
-    <% if actors.present? %>
+<% if actors.present? %>
+  <div class="flex">
+    <div class="showpage__section">
       <h2>Actors</h2>
       <div class="flex-columns flex-wrap">
         <% actors.each do |actor| %>
@@ -15,6 +15,6 @@
           </div>
         <% end %>
       </div>
-    <% end %>
+    </div>
   </div>
-</div>
+<% end %>
