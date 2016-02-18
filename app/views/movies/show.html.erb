@@ -111,7 +111,8 @@
         <h2>Trailers</h2>
         <div class="trailers" define="{activeTrailer: null, activeTrailerSrc: null}">
           <div class="flex-columns flex-wrap">
-            <% @movie.youtube_trailers.each_with_index do |trailer, index| %>
+            <% trailers = @movie.youtube_trailers %>
+            <% trailers.each_with_index do |trailer, index| %>
               <% key = trailer[:key] %>
               <button
                 class="trailer-thumbnail"
@@ -121,6 +122,11 @@
                   <img src="http://img.youtube.com/vi/<%= trailer[:key] %>/0.jpg" alt="">
                 </div>
               </button>
+            <% end %>
+
+            <% remainder = trailers.size % 3 %>
+            <% if remainder != 0 && trailers.size != 3 %>
+              <% 5.times do %><div style="margin-bottom: 0; height: 0;" class="trailer-thumbnail"></div><% end %>
             <% end %>
           </div>
           <div class="trailer hide" bind-show="activeTrailerSrc != null">

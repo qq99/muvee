@@ -108,7 +108,7 @@
 .trailer-thumbnail {
   @include aspect-ratio(4,3);
   display: flex;
-  flex: 0 1 25%;
+  flex: 1 0 10em;
   filter: grayscale(100%);
   transition: 0.25s -webkit-filter ease-in-out;
 

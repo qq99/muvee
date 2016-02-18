@@ -20,7 +20,7 @@
         <% end %>
 
         <% remainder = actors.size % 5 %>
-        <% if remainder != 0 && (actors.size > 4 || actors.size < 3) %>
+        <% if remainder != 0 && actors.size != 5 %>
           <% 10.times do %><div class="actor-tile" style='height: 0; margin-bottom: 0;'></div><% end %>
         <% end %>
       </div>
