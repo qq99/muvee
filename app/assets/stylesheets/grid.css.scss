@@ -44,6 +44,7 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  margin-right: -1em;
   > * {
     flex: 0 0 auto;
     margin-right: 1em;
@@ -51,6 +52,9 @@
   }
   &.flex-columns--top {
     align-items: flex-start;
+  }
+  &.flex-columns--centered {
+    justify-content: center;
   }
 }
 
