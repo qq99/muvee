@@ -1,6 +1,8 @@
 class Series < ActiveRecord::Base
   include HasMetadata
   include DownloadFile
+  include AssociatesSelfWithActors
+  include AssociatesSelfWithGenres
 
   after_create :download_images
   after_create :associate_with_genres
@@ -34,13 +36,12 @@ class Series < ActiveRecord::Base
   scope :paginated, ->(page, results_per_page) { limit(results_per_page).offset(page * results_per_page) }
 
   def extract_metadata
-    self.title = series_metadata[:SeriesName]
+    self.title = series_metadata[:SeriesName].presence || self.title
     self.tvdb_id = series_metadata[:id].to_i
-    self.overview = series_metadata[:Overview]
-    self.tvdb_rating = series_metadata[:Rating]
-    self.tvdb_rating_count = series_metadata[:RatingCount]
-    self.status = series_metadata[:Status]
-    #self.tvdb_series_result = episode_metadata_search
+    self.overview = series_metadata[:Overview].presence || self.overview
+    self.tvdb_rating = series_metadata[:Rating].presence || self.tvdb_rating
+    self.tvdb_rating_count = series_metadata[:RatingCount].presence || self.tvdb_rating_count
+    self.status = series_metadata[:Status].presence || self.status
     self
   end
 
@@ -148,26 +149,13 @@ class Series < ActiveRecord::Base
 
   def associate_with_genres
     return unless series_metadata[:Genre].present?
-
-    listed_genres = series_metadata[:Genre].split("|").reject(&:blank?).uniq.compact
-    self.genres = []
-    listed_genres.each do |genre_name|
-      normalized = Genre.normalized_name(genre_name)
-      genre = Genre.find_by_name(normalized) || Genre.create(name: normalized)
-      self.genres << genre
-    end
-    self.save if listed_genres.any?
+    genres = series_metadata[:Genre].split("|")
+    associate_self_with_genres(genres)
   end
 
   def associate_with_actors
     return unless series_metadata[:Actors].present?
-
-    listed_actors = series_metadata[:Actors].split("|").reject(&:blank?).uniq.compact
-    self.actors = []
-    listed_actors.each do |actor_name|
-      actor = Actor.where('lower(name) like :q', q: "%#{actor_name.downcase}%").first || Actor.create(name: actor_name)
-      self.actors << actor
-    end
-    self.save if listed_actors.any?
+    actors = series_metadata[:Actors].split("|")
+    associate_self_with_actors(actors)
   end
 end

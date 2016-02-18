@@ -2,7 +2,7 @@ class Video < ActiveRecord::Base
   has_many :sources, dependent: :destroy
   has_many :thumbnails, dependent: :destroy
   has_many :fanarts, dependent: :destroy
-  has_many :transcodes
+  has_many :transcodes, dependent: :destroy
 
   has_many :genres_videos
   has_many :genres, through: :genres_videos
@@ -169,9 +169,7 @@ class Video < ActiveRecord::Base
 
   def reanalyze
     self.touch
-    sources.each do |source|
-      source.reanalyze
-    end
+    sources.each(&:reanalyze)
     reset_status
     shellout_and_grab_duration if duration.blank? || duration == 0
     if empty_or_missing_thumbnails?
@@ -195,24 +193,6 @@ class Video < ActiveRecord::Base
     # TODO: broken, delete sources?
     #return unless raw_file_path
     #File.delete(raw_file_path)
-  end
-
-  def compute_genres(genre_string)
-    genre_array = genre_string.split(/,|\|/)
-    dedupe_genre_array(genre_array)
-  end
-
-  def compute_actors(actors_string)
-    actors_array = actors_string.split(/,|\|/)
-    dedupe_actor_array(actors_array)
-  end
-
-  def dedupe_genre_array(genre_array)
-    genre_array.compact.map(&:strip).map(&:titleize).uniq.reject(&:blank?)
-  end
-
-  def dedupe_actor_array(actor_array)
-    actor_array.compact.map(&:strip).uniq.reject(&:blank?)
   end
 
   def avconv_create_thumbnail_command(at_seconds, output_path)

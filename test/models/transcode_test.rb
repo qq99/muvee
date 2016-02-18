@@ -116,6 +116,7 @@ class TranscodeTest < ActiveSupport::TestCase
   test "#transcode returns early when complete?" do
     @transcode.update_attribute(:status, 'complete')
 
+    @transcode.expects(:origin_file_exists?).returns(true)
     @transcode.expects(:perform).never
     @transcode.expects(:perform_transcode_subprocess).never
     @transcode.expects(:move_transcoded_file!).never
@@ -127,6 +128,7 @@ class TranscodeTest < ActiveSupport::TestCase
   test "#transcode attempts to move the transcoded file when complete? and the transcoding file still exists" do
     @transcode.update_attribute(:status, 'complete')
 
+    @transcode.expects(:origin_file_exists?).returns(true)
     @transcode.expects(:transcoding_file_exists?).once.returns(true)
     @transcode.expects(:perform).never
     @transcode.expects(:perform_transcode_subprocess).never
@@ -139,6 +141,7 @@ class TranscodeTest < ActiveSupport::TestCase
   test "#transcode returns early when transcoding?" do
     @transcode.update_attribute(:status, 'transcoding')
 
+    @transcode.expects(:origin_file_exists?).returns(true)
     @transcode.expects(:perform).never
     @transcode.expects(:perform_transcode_subprocess).never
     @transcode.expects(:move_transcoded_file!).never
@@ -150,6 +153,7 @@ class TranscodeTest < ActiveSupport::TestCase
   test "#transcode deletes transcoding file when Transcode has failed, and transcoding file still exists, performs the transcode, and moves the succesful result" do
     @transcode.update_attribute(:status, 'failed')
 
+    @transcode.expects(:origin_file_exists?).returns(true)
     @transcode.expects(:transcoding_file_exists?).at_least_once.returns(true)
     File.expects(:delete).with(@transcode.transcode_path).once.returns(true)
     @transcode.expects(:perform_transcode_subprocess).once.returns(true)
@@ -160,6 +164,7 @@ class TranscodeTest < ActiveSupport::TestCase
   end
 
   test "#transcode does not try to move the result if #perform_transcode_work was unsuccessful" do
+    @transcode.expects(:origin_file_exists?).returns(true)
     @transcode.expects(:perform_transcode_subprocess).once.returns(false)
     @transcode.expects(:move_transcoded_file!).never
 

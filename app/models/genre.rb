@@ -11,7 +11,8 @@ class Genre < ActiveRecord::Base
 
   SAME_THINGS = {
     "sci fi" => "Science Fiction",
-    "scifi" => "Science Fiction"
+    "scifi" => "Science Fiction",
+    "sci-fi" => "Science Fiction"
   }.freeze
 
   def self.normalized_name(name)

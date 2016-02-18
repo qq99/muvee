@@ -22,3 +22,23 @@ american_dad_s01e03_source:
   video: american_dad_s01_e03
   raw_file_path: '/foo/bar/American.Dad.S01E03.mp4'
   type: 'TvShowSource'
+
+tv_source_with_missing_raw_file_path:
+  video: american_dad_s01_e03
+  raw_file_path: '/foo/bar/no_longer_present_in_fs'
+  type: 'TvShowSource'
+
+movie_source_with_missing_raw_file_path:
+  video: sourced_movie
+  raw_file_path: '/foo/bar/also_no_longer_present_in_fs'
+  type: 'MovieSource'
+
+source_for_show_with_no_series_but_has_sources:
+  video: show_with_no_series_but_has_sources
+  raw_file_path: '/foo/bar/some.nonseries.show.mp4'
+  type: 'TvShowSource'
+
+source_for_show_with_no_title_no_series_one_source:
+  video: show_with_no_title_no_series_one_source
+  raw_file_path: '/foo/bar/Another.nonseries.show.mp4'
+  type: 'TvShowSource'

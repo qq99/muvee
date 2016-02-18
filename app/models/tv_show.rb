@@ -1,5 +1,6 @@
 class TvShow < Video
   include HasMetadata
+  include AssociatesSelfWithGenres
 
   belongs_to :series, counter_cache: true
   after_create :extract_metadata, unless: :reanalyzing_series
@@ -22,11 +23,14 @@ class TvShow < Video
   def associate_with_series
     old_series = self.series.presence
 
-    new_series = Series.find_or_create_by(title: title)
-    self.series = new_series
+    self.series = if season.blank? || episode.blank?
+      nil
+    else
+      Series.find_or_create_by(title: title)
+    end
     self.save
 
-    Series.reset_counters(new_series.id, :tv_shows) if new_series.persisted?
+    Series.reset_counters(self.series.id, :tv_shows) if self.series.try(:persisted?)
     Series.reset_counters(old_series.id, :tv_shows) if old_series.present?
   end
 
@@ -40,30 +44,29 @@ class TvShow < Video
 
   def associate_with_genres
     return if series_metadata[:Genre].blank?
-
-    self.genres = []
-
-    listed_genres = compute_genres(series_metadata[:Genre])
-    listed_genres.each do |genre_name|
-      self.genres << Genre.find_or_create_by(name: genre_name)
-    end
-    self.save if listed_genres.any?
+    genres = series_metadata[:Genre].split(/,|\|/)
+    associate_self_with_genres(genres)
   end
 
   def extract_metadata
-    self.title = metadata[:SeriesName]
-    self.overview = episode_specific_metadata[:Overview]
-    self.episode_name = episode_specific_metadata[:EpisodeName]
-    self.season = episode_specific_metadata[:SeasonNumber]
-    self.episode = episode_specific_metadata[:EpisodeNumber]
+    self.title = metadata[:SeriesName].presence || self.title
+    self.overview = episode_specific_metadata[:Overview].presence || self.overview
+    self.episode_name = episode_specific_metadata[:EpisodeName].presence || self.episode_name
+    self.season = episode_specific_metadata[:SeasonNumber].presence || self.season
+    self.episode = episode_specific_metadata[:EpisodeNumber].presence || self.episode
   end
 
   def reanalyze
     super
     associate_with_series
-    associate_with_genres
-    extract_metadata
-    self.save
+
+    if series.blank? && sources.count == 0
+      self.destroy
+    else
+      associate_with_genres
+      extract_metadata
+      self.save
+    end
   end
 
   def redownload; end

@@ -26,7 +26,12 @@ class Source < ActiveRecord::Base
   end
 
   def reanalyze
-
+    if file_is_present_and_exists?
+      true
+    else
+      self.destroy
+      false
+    end
   end
 
   def filename
