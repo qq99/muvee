@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/Shopify/turbograft.git
-  revision: 10daded5eb028c39e3173cef3733e2ad42a2af51
+  revision: ad37b11211e9b4c400b776068fc31ad529df5f32
   branch: fix-historystate-bug
   specs:
     turbograft (0.2.0)
