@@ -189,6 +189,15 @@ class Transcode < ActiveRecord::Base
     # puts note
   end
 
+  def reanalyze
+    if origin_file_exists?
+      true
+    else
+      self.destroy
+      false
+    end
+  end
+
   private
 
   def perform_transcode_subprocess
