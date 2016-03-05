@@ -2,13 +2,13 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.0'
+gem 'rails', '>= 5.0.0.beta3', '< 5.1'
 gem 'responders', '~> 2.0'
-gem 'sinatra'
+# gem 'sinatra'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.3'
+gem 'sass-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
@@ -57,7 +57,7 @@ gem 'thepiratebay', github: "qq99/thepiratebay", branch: "master"
 gem 'foreman'
 gem 'sidekiq'
 gem 'sidekiq-limit_fetch'
-gem "sidekiq-cron", "~> 0.2.0"
+# gem "sidekiq-cron", "~> 0.4.0"
 gem "transmission_api", github: "qq99/TransmissionApi", branch: "master"
 
 group :production, :development do
@@ -77,10 +77,14 @@ group :development, :test do
   gem 'bond'
   gem 'pry-byebug'
   gem 'pry-theme'
-  gem 'partially_useful'
+  # gem 'partially_useful'
   gem "better_errors"
   gem "binding_of_caller"
-  gem 'quiet_assets'
+  # gem 'quiet_assets'
+end
+
+group :development do
+  gem 'fleek'
 end
 
 # Use ActiveModel has_secure_password
