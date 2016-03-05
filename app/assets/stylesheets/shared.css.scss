@@ -121,6 +121,12 @@
     filter: grayscale(0%);
   }
 }
+.trailer-thumbnail--filler {
+  display: flex;
+  flex: 1 0 10em;
+  height: 0;
+  margin-bottom: 0;
+}
 
 .actor-tile {
   @include aspect-ratio(7,11);
@@ -141,6 +147,12 @@
       color: $less-radical-blue;
     }
   }
+}
+.actor-tile--filler {
+  flex: 1 0 10em;
+  display: flex;
+  height: 0;
+  margin-bottom: 0;
 }
 .actor-profile-picture {
   width: 100%;
