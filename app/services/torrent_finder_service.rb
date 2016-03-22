@@ -8,7 +8,7 @@ class TorrentFinderService
 
     threads = []
     # threads << search_eztv
-    threads << search_kickass
+    # threads << search_kickass
     threads << search_piratebay
     threads.each(&:join)
 
