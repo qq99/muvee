@@ -170,6 +170,7 @@ class Video < ActiveRecord::Base
   def reanalyze
     self.touch
     sources.each(&:reanalyze)
+    transcodes.each(&:reanalyze)
     reset_status
     shellout_and_grab_duration if duration.blank? || duration == 0
     if empty_or_missing_thumbnails?
