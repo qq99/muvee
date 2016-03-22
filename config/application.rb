@@ -25,6 +25,8 @@ module MuvRails
     # config.i18n.default_locale = :de
     config.assets.paths << Rails.root.join("vendor", "assets", "javascripts")
 
+    config.action_cable.disable_request_forgery_protection = true
+    
     # Autoload lib/ folder including all subdirectories
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
   end

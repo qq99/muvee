@@ -2,6 +2,7 @@
 
 Rails.application.routes.draw do
   # mount Sidekiq::Web => '/sidekiq'
+  mount ActionCable.server => "/cable"
 
   resources :videos, except: [:show] do
     collection do

@@ -14,11 +14,6 @@ class Muvee.MuveeSocket
         evt = new CustomEvent("muvee:progress_reporter:SeriesDiscoveryWorker", {'detail': data})
         document.dispatchEvent(evt)
 
-      else if data.type == "TorrentInformation"
-        torrents = data.results
-        for data in torrents
-          evt = new CustomEvent("muvee:progress_reporter:TorrentInformation#{data.id}", {'detail': data})
-          document.dispatchEvent(evt)
     catch e
       console.log('Unable to parse as JSON', event.data)
 
@@ -29,13 +24,6 @@ class Muvee.MuveeSocket
   onOpen: =>
     console.log 'Socket opened.'
     @resetReconnectDelay()
-
-    socketInterval = setInterval =>
-      if @socket.readyState == @socket.OPEN
-        @socket.send(JSON.stringify(name: 'torrent_info'))
-      else
-        clearInterval socketInterval
-    , 1000
 
   resetReconnectDelay: ->
     @currentPoT = 0
