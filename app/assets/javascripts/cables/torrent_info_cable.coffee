@@ -17,9 +17,11 @@ Muvee.cable.subscriptions.create "TorrentInfoChannel",
       document.dispatchEvent(evt)
 
   install: ->
-    @torrentQueryInterval = setInterval =>
-      @perform("torrent_info")
-    , 1000
+    @pageChangeListener = document.addEventListener 'page:load', @getInfo.bind(this)
+    @torrentQueryInterval = setInterval(@getInfo.bind(this), 1000)
+
+  getInfo: -> @perform("torrent_info")
 
   uninstall: ->
     clearInterval @torrentQueryInterval
+    document.removeEventListener(@pageChangeListener)

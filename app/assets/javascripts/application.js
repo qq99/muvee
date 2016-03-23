@@ -18,5 +18,6 @@
 //= require nprogress
 //= require bootstrap
 //= require cable
+//= require_tree ./cables
 //= require_tree ./modules
 //= require_tree ./ui

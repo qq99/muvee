@@ -3,9 +3,8 @@ class SeriesDiscoveryWorker
   sidekiq_options queue: :series_discovery, retry: false
 
   def publish(event)
-    @redis ||= Redis.new
-    event = event.merge(type: 'SeriesDiscoveryWorker')
-    @redis.publish(:sidekiq, event.to_json)
+    event[:namespace] = 'SeriesDiscoveryWorker'
+    ActionCable.server.broadcast "progress_reports", event
   end
 
   def perform
