@@ -26,8 +26,8 @@ class VideosController < ApplicationController
         episodic_scope = @video.series.tv_shows.local.release_order
         episodic_ids = episodic_scope.pluck(:id)
         index_of_current_episode = episodic_ids.find_index{|id| id == @video.id}
-        @previous_episode = episodic_scope.at(index_of_current_episode - 1) if index_of_current_episode > 0
-        @next_episode = episodic_scope.at(index_of_current_episode + 1) if index_of_current_episode < (episodic_ids.size - 1)
+        @previous_episode = episodic_scope[index_of_current_episode - 1] if index_of_current_episode > 0
+        @next_episode = episodic_scope[index_of_current_episode + 1] if index_of_current_episode < (episodic_ids.size - 1)
       end
     end
     render 'show', layout: 'fullscreen'
