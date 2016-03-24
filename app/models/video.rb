@@ -209,6 +209,7 @@ class Video < ActiveRecord::Base
   end
 
   def self.get_video_encoding(path)
+    # TODO: raise an error if the File doesn't exist
     command = "avprobe " + path.shellescape + " 2>&1 | grep -Eo 'Video: [a-zA-Z0-9]*' | cut -c 8-"
     result = %x(#{command})
     type = result.strip.downcase
@@ -220,6 +221,7 @@ class Video < ActiveRecord::Base
   end
 
   def self.get_audio_encoding(path)
+    # TODO: raise an error if the File doesn't exist
     command = "avprobe " + path.shellescape + " 2>&1 | grep -Eo 'Audio: [a-zA-Z0-9]*' | cut -c 8-"
     result = %x(#{command})
     type = result.strip.downcase
@@ -237,6 +239,7 @@ class Video < ActiveRecord::Base
       if allowed[:audio].include?(current_audio) && allowed[:video].include?(current_video)
         false
       else
+        # TODO: if avprobe doesn't exist, this will be hit. This is not good
         true
       end
     else # no mapping at all
