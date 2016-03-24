@@ -26,7 +26,13 @@ module MuvRails
     config.assets.paths << Rails.root.join("vendor", "assets", "javascripts")
 
     config.action_cable.disable_request_forgery_protection = true
-    
+
+    config.control_hue_lights = if is_server_or_sidekiq_context?
+      Figaro.env.control_hue_lights == "true"
+    else
+      false
+    end
+
     # Autoload lib/ folder including all subdirectories
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
   end

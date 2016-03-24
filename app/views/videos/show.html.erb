@@ -3,18 +3,22 @@
     leftOffAtPath: '<%= left_off_at_video_path(@video) %>',
     resumeFrom: <%= @video.left_off_at.try(:to_i) || 0 %>,
     duration: <%= @video.duration.try(:to_i) || 0 %>
-  }),
-  hue: new Muvee.HueController(this, {
-    brightenPath: '<%= brighten_lights_path %>',
-    dimPath: '<%= dim_lights_path %>',
-    setPath: '<%= set_lights_path %>'
-  })}">
+  })
+}">
   <%= render 'video_controls' %>
   <%= render 'video_watch_meta', video: @video, next_episode: @next_episode, previous_episode: @previous_episode %>
   <% if @video.is_tv? %>
     <%= render 'video_upnext', next_episode: @next_episode, previous_episode: @previous_episode if @next_episode %>
   <% end %>
-  <div class="video-container">
+  <div class="video-container" <% if control_hue_lights? %>
+    define="{
+      hue: new Muvee.HueController(this, {
+        brightenPath: '<%= brighten_lights_path %>',
+        dimPath: '<%= dim_lights_path %>',
+        setPath: '<%= set_lights_path %>'
+      })
+    }"
+    <% end %>>
     <video src="<%= stream_source_video_path(@video, @source) %>"
       id="video"
       class="video-<%= @video.id %>"

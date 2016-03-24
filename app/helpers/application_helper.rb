@@ -85,4 +85,8 @@ module ApplicationHelper
   def year_month_day(time)
     time.try(:strftime, '%Y-%m-%d')
   end
+
+  def control_hue_lights?
+    Rails.configuration.control_hue_lights
+  end
 end

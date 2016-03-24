@@ -30,13 +30,15 @@
     </div>
   </div>
 
-  <div class="video-controls-group fullscreen-group">
-    <div class="video-controls-button hue" bind-event-click="hue.cycleMode()" bind-class="{'brightness': hue.lightPref == 'brightness', 'color': hue.lightPref == 'hue'}">
-      <i class="fa fa-lightbulb-o"></i>
+  <% if control_hue_lights? %>
+    <div class="video-controls-group fullscreen-group">
+      <div class="video-controls-button hue" bind-event-click="hue.cycleMode()" bind-class="{'brightness': hue.lightPref == 'brightness', 'color': hue.lightPref == 'hue'}">
+        <i class="fa fa-lightbulb-o"></i>
+      </div>
+      <div class="video-controls-button" bind-event-click="player.toggleFullscreen()">
+        <i class="fa fa-arrows-alt" bind-class="{'fa-arrows-alt': !player.fullscreen, 'fa-compress': player.fullscreen}"></i>
+      </div>
     </div>
-    <div class="video-controls-button" bind-event-click="player.toggleFullscreen()">
-      <i class="fa fa-arrows-alt" bind-class="{'fa-arrows-alt': !player.fullscreen, 'fa-compress': player.fullscreen}"></i>
-    </div>
-  </div>
+  <% end %>
 
 </div>
