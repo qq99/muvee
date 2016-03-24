@@ -120,7 +120,7 @@ class Transcode < ActiveRecord::Base
     end
     return false if is_already_transcoded_by_muvee?
     return false if started?
-    if complete? # don't convert it again!
+    if transcoded_file_exists? || complete? # don't convert it again!
       move_transcoded_file! if transcoding_file_exists?
       note "#{eventual_path} already transcoded; please review #{raw_file_path}"
       return true
