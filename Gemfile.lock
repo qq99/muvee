@@ -220,6 +220,8 @@ GEM
       coderay (~> 1.1)
       json (~> 1.8)
     puma (3.0.2)
+    quiet_assets (1.1.0)
+      railties (>= 3.1, < 5.0)
     rack (2.0.0.alpha)
       json
     rack-test (0.6.3)
@@ -362,6 +364,7 @@ DEPENDENCIES
   pry-rails
   pry-theme
   puma
+  quiet_assets
   rails (>= 5.0.0.beta3, < 5.1)
   rb-readline
   redis

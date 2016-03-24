@@ -73,7 +73,7 @@ group :development, :test do
   # gem 'partially_useful'
   gem "better_errors"
   gem "binding_of_caller"
-  # gem 'quiet_assets'
+  gem 'quiet_assets'
 end
 
 group :development do

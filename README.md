@@ -72,7 +72,7 @@ To install and use on Linux
 ---
 0. Install the Transmission bittorrent client, and enable web access (restricting it to 127.0.0.1 is fine). This is required to run muvee atm until I code around errors thrown when it is not running.  Your remote settings should look like this for muvee to interact with Transmission.  You can set your other client settings however you like.
 ![](http://imgur.com/wjzDzVI.jpg)
-1. `sudo apt-get install postgresql-9.3 libpq-dev libav-tools nginx imagemagick libffi-dev libphash0 libphash0-dev redis` or if on OSX, `brew install postgresql redis nginx libav`
+1. `sudo apt-get install postgresql-9.3 libpq-dev libav-tools nginx redis` or if on OSX, `brew install postgresql redis nginx libav`
 2. `bundle install`
 3. `bundle exec rake database:create` (or manually create a postgres role and set up your `database.yml`, e.g., `psql -c "create role muvee with createdb login password 'password1'"`)
 4. `bundle exec rake db:create` (different than above!) then `bundle exec rake db:migrate`
@@ -107,16 +107,23 @@ At the moment, `muvee` uses `client.groups.first` as the set of lights it will d
 Dependencies (and tested with):
 ---
 
+- transmission 2.84
 - postgresql-9.3 libpq-dev
-- ruby 2.1.2+
+- ruby 2.2.2
 - redis (for sidekiq)
   - sudo apt-get install redis
 - libav-tools
-  - avconv version 9.14-6:9.14-0ubuntu0.14.04.1
-  - avprobe version 9.14-6:9.14-0ubuntu0.14.04.1
-- node.js 0.10.25+ (**deprecated?**)
-- nginx version: nginx/1.4.6 (Ubuntu)
-  - globally available on your path
+  - avconv / ffmpeg (req `avconv` command on your path)
+    - avconv version 9.14-6:9.14-0ubuntu0.14.04.1
+    - ffmpeg version 2.7.6-0ubuntu0.15.10.1
+  - avprobe / ffprobe (req `avprobe` command on your path)
+    - avprobe version 9.14-6:9.14-0ubuntu0.14.04.1
+    - ffprobe version 2.7.6-0ubuntu0.15.10.1
+- nginx version (req `nginx` command available on your path):
+  - nginx/1.9.3 (Ubuntu)
+  - nginx/1.4.6 (Ubuntu)
+
+Deprecated dependencies:
 - ImageMagick 6.7.7-10 2014-03-06 Q16 (**deprecated** for now)
 - libffi-dev libphash0 libphash0-dev (for determining 3D-ness of movies; **deprecated**)
   - `sudo apt-get install libffi-dev libphash0 libphash0-dev`
