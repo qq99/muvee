@@ -8,7 +8,7 @@ class TorrentFinderService
 
     threads = []
     # threads << search_eztv
-    # threads << search_kickass
+    threads << search_kickass
     threads << search_piratebay
     threads.each(&:join)
 
@@ -47,22 +47,43 @@ class TorrentFinderService
 
   def search_eztv
     Thread.new {
-      @eztv_results = EztvSearchResult.search(@query) || []
-      categorize_results(:eztv, @eztv_results)
+      begin
+        Timeout::timeout(5) do
+          @eztv_results = EztvSearchResult.search(@query) || []
+          categorize_results(:eztv, @eztv_results)
+        end
+      rescue Timeout::Error
+        puts 'eztv search timed out'
+        []
+      end
     }
   end
 
   def search_kickass
     Thread.new {
-      @kickass_results = KickassTorrentsSearchResult.get(@query).results || []
-      categorize_results(:kickass, @kickass_results)
+      begin
+        Timeout::timeout(5) do
+          @kickass_results = KickassTorrentsSearchResult.get(@query).results || []
+          categorize_results(:kickass, @kickass_results)
+        end
+      rescue Timeout::Error
+        puts 'kickass search timed out'
+        []
+      end
     }
   end
 
   def search_piratebay
     Thread.new {
-      @piratebay_results = ThePirateBay::Search.new(@query, 0, ThePirateBay::SortBy::Seeders, ThePirateBay::Category::Video).results || []
-      categorize_results(:piratebay, @piratebay_results)
+      begin
+        Timeout::timeout(5) do
+          @piratebay_results = ThePirateBay::Search.new(@query, 0, ThePirateBay::SortBy::Seeders, ThePirateBay::Category::Video).results || []
+          categorize_results(:piratebay, @piratebay_results)
+        end
+      rescue Timeout::Error
+        puts 'piratebay search timed out'
+        []
+      end
     }
   end
 
