@@ -3,9 +3,6 @@ class TorrentInfoChannel < ApplicationCable::Channel
     torrent_info
   end
 
-  def unsubscribed
-  end
-
   def torrent_info
     payload = Torrent.all.map(&:summary)
     transmit(payload)

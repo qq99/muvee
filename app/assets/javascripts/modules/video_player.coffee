@@ -176,8 +176,10 @@ class Muvee.VideoPlayer
     @secondsLeft() < 15
 
   _setLeftOffAtTime: ->
-    $.post @opts.leftOffAtPath,
+    Muvee.videoStatusCable.perform("set_left_off_at",
+      video_id: @opts.videoId,
       left_off_at: parseInt(@videoEl.currentTime, 10)
+    )
 
   showControls: ->
     @shouldShowControls = true

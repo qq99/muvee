@@ -13,7 +13,6 @@ Rails.application.routes.draw do
       get 'source/:source_id/stream', action: :stream_source, as: :stream_source
       get :fanart
       get :thumbnails
-      post :left_off_at
       post :reanalyze, action: :reanalyze_video
     end
   end
