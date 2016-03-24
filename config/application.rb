@@ -33,6 +33,12 @@ module MuvRails
       false
     end
 
+    config.control_transmission = if is_server_or_sidekiq_context?
+      Figaro.env.control_transmission == "true"
+    else
+      false
+    end
+
     # Autoload lib/ folder including all subdirectories
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
   end

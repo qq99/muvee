@@ -1,27 +1,28 @@
-Muvee.cable.subscriptions.create "TorrentInfoChannel",
-  connected: ->
-    @install()
+if Muvee.configuration.control_transmission
+  Muvee.cable.subscriptions.create "TorrentInfoChannel",
+    connected: ->
+      @install()
 
-  disconnected: ->
-    @uninstall()
+    disconnected: ->
+      @uninstall()
 
-  rejected: ->
-    @uninstall()
+    rejected: ->
+      @uninstall()
 
-  received: (data) ->
-    for result in data
-      evt = new CustomEvent(
-        "muvee:progress_reporter:TorrentInformation#{result.id}",
-        {'detail': result}
-      )
-      document.dispatchEvent(evt)
+    received: (data) ->
+      for result in data
+        evt = new CustomEvent(
+          "muvee:progress_reporter:TorrentInformation#{result.id}",
+          {'detail': result}
+        )
+        document.dispatchEvent(evt)
 
-  install: ->
-    @pageChangeListener = document.addEventListener 'page:load', @getInfo.bind(this)
-    @torrentQueryInterval = setInterval(@getInfo.bind(this), 1000)
+    install: ->
+      @pageChangeListener = document.addEventListener 'page:load', @getInfo.bind(this)
+      @torrentQueryInterval = setInterval(@getInfo.bind(this), 1000)
 
-  getInfo: -> @perform("torrent_info")
+    getInfo: -> @perform("torrent_info")
 
-  uninstall: ->
-    clearInterval @torrentQueryInterval
-    document.removeEventListener(@pageChangeListener)
+    uninstall: ->
+      clearInterval @torrentQueryInterval
+      document.removeEventListener(@pageChangeListener)

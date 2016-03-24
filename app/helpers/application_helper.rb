@@ -89,4 +89,8 @@ module ApplicationHelper
   def control_hue_lights?
     Rails.configuration.control_hue_lights
   end
+
+  def control_transmission?
+    Rails.configuration.control_transmission
+  end
 end
