@@ -22,10 +22,13 @@ class TorrentManagerService
   end
 
   def self.start_transmission
-    transmission = fork do
-      exec 'transmission-gtk'
+    Process.fork do
+      Process.setsid
+      Process.fork do
+        exec 'transmission-gtk'
+      end
+      exit
     end
-    Process.detach(transmission)
   end
 
   def percentage_done(transmission_id)
