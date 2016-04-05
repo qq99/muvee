@@ -16,7 +16,7 @@
   <thead>
     <tr>
       <td></td>
-      <td>Source</td>
+      <td></td>
       <td>Size</td>
       <td width='50%'>Title</td>
       <td class='ralign'>S</td>
@@ -29,13 +29,21 @@
   <% sources.each do |source| %>
     <tr class="<%= 'dead' if source.dead? %>">
       <td>
+        <div class="tracker-logo">
+          <% if source.source == :kickass %>
+            <%= image_tag 'kickass-torrents-logo', title: "Kickass" %>
+          <% else %>
+            <%= image_tag 'piratebay-logo', title: 'The Pirate Bay' %>
+          <% end %>
+        </div>
+      </td>
+      <td>
         <% if source.verified %>
           <i class="fa fa-check-circle success" title="Verified"></i>
         <% else %>
           <i class="fa fa-question-circle" title="Unverified"></i>
         <% end %>
       </td>
-      <td><%= source.source %></td>
       <td><%= number_to_human_size(source.filesize) if source.filesize.present? %></td>
       <td>
         <% if source.link.present? %>

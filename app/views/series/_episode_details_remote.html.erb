@@ -1,17 +1,4 @@
-<div class="video-detailed-summary remote">
-
-  <% if video.released_on.present? %>
-    <p>
-      <i class="subdued fa fa-calendar"></i>
-      <%= airs_on_summary(video.released_on) %>
-    </p>
-  <% end %>
-
-  <% if video.overview.present? %>
-    <p class="video-overview">
-      <%= video.overview %>
-    </p>
-  <% end %>
+<div class="video-detailed-summary remote" define="{showSpoilers: false}">
 
   <p>
     <% if video.torrents.present? %>
@@ -22,6 +9,16 @@
       No sources were found for this episode.
     <% end %>
   </p>
+
+  <% if video.overview.present? %>
+    <p class="video-overview hide" bind-show="showSpoilers">
+      <%= video.overview %>
+    </p>
+    <button class="action-button" bind-event-click="showSpoilers = !showSpoilers">
+      <span bind-show="!showSpoilers">Show spoilers</span>
+      <span bind-show="showSpoilers">Hide spoilers</span>
+    </button>
+  <% end %>
 
   <% if @torrent_sources.present? %>
     <%= render 'shared/sources_table',
