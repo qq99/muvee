@@ -13,31 +13,24 @@
     </p>
   <% end %>
 
-  <% if video.torrents.present? %>
-    Downloading <%= video.torrents.size %> torrents now...
-  <% end %>
+  <p>
+    <% if video.torrents.present? %>
+      Downloading <%= video.torrents.size %> torrents now...
+    <% end %>
 
-  <% if @torrent_sources.present? %>
-    <p><%= pluralize(@torrent_sources.size, 'source') %> found:</p>
-  <% elsif @torrent_sources != nil && video.torrents.size == 0 %>
-    <p>No sources were found for this episode.</p>
-  <% end %>
+    <% if @torrent_sources.blank? %>
+      No sources were found for this episode.
+    <% end %>
+  </p>
 
   <% if @torrent_sources.present? %>
     <%= render 'shared/sources_table',
           sources: @torrent_sources,
           object_unique_id: "video-#{video.id}",
+          find_more_path: self.method(:show_episode_details_series_index_path),
+          find_more_path_args: [{episode_id: video.id}],
           download_path: self.method(:download_series_path),
           download_path_args: [video.series, video] %>
   <% end %>
 
-  <p>Didn't find what you were looking for? Try searching by a different title:</p>
-
-  <%= form_tag show_episode_details_series_index_path(episode_id: video.id), 'tg-remote' => 'true', method: 'GET', 'refresh-on-success' => "video-#{video.id}" do %>
-    <div class="action-button-group flex">
-      <%= text_field_tag :query, params[:query], class: 'action-button' %><%= button_tag type: "submit", class: 'action-button' do %>
-      <i class="fa fa-search"></i> Search
-      <% end %>
-    </div>
-  <% end %>
 </div>
