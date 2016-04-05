@@ -5,7 +5,7 @@
     duration: <%= @video.duration.try(:to_i) || 0 %>
   })
 }">
-  <%= render 'video_controls' %>
+  <%= render 'video_controls', video: @video %>
   <%= render 'video_watch_meta', video: @video, next_episode: @next_episode, previous_episode: @previous_episode %>
   <% if @video.is_tv? %>
     <%= render 'video_upnext', next_episode: @next_episode, previous_episode: @previous_episode if @next_episode %>

@@ -1,8 +1,11 @@
+@import 'base';
 @import 'variables';
+@import 'utility';
 
 $video-control-button-width: 1.25em;
 $video-control-group-padding: 0.25em;
 $volumebar-width: 8em;
+$video-control-section-height: 3em;
 
 #watch {
   position: relative;
@@ -13,10 +16,45 @@ $volumebar-width: 8em;
   z-index: 200;
   width: 80%;
   left: 10%;
-  bottom: 10%;
-  height: 2em;
-  background: rgba(0, 0, 0, 0.85);
+  bottom: 2rem;
+  height: $video-control-section-height;
   display: flex;
+  overflow: hidden;
+}
+
+.meta-buttons {
+  position: absolute;
+  z-index: 200;
+  top: 2rem;
+  left: 2rem;
+  font-size: 3em;
+  color: white;
+  overflow: hidden;
+
+  a {
+    display: block;
+    padding: 0.5rem 1rem;
+  }
+}
+
+.video-controls, .meta-buttons {
+  background: rgba(0,0,0,0);
+  transition: background 0.5s ease-in-out;
+
+  &.high-contrast {
+    background: rgba(0,0,0,0.8);
+    a, .video-controls-button {
+      &:hover, &:focus {
+        background: black;
+        color: $radical-blue;
+      }
+    }
+  }
+}
+
+.video-controls .progress-bar {
+  padding: 10px;
+  cursor: pointer;
 }
 
 // buttons
@@ -24,19 +62,23 @@ $volumebar-width: 8em;
   position: relative;
   z-index: 10;
   height: 100%;
-  margin: 0 $video-control-group-padding;
+  margin: 0;
   display: flex;
   align-items: center;
 }
 .video-controls-button {
-  font-size: 1.5em;
-  line-height: 1.5em;
+  height: $video-control-section-height;
+  width: $video-control-section-height;
+  display: flex;
+  flex: 0 0 auto;
   color: white;
-  margin: 0.25em;
   text-align: center;
   cursor: pointer;
-  max-height: 100%;
-  width: 1em;
+  justify-content: center;
+  align-items: center;
+  i {
+    font-size: 1.5em;
+  }
 }
 
 #duration-group {
@@ -49,10 +91,14 @@ $volumebar-width: 8em;
 .duration-remaining {
   pointer-events: none;
   position: absolute;
-  right: 0.5em;
-  top: 0em;
+  right: 0;
+  top: 0;
+  padding-right: 1rem;
+  height: 100%;
   color: white;
   text-shadow: 1px 1px 0px black;
+  display: flex;
+  align-items: center;
 }
 
 .hue {
