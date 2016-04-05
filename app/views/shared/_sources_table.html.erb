@@ -6,54 +6,62 @@
     <tr>
       <td></td>
       <td>Source</td>
+      <td>Size</td>
       <td width='50%'>Title</td>
-      <td>Seeders</td>
-      <td>Leechers</td>
-      <td>Ratio</td>
-      <td width="100px"></td>
+      <td class='ralign'>S</td>
+      <td class='ralign'>L</td>
+      <td class='ralign'>R</td>
+      <td></td>
     </tr>
   </thead>
   <% sources.each do |source| %>
 
   <%
-    seed_class = if source[:seeders] && source[:seeders] > good_seed_count_threshold then "success" elsif source[:seeders] == 0 then "error" else "notice" end
-    ratio_class = if source[:ratio] && source[:ratio] > good_ratio_threshold then 'success' elsif source[:ratio] == 0 then 'error' else 'notice' end
+    seed_class = if source.seeders && source.seeders > good_seed_count_threshold then "success" elsif source.seeders == 0 then "error" else "notice" end
+    ratio_class = if source.ratio && source.ratio > good_ratio_threshold then 'success' elsif source.ratio == 0 then 'error' else 'notice' end
   %>
   <tr>
     <td>
-      <% if source[:verified] %>
+      <% if source.verified %>
         <i class="fa fa-check-circle success" title="Verified"></i>
       <% else %>
         <i class="fa fa-question-circle" title="Unverified"></i>
       <% end %>
     </td>
-    <td><%= source[:source] %></td>
-    <td><%= source[:title] %></td>
-    <td><span class="<%= seed_class %>"><%= source[:seeders] || '-' %></span></td>
-    <td><%= source[:leechers] || '-' %></td>
+    <td><%= source.source %></td>
+    <td><%= number_to_human_size(source.filesize) if source.filesize.present? %></td>
     <td>
+      <% if source.link.present? %>
+        <%= link_to source.title, source.link, target: "_blank" %>
+      <% else %>
+        <%= source.title %>
+      <% end %>
+    </td>
+    <td class='ralign'><span class="<%= seed_class %>"><%= source.seeders || '?' %></span></td>
+    <td class='ralign'><%= source.leechers || '?' %></td>
+    <td class='ralign'>
       <span class="<%= ratio_class %>">
-        <% if source[:ratio].present? %>
-          <% if source[:ratio].nan? %>
+        <% if source.ratio.present? %>
+          <% if source.ratio.nan? %>
             -
-          <% elsif source[:ratio].infinite? %>
+          <% elsif source.ratio.infinite? %>
             ∞
           <% else %>
-            <%= number_with_precision(source[:ratio], precision: 2) %>
+            <%= number_with_precision(source.ratio, precision: 2) %>
           <% end %>
         <% else %>
           -
         <% end %>
       </span>
     </td>
-    <td>
-      <%= link_to download_path.call(*download_path_args, download_url: source[:magnet_link]),
+    <td class='ralign'>
+      <%= link_to download_path.call(*download_path_args, download_url: source.magnet_link),
       class: 'action-button flex-fixed',
         'tg-remote' => "post",
         'refresh-on-success' => object_unique_id do %>
         <i class="fa fa-download"></i>
         <% end %>
-        <a class="flex-fixed action-button" href="<%= source[:magnet_link] %>">
+        <a class="flex-fixed action-button" href="<%= source.magnet_link %>">
           <i class="fa fa-magnet"></i>
         </a>
       </td>

@@ -5,25 +5,25 @@
 .torrent-sources-table {
   width: 100%;
   font-weight: 200;
-  margin-bottom: 1em;
+  border-spacing: 0;
   thead {
     font-style: italic;
     color: #aaa;
   }
   td {
-    padding: 0.1em;
-  }
-  td.long {
-    overflow: hidden;
-    white-space: nowrap;
-    max-width: 7.5em;
-    text-overflow: ellipsis;
-  }
-  td.button-sized {
-    width: 1em;
+    padding: 0.45rem 0.25rem;
   }
   .action-button {
     margin-top: 0;
     margin-bottom: 0;
+  }
+  tr:nth-child(2n) {
+    background: rgba(255,255,255,0.05);
+  }
+  tbody tr:hover {
+    background: rgba(255,255,255,0.1);
+  }
+  .ralign {
+    text-align: right;
   }
 }

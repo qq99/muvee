@@ -20,6 +20,8 @@ gem 'jquery-rails'
 gem 'lodash-rails'
 gem "font-awesome-rails"
 gem 'httparty'
+gem 'hashie'
+gem 'typhoeus'
 gem 'redis'
 gem 'color'
 gem 'figaro'

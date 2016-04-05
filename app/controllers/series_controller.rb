@@ -127,7 +127,7 @@ class SeriesController < ApplicationController
     else
       if params[:query].present?
 
-        @torrent_sources = TorrentFinderService.new(params[:query]).search
+        @torrent_sources = TorrentFinderService.new(params[:query]).find
         @torrent_sources.reject! do |src|
           Torrent.exists?(source: src[:magnet_link]).present?
         end
