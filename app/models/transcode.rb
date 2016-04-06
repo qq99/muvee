@@ -113,8 +113,12 @@ class Transcode < ActiveRecord::Base
     File.exist?(raw_file_path)
   end
 
+  def origin_file_is_actually_a_directory?
+    File.directory?(raw_file_path)
+  end
+
   def transcode
-    if !origin_file_exists?
+    if !origin_file_exists? || origin_file_is_actually_a_directory?
       self.destroy
       return false
     end

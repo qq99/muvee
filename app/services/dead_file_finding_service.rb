@@ -15,9 +15,13 @@ class DeadFileFindingService
 
       if is_video_container?(filename) # potentially transcoded to another filename
         filename_no_extension = filename.gsub(File.extname(filename), '')
-        if (source = Source.find_by(raw_file_path: filename_no_extension + ".mp4")) ||
-           (source = Source.find_by(raw_file_path: filename_no_extension + ".webm"))
-
+        variants = [
+          "#{filename_no_extension}.mp4",
+          "#{filename_no_extension}.webm",
+          "#{filename_no_extension}.muv-transcoded.mp4",
+          "#{filename_no_extension}.muv-transcoded.webm"
+        ]
+        if source = Source.find_by(raw_file_path: variants)
           data[:similar_source] = source
         end
       end

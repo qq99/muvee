@@ -1,3 +1,4 @@
+
 # SQLite version 3.x
 #   gem install sqlite3
 #
@@ -30,7 +31,7 @@ development:
   encoding: unicode
   database: muvee
   host: localhost
-  pool: 30
+  pool: 60
   username: muvee
   password: password1
 
@@ -39,6 +40,6 @@ test:
   encoding: unicode
   database: muvee_test
   host: localhost
-  pool: 30
+  pool: 60
   username: muvee
   password: password1
