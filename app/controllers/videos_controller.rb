@@ -1,9 +1,8 @@
 class VideosController < ApplicationController
-  before_action :set_video, only: [:show, :show_source, :edit, :update, :destroy, :stream, :stream_source, :left_off_at, :thumbnails, :fanart, :reanalyze_video]
+  before_action :set_video, only: [:show, :show_source, :edit, :update, :destroy, :stream, :stream_source, :thumbnails, :fanart, :reanalyze_video]
   before_action :set_source, only: [:show_source, :stream_source]
 
-  skip_before_filter :check_if_first_use, only: [:left_off_at]
-  respond_to :json, only: [:left_off_at, :thumbnails]
+  respond_to :json, only: [:thumbnails]
 
   def list
     @videos = Video.all
@@ -26,8 +25,8 @@ class VideosController < ApplicationController
         episodic_scope = @video.series.tv_shows.local.release_order
         episodic_ids = episodic_scope.pluck(:id)
         index_of_current_episode = episodic_ids.find_index{|id| id == @video.id}
-        @previous_episode = episodic_scope.at(index_of_current_episode - 1) if index_of_current_episode > 0
-        @next_episode = episodic_scope.at(index_of_current_episode + 1) if index_of_current_episode < (episodic_ids.size - 1)
+        @previous_episode = episodic_scope[index_of_current_episode - 1] if index_of_current_episode > 0
+        @next_episode = episodic_scope[index_of_current_episode + 1] if index_of_current_episode < (episodic_ids.size - 1)
       end
     end
     render 'show', layout: 'fullscreen'
@@ -72,12 +71,6 @@ class VideosController < ApplicationController
     render json: {status: "ok"}
   end
 
-  # POST /videos/1/left_off_at.json
-  def left_off_at
-    @video.update_attribute(:left_off_at, params[:left_off_at])
-    render json: {status: "ok"}
-  end
-
   # GET /videos/1/thumbnails.json
   def thumbnails
     # builds thumbnails if they don't exist, returns them if they do
@@ -91,7 +84,6 @@ class VideosController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_video
       @video = Video.find(params[:id])
     end
@@ -104,7 +96,6 @@ class VideosController < ApplicationController
       end
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def video_params
       params.require(:video).permit(:raw_file_path, :type, :episode, :season, :duration, :left_off_at, :series_id)
     end

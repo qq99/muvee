@@ -25,6 +25,20 @@ module MuvRails
     # config.i18n.default_locale = :de
     config.assets.paths << Rails.root.join("vendor", "assets", "javascripts")
 
+    config.action_cable.disable_request_forgery_protection = true
+
+    config.control_hue_lights = if is_server_or_sidekiq_context?
+      Figaro.env.control_hue_lights == "true"
+    else
+      false
+    end
+
+    config.control_transmission = if is_server_or_sidekiq_context?
+      Figaro.env.control_transmission == "true"
+    else
+      false
+    end
+
     # Autoload lib/ folder including all subdirectories
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
   end

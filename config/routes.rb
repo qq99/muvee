@@ -1,7 +1,8 @@
-require 'sidekiq/web'
+# require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  mount Sidekiq::Web => '/sidekiq'
+  # mount Sidekiq::Web => '/sidekiq'
+  mount ActionCable.server => "/cable"
 
   resources :videos, except: [:show] do
     collection do
@@ -12,7 +13,6 @@ Rails.application.routes.draw do
       get 'source/:source_id/stream', action: :stream_source, as: :stream_source
       get :fanart
       get :thumbnails
-      post :left_off_at
       post :reanalyze, action: :reanalyze_video
     end
   end

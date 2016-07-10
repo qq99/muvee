@@ -1,12 +1,36 @@
-<div class="video-controls hide" bind-class="{'hide': !player.shouldShowControls}">
+<div class="meta-buttons"
+  bind-class="{
+    hide: !player.shouldShowControls,
+    'high-contrast': player.playing()
+  }">
+  <%
+    if video.is_tv?
+      home_path = series_index_path
+    else
+      home_path = newest_movies_path
+    end
+  %>
+  <%= link_to home_path do %>
+    <i class="fa fa-home"></i>
+  <% end %>
+</div>
+
+<div class="video-controls hide"
+  bind-class="{
+    hide: !player.shouldShowControls,
+    'high-contrast': player.playing()
+  }">
 
   <div class="video-controls-group play-group">
-    <div class="video-controls-button" bind-event-click="player.togglePlayPause()">
-      <i class="fa fa-pause" bind-class="{'fa-pause': player.playing(), 'fa-play': player.paused()}"></i>
-    </div>
-    <div class="video-controls-button" bind-event-click="player.stepBackwards()">
+    <a class="video-controls-button" bind-event-click="player.togglePlayPause()">
+      <i class="fa fa-pause" bind-class="{
+        'fa-pause': player.playing(),
+        'fa-play': player.paused()
+      }"></i>
+    </a>
+    <a class="video-controls-button" bind-event-click="player.stepBackwards()">
       <i class="fa fa-step-backward"></i>
-    </div>
+    </a>
   </div>
 
   <div id="duration-group" class="video-controls-group">
@@ -19,24 +43,29 @@
   </div>
 
   <div id="volume-group" class="video-controls-group">
+    <div class="video-controls-button" bind-event-click="player.toggleMute()">
+      <i class="fa fa-volume-up" bind-class="{
+        'fa-volume-up': !player.muted(),
+        'fa-volume-off': player.muted(),
+        'error': player.muted()
+      }"></i>
+    </div>
     <div class="progress-bar">
       <div id="volume-bar" class="progress-bar__container" bind-event-click="player.clickVolumeBar(event)">
         <div class="progress-bar__bar" style="width: 100%"></div>
       </div>
     </div>
-
-    <div class="video-controls-button" bind-event-click="player.toggleMute()">
-      <i class="fa fa-volume-up" bind-class="{'fa-volume-up': !player.muted(), 'fa-volume-off': player.muted()}"></i>
-    </div>
   </div>
 
-  <div class="video-controls-group fullscreen-group">
-    <div class="video-controls-button hue" bind-event-click="hue.cycleMode()" bind-class="{'brightness': hue.lightPref == 'brightness', 'color': hue.lightPref == 'hue'}">
-      <i class="fa fa-lightbulb-o"></i>
+  <% if control_hue_lights? %>
+    <div class="video-controls-group fullscreen-group">
+      <div class="video-controls-button hue" bind-event-click="hue.cycleMode()" bind-class="{'brightness': hue.lightPref == 'brightness', 'color': hue.lightPref == 'hue'}">
+        <i class="fa fa-lightbulb-o"></i>
+      </div>
+      <div class="video-controls-button" bind-event-click="player.toggleFullscreen()">
+        <i class="fa fa-arrows-alt" bind-class="{'fa-arrows-alt': !player.fullscreen, 'fa-compress': player.fullscreen}"></i>
+      </div>
     </div>
-    <div class="video-controls-button" bind-event-click="player.toggleFullscreen()">
-      <i class="fa fa-arrows-alt" bind-class="{'fa-arrows-alt': !player.fullscreen, 'fa-compress': player.fullscreen}"></i>
-    </div>
-  </div>
+  <% end %>
 
 </div>

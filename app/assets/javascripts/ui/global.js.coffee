@@ -9,7 +9,3 @@ $(document).on "click", "[data-modal]", (ev) ->
   ev.preventDefault()
   modalId = $(ev.currentTarget).data("modal")
   $("##{modalId}").addClass("show")
-
-
-$ ->
-  socket = new Muvee.MuveeSocket()

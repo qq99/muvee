@@ -2,15 +2,18 @@ class Muvee.ProgressReporter
 
   # nice test:  evt = new CustomEvent('muvee:progress_reporter:VideoCreationService', {detail: {status: 'scanning', substatus: '/foo/bar/baz.mp4', current: 50, max: 2568}}); document.dispatchEvent(evt)
 
-  constructor: (@node, namespace) ->
+  constructor: (@node, @namespace) ->
     @visible = false
 
-    @listener = document.addEventListener "muvee:progress_reporter:#{namespace}", @update.bind(this)
+    @listener = document.addEventListener(@getNamespace(), @update.bind(this))
 
     Page.onReplace(@node, @destructor.bind(this))
 
   destructor: ->
-    document.removeEventListener(@listener)
+    document.removeEventListener(@getNamespace(), @listener)
+
+  getNamespace: ->
+    "muvee:progress_reporter:#{@namespace}"
 
   isShown: ->
     @visible

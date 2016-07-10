@@ -15,7 +15,9 @@
 //= require uri
 //= require turbograft
 //= require twine
-//= require ./ui/bootstrap.js.coffee
+//= require nprogress
+//= require bootstrap
+//= require cable
+//= require_tree ./cables
 //= require_tree ./modules
 //= require_tree ./ui
-//= require nprogress

@@ -12,24 +12,35 @@
   .episode-title {
     color: $radical-blue;
   }
-}
 
+  .video-overview {
+    width: 35em;
+    position: relative;
+  }
+
+  .progress-bar__container {
+    background: rgba(255,255,255,0.1);
+  }
+  .progress-bar__bar {
+    transition: 0.15s ease-in-out;
+  }
+
+}
 .video-watch-meta {
   @extend .mbox;
   background: black;
   background: rgba(0,0,0,0.9);
-  background: linear-gradient(45deg, rgba(0,0,0,1), rgba(0,0,0,0.5));
+  background: linear-gradient(45deg, rgba(0,0,0,1), rgba(0,0,0,0.55));
   z-index: 20;
   color: white;
-  padding: 3.5em;
+  padding: 0 10% 5rem 10%;
   opacity: 1;
   transition: all 0.5s ease-in-out;
-  > * {
-    max-width: 35em;
-  }
+  display: flex;
+  align-items: center;
 
   .title {
-    margin: 0.5em 0 0 0;
+    margin: 0.25em 0;
     color: white;
     a {
       color: inherit;
@@ -39,8 +50,8 @@
     }
   }
   .title-information {
-    margin: 5em 0 2em 0;
     font-size: 1.2em;
+    margin-bottom: 2.5rem;
   }
   .description {
     margin-top:1.5em;

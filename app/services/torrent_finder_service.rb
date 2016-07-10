@@ -4,16 +4,76 @@ class TorrentFinderService
     @query = query.gsub(/[\(\)']/, '')
   end
 
-  def search
+  def find
+    hydra = Typhoeus::Hydra.new
 
-    threads = []
-    # threads << search_eztv
-    threads << search_kickass
-    threads << search_piratebay
-    threads.each(&:join)
+    search_piratebay # TODO: make into hydra queue
+    hydra.queue search_kickass
+    hydra.run
 
-    @results = eztv_results + kickass_results + piratebay_results
+    @results = kickass_results + piratebay_results + eztv_results
     sort_results(@results)
+  end
+
+  def search_kickass
+    req = Typhoeus::Request.new(
+      "https://#{Figaro.env.kickass_domain}/usearch/#{URI.escape(@query)}/",
+      followlocation: true,
+      accept_encoding: "gzip",
+      params: {
+        rss: 1
+      }
+    )
+    req.on_complete do |response|
+      if response.success?
+        log 'kickass: req success'
+        result = Hash.from_xml(response.body).try(:with_indifferent_access) || {}
+        result = Hashie::Mash.new(result)
+
+        entries = result.try(:rss).try(:channel).try(:item)
+        entries = [entries] if entries.kind_of?(Hash)
+
+        @kickass_results = entries.map do |entry|
+          pub_date = Time.parse(entry.pubDate) if entry.pubDate.present?
+
+          RemoteTorrent.new(
+            title: entry.title,
+            seeders: entry.seeds.to_s.to_i,
+            leechers: entry.peers.to_s.to_i,
+            magnet_link: entry.magnetURI,
+            verified: entry.verified.to_s.to_i == 1,
+            author: entry.author,
+            category: entry.category,
+            link: entry.link,
+            published_at: entry.pub_date,
+            filesize: entry.contentLength.to_i
+          )
+        end
+        postprocess_results(:kickass, @kickass_results)
+        @kickass_results
+      elsif response.timed_out?
+        log 'kickass: req timed out'
+      elsif response.code == 0
+        log 'kickass: something went wrong, no response code'
+      else
+        log "kickass: request failed: #{response.code.to_s}"
+      end
+    end
+
+    req
+  end
+
+  def search_piratebay
+    begin
+      Timeout::timeout(5) do
+        results = ThePirateBay::Search.new(@query, 0, ThePirateBay::SortBy::Seeders, ThePirateBay::Category::Video).results || []
+        @piratebay_results = results.map{ |e| RemoteTorrent.new(e) }
+        postprocess_results(:piratebay, @piratebay_results)
+      end
+    rescue Timeout::Error
+      log 'piratebay: search timed out'
+      []
+    end
   end
 
   def eztv_results
@@ -28,42 +88,20 @@ class TorrentFinderService
     @piratebay_results || []
   end
 
+  private
+
+  def postprocess_results(source, results)
+    results.each { |result|
+      result[:source] = source
+    }
+  end
+
   def sort_results(results)
-    results
-      .sort_by! { |entry| entry[:verified] ? -1 : 1 }
-      .sort_by! { |entry| -1 * (entry[:seeders] || 0) }
+    results.sort_by! { |entry| -(entry[:seeders] || 0) }
   end
 
-  def categorize_results(source, results)
-    results
-      .each { |result| result[:source] = source }
-      .each { |result|
-        seeders = result[:seeders].to_s.to_i
-        leechers = result[:leechers].to_s.to_i
-        ratio = seeders.to_f / leechers.to_f
-        result[:ratio] = ratio
-      }
-  end
-
-  def search_eztv
-    Thread.new {
-      @eztv_results = EztvSearchResult.search(@query) || []
-      categorize_results(:eztv, @eztv_results)
-    }
-  end
-
-  def search_kickass
-    Thread.new {
-      @kickass_results = KickassTorrentsSearchResult.get(@query).results || []
-      categorize_results(:kickass, @kickass_results)
-    }
-  end
-
-  def search_piratebay
-    Thread.new {
-      @piratebay_results = ThePirateBay::Search.new(@query, 0, ThePirateBay::SortBy::Seeders, ThePirateBay::Category::Video).results || []
-      categorize_results(:piratebay, @piratebay_results)
-    }
+  def log(message)
+    puts "[TorrentFinderService] #{message}"
   end
 
 end

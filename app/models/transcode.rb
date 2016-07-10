@@ -113,14 +113,18 @@ class Transcode < ActiveRecord::Base
     File.exist?(raw_file_path)
   end
 
+  def origin_file_is_actually_a_directory?
+    File.directory?(raw_file_path)
+  end
+
   def transcode
-    if !origin_file_exists?
+    if !origin_file_exists? || origin_file_is_actually_a_directory?
       self.destroy
       return false
     end
     return false if is_already_transcoded_by_muvee?
     return false if started?
-    if complete? # don't convert it again!
+    if transcoded_file_exists? || complete? # don't convert it again!
       move_transcoded_file! if transcoding_file_exists?
       note "#{eventual_path} already transcoded; please review #{raw_file_path}"
       return true

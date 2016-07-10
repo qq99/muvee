@@ -18,9 +18,8 @@ class VideoCreationService
   end
 
   def publish(event)
-    @redis ||= Redis.new
-    event = event.merge(type: 'VideoCreationService')
-    @redis.publish(:sidekiq, event.to_json)
+    event[:namespace] = 'VideoCreationService'
+    ActionCable.server.broadcast "progress_reports", event
   end
 
   def create_videos(klass, folders)

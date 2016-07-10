@@ -1,4 +1,4 @@
-HUE_CLIENT = if is_server_or_sidekiq_context?
+HUE_CLIENT = if Rails.configuration.control_hue_lights
   puts '=> initializers/hue: Initializing Hue client'
   begin
     Hue::Client.new
@@ -7,5 +7,6 @@ HUE_CLIENT = if is_server_or_sidekiq_context?
     nil
   end
 else
+  puts '=> initializers/hue: Opting not to control Hue lights'
   {}
 end

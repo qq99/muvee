@@ -1,40 +1,33 @@
 <div class="video-watch-meta hidden" bind-class="{'hidden': player.playing()}">
-  <div class="meta-options">
-    <%
-      if video.is_tv?
-        home_path = series_index_path
-      else
-        home_path = newest_movies_path
-      end
-    %>
-    <%= link_to home_path, class: 'home action-button' do %>
-      <i class="fa fa-home"></i> Bring me back home
-    <% end %>
-  </div>
-  <div class="title-information">
+  <div class="video-overview">
 
-    <p>You're watching...</p>
-    <h1 class="title">
-      <% if video.is_tv? && video.series_id.present? %>
-        <%= link_to video.title, series_path(video.series) %>
-      <% else %>
-        <%= link_to video.title, movie_path(video) %>
-      <% end %>
+    <div class="title-information">
 
-      <% if video.season && video.episode %>
-        <em class="season-and-episode"><%= video.season_episode %></em>
+      <p>
+        You're watching...
+      </p>
+      <h1 class="title">
+        <% if video.is_tv? && video.series_id.present? %>
+          <%= link_to video.title, series_path(video.series) %>
+        <% else %>
+          <%= link_to video.title, movie_path(video) %>
+        <% end %>
+
+        <% if video.season && video.episode %>
+          <em class="season-and-episode"><%= video.season_episode %></em>
+        <% end %>
+      </h1>
+      <h3 class="episode-title">
+        <%= video.episode_name.presence %>
+      </h3>
+      <% if video.overview.present? %>
+        <div class="description">
+          <p>
+            <%= truncate(video.overview, length: 255, separator: ' ') %>
+          </p>
+        </div>
       <% end %>
-    </h1>
-    <h3 class="episode-title">
-      <%= video.episode_name.presence %>
-    </h3>
-    <% if video.overview.present? %>
-      <div class="description">
-        <p>
-          <%= truncate(video.overview, length: 255, separator: ' ') %>
-        </p>
-      </div>
-    <% end %>
+    </div>
+    <%= render 'video_meta_options', next_episode: @next_episode, previous_episode: @previous_episode %>
   </div>
-  <%= render 'video_meta_options', next_episode: @next_episode, previous_episode: @previous_episode %>
 </div>

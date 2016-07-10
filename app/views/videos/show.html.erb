@@ -1,27 +1,25 @@
 <div id="watch" define="{
   player: new Muvee.VideoPlayer(this, {
-    leftOffAtPath: '<%= left_off_at_video_path(@video) %>',
+    videoId: <%= @video.id.to_json %>,
     resumeFrom: <%= @video.left_off_at.try(:to_i) || 0 %>,
     duration: <%= @video.duration.try(:to_i) || 0 %>
-  }),
-  hue: new Muvee.HueController(this, {
-    brightenPath: '<%= brighten_lights_path %>',
-    dimPath: '<%= dim_lights_path %>',
-    setPath: '<%= set_lights_path %>'
-  })}">
-  <%= render 'video_controls' %>
+  })
+}">
+  <%= render 'video_controls', video: @video %>
   <%= render 'video_watch_meta', video: @video, next_episode: @next_episode, previous_episode: @previous_episode %>
   <% if @video.is_tv? %>
     <%= render 'video_upnext', next_episode: @next_episode, previous_episode: @previous_episode if @next_episode %>
   <% end %>
-  <div class="video-container">
-    <video src="<%= stream_source_video_path(@video, @source) %>"
-      id="video"
-      class="video-<%= @video.id %>"
-      data-resume-from="<%= @video.left_off_at %>"
-      data-left-off-at-path="<%= left_off_at_video_path(@video) %>"
-      autoplay>
-    </video>
+  <div class="video-container" <% if control_hue_lights? %>
+    define="{
+      hue: new Muvee.HueController(this, {
+        brightenPath: '<%= brighten_lights_path %>',
+        dimPath: '<%= dim_lights_path %>',
+        setPath: '<%= set_lights_path %>'
+      })
+    }"
+    <% end %>>
+    <video autoplay src="<%= stream_source_video_path(@video, @source) %>" id="video"></video>
     <canvas class="hide" id="pixel-sampler" width="8" height="8"></canvas>
   </div>
 </div>
