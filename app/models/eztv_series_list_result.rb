@@ -6,7 +6,7 @@ class EztvSeriesListResult < ExternalMetadata
     uri = URI.parse(ENDPOINT_URL)
     response = HTTParty.get(uri.to_s)
     page = Nokogiri::HTML(response.body)
-    options = page.css('[name="SearchString"] option').select{|option| option.attributes['value'].to_s.present? }
+    options = page.css('.tv-show-search-select option').select{|option| option.attributes['value'].to_s.present? }
     names = options.map{|option| option.text.strip }
     names
   end
