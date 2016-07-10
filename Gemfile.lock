@@ -124,10 +124,6 @@ GEM
     ffi (1.9.13)
     figaro (1.1.1)
       thor (~> 0.14)
-    fleek (0.1.2)
-      actioncable (>= 5.0.0.beta3, < 5.1)
-      actionview (>= 5.0.0.beta3, < 5.1)
-      listen (~> 3.0.5)
     font-awesome-rails (4.6.3.1)
       railties (>= 3.2, < 5.1)
     foreman (0.82.0)
@@ -351,7 +347,6 @@ DEPENDENCIES
   color
   ffi
   figaro
-  fleek
   font-awesome-rails
   foreman
   guard

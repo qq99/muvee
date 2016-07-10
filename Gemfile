@@ -79,7 +79,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'fleek'
+  # gem 'fleek'
 end
 
 # Use ActiveModel has_secure_password
