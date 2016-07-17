@@ -20,27 +20,58 @@ class TmdbPersonMetadataService
 
   private
 
+  def tmdb_id
+    @tmdb_id
+  end
+
   # https://api.themoviedb.org/3/person/91606?api_key=a533c4925884599fa704aaf5a9006983&append_to_response=images
   def create_or_update_person(data)
-    person = Person.find_or_initialize_by(tmdb_id: @tdmb_id) do |p|
-      p.biography = data.biography
-      p.homepage = data.homepage
-      p.full_name = data.name
-      p.birthday = Time.parse(data.birthday) if data.birthday.present?
-      p.deathday = Time.parse(data.deathday) if data.deathday.present?
-      p.popularity = data.popularity
-      p.adult = data.adult
-      p.aliases = data.also_known_as.join(',')
-      p.imdb_id = data.imdb_id
-      p.homepage = data.homepage
-      p.gender = case data.gender
-      when 2
-        'Male'
-      else
-        'Female'
-      end
-      p.birthplace = data.place_of_birth
+    person = Person.find_or_initialize_by(tmdb_id: tmdb_id)
+
+    person.biography = data.biography
+    person.homepage = data.homepage
+    person.full_name = data.name
+    person.birthday = Time.parse(data.birthday) if data.birthday.present?
+    person.deathday = Time.parse(data.deathday) if data.deathday.present?
+    person.popularity = data.popularity
+    person.adult = data.adult
+    person.aliases = data.also_known_as.join(',')
+    person.imdb_id = data.imdb_id
+    person.homepage = data.homepage
+    person.gender = case data.gender
+    when 2
+      'Male'
+    else
+      'Female'
     end
+    person.birthplace = data.place_of_birth
+
+    person.images.destroy_all
+    person.images = associate_images(data)
+
+    person.save
+  end
+
+  def associate_images(data)
+    data.images_.profiles.map do |image|
+      ProfileImage.new(
+        aspect_ratio: image.aspect_ratio,
+        width: image.width,
+        height: image.height,
+        language: image.iso_639_1,
+        vote_average: image.vote_average,
+        vote_count: image.vote_count,
+        path: "http://image.tmdb.org/t/p/original#{image.file_path}"
+      )
+    end
+  end
+
+  def perform_request
+    Typhoeus.get(
+      "https://api.themoviedb.org/3/person/#{tmdb_id}?api_key=#{Figaro.env.tmdb_api_key}&append_to_response=images",
+      followlocation: true,
+      accept_encoding: "gzip"
+    )
   end
 
 end

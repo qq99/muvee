@@ -5,7 +5,14 @@ class Person < ActiveRecord::Base
   has_many :persons_series
   has_many :series, through: :persons_series
 
+  has_many :images
+  has_many :profile_images
+
   has_many :roles
 
   validates :full_name, presence: true, uniqueness: {case_sensitive: false}
+
+  def reanalyze
+    TmdbPersonMetadataService.new(tmdb_id).run
+  end
 end
