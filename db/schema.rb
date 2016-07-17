@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151108204825) do
+ActiveRecord::Schema.define(version: 20160717223626) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,9 +28,8 @@ ActiveRecord::Schema.define(version: 20151108204825) do
     t.date     "deathday"
     t.string   "homepage"
     t.text     "aliases",        default: [],              array: true
+    t.index ["name"], name: "index_actors_on_name", unique: true, using: :btree
   end
-
-  add_index "actors", ["name"], name: "index_actors_on_name", unique: true, using: :btree
 
   create_table "actors_series", force: :cascade do |t|
     t.integer "series_id"
@@ -62,9 +60,8 @@ ActiveRecord::Schema.define(version: 20151108204825) do
     t.datetime "updated_at"
     t.string   "endpoint"
     t.integer  "series_id"
+    t.index ["endpoint"], name: "index_external_metadata_on_endpoint", unique: true, using: :btree
   end
-
-  add_index "external_metadata", ["endpoint"], name: "index_external_metadata_on_endpoint", unique: true, using: :btree
 
   create_table "fanarts", force: :cascade do |t|
     t.datetime "created_at"
@@ -126,9 +123,8 @@ ActiveRecord::Schema.define(version: 20151108204825) do
     t.string   "type_of_3d"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["raw_file_path"], name: "index_sources_on_raw_file_path", unique: true, using: :btree
   end
-
-  add_index "sources", ["raw_file_path"], name: "index_sources_on_raw_file_path", unique: true, using: :btree
 
   create_table "thumbnails", force: :cascade do |t|
     t.integer  "video_id"
@@ -146,6 +142,16 @@ ActiveRecord::Schema.define(version: 20151108204825) do
     t.string   "video_type"
   end
 
+  create_table "trailers", force: :cascade do |t|
+    t.integer  "video_id"
+    t.string   "name"
+    t.string   "youtube_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["video_id"], name: "index_trailers_on_video_id", using: :btree
+    t.index ["youtube_id"], name: "index_trailers_on_youtube_id", unique: true, using: :btree
+  end
+
   create_table "transcodes", force: :cascade do |t|
     t.integer  "video_id"
     t.string   "type"
@@ -153,9 +159,8 @@ ActiveRecord::Schema.define(version: 20151108204825) do
     t.string   "raw_file_path"
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
+    t.index ["raw_file_path"], name: "index_transcodes_on_raw_file_path", unique: true, using: :btree
   end
-
-  add_index "transcodes", ["raw_file_path"], name: "index_transcodes_on_raw_file_path", unique: true, using: :btree
 
   create_table "tv_shows", force: :cascade do |t|
     t.datetime "created_at"
@@ -205,8 +210,7 @@ ActiveRecord::Schema.define(version: 20151108204825) do
     t.integer  "sources_count",            default: 0
     t.boolean  "is_favorite",              default: false
     t.datetime "sourced_at"
+    t.index ["series_id", "season", "episode"], name: "index_videos_on_series_id_and_season_and_episode", unique: true, using: :btree
   end
-
-  add_index "videos", ["series_id", "season", "episode"], name: "index_videos_on_series_id_and_season_and_episode", unique: true, using: :btree
 
 end
