@@ -117,6 +117,7 @@ class TmdbMovieMetadataService
 
     resulting_people = actors.map do |actor|
       person = Person.find_or_initialize_by(full_name: actor.name)
+      person.tmdb_id = actor.id
       role = person.roles.find_or_initialize_by(video_id: movie.id)
       role.character = actor.character
       role.department = 'Performance'

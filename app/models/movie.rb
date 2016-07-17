@@ -15,19 +15,13 @@ class Movie < Video
 
   POSTER_FOLDER = Rails.root.join('public', 'posters')
 
-  def metadata
-    @imdb_id ||= fetch_imdb_id || search_for_imdb_id
-    return {} if @imdb_id.blank?
-    @metadata ||= (TmdbMovieResult.get(@imdb_id).data || {})
-  end
-
-  def trailers
-    TmdbVideoResult.get('movie', search_tmdb_for_id).results
-  end
-
-  def youtube_trailers
-    (trailers || []).select{ |trailer| trailer[:site].downcase == 'youtube' }
-  end
+  # def trailers
+  #   TmdbVideoResult.get('movie', search_tmdb_for_id).results
+  # end
+  #
+  # def youtube_trailers
+  #   (trailers || []).select{ |trailer| trailer[:site].downcase == 'youtube' }
+  # end
 
   def search_tmdb_for_id
     Rails.logger.info "[search_tmdb_for_id] Searching TMDB for an ID for: #{title}"
@@ -44,7 +38,9 @@ class Movie < Video
   end
 
   def poster_url
-    "/posters/#{poster_path}" if poster_path.present?
+    return nil unless poster_images.present?
+    poster_images.sort{|p| -p.vote_average}.first.path
+    # TODO: use locale specific image
   end
 
   def extract_metadata

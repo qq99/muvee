@@ -3,7 +3,7 @@
 <div class="showpage-container" id="movie-show" refresh='movie-show'>
 
   <div class="showpage-header">
-    <%= render 'shared/showpage_slideshow', urls: @movie.fanarts.present? ? @movie.fanarts.shuffle.map(&:url) : [] %>
+    <%= render 'shared/showpage_slideshow', urls: @movie.fanarts.present? ? @movie.backdrop_images.shuffle.map(&:path) : [] %>
 
     <div class="showpage-header__overlay">
       <div class="showpage-header__overlay__top-scrim">
@@ -105,27 +105,26 @@
     </div>
   </div>
 
-  <% if @movie.youtube_trailers.present? %>
+  <% if @movie.trailers.present? %>
     <div class="flex">
       <div class="showpage__section">
         <h2>Trailers</h2>
         <div class="trailers" define="{activeTrailer: null, activeTrailerSrc: null}">
           <div class="flex-columns flex-wrap">
-            <% trailers = @movie.youtube_trailers %>
-            <% trailers.each_with_index do |trailer, index| %>
-              <% key = trailer[:key] %>
+            <% @movie.trailers.each_with_index do |trailer, index| %>
+              <% key = trailer.youtube_id %>
               <button
                 class="trailer-thumbnail"
                 bind-event-click="activeTrailer = <%= key.to_json %>, activeTrailerSrc = <%= "http://www.youtube.com/embed/#{key}?autoplay=0&html5=1".to_json %>"
                 bind-class="{active: (activeTrailer == <%= key.to_json %>)}">
                 <div class="content">
-                  <img src="http://img.youtube.com/vi/<%= trailer[:key] %>/0.jpg" alt="">
+                  <img src="http://img.youtube.com/vi/<%= key %>/0.jpg" alt="">
                 </div>
               </button>
             <% end %>
 
-            <% remainder = trailers.size % 3 %>
-            <% if remainder != 0 && trailers.size != 3 %>
+            <% remainder = @movie.trailers.size % 3 %>
+            <% if remainder != 0 && @movie.trailers.size != 3 %>
               <% 5.times do %><div class="trailer-thumbnail--filler"></div><% end %>
             <% end %>
           </div>
@@ -143,7 +142,7 @@
     </div>
   <% end %>
 
-  <%= render 'shared/showpage_actors', actors: @movie.actors, paginator_path: self.method(:by_actor_movies_path) %>
+  <%= render 'shared/showpage_actors', actors: @movie.cast, paginator_path: self.method(:by_actor_movies_path) %>
 
   <div class="flex">
     <div class="showpage__section">

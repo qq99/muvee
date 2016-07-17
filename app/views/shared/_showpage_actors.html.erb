@@ -6,7 +6,7 @@
         <% actors.each do |actor| %>
           <div class='actor-tile'>
             <div class="content">
-              <% profile = actor.profile_picture_fanart %>
+              <% profile = nil %>
               <%= link_to paginator_path.call(actor) do %>
                 <% if profile.present? %>
                   <div class="actor-profile-picture" style="background-image: url(<%= profile.url %>)"></div>
@@ -14,7 +14,7 @@
                   <div class="actor-profile-picture" style="background-image: url(<%= asset_path('unknown-portrait.jpg') %>)"></div>
                 <% end %>
               <% end %>
-              <%= link_to actor.name, paginator_path.call(actor), class: "actor-name" %>
+              <%= link_to actor.full_name, paginator_path.call(actor), class: "actor-name" %>
             </div>
           </div>
         <% end %>

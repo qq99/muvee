@@ -4,15 +4,28 @@ class Video < ActiveRecord::Base
   has_many :fanarts, dependent: :destroy
   has_many :transcodes, dependent: :destroy
 
+  has_many :trailers
+
+  has_many :images
+  has_many :backdrop_images
+  has_many :poster_images
+  has_many :banner_images
+
   has_many :genres_videos
   has_many :genres, through: :genres_videos
 
   has_many :actors_videos
   has_many :actors, through: :actors_videos
 
+  has_many :people_videos
+  has_many :people, through: :people_videos
+  has_many :roles
+
   has_many :torrents
 
   validates_uniqueness_of :imdb_id, allow_nil: true, allow_blank: true
+  validates_uniqueness_of :tmdb_id, allow_nil: true, allow_blank: true
+  validates_uniqueness_of :tvdb_id, allow_nil: true, allow_blank: true
 
   scope :alphabetical, -> {order(title: :asc)}
   scope :local, -> {where('sources_count > 0')}
@@ -23,6 +36,11 @@ class Video < ActiveRecord::Base
   scope :tv_shows, -> {where(type: "TvShow")}
   scope :unwatched, -> {where(left_off_at: nil)}
   scope :newest, -> {order(sourced_at: :desc)}
+
+  def cast; roles.cast; end
+  def crew; roles.crew; end
+  def directors; roles.directors; end
+  def producers; roles.directors; end
 
   # https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats
   VIDEO_CONTAINERS = %w{.m4v .mp4 .webm .avi .mkv}
