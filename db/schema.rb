@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160717223626) do
+ActiveRecord::Schema.define(version: 20160717224743) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,9 +88,57 @@ ActiveRecord::Schema.define(version: 20160717223626) do
     t.integer "video_id"
   end
 
+  create_table "images", force: :cascade do |t|
+    t.integer  "video_id"
+    t.integer  "series_id"
+    t.string   "type"
+    t.string   "path"
+    t.float    "aspect_ratio"
+    t.integer  "height"
+    t.integer  "width"
+    t.string   "language"
+    t.float    "vote_average"
+    t.integer  "vote_count"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "movies", force: :cascade do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "people", force: :cascade do |t|
+    t.string   "imdb_id"
+    t.string   "tmdb_id"
+    t.string   "tvdb_id"
+    t.string   "full_name"
+    t.text     "biography"
+    t.string   "homepage"
+    t.string   "birthplace"
+    t.date     "birthday"
+    t.date     "deathday"
+    t.text     "aliases"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "people_series", force: :cascade do |t|
+    t.integer "series_id"
+    t.integer "person_id"
+  end
+
+  create_table "people_videos", force: :cascade do |t|
+    t.integer "video_id"
+    t.integer "person_id"
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.integer "person_id"
+    t.integer "video_id"
+    t.string  "department"
+    t.string  "job_title"
+    t.string  "character"
   end
 
   create_table "series", force: :cascade do |t|
@@ -210,6 +258,15 @@ ActiveRecord::Schema.define(version: 20160717223626) do
     t.integer  "sources_count",            default: 0
     t.boolean  "is_favorite",              default: false
     t.datetime "sourced_at"
+    t.float    "popularity"
+    t.string   "mpaa_rating"
+    t.string   "website"
+    t.string   "tmdb_id"
+    t.string   "tvdb_id"
+    t.string   "omdb_id"
+    t.integer  "budget"
+    t.integer  "revenue"
+    t.boolean  "adult"
     t.index ["series_id", "season", "episode"], name: "index_videos_on_series_id_and_season_and_episode", unique: true, using: :btree
   end
 

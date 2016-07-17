@@ -1,0 +1,3 @@
+class BannerImage < Image
+
+end

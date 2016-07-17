@@ -173,10 +173,10 @@ class Video < ActiveRecord::Base
     transcodes.each(&:reanalyze)
     reset_status
     shellout_and_grab_duration if duration.blank? || duration == 0
-    if empty_or_missing_thumbnails?
-      thumbnails.destroy_all
-      create_initial_thumb
-    end
+    # if empty_or_missing_thumbnails?
+    #   thumbnails.destroy_all
+    #   create_initial_thumb
+    # end
   end
 
   def empty_or_missing_thumbnails?

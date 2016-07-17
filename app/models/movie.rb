@@ -3,12 +3,12 @@ class Movie < Video
   include AssociatesSelfWithActors
   include AssociatesSelfWithGenres
 
-  after_commit :queue_download_job, on: :create
-  after_create :extract_metadata
-  after_create :associate_with_genres
-  after_create :associate_with_actors
-  after_create :download_poster
-  before_destroy :destroy_poster
+  # after_commit :queue_download_job, on: :create
+  # after_create :extract_metadata
+  # after_create :associate_with_genres
+  # after_create :associate_with_actors
+  # after_create :download_poster
+  # before_destroy :destroy_poster
 
   scope :paginated, ->(page, results_per_page) { limit(results_per_page).offset(page * results_per_page) }
   scope :favorites, -> {where(is_favorite: true)}
@@ -170,15 +170,17 @@ class Movie < Video
 
   def reanalyze
     super
-    old_imdb_id = imdb_id
-    extract_metadata
-    associate_with_genres
-    associate_with_actors
-    actors.each(&:reanalyze)
-    redownload_missing
-    if imdb_id != old_imdb_id
-      redownload
-    end
+
+    TmdbMovieMetadataService.new(imdb_id).run
+    # old_imdb_id = imdb_id
+    # extract_metadata
+    # associate_with_genres
+    # associate_with_actors
+    # actors.each(&:reanalyze)
+    # redownload_missing
+    # if imdb_id != old_imdb_id
+    #   redownload
+    # end
   end
 
   def suggested_filename
