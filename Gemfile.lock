@@ -274,6 +274,8 @@ GEM
     redis (3.3.0)
     redis-namespace (1.5.2)
       redis (~> 3.0, >= 3.0.4)
+    redis_rate_limiter (0.0.9)
+      redis
     responders (2.2.0)
       railties (>= 4.2.0, < 5.1)
     rufus-scheduler (3.2.1)
@@ -307,6 +309,10 @@ GEM
       sidekiq (>= 4.0.0)
     sidekiq-limit_fetch (3.3.0)
       sidekiq (>= 4)
+    sidekiq-rate-limiter (0.1.1)
+      redis
+      redis_rate_limiter
+      sidekiq (>= 2.0, < 5.0)
     slop (3.6.0)
     socksify (1.7.0)
     sprockets (3.6.3)
@@ -389,6 +395,7 @@ DEPENDENCIES
   sidekiq
   sidekiq-cron
   sidekiq-limit_fetch
+  sidekiq-rate-limiter
   sinatra!
   sqlite3
   thepiratebay!

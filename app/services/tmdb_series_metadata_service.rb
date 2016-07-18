@@ -10,8 +10,10 @@ class TmdbSeriesMetadataService
     data = case response.code
     when 200
       Hashie::Mash.new(JSON.parse(response.body))
+    when 429
+      raise StandardError.new("Rate limit exceeded")
     else
-      Hashie::Mash.new
+      raise StandardError.new("Something went wrong: #{response.body}")
     end
 
     create_or_update_series(data)
@@ -26,17 +28,17 @@ class TmdbSeriesMetadataService
   def create_or_update_series(data)
     series = Series.find_or_initialize_by(tmdb_id: tmdb_id)
 
-    series.imdb_id = data.external_ids.imdb_id
-    series.tvdb_id = data.external_ids.tvdb_id
-    series.freebase_id = data.external_ids.freebase_id
-    series.freebase_mid = data.external_ids.freebase_mid
-    series.tvrage_id = data.external_ids.tvrage_id
+    series.imdb_id = data.external_ids_.imdb_id
+    series.tvdb_id = data.external_ids_.tvdb_id
+    series.freebase_id = data.external_ids_.freebase_id
+    series.freebase_mid = data.external_ids_.freebase_mid
+    series.tvrage_id = data.external_ids_.tvrage_id
 
     series.title = data.name
     series.overview = data.overview
     series.website = data.homepage
     series.popularity = data.popularity
-    series.country = data.origin_country.first
+    series.country = data.origin_country.try(:first)
     series.language = data.original_language
     begin
       series.first_air_date = Time.parse(data.first_air_date) if data.first_air_date.present?
@@ -64,6 +66,7 @@ class TmdbSeriesMetadataService
   end
 
   def associate_genres(data)
+    return [] unless data.genres.present?
     genres = data.genres.map(&:name).compact.map(&:strip).reject(&:blank?).uniq
 
     resulting_genres = genres.map do |genre_name|
@@ -74,6 +77,7 @@ class TmdbSeriesMetadataService
   end
 
   def associate_episodes_of_series(seasons_count, series)
+    return unless seasons_count.kind_of?(Integer)
     seasons_count.times do |i|
       TmdbEpisodeMetadataService.new(series.id, i+1).run
     end
@@ -118,6 +122,7 @@ class TmdbSeriesMetadataService
   end
 
   def associate_actors(data, series)
+    return [] unless data.credits_.cast.present?
     actors = data.credits.cast
 
     resulting_people = actors.map do |actor|
@@ -134,6 +139,7 @@ class TmdbSeriesMetadataService
   end
 
   def associate_crew(data, series)
+    return [] unless data.credits_.crew.present?
     crew = data.credits.crew
 
     resulting_people = crew.map do |crew_member|

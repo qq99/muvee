@@ -17,7 +17,8 @@ class Series < ActiveRecord::Base
 
   validates :title, presence: true
 
-  validates_uniqueness_of :tvdb_id, allow_nil: false, allow_blank: false
+  validates_uniqueness_of :title, allow_nil: false, allow_blank: false
+  validates_uniqueness_of :tmdb_id, allow_nil: true, allow_blank: true
 
   POSTER_FOLDER = Rails.root.join('public', 'posters')
   FANART_FOLDER = Rails.root.join('public', 'fanart')
@@ -28,6 +29,7 @@ class Series < ActiveRecord::Base
   has_one :last_watched_video, class_name: "Video", primary_key: "last_watched_video_id", foreign_key: "id"
 
   scope :alphabetical, -> {order(title: :asc)}
+  scope :remote, -> {where('has_local_episodes = false')}
   scope :local, -> {where('has_local_episodes = true')}
   scope :with_episodes, -> {where('tv_shows_count > 0')}
   scope :without_episodes, -> {where('tv_shows_count = 0')}
@@ -62,7 +64,7 @@ class Series < ActiveRecord::Base
   def find_tmdb_id
     data = Series.search_for(title)
     if data.results_.blank?
-      data = Series.search_for(Guesser::Movie.guess(title)[:title])
+      data = Series.search_for(title.gsub(/(\(\d{4}\))/, ''))
     end
 
     results = data.results || []

@@ -8,12 +8,12 @@
 - [scan, 1]
 - [series_discovery, 7]
 - [movies_discovery, 7]
-- [analyze, 2]
+- [analyze, 1]
 - [default, 5]
 - [transcode, 2]
 :limits:
   transcode: 2
-  analyze: 2
+  analyze: 1
   scan: 1
   series_discovery: 1
   movies_discovery: 1

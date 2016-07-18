@@ -13,8 +13,10 @@ class TmdbEpisodeMetadataService
     data = case response.code
     when 200
       Hashie::Mash.new(JSON.parse(response.body))
+    when 429
+      raise StandardError.new("Rate limit exceeded")
     else
-      Hashie::Mash.new
+      raise StandardError.new("Something went wrong: #{response.body}")
     end
 
     create_or_update_episodes(data)
@@ -31,6 +33,7 @@ class TmdbEpisodeMetadataService
   end
 
   def create_or_update_episodes(data)
+    return unless data.episodes.present?
     data.episodes.each do |episode|
       ep = series.tv_shows.find_or_initialize_by(season: episode.season_number, episode: episode.episode_number)
 

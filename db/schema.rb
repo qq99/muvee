@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160718211125) do
+ActiveRecord::Schema.define(version: 20160718214614) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -165,7 +165,7 @@ ActiveRecord::Schema.define(version: 20160718211125) do
     t.string   "last_sort_value"
     t.string   "last_season_filter"
     t.boolean  "is_favorite",           default: false
-    t.boolean  "has_local_episodes"
+    t.boolean  "has_local_episodes",    default: false
     t.string   "tmdb_id"
     t.string   "imdb_id"
     t.string   "freebase_id"

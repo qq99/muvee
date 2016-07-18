@@ -11,8 +11,10 @@ class TmdbMovieMetadataService
     data = case response.code
     when 200
       Hashie::Mash.new(JSON.parse(response.body))
+    when 429
+      raise StandardError.new("Rate limit exceeded")
     else
-      Hashie::Mash.new
+      raise StandardError.new("Something went wrong: #{response.body}")
     end
 
     create_or_update_movie(data)
