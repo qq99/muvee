@@ -1,4 +1,4 @@
-class TmdbEpisodeMetadataService
+class TmdbEpisodeMetadataService < TmdbService
   def initialize(series_id, season_number)
     raise ArgumentError.new("Must supply muvee series_id") unless series_id.present?
     raise ArgumentError.new("Must supply season number") unless season_number.present?
@@ -8,17 +8,7 @@ class TmdbEpisodeMetadataService
   end
 
   def run
-    response = perform_request
-
-    data = case response.code
-    when 200
-      Hashie::Mash.new(JSON.parse(response.body))
-    when 429
-      raise StandardError.new("Rate limit exceeded")
-    else
-      raise StandardError.new("Something went wrong: #{response.body}")
-    end
-
+    data = get_data
     create_or_update_episodes(data)
   end
 
@@ -56,11 +46,7 @@ class TmdbEpisodeMetadataService
     end
   end
 
-  def perform_request
-    Typhoeus.get(
-      "https://api.themoviedb.org/3/tv/#{series.tmdb_id}/season/#{season_number}?api_key=#{Figaro.env.tmdb_api_key}",
-      followlocation: true,
-      accept_encoding: "gzip"
-    )
+  def url
+    "https://api.themoviedb.org/3/tv/#{series.tmdb_id}/season/#{season_number}?api_key=#{Figaro.env.tmdb_api_key}"
   end
 end

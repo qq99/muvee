@@ -3,7 +3,7 @@ class AnalyzerWorker
   sidekiq_options queue: :analyze, retry: false
 
   def perform(opts)
-    Series.all.each do |series|
+    Series.first(30).each do |series|
       ReanalyzerWorker.perform_async(Series.name, series.id)
     end
     #

@@ -21,6 +21,8 @@ gem 'lodash-rails'
 gem "font-awesome-rails"
 gem 'httparty'
 gem 'hashie'
+gem 'faraday'
+gem 'faraday-http-cache'
 gem 'typhoeus'
 gem 'redis'
 gem 'color'
@@ -53,7 +55,6 @@ gem 'foreman'
 gem 'sidekiq'
 gem 'sidekiq-limit_fetch'
 gem "sidekiq-cron"
-gem 'sidekiq-rate-limiter'
 gem "transmission_api", github: "qq99/TransmissionApi", branch: "master"
 
 group :production, :development do

@@ -1,4 +1,4 @@
-class TmdbMovieMetadataService
+class TmdbMovieMetadataService < TmdbService
 
   def initialize(imdb_id)
     raise ArgumentError.new("You must supply an imdb id") unless imdb_id.present?
@@ -6,17 +6,7 @@ class TmdbMovieMetadataService
   end
 
   def run
-    response = perform_request
-
-    data = case response.code
-    when 200
-      Hashie::Mash.new(JSON.parse(response.body))
-    when 429
-      raise StandardError.new("Rate limit exceeded")
-    else
-      raise StandardError.new("Something went wrong: #{response.body}")
-    end
-
+    data = get_data
     create_or_update_movie(data)
   end
 
@@ -145,12 +135,8 @@ class TmdbMovieMetadataService
     end
   end
 
-  def perform_request
-    Typhoeus.get(
-      "https://api.themoviedb.org/3/movie/#{@imdb_id}?api_key=#{Figaro.env.tmdb_api_key}&append_to_response=images,keywords,release_dates,credits,trailers",
-      followlocation: true,
-      accept_encoding: "gzip"
-    )
+  def url
+    "https://api.themoviedb.org/3/movie/#{@imdb_id}?api_key=#{Figaro.env.tmdb_api_key}&append_to_response=images,keywords,release_dates,credits,trailers"
   end
 
 end

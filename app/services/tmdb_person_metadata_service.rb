@@ -1,4 +1,4 @@
-class TmdbPersonMetadataService
+class TmdbPersonMetadataService < TmdbService
 
   def initialize(tmdb_id)
     raise ArgumentError.new('Must supply a tmdb id') unless tmdb_id.present?
@@ -6,15 +6,7 @@ class TmdbPersonMetadataService
   end
 
   def run
-    response = perform_request
-
-    data = case response.code
-    when 200
-      Hashie::Mash.new(JSON.parse(response.body))
-    else
-      Hashie::Mash.new
-    end
-
+    data = get_data
     create_or_update_person(data)
   end
 
@@ -73,12 +65,8 @@ class TmdbPersonMetadataService
     end
   end
 
-  def perform_request
-    Typhoeus.get(
-      "https://api.themoviedb.org/3/person/#{tmdb_id}?api_key=#{Figaro.env.tmdb_api_key}&append_to_response=images",
-      followlocation: true,
-      accept_encoding: "gzip"
-    )
+  def url
+    "https://api.themoviedb.org/3/person/#{tmdb_id}?api_key=#{Figaro.env.tmdb_api_key}&append_to_response=images"
   end
-
+  
 end
