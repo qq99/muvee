@@ -80,12 +80,6 @@ class MoviesController < ApplicationController
     @movies = @genre.movies.all.to_a # TODO: figure out pagination here
   end
 
-  def actor
-    @section = :actor
-    @actor = Actor.find(params[:actor])
-    @movies = @actor.movies.all.to_a
-  end
-
   def discover_more
     MoviesDiscoveryWorker.perform_async
     flash.now[:notice] = "Finding you more movies in the background"

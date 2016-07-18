@@ -70,12 +70,6 @@ class SeriesController < ApplicationController
     @series = @genre.series.all.to_a # TODO: figure out pagination here
   end
 
-  def actor
-    @section = :actor
-    @actor = Actor.find(params[:actor])
-    @series = @actor.series.all.to_a # TODO: figure out pagination here
-  end
-
   def nonepisodic
     @section = :nonepisodic
     @shows = TvShow.where(series_id: nil).all

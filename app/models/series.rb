@@ -2,9 +2,6 @@ class Series < ActiveRecord::Base
   has_many :genres_series
   has_many :genres, through: :genres_series
 
-  has_many :actors_series
-  has_many :actors, through: :actors_series
-
   has_many :people_series
   has_many :people, through: :people_series
   has_many :roles

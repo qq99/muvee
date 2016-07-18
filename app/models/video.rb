@@ -15,9 +15,6 @@ class Video < ActiveRecord::Base
   has_many :genres_videos
   has_many :genres, through: :genres_videos
 
-  has_many :actors_videos
-  has_many :actors, through: :actors_videos
-
   has_many :people_videos
   has_many :people, through: :people_videos
   has_many :roles
