@@ -1,0 +1,7 @@
+<% content_for :people_subnav do %>
+<ul class="subnav">
+  <li>
+    <%= link_to 'All', people_path, class: @section == :all ? 'is-active' : '' %>
+  </li>
+</ul>
+<% end %>

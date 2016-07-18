@@ -84,6 +84,10 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :people do
+
+  end
+
   resources :torrents, only: [] do
     member do
       get :status

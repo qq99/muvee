@@ -40,6 +40,13 @@
 
         <%= yield :series_subnav %>
       </li>
+      <li <% if controller_name == 'people' %>class="is-active" <% end %>>
+        <%= link_to people_path, class: 'top-nav-button' do %>
+          <i class="fa fa-user"></i>
+        <% end %>
+
+        <%= yield :people_subnav %>
+      </li>
       <li>
         <%= link_to shuffle_videos_path, class: 'top-nav-button' do %>
           <i class="fa fa-random"></i>

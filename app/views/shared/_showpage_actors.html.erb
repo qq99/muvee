@@ -6,15 +6,16 @@
         <% roles.each do |role| %>
           <div class='actor-tile'>
             <div class="content">
+              <% person = role.person %>
               <% profile = role.person.default_profile_picture %>
-              <%= link_to paginator_path.call(role) do %>
+              <%= link_to person_path(person) do %>
                 <% if profile.present? %>
                   <div class="actor-profile-picture" style="background-image: url(<%= profile %>)"></div>
                 <% else %>
                   <div class="actor-profile-picture" style="background-image: url(<%= asset_path('unknown-portrait.jpg') %>)"></div>
                 <% end %>
               <% end %>
-              <%= link_to paginator_path.call(role), class: "actor-name" do %>
+              <%= link_to person_path(person), class: "actor-name" do %>
                 <%= role.full_name %>
                 <% if role.character.present? %>
                   <br> as <span><%= role.character %></span>

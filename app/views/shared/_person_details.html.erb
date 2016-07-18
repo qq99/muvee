@@ -1,0 +1,26 @@
+<div class="actor-details">
+  <div class="flex">
+
+    <% person.profile_images.each do |image| %>
+      <div
+        class="actor-profile-picture"
+        style="background-image: url(<%= image.path %>)">
+      </div>
+    <% end %>
+  </div>
+
+  <div>
+    <h1><%= person.full_name %></h1>
+    <p class="flex-columns">
+      <% if person.birthday %>
+        <span><i class="fa fa-calendar"></i> Born on <%= person.birthday %></span>
+      <% end %>
+      <% if person.deathday %>
+        <span><i class="fa fa-calendar"></i> Died on <%= person.deathday %></span>
+      <% end %>
+    </p>
+    <% (person.biography || '').split("\n").reject(&:blank?).compact.each do |paragraph| %>
+      <p><%= paragraph %></p>
+    <% end %>
+  </div>
+</div>
