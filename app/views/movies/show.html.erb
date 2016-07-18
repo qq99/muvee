@@ -77,6 +77,9 @@
                 <%= @movie.overview %>
               </p>
               <div class="flex-columns sst">
+                <%= link_to imdb_link(@movie.imdb_id), class: 'imdb-icon-link flex-columns', target: :_blank do %>
+                  <%= render 'shared/imdb_logo' %>
+                <% end %>
                 <div class="parental-guidance-rating">
                   <%= @movie.parental_guidance_rating || "N/A" %>
                 </div>
