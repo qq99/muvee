@@ -1,7 +1,7 @@
 <% if roles.present? %>
   <div class="flex">
     <div class="showpage__section">
-      <h2>Actors</h2>
+      <h2><%= header %></h2>
       <div class="flex-columns flex-wrap">
         <% roles.each do |role| %>
           <div class='actor-tile'>
@@ -19,6 +19,8 @@
                 <%= role.full_name %>
                 <% if role.character.present? %>
                   <br> as <span><%= role.character %></span>
+                <% elsif role.job_title.present? %>
+                  <br> as <span><%= role.job_title %></span>
                 <% end %>
               <% end %>
             </div>

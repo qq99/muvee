@@ -142,7 +142,8 @@
     </div>
   <% end %>
 
-  <%= render 'shared/showpage_actors', roles: @movie.cast, paginator_path: self.method(:by_actor_movies_path) %>
+  <%= render 'shared/showpage_people', header: 'Actors', roles: @movie.cast %>
+  <%= render 'shared/showpage_people', header: 'Crew', roles: @movie.crew %>
 
   <div class="flex">
     <div class="showpage__section">
