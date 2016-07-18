@@ -46,29 +46,8 @@ class Series < ActiveRecord::Base
     backdrop_images.sort{|p| -p.vote_average}.first.url # TODO: use locale specific image
   end
 
-  def self.search_for(query)
-    response = Typhoeus.get(
-      "https://api.themoviedb.org/3/search/tv?api_key=#{Figaro.env.tmdb_api_key}&query=#{URI::encode(query)}",
-      followlocation: true,
-      accept_encoding: "gzip"
-    )
-
-    case response.code
-    when 200
-      Hashie::Mash.new(JSON.parse(response.body))
-    else
-      Hashie::Mash.new
-    end
-  end
-
   def find_tmdb_id
-    data = Series.search_for(title)
-    if data.results_.blank?
-      data = Series.search_for(title.gsub(/(\(\d{4}\))/, ''))
-    end
-
-    results = data.results || []
-    results.first.try(:id)
+    TmdbSeriesSearchingService.new(title).run
   end
 
   def reanalyze
