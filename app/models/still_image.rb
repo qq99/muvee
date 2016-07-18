@@ -1,0 +1,3 @@
+class StillImage < Image
+
+end

@@ -3,9 +3,9 @@ class TvShow < Video
   include AssociatesSelfWithGenres
 
   belongs_to :series, counter_cache: true
-  after_create :extract_metadata, unless: :reanalyzing_series
-  after_create :associate_with_series, unless: :reanalyzing_series
-  after_create :associate_with_genres
+  # after_create :extract_metadata, unless: :reanalyzing_series
+  # after_create :associate_with_series, unless: :reanalyzing_series
+  # after_create :associate_with_genres
 
   validate :unique_episode_in_season, on: :create
 

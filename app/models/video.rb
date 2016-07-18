@@ -20,6 +20,10 @@ class Video < ActiveRecord::Base
   has_many :people_videos
   has_many :people, through: :people_videos
   has_many :roles
+  def cast; roles.cast; end
+  def crew; roles.crew; end
+  def directors; roles.directors; end
+  def producers; roles.directors; end
 
   has_many :torrents
 
@@ -36,11 +40,6 @@ class Video < ActiveRecord::Base
   scope :tv_shows, -> {where(type: "TvShow")}
   scope :unwatched, -> {where(left_off_at: nil)}
   scope :newest, -> {order(sourced_at: :desc)}
-
-  def cast; roles.cast; end
-  def crew; roles.crew; end
-  def directors; roles.directors; end
-  def producers; roles.directors; end
 
   # https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats
   VIDEO_CONTAINERS = %w{.m4v .mp4 .webm .avi .mkv}

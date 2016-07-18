@@ -128,6 +128,7 @@ class TmdbMovieMetadataService
     end
   end
 
+      person if person.persisted?
   def associate_crew(data, movie)
     crew = data.credits.crew
 
@@ -140,8 +141,6 @@ class TmdbMovieMetadataService
       role.save
 
       person
-
-      person if person.persisted?
     end
   end
 

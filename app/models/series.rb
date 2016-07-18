@@ -4,17 +4,26 @@ class Series < ActiveRecord::Base
   include AssociatesSelfWithActors
   include AssociatesSelfWithGenres
 
-  after_create :download_images
-  after_create :associate_with_genres
-  after_create :associate_with_actors
-  before_destroy :destroy_images
-  before_validation :extract_metadata, on: :create
+  # after_create :download_images
+  # after_create :associate_with_genres
+  # after_create :associate_with_actors
+  # before_destroy :destroy_images
+  # before_validation :extract_metadata, on: :create
 
   has_many :genres_series
   has_many :genres, through: :genres_series
 
   has_many :actors_series
   has_many :actors, through: :actors_series
+
+  has_many :people_series
+  has_many :people, through: :people_series
+  has_many :roles
+
+  def cast; roles.cast; end
+  def crew; roles.crew; end
+  def directors; roles.directors; end
+  def producers; roles.directors; end
 
   validates :title, presence: true
 
@@ -122,29 +131,57 @@ class Series < ActiveRecord::Base
     end
   end
 
-  def reanalyze
-    extract_metadata
-    associate_with_genres
-    associate_with_actors
-    self.save
-    all_episodes_metadata.each do |ep|
-      show = TvShow.find_or_initialize_by(
-        series_id: self.id,
-        season: ep[:SeasonNumber],
-        episode: ep[:EpisodeNumber]
-      )
+  def self.search_for(query)
+    response = Typhoeus.get(
+      "https://api.themoviedb.org/3/search/tv?api_key=#{Figaro.env.tmdb_api_key}&query=#{URI::encode(query)}",
+      followlocation: true,
+      accept_encoding: "gzip"
+    )
 
-      show.reanalyzing_series = true
-      show.title = self.title
-      show.reset_status
-      show.vote_count = ep[:RatingCount]
-      show.vote_average = ep[:Rating]
-      show.released_on = ep[:FirstAired]
-      show.overview = ep[:Overview]
-      show.episode_name = ep[:EpisodeName]
-
-      result = show.save
+    case response.code
+    when 200
+      Hashie::Mash.new(JSON.parse(response.body))
+    else
+      Hashie::Mash.new
     end
+  end
+
+  def reanalyze
+    if tmdb_id.blank?
+      data = Series.search_for(title)
+      results = data.results || []
+      self.tmdb_id = results.first.try(:id)
+      self.save if tmdb_id.present?
+    end
+
+    return unless tmdb_id.present?
+
+    TmdbSeriesMetadataService.new(tmdb_id).run
+
+    people.map(&:reanalyze)
+
+    # extract_metadata
+    # associate_with_genres
+    # associate_with_actors
+    # self.save
+    # all_episodes_metadata.each do |ep|
+    #   show = TvShow.find_or_initialize_by(
+    #     series_id: self.id,
+    #     season: ep[:SeasonNumber],
+    #     episode: ep[:EpisodeNumber]
+    #   )
+    #
+    #   show.reanalyzing_series = true
+    #   show.title = self.title
+    #   show.reset_status
+    #   show.vote_count = ep[:RatingCount]
+    #   show.vote_average = ep[:Rating]
+    #   show.released_on = ep[:FirstAired]
+    #   show.overview = ep[:Overview]
+    #   show.episode_name = ep[:EpisodeName]
+    #
+    #   result = show.save
+    # end
   end
 
   def associate_with_genres

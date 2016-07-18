@@ -156,8 +156,8 @@ class SeriesController < ApplicationController
   end
 
   def reanalyze
-    SeriesAnalyzerWorker.perform_async(@series.id)
-    flash.now[:notice] = "Re-analyzing series in the background"
+    @series.reanalyze
+    flash.now[:notice] = "Series reanalyzed successfully"
     show
   end
 

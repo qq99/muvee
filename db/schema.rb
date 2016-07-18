@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160717233815) do
+ActiveRecord::Schema.define(version: 20160718040850) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -143,6 +143,7 @@ ActiveRecord::Schema.define(version: 20160717233815) do
     t.string  "department"
     t.string  "job_title"
     t.string  "character"
+    t.integer "series_id"
   end
 
   create_table "series", force: :cascade do |t|
@@ -164,6 +165,19 @@ ActiveRecord::Schema.define(version: 20160717233815) do
     t.string   "last_season_filter"
     t.boolean  "is_favorite",           default: false
     t.boolean  "has_local_episodes"
+    t.string   "tmdb_id"
+    t.string   "imdb_id"
+    t.string   "freebase_id"
+    t.string   "freebase_mid"
+    t.string   "tvrage_id"
+    t.string   "website"
+    t.float    "popularity"
+    t.string   "country"
+    t.string   "language"
+    t.date     "first_air_date"
+    t.date     "last_air_date"
+    t.boolean  "ended"
+    t.string   "content_rating"
   end
 
   create_table "sources", force: :cascade do |t|
