@@ -15,4 +15,9 @@ class Person < ActiveRecord::Base
   def reanalyze
     TmdbPersonMetadataService.new(tmdb_id).run
   end
+
+  def default_profile_picture
+    return nil unless profile_images.present?
+    profile_images.sample.path
+  end
 end

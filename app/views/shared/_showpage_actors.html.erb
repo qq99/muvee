@@ -1,26 +1,31 @@
-<% if actors.present? %>
+<% if roles.present? %>
   <div class="flex">
     <div class="showpage__section">
       <h2>Actors</h2>
       <div class="flex-columns flex-wrap">
-        <% actors.each do |actor| %>
+        <% roles.each do |role| %>
           <div class='actor-tile'>
             <div class="content">
-              <% profile = nil %>
-              <%= link_to paginator_path.call(actor) do %>
+              <% profile = role.person.default_profile_picture %>
+              <%= link_to paginator_path.call(role) do %>
                 <% if profile.present? %>
-                  <div class="actor-profile-picture" style="background-image: url(<%= profile.url %>)"></div>
+                  <div class="actor-profile-picture" style="background-image: url(<%= profile %>)"></div>
                 <% else %>
                   <div class="actor-profile-picture" style="background-image: url(<%= asset_path('unknown-portrait.jpg') %>)"></div>
                 <% end %>
               <% end %>
-              <%= link_to actor.full_name, paginator_path.call(actor), class: "actor-name" %>
+              <%= link_to paginator_path.call(role), class: "actor-name" do %>
+                <%= role.full_name %>
+                <% if role.character.present? %>
+                  <br> as <span><%= role.character %></span>
+                <% end %>
+              <% end %>
             </div>
           </div>
         <% end %>
 
-        <% remainder = actors.size % 5 %>
-        <% if remainder != 0 && actors.size != 5 %>
+        <% remainder = roles.size % 5 %>
+        <% if remainder != 0 && roles.size != 5 %>
           <% 10.times do %><div class="actor-tile--filler"></div><% end %>
         <% end %>
       </div>

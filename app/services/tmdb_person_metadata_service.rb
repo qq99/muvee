@@ -31,11 +31,17 @@ class TmdbPersonMetadataService
     person.biography = data.biography
     person.homepage = data.homepage
     person.full_name = data.name
-    person.birthday = Time.parse(data.birthday) if data.birthday.present?
-    person.deathday = Time.parse(data.deathday) if data.deathday.present?
+    begin
+      person.birthday = Time.parse(data.birthday) if data.birthday.present?
+    rescue => e
+    end
+    begin
+      person.deathday = Time.parse(data.deathday) if data.deathday.present?
+    rescue => e
+    end
     person.popularity = data.popularity
     person.adult = data.adult
-    person.aliases = data.also_known_as.join(',')
+    person.aliases = data.also_known_as.join(',') if data.also_known_as.present?
     person.imdb_id = data.imdb_id
     person.homepage = data.homepage
     person.gender = case data.gender
@@ -53,7 +59,8 @@ class TmdbPersonMetadataService
   end
 
   def associate_images(data)
-    data.images_.profiles.map do |image|
+    profiles = data.images_.profiles || []
+    profiles.map do |image|
       ProfileImage.new(
         aspect_ratio: image.aspect_ratio,
         width: image.width,

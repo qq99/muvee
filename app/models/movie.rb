@@ -168,6 +168,8 @@ class Movie < Video
     super
 
     TmdbMovieMetadataService.new(imdb_id).run
+
+    people.map(&:reanalyze)
     # old_imdb_id = imdb_id
     # extract_metadata
     # associate_with_genres
