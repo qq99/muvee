@@ -7,7 +7,10 @@ class Genre < ActiveRecord::Base
   has_many :series, through: :genres_series
 
   before_validation :sanitize_name
-  validates :name, presence: true, uniqueness: {case_sensitive: false}
+  validates :name,
+    presence: true,
+    uniqueness: {case_sensitive: false, message: '%{value} has already been taken in scope of genre'},
+    on: :create
 
   SAME_THINGS = {
     "sci fi" => "Science Fiction",
