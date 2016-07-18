@@ -36,9 +36,13 @@ class TmdbEpisodeMetadataService
 
       ep.episode_name = episode.name
       ep.overview = episode.overview
-      ep.images = [StillImage.new(
-        path: "http://image.tmdb.org/t/p/original#{episode.still_path}"
-      )]
+      if episode.still_path
+        ep.images = [StillImage.new(
+          path: episode.still_path
+        )]
+      else
+        ep.images = []
+      end
       ep.mpaa_rating = series.content_rating
       begin
         ep.released_on = Time.parse(data.air_date) if data.air_date.present?

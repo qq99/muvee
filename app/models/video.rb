@@ -6,10 +6,11 @@ class Video < ActiveRecord::Base
 
   has_many :trailers
 
-  has_many :images
-  has_many :backdrop_images
-  has_many :poster_images
-  has_many :banner_images
+  has_many :images, dependent: :destroy
+  has_many :backdrop_images, dependent: :destroy
+  has_many :poster_images, dependent: :destroy
+  has_many :banner_images, dependent: :destroy
+  has_many :still_images, dependent: :destroy
 
   has_many :genres_videos
   has_many :genres, through: :genres_videos

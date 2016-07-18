@@ -86,7 +86,7 @@ class TmdbMovieMetadataService
         language: image.iso_639_1,
         vote_average: image.vote_average,
         vote_count: image.vote_count,
-        path: "http://image.tmdb.org/t/p/original#{image.file_path}"
+        path: image.file_path
       )
     end
 
@@ -99,7 +99,7 @@ class TmdbMovieMetadataService
         language: image.iso_639_1,
         vote_average: image.vote_average,
         vote_count: image.vote_count,
-        path: "http://image.tmdb.org/t/p/original#{image.file_path}"
+        path: image.file_path
       )
     end
 

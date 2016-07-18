@@ -20,7 +20,7 @@ class Movie < Video
 
   def poster_url
     return nil unless poster_images.present?
-    poster_images.sort{|p| -p.vote_average}.first.path # TODO: use locale specific image
+    poster_images.sort{|p| -p.vote_average}.first.url # TODO: use locale specific image
   end
 
   def extract_metadata

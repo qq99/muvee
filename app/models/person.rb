@@ -18,6 +18,6 @@ class Person < ActiveRecord::Base
 
   def default_profile_picture
     return nil unless profile_images.present?
-    profile_images.sample.path
+    profile_images.sample.url
   end
 end

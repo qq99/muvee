@@ -3,7 +3,7 @@
 <div class="showpage-container" id="movie-show" refresh='movie-show'>
 
   <div class="showpage-header">
-    <%= render 'shared/showpage_slideshow', urls: @movie.fanarts.present? ? @movie.backdrop_images.shuffle.map(&:path) : [] %>
+    <%= render 'shared/showpage_slideshow', urls: @movie.backdrop_images.present? ? @movie.backdrop_images.shuffle.map(&:url) : [] %>
 
     <div class="showpage-header__overlay">
       <div class="showpage-header__overlay__top-scrim">
