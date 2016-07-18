@@ -50,6 +50,6 @@
       <%= render 'shared/star_rating', vote_count: object.tvdb_rating_count, rating: object.tvdb_rating || 0, rating_max: 10.0, new_scale: 5 %>
       <div class="tile__meta-backdrop"></div>
     </div>
-    <div class="tile__background" style="background-image: url(<%= object.backdrop_images.sample.try(:url) %>);"></div>
+    <div class="tile__background" style="background-image: url(<%= object.backdrop_url %>);"></div>
   </div>
 <% end %>

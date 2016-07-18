@@ -47,8 +47,6 @@ class Movie < Video
     extract_metadata
     TmdbMovieMetadataService.new(imdb_id).run
     people.map(&:reanalyze)
-    # old_imdb_id = imdb_id
-    # extract_metadata
   end
 
   def suggested_filename
