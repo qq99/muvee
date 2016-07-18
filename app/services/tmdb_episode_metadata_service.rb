@@ -34,6 +34,7 @@ class TmdbEpisodeMetadataService
     data.episodes.each do |episode|
       ep = series.tv_shows.find_or_initialize_by(season: episode.season_number, episode: episode.episode_number)
 
+      ep.title = series.title
       ep.episode_name = episode.name
       ep.overview = episode.overview
       if episode.still_path

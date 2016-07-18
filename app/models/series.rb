@@ -62,11 +62,19 @@ class Series < ActiveRecord::Base
     end
   end
 
+  def find_tmdb_id
+    data = Series.search_for(title)
+    if data.results_.blank?
+      data = Series.search_for(Guesser::Movie.guess(title)[:title])
+    end
+
+    results = data.results || []
+    results.first.try(:id)
+  end
+
   def reanalyze
     if tmdb_id.blank?
-      data = Series.search_for(title)
-      results = data.results || []
-      self.tmdb_id = results.first.try(:id)
+      self.tmdb_id = find_tmdb_id
       self.save if tmdb_id.present?
     end
 
