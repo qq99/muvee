@@ -27,7 +27,7 @@
       <%= render 'shared/star_rating', vote_count: object.vote_count, rating: object.vote_average || 0, rating_max: 10.0, new_scale: 5 %>
       <div class="tile__meta-backdrop"></div>
     </div>
-    <div class="tile__background" style="background-image: url(<%= object.fanarts.sample.try(:url) %>);"></div>
+    <div class="tile__background" style="background-image: url(<%= object.backdrop_images.sample.try(:url) %>);"></div>
   </div>
 <% elsif object.is_a? Series %>
   <% num_unacquired = number_of_released_episodes_unacquired(object) %>
@@ -50,6 +50,6 @@
       <%= render 'shared/star_rating', vote_count: object.tvdb_rating_count, rating: object.tvdb_rating || 0, rating_max: 10.0, new_scale: 5 %>
       <div class="tile__meta-backdrop"></div>
     </div>
-    <div class="tile__background" style="background-image: url(<%= object.fanart_url %>);"></div>
+    <div class="tile__background" style="background-image: url(<%= object.backdrop_images.sample.try(:url) %>);"></div>
   </div>
 <% end %>

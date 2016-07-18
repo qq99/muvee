@@ -3,7 +3,7 @@
 <div class="showpage-container" id="series-show" refresh='series-show'>
 
   <div class="showpage-header">
-    <%= render 'shared/showpage_slideshow', urls: @series.fanart_url.present? ? [@series.fanart_url] : [] %>
+    <%= render 'shared/showpage_slideshow', urls: @series.backdrop_images.present? ? @series.backdrop_images.shuffle.map(&:url) : [] %>
 
     <div class="showpage-header__overlay">
       <div class="showpage-header__overlay__top-scrim">

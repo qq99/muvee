@@ -51,6 +51,10 @@ class TmdbSeriesMetadataService
     series.content_rating = content_ratings.first.try(:rating)
     series.save
 
+    series.genres = associate_genres(data)
+    series.images.destroy_all
+    series.images = associate_images(data)
+
     series.people = []
     series.people << associate_people(data, series)
 
@@ -59,10 +63,52 @@ class TmdbSeriesMetadataService
     associate_episodes_of_series(data.number_of_seasons, series)
   end
 
+  def associate_genres(data)
+    genres = data.genres.map(&:name).compact.map(&:strip).reject(&:blank?).uniq
+
+    resulting_genres = genres.map do |genre_name|
+      genre_name = Genre.normalized_name(genre_name)
+      genre = Genre.find_or_create_by(name: genre_name)
+      genre
+    end
+  end
+
   def associate_episodes_of_series(seasons_count, series)
     seasons_count.times do |i|
       TmdbEpisodeMetadataService.new(series.id, i+1).run
     end
+  end
+
+  def associate_images(data)
+    resulting_images = []
+
+    backdrops = data.images_.backdrops || []
+    backdrops.each do |image|
+      resulting_images << BackdropImage.new(
+        aspect_ratio: image.aspect_ratio,
+        width: image.width,
+        height: image.height,
+        language: image.iso_639_1,
+        vote_average: image.vote_average,
+        vote_count: image.vote_count,
+        path: image.file_path
+      )
+    end
+
+    posters = data.images_.posters || []
+    posters.each do |image|
+      resulting_images << PosterImage.new(
+        aspect_ratio: image.aspect_ratio,
+        width: image.width,
+        height: image.height,
+        language: image.iso_639_1,
+        vote_average: image.vote_average,
+        vote_count: image.vote_count,
+        path: image.file_path
+      )
+    end
+
+    resulting_images
   end
 
   def associate_people(data, series)
@@ -104,7 +150,7 @@ class TmdbSeriesMetadataService
 
   def perform_request
     Typhoeus.get(
-      "https://api.themoviedb.org/3/tv/#{tmdb_id}?api_key=#{Figaro.env.tmdb_api_key}&append_to_response=credits,external_ids,content_ratings",
+      "https://api.themoviedb.org/3/tv/#{tmdb_id}?api_key=#{Figaro.env.tmdb_api_key}&append_to_response=credits,external_ids,content_ratings,images",
       followlocation: true,
       accept_encoding: "gzip"
     )

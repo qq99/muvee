@@ -13,7 +13,7 @@
   <% if @prev_series.present? %>
     <%= link_to paginator_path.call(page: @prev_page, query: params[:query], alpha: params[:alpha]), class: 'pretty-pager top js-prev-page' do %>
       <span class="pretty-pager__text">&lsaquo; Previous</span>
-      <div class="tile__background" style="background-image: url(<%= @prev_series.fanart_url %>);"></div>
+      <div class="tile__background" style="background-image: url(<%= @prev_series.backdrop_url %>);"></div>
       <div class="pretty-pager__autoscroll-indicator" bind-attribute="{style: pager.prevProgressCssWidth()}"></div>
     <% end %>
   <% end %>
@@ -39,7 +39,7 @@
   <% if @next_series.present? %>
     <%= link_to paginator_path.call(page: @next_page, query: params[:query], alpha: params[:alpha]), class: 'pretty-pager bottom js-next-page' do %>
       <span class="pretty-pager__text">Next &rsaquo;</span>
-      <div class="tile__background" style="background-image: url(<%= @next_series.fanart_url %>);"></div>
+      <div class="tile__background" style="background-image: url(<%= @next_series.backdrop_url %>);"></div>
       <div class="pretty-pager__autoscroll-indicator" bind-attribute="{style: pager.nextProgressCssWidth()}"></div>
     <% end %>
   <% end %>
