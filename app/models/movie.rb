@@ -24,22 +24,6 @@ class Movie < Video
   end
 
   def extract_metadata
-    self.title = metadata[:title]
-    begin
-      self.released_on = Time.parse(metadata[:release_date]) if metadata[:release_date]
-    rescue
-      self.released_on = nil
-    end
-    self.runtime_minutes = metadata[:runtime]
-    self.year = released_on.try(:year)
-    self.tagline = metadata[:tagline]
-    self.vote_count = metadata[:vote_count] if metadata[:vote_count].to_i >= vote_count.to_i
-    self.vote_average = metadata[:vote_average] if metadata[:vote_count].to_i >= vote_count.to_i
-    self.overview = metadata[:overview]
-    self.language = metadata[:spoken_languages].map{|d| d.values.first}.flatten.join(", ") if metadata[:spoken_languages].present?
-    self.country = metadata[:production_countries].map{|d| d.values.last}.flatten.join(", ") if metadata[:production_countries].present?
-    self.imdb_id = metadata[:imdb_id] unless imdb_id.present?
-
     if omdb_metadata.found?
       self.parental_guidance_rating = omdb_metadata.data['Rated']
       self.vote_average = omdb_metadata.data['imdbRating'].try(:to_f)
@@ -60,17 +44,11 @@ class Movie < Video
   def reanalyze
     super
     return unless imdb_id.present?
+    extract_metadata
     TmdbMovieMetadataService.new(imdb_id).run
     people.map(&:reanalyze)
     # old_imdb_id = imdb_id
     # extract_metadata
-    # associate_with_genres
-    # associate_with_actors
-    # actors.each(&:reanalyze)
-    # redownload_missing
-    # if imdb_id != old_imdb_id
-    #   redownload
-    # end
   end
 
   def suggested_filename
