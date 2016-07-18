@@ -1,6 +1,7 @@
 class Role < ActiveRecord::Base
   belongs_to :person
   belongs_to :video
+  belongs_to :series
 
   scope :directors, -> { where(department: 'Directing') }
   scope :producers, -> { where(department: 'Production') }

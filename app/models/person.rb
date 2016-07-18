@@ -20,4 +20,10 @@ class Person < ActiveRecord::Base
     return nil unless profile_images.present?
     profile_images.sample.url
   end
+
+  def videos_and_series
+    self.roles.map do |role|
+      role.series || role.video
+    end
+  end
 end

@@ -1,2 +1,9 @@
 <%= render 'subnav' %>
 <%= render 'shared/person_details', person: @person %>
+
+
+<% prng = Random.new(Time.new.floor(16.minutes).to_i + (params[:page].to_i || 0)) %>
+
+<% while @items.size > 0 %>
+  <%= layout(@items, prng) %>
+<% end %>
