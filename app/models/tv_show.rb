@@ -21,15 +21,33 @@ class TvShow < Video
     "S" + s.to_s.rjust(2, '0') + "E" + e.to_s.rjust(2, '0')
   end
 
-  def reanalyze(deep_reanalyze = false)
-    if series.blank?
-      found_series = if season.present? && episode.present? && title.present?
-        Series.find_or_create_by(title: title)
+  def associate_self_with_series
+    found_series = if series.blank?
+      if season.present? && episode.present? && title.present?
+        s = Series.find_or_create_by(title: title)
+        s.reanalyze(true)
+        s
       end
-      found_series.reanalyze(true)
     end
 
-    super
+    if found_series.present?
+      existing_episode = found_series.tv_shows.find_by(season: season, episode: episode)
+      if existing_episode.present? && existing_episode != self
+        existing_episode.sources += self.sources
+        self.sources = []
+        existing_episode.save
+        self.destroy
+        existing_episode.reanalyze
+      else
+        self.series = found_series
+        self.save
+      end
+    end
+  end
+
+  def reanalyze(deep_reanalyze = false)
+    video_still_exists = associate_self_with_series
+    super if video_still_exists
   end
 
   def redownload; end

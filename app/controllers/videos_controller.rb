@@ -64,13 +64,6 @@ class VideosController < ApplicationController
     end
   end
 
-  # POST /videos/:id/reanalyze
-  # re-analyze the metadata of a single video
-  def reanalyze_video
-    @video.reanalyze
-    render json: {status: "ok"}
-  end
-
   # GET /videos/1/thumbnails.json
   def thumbnails
     # builds thumbnails if they don't exist, returns them if they do
