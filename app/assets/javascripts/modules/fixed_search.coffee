@@ -10,8 +10,9 @@ class Muvee.FixedSearch
 
   bindGlobalListener: ->
     $(document).on 'keydown.FixedSearch', (ev) =>
+      tagName = ev.target.tagName.toLowerCase()
       if ev.keyCode == 84 # t
-        return if ev.target.tagName == 'INPUT'
+        return if tagName == 'input' || tagName == 'textarea'
         @show()
         ev.preventDefault()
 
