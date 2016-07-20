@@ -21,12 +21,15 @@ class TvShow < Video
     "S" + s.to_s.rjust(2, '0') + "E" + e.to_s.rjust(2, '0')
   end
 
-  def reanalyze
+  def reanalyze(deep_reanalyze = false)
     if series.blank?
-      self.destroy
-    else
-      super
+      found_series = if season.present? && episode.present? && title.present?
+        Series.find_or_create_by(title: title)
+      end
+      found_series.reanalyze(true)
     end
+
+    super
   end
 
   def redownload; end
