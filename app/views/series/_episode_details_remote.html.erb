@@ -20,14 +20,12 @@
     </button>
   <% end %>
 
-  <% if @torrent_sources.present? %>
-    <%= render 'shared/sources_table',
-          sources: @torrent_sources,
-          object_unique_id: "video-#{video.id}",
-          find_more_path: self.method(:show_episode_details_series_index_path),
-          find_more_path_args: [{episode_id: video.id}],
-          download_path: self.method(:download_series_path),
-          download_path_args: [video.series, video] %>
-  <% end %>
+  <%= render 'shared/sources_table',
+        sources: @torrent_sources,
+        object_unique_id: "video-#{video.id}",
+        find_more_path: self.method(:show_episode_details_series_index_path),
+        find_more_path_args: [{episode_id: video.id}],
+        download_path: self.method(:download_series_path),
+        download_path_args: [video.series, video] %>
 
 </div>
