@@ -87,7 +87,7 @@ class Video < ActiveRecord::Base
     shellout_and_grab_duration
     create_initial_thumb
     reset_status
-    self.save if self.changed?
+    reanalyze(true)
   end
 
   def reset_status
