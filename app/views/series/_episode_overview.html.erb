@@ -32,15 +32,6 @@
   <div class="episode-watch-progress progress-bar__container indeterminate" title="Transcoding now..."></div>
 <% end %>
 
-<%= link_to reanalyze_video_path(video),
-  'tg-remote' => 'POST',
-  'full-refresh' => true,
-  'refresh-on-success' => "video-#{video.id}",
-  class: 'icon-link' do %>
-
-  <i class="fa fa-refresh"></i>
-<% end %>
-
 <span class="flex-fixed released-on" define="{releasedOnToggled: false}">
   <% if video.remote? && video.released_on.present? %>
     <span bind-show="releasedOnToggled" bind-event-click="releasedOnToggled = !releasedOnToggled">
