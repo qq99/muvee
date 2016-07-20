@@ -41,6 +41,7 @@ class TmdbSeriesMetadataService < TmdbService
     series.ended = !data.in_production
     content_ratings = data.content_ratings_.results || []
     series.content_rating = content_ratings.first.try(:rating)
+    series.seasons_count = data.number_of_seasons
     series.save
 
     series.genres = associate_genres(data)
@@ -51,8 +52,6 @@ class TmdbSeriesMetadataService < TmdbService
     series.people << associate_people(data, series)
 
     series.save
-
-    associate_episodes_of_series(data.number_of_seasons, series)
   end
 
   def associate_genres(data)
@@ -63,13 +62,6 @@ class TmdbSeriesMetadataService < TmdbService
       genre_name = Genre.normalized_name(genre_name)
       genre = Genre.find_or_create_by(name: genre_name)
       genre
-    end
-  end
-
-  def associate_episodes_of_series(seasons_count, series)
-    return unless seasons_count.kind_of?(Integer)
-    seasons_count.times do |i|
-      TmdbEpisodeMetadataService.new(series.id, i+1).run
     end
   end
 
@@ -106,7 +98,7 @@ class TmdbSeriesMetadataService < TmdbService
   end
 
   def associate_people(data, series)
-    people = associate_actors(data, series) + associate_crew(data, series)
+    people = associate_actors(data, series)# + associate_crew(data, series)
     people = people.uniq(&:id)
     people
   end

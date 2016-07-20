@@ -182,7 +182,7 @@ class Video < ActiveRecord::Base
     Dir.getwd() + Video.thumbnail_root_path + UUID.generate(:compact) + ".jpg"
   end
 
-  def reanalyze
+  def reanalyze(deep_reanalyze = false)
     self.touch
     sources.each(&:reanalyze)
     transcodes.each(&:reanalyze)

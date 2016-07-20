@@ -12,7 +12,7 @@ class Person < ActiveRecord::Base
 
   validates :full_name, presence: true, uniqueness: {case_sensitive: false}
 
-  def reanalyze
+  def reanalyze(deep_reanalyze)
     TmdbPersonMetadataService.new(tmdb_id).run
   end
 

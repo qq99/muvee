@@ -99,7 +99,7 @@ class TmdbMovieMetadataService < TmdbService
   end
 
   def associate_people(data, movie)
-    people = associate_actors(data, movie) + associate_crew(data, movie)
+    people = associate_actors(data, movie)# + associate_crew(data, movie)
     people = people.uniq(&:id)
     people
   end

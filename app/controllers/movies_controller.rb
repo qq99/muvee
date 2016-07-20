@@ -125,8 +125,9 @@ class MoviesController < ApplicationController
   end
 
   def reanalyze
-    @movie.reanalyze
-
+    @movie.reanalyze(true)
+    @movie.reload
+    flash.now[:notice] = "Movie reanalyzing, please check back for updates"
     show
   end
 

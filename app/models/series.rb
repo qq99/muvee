@@ -50,7 +50,7 @@ class Series < ActiveRecord::Base
     TmdbSeriesSearchingService.new(title).run
   end
 
-  def reanalyze
+  def reanalyze(deep_reanalyze = false)
     if tmdb_id.blank?
       self.tmdb_id = find_tmdb_id
       self.save if tmdb_id.present?
@@ -60,7 +60,15 @@ class Series < ActiveRecord::Base
 
     TmdbSeriesMetadataService.new(tmdb_id).run
 
-    people.map(&:reanalyze)
+    return unless deep_reanalyze
+
+    seasons_count.times do |i|
+      SeasonReanalyzerWorker.perform_async(id, i+1)
+    end
+
+    people.map do |person|
+      ReanalyzerWorker.perform_async("Person", person.id)
+    end
   end
 
 end

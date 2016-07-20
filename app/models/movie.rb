@@ -41,12 +41,17 @@ class Movie < Video
     imdb_id
   end
 
-  def reanalyze
+  def reanalyze(deep_reanalyze = false)
     super
     return unless imdb_id.present?
     extract_metadata
     TmdbMovieMetadataService.new(imdb_id).run
-    people.map(&:reanalyze)
+
+    return unless deep_reanalyze
+
+    people.map do |person|
+      ReanalyzerWorker.perform_async("Person", person.id)
+    end
   end
 
   def suggested_filename

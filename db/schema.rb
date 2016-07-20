@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160718214614) do
+ActiveRecord::Schema.define(version: 20160720220953) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -179,6 +179,7 @@ ActiveRecord::Schema.define(version: 20160718214614) do
     t.date     "last_air_date"
     t.boolean  "ended"
     t.string   "content_rating"
+    t.integer  "seasons_count",         default: 0
   end
 
   create_table "sources", force: :cascade do |t|

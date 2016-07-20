@@ -1,6 +1,8 @@
 class SeriesController < ApplicationController
+  before_action :compute_series_information
   before_action :set_series, only: [:show, :shuffle, :download, :reanalyze, :favorite, :unfavorite]
   before_action :set_episode, only: [:show_episode_details, :download]
+  before_action :redirect_to_discover, only: [:index, :newest_episodes, :newest_unwatched]
 
   RESULTS_PER_PAGE = 48
 
@@ -150,8 +152,9 @@ class SeriesController < ApplicationController
   end
 
   def reanalyze
-    @series.reanalyze
-    flash.now[:notice] = "Series reanalyzed successfully"
+    @series.reanalyze(true)
+    flash.now[:notice] = "Series reanalyzing, please check back for updates"
+    @series.reload
     show
   end
 
@@ -162,6 +165,11 @@ class SeriesController < ApplicationController
   end
 
   private
+
+    def compute_series_information
+      @has_local_series = Series.local.count > 0
+      @has_favorite_series = Series.favorites.count > 0
+    end
 
     def paged(scope)
       @_is_paged = true
@@ -189,5 +197,9 @@ class SeriesController < ApplicationController
 
     def set_episode
       @episode = TvShow.find(params[:episode_id])
+    end
+
+    def redirect_to_discover
+      redirect_to discover_series_index_path unless @has_local_series
     end
 end
