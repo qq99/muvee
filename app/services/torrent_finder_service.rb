@@ -8,8 +8,8 @@ class TorrentFinderService
     hydra = Typhoeus::Hydra.new
 
     search_piratebay # TODO: make into hydra queue
-    hydra.queue search_kickass
-    hydra.run
+    # hydra.queue search_kickass
+    # hydra.run
 
     @results = kickass_results + piratebay_results + eztv_results
     sort_results(@results)
