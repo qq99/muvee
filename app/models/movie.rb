@@ -26,10 +26,21 @@ class Movie < Video
     TmdbMovieSearchingService.new(title).run
   end
 
+  def resolve_duplicates
+    existing_movie = Movie.find_by(tmdb_id: tmdb_id)
+    if existing_movie.present?
+      self.destroy
+      false
+    end
+    true
+  end
+
   def reanalyze(deep_reanalyze = false)
     super
     if tmdb_id.blank? && imdb_id.blank?
       self.tmdb_id = find_tmdb_id
+      should_continue = resolve_duplicates
+      return unless should_continue
       self.save if tmdb_id.present?
     end
 

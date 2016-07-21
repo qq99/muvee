@@ -122,7 +122,15 @@ class MoviesController < ApplicationController
 
   def reanalyze
     @movie.reanalyze(true)
-    @movie.reload
+    if @movie.persisted? # it may have been deleted as a duplicate
+      @movie.reload
+    else
+      existing_movie = Movie.find_by(tmdb_id: @movie.tmdb_id)
+      response.headers['X-Next-Redirect'] = movie_path(existing_movie)
+      head :ok
+      return
+    end
+
     flash.now[:notice] = "Movie reanalyzing, please check back for updates"
     show
   end

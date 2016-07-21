@@ -6,8 +6,7 @@ class Source < ActiveRecord::Base
   validates :raw_file_path, uniqueness: true
   before_validation :set_quality, on: :create
   before_validation :associate_self_with_video, on: :create
-
-  after_create :trigger_post_source_actions
+  after_create :trigger_post_source_actions, on: :create
 
   def set_quality
     self.quality = guessed[:quality]
