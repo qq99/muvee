@@ -50,6 +50,12 @@
                 <div>
                   <%= render 'shared/star_rating', vote_count: @series.tmdb_vote_count, rating: @series.tmdb_vote_average || 0, rating_max: 10.0, new_scale: 5 %>
                 </div>
+                <%= link_to imdb_link(@series.imdb_id), class: 'metadata-service-logo-link', target: :_blank do %>
+                  <%= render 'shared/imdb_logo' %>
+                <% end %>
+                <%= link_to tmdb_series_link(@series.tmdb_id), class: 'metadata-service-logo-link', target: :_blank do %>
+                  <%= image_tag 'tmdb-logo' %>
+                <% end %>
               </div>
             </div>
           </div>

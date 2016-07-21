@@ -99,7 +99,7 @@
                 <%= link_to imdb_link(@movie.imdb_id), class: 'metadata-service-logo-link', target: :_blank do %>
                   <%= render 'shared/imdb_logo' %>
                 <% end %>
-                <%= link_to tmdb_link(@movie.tmdb_id), class: 'metadata-service-logo-link', target: :_blank do %>
+                <%= link_to tmdb_movie_link(@movie.tmdb_id), class: 'metadata-service-logo-link', target: :_blank do %>
                   <%= image_tag 'tmdb-logo' %>
                 <% end %>
               </div>
