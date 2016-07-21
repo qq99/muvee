@@ -1,2 +1,2 @@
 <%= render 'subnav' %>
-<%= render 'movies_results' %>
+<%= render 'movies_results', paginator_path: self.method(:movies_path) %>

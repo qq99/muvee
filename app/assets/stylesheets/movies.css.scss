@@ -14,15 +14,13 @@
 
 }
 
-#ImdbLogoSvg {
-  height: 30px;
-  width: 60px;
-}
-#TmdbLogoSvg {
-  height: 50px;
-  width: 200px;
-  path {
-    fill: white;
+.metadata-service-logo-link {
+  display: block;
+  height: 35px;
+  width: auto;
+  img, svg {
+    height: 100%;
+    width: auto;
   }
 }
 

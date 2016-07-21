@@ -24,8 +24,9 @@ class Movie < Video
   def remotely_fetch_votes
     if omdb_metadata.found?
       self.parental_guidance_rating = omdb_metadata.data['Rated']
-      self.vote_average = omdb_metadata.data['imdbRating'].try(:to_f)
-      self.vote_count = omdb_metadata.data['imdbVotes'].try(:gsub, /[^\d]/, '').try(:to_i)
+      # done with tmdb now:
+      # self.vote_average = omdb_metadata.data['imdbRating'].try(:to_f)
+      # self.vote_count = omdb_metadata.data['imdbVotes'].try(:gsub, /[^\d]/, '').try(:to_i)
     end
 
     self.save
@@ -43,7 +44,7 @@ class Movie < Video
     super
     return unless imdb_id.present? || tmdb_id.present?
     TmdbMovieMetadataService.new(imdb_id, tmdb_id).run
-    remotely_fetch_votes
+    # remotely_fetch_votes
 
     return unless deep_reanalyze
 

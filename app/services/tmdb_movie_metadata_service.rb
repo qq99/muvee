@@ -19,8 +19,8 @@ class TmdbMovieMetadataService < TmdbService
     movie ||= Movie.find_by(imdb_id: data.imdb_id)
     movie ||= Movie.new
 
-    movie.imdb_id = data.id
-    movie.tmdb_id = data.tmdb_id
+    movie.tmdb_id = data.id
+    movie.imdb_id = data.imdb_id
     movie.adult = data.adult
     movie.budget = data.budget
     movie.website = data.homepage
@@ -53,8 +53,8 @@ class TmdbMovieMetadataService < TmdbService
   def associate_trailers(data)
     trailers = data.trailers.youtube
 
-    resulting_trailers = trailers.map do |trailer|
-      trailer = Trailer.new(
+    resulting_trailers = trailers.uniq{|t| t.source}.map do |trailer|
+      trailer = Trailer.find_or_initialize_by(
         youtube_id: trailer.source,
         name: trailer.name
       )

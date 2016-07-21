@@ -19,7 +19,11 @@ module ApplicationHelper
   end
 
   def imdb_link(imdb_id)
-    "http://www.imdb.com/title/#{imdb_id}/"
+    "http://www.imdb.com/title/#{imdb_id}"
+  end
+
+  def tmdb_link(tmdb_id)
+    "https://www.themoviedb.org/movie/#{tmdb_id}"
   end
 
   def released_on_human(released_on)

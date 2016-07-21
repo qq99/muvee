@@ -1,7 +1,7 @@
 <% content_for :movies_subnav do %>
 <ul class="subnav">
   <li>
-    <%= link_to 'All', all_movies_path, class: @section == :all ? 'is-active' : '' %>
+    <%= link_to 'Discover', discover_movies_path, class: @section == :discover ? 'is-active' : '' %>
   </li>
   <li>
     <%= link_to 'On deck', newest_unwatched_movies_path, class: @section == :newest_unwatched ? 'is-active' : '' %>
@@ -14,9 +14,6 @@
   </li>
   <li>
     <%= link_to 'Genres', genres_movies_path, class: @section == :genres ? 'is-active' : '' %>
-  </li>
-  <li>
-    <%= link_to 'Discover', discover_movies_path, class: @section == :discover ? 'is-active' : '' %>
   </li>
 </ul>
 <% end %>

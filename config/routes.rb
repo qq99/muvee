@@ -60,8 +60,7 @@ Rails.application.routes.draw do
   end
   resources :movies do
     collection do
-      get :index, action: :all
-      get :all
+      get :index
       get :discover
       get :newest
       get :newest_unwatched

@@ -13,7 +13,12 @@ class MoviesController < ApplicationController
   RESULTS_PER_PAGE = 24
 
   def index
-    all
+    @section = :all
+
+    scope = Movie.order('random()')
+    scope = alpha_filter_scope(scope)
+
+    @prev_movie, @movies, @next_movie = paged(scope)
   end
 
   def show
@@ -34,15 +39,6 @@ class MoviesController < ApplicationController
     response.headers['X-XHR-Redirected-To'] = request.env['REQUEST_URI']
   end
 
-  def all
-    @section = :all
-
-    scope = Movie.order('random()')
-    scope = alpha_filter_scope(scope)
-
-    @prev_movie, @movies, @next_movie = paged(scope)
-  end
-
   def newest_unwatched
     @section = :newest_unwatched
     scope = Movie.local.newest.unwatched
@@ -61,7 +57,7 @@ class MoviesController < ApplicationController
 
   def discover
     @section = :discover
-    scope = Movie.remote.order(created_at: :desc)
+    scope = Movie.order(created_at: :desc)
     scope = alpha_filter_scope(scope)
 
     @prev_movie, @movies, @next_movie = paged(scope)
