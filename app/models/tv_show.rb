@@ -1,4 +1,7 @@
 class TvShow < Video
+  include PrettyUrls
+  pretty_url_by :title
+
   belongs_to :series, counter_cache: true
   validate :unique_episode_in_season, on: :create
 

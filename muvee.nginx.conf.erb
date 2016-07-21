@@ -84,7 +84,7 @@ http {
       root <%= @app_root %>/public;
     }
 
-    location ~ ^/videos/[0-9]*/source/[0-9]*/stream {
+    location ~ ^/videos/.*/source/.*/stream {
       proxy_redirect    off;
 
       proxy_set_header  Host              $http_host;

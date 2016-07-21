@@ -1,6 +1,8 @@
 class Source < ActiveRecord::Base
   include AssociatesSelfWithVideo
   include HasMetadata
+  include PrettyUrls
+  pretty_url_by :quality
   belongs_to :video, counter_cache: true
 
   validates :raw_file_path, uniqueness: true

@@ -1,4 +1,7 @@
 class Series < ActiveRecord::Base
+  include PrettyUrls
+  pretty_url_by :title
+
   has_many :genres_series, dependent: :destroy
   has_many :genres, through: :genres_series
 

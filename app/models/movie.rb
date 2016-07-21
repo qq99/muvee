@@ -1,4 +1,7 @@
 class Movie < Video
+  include PrettyUrls
+  pretty_url_by :title
+  
   scope :paginated, ->(page, results_per_page) { limit(results_per_page).offset(page * results_per_page) }
   scope :favorites, -> {where(is_favorite: true)}
 
@@ -61,4 +64,5 @@ class Movie < Video
     name.gsub!(/[^0-9A-Za-z.\(\)\[\]\-\s]/, '')
     name += File.extname(raw_file_path)
   end
+
 end
