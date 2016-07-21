@@ -57,7 +57,7 @@ class MoviesController < ApplicationController
 
   def discover
     @section = :discover
-    scope = Movie.order(created_at: :desc)
+    scope = Movie.remote.order(created_at: :desc)
     scope = alpha_filter_scope(scope)
 
     @prev_movie, @movies, @next_movie = paged(scope)
