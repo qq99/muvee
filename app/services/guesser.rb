@@ -164,7 +164,7 @@ class Guesser
   end
 
   def self.strip_scene_stuff(str)
-    str.gsub(/(x264|hdtv|x264-2HD|-LOL)/i, '')
+    str.gsub(/(x264|hdtv|x264-2HD|-LOL|muv-transcoded)/i, '')
   end
 
   def self.pretty_title(str)

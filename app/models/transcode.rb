@@ -4,6 +4,9 @@ class Transcode < ActiveRecord::Base
   before_validation :associate_self_with_video, on: :create
   belongs_to :video
 
+  scope :pending, -> {where(status: 'pending')}
+  scope :failed, -> {where(status: 'failed')}
+  scope :complete, -> {where(status: 'complete')}
   scope :complete, -> {where(status: 'complete')}
   scope :incomplete, -> {where.not(status: 'complete')}
   scope :not_working, -> {where.not(status: 'transcoding')}

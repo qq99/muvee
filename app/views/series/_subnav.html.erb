@@ -22,8 +22,10 @@
   <li>
     <%= link_to 'Genres', genres_series_index_path, class: @section == :genres ? 'is-active' : '' %>
   </li>
-  <li>
-    <%= link_to 'Others', nonepisodic_series_index_path, class: @section == :nonepisodic ? 'is-active' : '' %>
-  </li>
+  <% if @has_nonepisodic_tv_shows %>
+    <li>
+      <%= link_to 'Others', nonepisodic_series_index_path, class: @section == :nonepisodic ? 'is-active' : '' %>
+    </li>
+  <% end %>
 </ul>
 <% end %>

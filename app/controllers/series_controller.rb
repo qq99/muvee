@@ -169,6 +169,7 @@ class SeriesController < ApplicationController
     def compute_series_information
       @has_local_series = Series.local.count > 0
       @has_favorite_series = Series.favorites.count > 0
+      @has_nonepisodic_tv_shows = TvShow.where(series_id: nil).count > 0
     end
 
     def paged(scope)
