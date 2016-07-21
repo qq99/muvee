@@ -47,7 +47,7 @@
         <%= object.overview %>
       </p>
       <%= render 'shared/genre_badge_listing', genres: object.genres.sample(2), paginator_path: self.method(:by_genre_series_index_path) %>
-      <%= render 'shared/star_rating', vote_count: object.tvdb_rating_count, rating: object.tvdb_rating || 0, rating_max: 10.0, new_scale: 5 %>
+      <%= render 'shared/star_rating', vote_count: object.tmdb_vote_count, rating: object.tmdb_vote_average || 0, rating_max: 10.0, new_scale: 5 %>
       <div class="tile__meta-backdrop"></div>
     </div>
     <div class="tile__background" style="background-image: url(<%= object.backdrop_url %>);"></div>

@@ -30,6 +30,8 @@ class TmdbSeriesMetadataService < TmdbService
     series.popularity = data.popularity
     series.country = data.origin_country.try(:first)
     series.language = data.original_language
+    series.tmdb_vote_count = data.vote_count
+    series.tmdb_vote_average = data.vote_average
     begin
       series.first_air_date = Time.parse(data.first_air_date) if data.first_air_date.present?
     rescue => e

@@ -48,7 +48,7 @@
               </p>
               <div class="flex-columns sst">
                 <div>
-                  <%= render 'shared/star_rating', vote_count: @series.tvdb_rating_count, rating: @series.tvdb_rating || 0, rating_max: 10.0, new_scale: 5 %>
+                  <%= render 'shared/star_rating', vote_count: @series.tmdb_vote_count, rating: @series.tmdb_vote_average || 0, rating_max: 10.0, new_scale: 5 %>
                 </div>
               </div>
             </div>
