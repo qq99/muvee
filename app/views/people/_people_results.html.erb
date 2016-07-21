@@ -1,0 +1,64 @@
+<%
+  empty = !@people.present?
+  was_empty_search = empty && params[:query].present?
+  show_alpha_picker = local_assigns[:show_alpha_picker]
+  show_alpha_picker = !was_empty_search if show_alpha_picker.nil?
+%>
+<div id="results" refresh="results" class="tile-list" <% if @_is_paged %>define="{pager: new Muvee.Pager(this)}"<% end %>>
+
+  <% if show_alpha_picker %>
+    <%= render 'shared/alpha_picker', paginator_path: paginator_path %>
+  <% end %>
+
+  <% if @prev_person.present? %>
+    <%= link_to paginator_path.call(page: @prev_page, query: params[:query], alpha: params[:alpha]), class: 'pretty-pager top js-prev-page' do %>
+      <span class="pretty-pager__text">&lsaquo; Previous</span>
+      <div class="tile__background" style="background-image: url(<%= @prev_person.default_profile_picture %>);"></div>
+      <div class="pretty-pager__autoscroll-indicator" bind-attribute="{style: pager.prevProgressCssWidth()}"></div>
+    <% end %>
+  <% end %>
+
+  <% prng = Random.new(Time.new.floor(16.minutes).to_i + (params[:page].to_i || 0)) %>
+
+  <div class="flex-columns flex-wrap">
+    <% @people.each do |person| %>
+      <div class='actor-tile'>
+        <div class="content">
+          <% profile = person.default_profile_picture %>
+          <%= link_to person_path(person) do %>
+            <% if profile.present? %>
+              <div class="actor-profile-picture" style="background-image: url(<%= profile %>)"></div>
+            <% else %>
+              <div class="actor-profile-picture" style="background-image: url(<%= asset_path('unknown-portrait.jpg') %>)"></div>
+            <% end %>
+          <% end %>
+          <%= link_to person_path(person), class: "actor-name" do %>
+            <%= person.full_name %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <% 10.times do %><div class="actor-tile--filler"></div><% end %>
+  </div>
+
+  <% if was_empty_search %>
+    <div class="index-notice">
+      <h3>
+        Unfortunately, <%= app_name %> doesn't know about <span class="note"><%= params[:query] %></span>.
+      </h3>
+    </div>
+  <% elsif empty %>
+    <div class="index-notice">
+      <h3>Nothing here.</h3>
+    </div>
+  <% end %>
+
+  <% if @next_person.present? %>
+    <%= link_to paginator_path.call(page: @next_page, query: params[:query], alpha: params[:alpha]), class: 'pretty-pager bottom js-next-page' do %>
+      <span class="pretty-pager__text">Next &rsaquo;</span>
+      <div class="tile__background" style="background-image: url(<%= @next_person.default_profile_picture %>);"></div>
+      <div class="pretty-pager__autoscroll-indicator" bind-attribute="{style: pager.nextProgressCssWidth()}"></div>
+    <% end %>
+  <% end %>
+</div>

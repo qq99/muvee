@@ -12,6 +12,9 @@ class Person < ActiveRecord::Base
 
   validates :full_name, presence: true, uniqueness: {case_sensitive: false}
 
+  scope :alphabetical, -> {order(full_name: :asc)}
+  scope :paginated, ->(page, results_per_page) { limit(results_per_page).offset(page * results_per_page) }
+
   def reanalyze(deep_reanalyze)
     TmdbPersonMetadataService.new(tmdb_id).run
   end
