@@ -2,20 +2,6 @@ class Movie < Video
   scope :paginated, ->(page, results_per_page) { limit(results_per_page).offset(page * results_per_page) }
   scope :favorites, -> {where(is_favorite: true)}
 
-  def search_tmdb_for_id
-    Rails.logger.info "[search_tmdb_for_id] Searching TMDB for an ID for: #{title}"
-    tmdb_movie = TmdbMovieSearchResult.get(title).sorted_by_popularity.first
-    tmdb_id = tmdb_movie.try(:[], :id)
-  end
-
-  def search_for_imdb_id
-    return imdb_id if imdb_id.present?
-    Rails.logger.info "[search_for_imdb_id] Searching TMDB for an ID for: #{title}"
-    tmdb_id = search_tmdb_for_id
-    return nil if tmdb_id.blank?
-    imdb_id = TmdbMovieResult.get(tmdb_id).data.try(:[], :imdb_id)
-  end
-
   def poster_url
     return nil unless poster_images.present?
     poster_images.sort{|p| -p.vote_average}.first.url # TODO: use locale specific image
@@ -36,12 +22,17 @@ class Movie < Video
     @omdb_metadata ||= OmdbSearchResult.get(imdb_id)
   end
 
-  def fetch_imdb_id
-    imdb_id
+  def find_tmdb_id
+    TmdbMovieSearchingService.new(title).run
   end
 
   def reanalyze(deep_reanalyze = false)
     super
+    if tmdb_id.blank? && imdb_id.blank?
+      self.tmdb_id = find_tmdb_id
+      self.save if tmdb_id.present?
+    end
+
     return unless imdb_id.present? || tmdb_id.present?
     TmdbMovieMetadataService.new(imdb_id, tmdb_id).run
     # remotely_fetch_votes
