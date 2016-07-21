@@ -11,6 +11,7 @@ module AssociatesSelfWithVideo
   end
 
   def associate_self_with_video
+    return if video.present?
     if type.include?('Movie')
       associate_self_with_movie
     elsif type.include?('TvShow')
@@ -19,7 +20,6 @@ module AssociatesSelfWithVideo
   end
 
   def associate_self_with_tv_show
-    return if video.present?
     show = TvShow.find_or_initialize_by(
       title: effective_tv_show_title,
       season: guessed[:season],

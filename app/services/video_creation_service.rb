@@ -95,7 +95,11 @@ class VideoCreationService
 
   def create_source(opts)
     return false if Source.exists?(raw_file_path: opts[:raw_file_path])
-    Source.create(opts)
+    SourceCreationWorker.perform_async(
+      opts[:type],
+      opts[:raw_file_path],
+      opts[:video].try(:id)
+    )
   end
 
 end
