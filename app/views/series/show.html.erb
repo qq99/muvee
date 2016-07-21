@@ -50,6 +50,16 @@
                 <div>
                   <%= render 'shared/star_rating', vote_count: @series.tmdb_vote_count, rating: @series.tmdb_vote_average || 0, rating_max: 10.0, new_scale: 5 %>
                 </div>
+                <% if @series.first_air_date.present? %>
+                  <div>
+                    <i class="subdued fa fa-calendar"></i>
+                    <%= released_on_human(@series.first_air_date) %>
+
+                    <% if @series.ended && @series.last_air_date.present? %>
+                      &mdash; <%= released_on_human(@series.last_air_date) %>
+                    <% end %>
+                  </div>
+                <% end %>
                 <%= link_to imdb_link(@series.imdb_id), class: 'metadata-service-logo-link', target: :_blank do %>
                   <%= render 'shared/imdb_logo' %>
                 <% end %>

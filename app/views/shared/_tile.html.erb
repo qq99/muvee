@@ -34,7 +34,7 @@
   <div class="tile" context="tile<%= object.id %>">
     <div class="tile__meta">
       <h3 class="video-type">Series</h3>
-      <h3 class='video-status'><%= object.status %></h3>
+      <h3 class='video-status'><%= object.ended ? 'Ended' : 'Continuing' %></h3>
       <% if num_unacquired.present? && num_unacquired > 0 %>
         <h3 class="video-status num-unacquired">
           <%= pluralize(num_unacquired, 'new episode') %>
