@@ -2,7 +2,9 @@
   empty = !@people.present?
   was_empty_search = empty && params[:query].present?
   show_alpha_picker = local_assigns[:show_alpha_picker]
-  show_alpha_picker = !was_empty_search if show_alpha_picker.nil?
+  if show_alpha_picker.nil?
+    show_alpha_picker = @people.size > 10
+  end
 %>
 <div id="results" refresh="results" class="tile-list" <% if @_is_paged %>define="{pager: new Muvee.Pager(this)}"<% end %>>
 
