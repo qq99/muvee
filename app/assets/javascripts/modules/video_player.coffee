@@ -1,6 +1,7 @@
 class Muvee.VideoPlayer
   constructor: (@node, @opts) ->
     @fullscreen = false
+    @onTimeUpdate = _.throttle(@_onTimeUpdate, 250)
     @setLeftOffAtTime = _.throttle(@_setLeftOffAtTime.bind(this), 1000)
     @videoEl = $(@node).find("video")[0]
 
@@ -15,62 +16,71 @@ class Muvee.VideoPlayer
     else
       startAt = @opts.resumeFrom
 
-    # HTML5 video events: http://www.w3.org/TR/html5/embedded-content-0.html#mediaevents
-    $(@videoEl).one "canplay.VideoPlayer", =>
-      @setVolume(@volumePreference)
-      unless @opts.duration && (@opts.duration - startAt) < 30 # don't set time if we're already near the end
-        @setCurrentTime(startAt)
+    @setVolume(@volumePreference)
 
-    $(@videoEl).on "pause.VideoPlayer", =>
-      if @secondsLeft() < 1
-        document.getElementById("next-episode-link").click()
-      else
-        #brightenLights()
+    unless @opts.duration && (@opts.duration - startAt) < 30 # don't set time if we're already near the end
+      @setCurrentTime(startAt)
 
-    $(@videoEl).on "timeupdate.VideoPlayer", _.throttle =>
-      Twine.refresh()
-      @setLeftOffAtTime()
-      @updateDurationBar()
-    , 250
+    @play()
 
-    $(@videoEl).on "play.VideoPlayer", =>
-      Twine.refresh()
-
-    $(@videoEl).on "volumechange.VideoPlayer", =>
-      Twine.refresh()
-      @updateVolumeBar()
-
-    $(document).on "keydown mousemove", @showControls.bind(this)
-
-    $(document).on "keydown.VideoPlayer", (ev) =>
-      switch ev.which
-        when 32 # space
-          @togglePlayPause()
-        when 37 # left arrow
-          @stepBackwards()
-        when 39 # right arrow
-          @stepForwards()
-        when 40 # up arrow
-          @setVolume(@videoEl.volume - 0.05)
-        when 38 # down arrow
-          @setVolume(@videoEl.volume + 0.05)
+    @bindEvents()
 
     Page.onReplace @node, @destructor
 
-  destructor: ->
-    $(document).off(".VideoPlayer")
+  bindEvents: ->
+    # HTML5 video events: http://www.w3.org/TR/html5/embedded-content-0.html#mediaevents
+    @videoEl.addEventListener 'pause', @onPause
+    @videoEl.addEventListener 'timeupdate', @onTimeUpdate
+    @videoEl.addEventListener 'play', @onPlay
+    @videoEl.addEventListener 'volumechange', @onVolumeChange
+    document.addEventListener 'keydown', @showControls
+    document.addEventListener 'mousemove', @showControls
+    document.addEventListener 'keydown', @onKeyDown
+
+  destructor: =>
+    @videoEl.removeEventListener('pause', @onPause)
+    @videoEl.removeEventListener('play', @onPlay)
+    @videoEl.removeEventListener('timeupdate', @onTimeUpdate)
+    @videoEl.removeEventListener('volumechange', @onTimeUpdate)
+    document.removeEventListener('keydown', @showControls)
+    document.removeEventListener('mousemove', @showControls)
+    document.removeEventListener('keydown', @onKeyDown)
 
   play: ->
     @videoEl.play()
 
+  onPlay: ->
+    Twine.refresh()
+
   pause: ->
     @videoEl.pause()
+
+  onPause: =>
+    document.getElementById("next-episode-link").click() if @secondsLeft() < 1
 
   paused: ->
     !!@videoEl.paused
 
   playing: ->
     !@paused()
+
+  _onTimeUpdate: =>
+    Twine.refresh()
+    @setLeftOffAtTime()
+    @updateDurationBar()
+
+  onKeyDown: (ev) =>
+    switch ev.which
+      when 32 # space
+        @togglePlayPause()
+      when 37 # left arrow
+        @stepBackwards()
+      when 39 # right arrow
+        @stepForwards()
+      when 40 # up arrow
+        @setVolume(@videoEl.volume - 0.05)
+      when 38 # down arrow
+        @setVolume(@videoEl.volume + 0.05)
 
   muted: ->
     @videoEl.volume == 0
@@ -109,6 +119,10 @@ class Muvee.VideoPlayer
   setVolume: (newVolume) ->
     @videoEl.volume = Math.max(0, Math.min(newVolume, 1))
     localStorage.setItem("volume-preference", @videoEl.volume)
+
+  onVolumeChange: =>
+    Twine.refresh()
+    @updateVolumeBar()
 
   updateVolumeBar: ->
     $("#volume-bar .progress-bar__bar", @node).css("width", "#{@percentageVolume()}%")
@@ -181,7 +195,7 @@ class Muvee.VideoPlayer
       left_off_at: parseInt(@videoEl.currentTime, 10)
     )
 
-  showControls: ->
+  showControls: =>
     @shouldShowControls = true
     clearTimeout(@controlTimeout)
     @controlTimeout = setTimeout =>
