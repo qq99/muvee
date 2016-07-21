@@ -10,9 +10,6 @@
   </li>
   <% if @has_local_series %>
     <li>
-      <%= link_to 'Series', series_index_path, class: @section == :series ? 'is-active' : '' %>
-    </li>
-    <li>
       <%= link_to 'On deck', newest_unwatched_series_index_path, class: @section == :newest_unwatched ? 'is-active' : '' %>
     </li>
     <li>
