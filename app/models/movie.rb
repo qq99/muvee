@@ -1,6 +1,4 @@
 class Movie < Video
-  # after_create :extract_metadata
-
   scope :paginated, ->(page, results_per_page) { limit(results_per_page).offset(page * results_per_page) }
   scope :favorites, -> {where(is_favorite: true)}
 
@@ -23,7 +21,7 @@ class Movie < Video
     poster_images.sort{|p| -p.vote_average}.first.url # TODO: use locale specific image
   end
 
-  def extract_metadata
+  def remotely_fetch_votes
     if omdb_metadata.found?
       self.parental_guidance_rating = omdb_metadata.data['Rated']
       self.vote_average = omdb_metadata.data['imdbRating'].try(:to_f)
@@ -43,9 +41,9 @@ class Movie < Video
 
   def reanalyze(deep_reanalyze = false)
     super
-    return unless imdb_id.present?
-    extract_metadata
-    TmdbMovieMetadataService.new(imdb_id).run
+    return unless imdb_id.present? || tmdb_id.present?
+    TmdbMovieMetadataService.new(imdb_id, tmdb_id).run
+    remotely_fetch_votes
 
     return unless deep_reanalyze
 

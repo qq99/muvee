@@ -1,8 +1,9 @@
 class TmdbMovieMetadataService < TmdbService
 
-  def initialize(imdb_id)
-    raise ArgumentError.new("You must supply an imdb id") unless imdb_id.present?
+  def initialize(imdb_id, tmdb_id)
     @imdb_id = imdb_id
+    @tmdb_id = tmdb_id
+    raise ArgumentError.new("You must supply at least one of imdb_id or tmdb_id") if imdb_id.blank? && tmdb_id.blank?
   end
 
   def run
@@ -13,8 +14,12 @@ class TmdbMovieMetadataService < TmdbService
   private
 
   def create_or_update_movie(data)
-    movie = Movie.find_or_initialize_by(imdb_id: data.imdb_id)
+    movie = nil
+    movie ||= Movie.find_by(tmdb_id: data.id)
+    movie ||= Movie.find_by(imdb_id: data.imdb_id)
+    movie ||= Movie.new
 
+    movie.imdb_id = data.id
     movie.tmdb_id = data.tmdb_id
     movie.adult = data.adult
     movie.budget = data.budget
@@ -135,8 +140,12 @@ class TmdbMovieMetadataService < TmdbService
     end
   end
 
+  def id
+    @tmdb_id || @imdb_id
+  end
+
   def url
-    "https://api.themoviedb.org/3/movie/#{@imdb_id}?api_key=#{Figaro.env.tmdb_api_key}&append_to_response=images,keywords,release_dates,credits,trailers"
+    "https://api.themoviedb.org/3/movie/#{id}?api_key=#{Figaro.env.tmdb_api_key}&append_to_response=images,keywords,release_dates,credits,trailers"
   end
 
 end

@@ -4,7 +4,7 @@ class Video < ActiveRecord::Base
   has_many :fanarts, dependent: :destroy
   has_many :transcodes, dependent: :destroy
 
-  has_many :trailers
+  has_many :trailers, dependent: :destroy
 
   has_many :images, dependent: :destroy
   has_many :backdrop_images, dependent: :destroy
@@ -12,12 +12,12 @@ class Video < ActiveRecord::Base
   has_many :banner_images, dependent: :destroy
   has_many :still_images, dependent: :destroy
 
-  has_many :genres_videos
+  has_many :genres_videos, dependent: :destroy
   has_many :genres, through: :genres_videos
 
-  has_many :people_videos
+  has_many :people_videos, dependent: :destroy
   has_many :people, through: :people_videos
-  has_many :roles
+  has_many :roles, dependent: :destroy
   def cast; roles.cast; end
   def crew; roles.crew; end
   def directors; roles.directors; end

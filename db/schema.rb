@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160720220953) do
+ActiveRecord::Schema.define(version: 20160721154841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,7 +84,7 @@ ActiveRecord::Schema.define(version: 20160720220953) do
     t.integer "series_id"
   end
 
-  create_table "genres_videos", id: false, force: :cascade do |t|
+  create_table "genres_videos", force: :cascade do |t|
     t.integer "genre_id"
     t.integer "video_id"
   end

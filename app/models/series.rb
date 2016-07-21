@@ -1,14 +1,14 @@
 class Series < ActiveRecord::Base
-  has_many :genres_series
+  has_many :genres_series, dependent: :destroy
   has_many :genres, through: :genres_series
 
-  has_many :people_series
+  has_many :people_series, dependent: :destroy
   has_many :people, through: :people_series
-  has_many :roles
+  has_many :roles, dependent: :destroy
 
-  has_many :images
-  has_many :backdrop_images
-  has_many :poster_images
+  has_many :images, dependent: :destroy
+  has_many :backdrop_images, dependent: :destroy
+  has_many :poster_images, dependent: :destroy
 
   def cast; roles.cast; end
   def crew; roles.crew; end
