@@ -46,7 +46,7 @@ Rails.application.routes.draw do
       get :favorites
       get :discover
       get :genres
-      get 'genres/:type', as: :by_genre, action: :genre
+      get 'genres/:id', as: :by_genre, action: :genre
       get :search
       post :discover_more
     end
@@ -66,7 +66,7 @@ Rails.application.routes.draw do
       get :newest_unwatched
       get :favorites
       get :genres
-      get 'genres/:type', as: :by_genre, action: :genre
+      get 'genres/:id', as: :by_genre, action: :genre
       get :search
       post :movie_search, as: :movie_search, action: :movie_search
       post :discover_more

@@ -6,7 +6,7 @@
 
       <% genres.each do |genre| %>
         <div class="tile">
-          <%= link_to by_genre_movies_path(genre.name.parameterize), class: 'tile__meta--banner' do %>
+          <%= link_to by_genre_movies_path(genre), class: 'tile__meta--banner' do %>
             <h1><%= genre.name %></h1>
           <% end %>
           <div class="tile__background" style="background-image: url(<%= genre.movies.local.sample.backdrop_images.sample.try(:url) %>);"></div>

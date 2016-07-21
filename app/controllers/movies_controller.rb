@@ -71,8 +71,7 @@ class MoviesController < ApplicationController
 
   def genre
     @section = :genres
-    name = Genre.normalized_name(params[:type])
-    @genre = Genre.find_by(name: name)
+    @genre = Genre.find(params[:id])
     @movies = @genre.movies.all.to_a # TODO: figure out pagination here
   end
 

@@ -1,5 +1,7 @@
 class Genre < ActiveRecord::Base
   include HasVideo
+  include PrettyUrls
+  pretty_url_by :name
 
   has_many :genres_videos
   has_videos(through: :genres_videos)
