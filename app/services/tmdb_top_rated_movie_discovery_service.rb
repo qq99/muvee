@@ -12,25 +12,6 @@ class TmdbTopRatedMovieDiscoveryService < TmdbService
 
   private
 
-  def create_movies(data)
-    movies = data.results || []
-
-    movies.map do |movie|
-      m = Movie.find_by(tmdb_id: movie.id)
-      return if m.present?
-
-      m = Movie.new
-      m.tmdb_id = movie.id
-      m.adult = movie.adult
-      m.title = movie.title
-      m.overview = movie.overview
-
-      m.save
-      m.reanalyze
-      m
-    end
-  end
-
   def page
     @page
   end

@@ -95,22 +95,11 @@ class MoviesController < ApplicationController
 
   def movie_search
     @query = params[:q]
-    query = ImdbSearchResult.get(@query)
-    results = query.relevant_results(@query)
-    @movies = []
 
-    results.each do |result|
-      movie = Movie.find_by(imdb_id: result[:imdbID])
-      movie = Movie.create(
-        status: "remote",
-        title: result[:Title],
-        imdb_id: result[:imdbID]
-      ) unless movie.present?
-      @movies << movie
-    end
-    @movies = @movies.compact.reject{ |m| m.id.blank? }
+    service = TmdbMovieSearchingService.new(@query)
+    service.search_and_create
 
-    render 'discover'
+    redirect_to search_movies_path(query: @query)
   end
 
   def destroy

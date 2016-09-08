@@ -11,6 +11,11 @@ class TmdbMovieSearchingService < TmdbService
     results.first.try(:id)
   end
 
+  def search_and_create
+    data = get_data
+    create_movies(data)
+  end
+
   private
 
   def title
