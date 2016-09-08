@@ -1,7 +1,7 @@
 <% if object.is_a? Movie %>
   <div class="tile" context="tile<%= object.id %>">
     <div class="tile__meta">
-      <h3 class="video-year"><%= object.year %></h3>
+      <h3 class="video-year"><%= object.year || object.try(:released_on).try(:year) %></h3>
       <h3 class="video-type">Movie</h3>
       <% if object.downloading? %>
         <h3 class='video-status'>Downloading Now</h3>
@@ -33,6 +33,7 @@
   <% num_unacquired = number_of_released_episodes_unacquired(object) %>
   <div class="tile" context="tile<%= object.id %>">
     <div class="tile__meta">
+      <h3 class="video-year"><%= [object.try(:first_air_date).try(:year), object.try(:last_air_date).try(:year)].compact.join("–") %></h3>
       <h3 class="video-type">Series</h3>
       <h3 class='video-status'><%= object.ended ? 'Ended' : 'Continuing' %></h3>
       <% if num_unacquired.present? && num_unacquired > 0 %>
