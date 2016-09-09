@@ -1,28 +1,13 @@
 class Movie < Video
   include PrettyUrls
   pretty_url_by :title
-  
+
   scope :paginated, ->(page, results_per_page) { limit(results_per_page).offset(page * results_per_page) }
   scope :favorites, -> {where(is_favorite: true)}
 
   def poster_url
     return nil unless poster_images.present?
     poster_images.sort{|p| -p.vote_average}.first.url # TODO: use locale specific image
-  end
-
-  def remotely_fetch_votes
-    if omdb_metadata.found?
-      self.parental_guidance_rating = omdb_metadata.data['Rated']
-      # done with tmdb now:
-      # self.vote_average = omdb_metadata.data['imdbRating'].try(:to_f)
-      # self.vote_count = omdb_metadata.data['imdbVotes'].try(:gsub, /[^\d]/, '').try(:to_i)
-    end
-
-    self.save
-  end
-
-  def omdb_metadata
-    @omdb_metadata ||= OmdbSearchResult.get(imdb_id)
   end
 
   def find_tmdb_id
@@ -49,13 +34,15 @@ class Movie < Video
 
     return unless imdb_id.present? || tmdb_id.present?
     TmdbMovieMetadataService.new(imdb_id, tmdb_id).run
-    # remotely_fetch_votes
 
     return unless deep_reanalyze
-
     people.map do |person|
-      ReanalyzerWorker.perform_async("Person", person.id)
+      ReanalyzerWorker.perform_async(Person.name, person.id)
     end
+  end
+
+  def year
+    released_on.try(:year)
   end
 
   def suggested_filename

@@ -31,24 +31,6 @@ class StatusController < ApplicationController
     end
   end
 
-  def redownload_all_arts
-    if existing_jobs.include? "AnalyzerWorker"
-      already_working
-    else
-      AnalyzerWorker.perform_async({method: :redownload})
-      job_enqueued
-    end
-  end
-
-  def redownload_missing_arts
-    if existing_jobs.include? "AnalyzerWorker"
-      already_working
-    else
-      AnalyzerWorker.perform_async({method: :redownload_missing})
-      job_enqueued
-    end
-  end
-
   private
 
   def job_enqueued

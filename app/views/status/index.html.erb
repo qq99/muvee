@@ -13,18 +13,12 @@
     <%= render 'torrent_status', torrents: @torrents %>
 
     <div class="section">
-      <h3>Library Cleaning</h3>
-      <%= link_to 'Organize movies', reorganize_movies_settings_path, class: 'action-button' %>
-      <%= link_to 'Find dead files', find_dead_files_settings_path, class: 'action-button' %>
-      <%= link_to 'Find dead sources', find_dead_sources_settings_path, class: 'action-button' %>
-    </div>
-
-    <div class="section">
       <h3>Library Maintenance</h3>
       <%= link_to 'Scan for new media', scan_for_new_media_status_index_path, 'tg-remote' => 'POST', class: 'action-button' %>
       <%= link_to 'Reanalyze media library', reanalyze_media_status_index_path, 'tg-remote' => 'POST', class: 'action-button' %>
-      <%= link_to 'Download missing posters and fanart', redownload_missing_arts_status_index_path, 'tg-remote' => 'POST', class: 'action-button' %>
-      <%= link_to 'Re-download all posters and fanart', redownload_all_arts_status_index_path, 'tg-remote' => 'POST', class: 'action-button' %>
+      <%= link_to 'Organize movies', reorganize_movies_settings_path, class: 'action-button' %>
+      <%= link_to 'Find dead files', find_dead_files_settings_path, class: 'action-button' %>
+      <%= link_to 'Find dead sources', find_dead_sources_settings_path, class: 'action-button' %>
     </div>
   </div>
 </div>

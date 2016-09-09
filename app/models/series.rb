@@ -70,7 +70,7 @@ class Series < ActiveRecord::Base
     end
 
     people.map do |person|
-      ReanalyzerWorker.perform_async("Person", person.id)
+      ReanalyzerWorker.perform_async(Person.name, person.id)
     end
   end
 
