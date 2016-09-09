@@ -39,6 +39,19 @@ class MoviesController < ApplicationController
     response.headers['X-XHR-Redirected-To'] = request.env['REQUEST_URI']
   end
 
+  def perform_remote_search
+    @query = params[:query]
+
+    if @query.blank?
+      flash[:error] = 'You must supply a title to search'
+    else
+      service = TmdbMovieSearchingService.new(@query)
+      service.search_and_create
+    end
+
+    redirect_to search_movies_path(query: @query)
+  end
+
   def newest_unwatched
     @section = :newest_unwatched
     scope = Movie.local.newest.unwatched
@@ -91,15 +104,6 @@ class MoviesController < ApplicationController
     @torrent_sources = TorrentFinderService.new(params[:query]).find
     @torrent_sources.reject! { |src| Torrent.exists?(source: src[:magnet_link]).present? }
     render partial: 'sources', locals: {sources: @torrent_sources}
-  end
-
-  def movie_search
-    @query = params[:q]
-
-    service = TmdbMovieSearchingService.new(@query)
-    service.search_and_create
-
-    redirect_to search_movies_path(query: @query)
   end
 
   def destroy
