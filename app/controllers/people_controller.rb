@@ -1,7 +1,5 @@
 class PeopleController < ApplicationController
 
-  RESULTS_PER_PAGE = 56
-
   def index
     @section = :all
     scope = Person.order(full_name: :asc)
@@ -24,6 +22,10 @@ class PeopleController < ApplicationController
       scope = scope.alphabetical.where('lower(full_name) like :q', q: alpha)
     end
     scope
+  end
+
+  def results_per_page
+    56
   end
 
 end

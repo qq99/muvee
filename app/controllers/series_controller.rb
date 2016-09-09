@@ -78,7 +78,11 @@ class SeriesController < ApplicationController
   def genre
     @section = :genres
     @genre = Genre.find(params[:id])
-    @series = @genre.series.all.to_a # TODO: figure out pagination here
+
+    scope = @genre.series.order(title: :asc)
+    scope = alpha_filter_scope(scope)
+
+    @prev_series, @series, @next_series = paged(scope)
   end
 
   def nonepisodic

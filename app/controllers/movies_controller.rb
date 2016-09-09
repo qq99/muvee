@@ -10,8 +10,6 @@ class MoviesController < ApplicationController
     :unfavorite
   ]
 
-  RESULTS_PER_PAGE = 24
-
   def index
     @section = :all
 
@@ -85,7 +83,11 @@ class MoviesController < ApplicationController
   def genre
     @section = :genres
     @genre = Genre.find(params[:id])
-    @movies = @genre.movies.all.to_a # TODO: figure out pagination here
+
+    scope = @genre.movies.order(title: :asc)
+    scope = alpha_filter_scope(scope)
+
+    @prev_movie, @movies, @next_movie = paged(scope)
   end
 
   def discover_more
@@ -170,7 +172,11 @@ class MoviesController < ApplicationController
 
   private
 
-    def set_movie
-      @movie = Movie.find(params[:id])
-    end
+  def set_movie
+    @movie = Movie.find(params[:id])
+  end
+
+  def results_per_page
+    24
+  end
 end

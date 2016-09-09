@@ -37,6 +37,8 @@ class Video < ActiveRecord::Base
   scope :tv_shows, -> {where(type: "TvShow")}
   scope :unwatched, -> {where(left_off_at: nil)}
   scope :newest, -> {order(sourced_at: :desc)}
+  scope :paginated, ->(page, results_per_page) { limit(results_per_page).offset(page * results_per_page) }
+  scope :favorites, -> {where(is_favorite: true)}
 
   # https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats
   VIDEO_CONTAINERS = %w{.m4v .mp4 .webm .avi .mkv}

@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :check_if_first_use
 
-  RESULTS_PER_PAGE = 48
+  private
 
   def check_if_first_use
     silence_action do
@@ -39,18 +39,24 @@ class ApplicationController < ActionController::Base
     @next_page = cur_page + 1
     @prev_page = cur_page - 1
 
-    prev_offset = (@current_page * RESULTS_PER_PAGE) - 1
-    next_offset = (@current_page * RESULTS_PER_PAGE) + self.class::RESULTS_PER_PAGE
+    prev_offset = (@current_page * results_per_page) - 1
+    next_offset = (@current_page * results_per_page) + results_per_page
 
     prev_resource = scope.limit(1).offset(prev_offset).first if prev_offset > 0
     next_resource = scope.limit(1).offset(next_offset).first if next_offset > 0
-    current_resources = scope.paginated(@current_page, self.class::RESULTS_PER_PAGE).to_a
+    current_resources = scope.paginated(@current_page, results_per_page).to_a
 
     [prev_resource, current_resources, next_resource]
   end
 
   def cur_page
     page = params[:page].to_i || 0
+  end
+
+  private
+
+  def results_per_page
+    48
   end
 
 end

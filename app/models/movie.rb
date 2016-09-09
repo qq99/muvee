@@ -2,9 +2,6 @@ class Movie < Video
   include PrettyUrls
   pretty_url_by :title
 
-  scope :paginated, ->(page, results_per_page) { limit(results_per_page).offset(page * results_per_page) }
-  scope :favorites, -> {where(is_favorite: true)}
-
   def poster_url
     return nil unless poster_images.present?
     poster_images.sort{|p| -p.vote_average}.first.url # TODO: use locale specific image
