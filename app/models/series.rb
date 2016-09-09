@@ -23,10 +23,6 @@ class Series < ActiveRecord::Base
   validates_uniqueness_of :title, allow_nil: false, allow_blank: false
   validates_uniqueness_of :tmdb_id, allow_nil: true, allow_blank: true
 
-  POSTER_FOLDER = Rails.root.join('public', 'posters')
-  FANART_FOLDER = Rails.root.join('public', 'fanart')
-  BANNER_FOLDER = Rails.root.join('public', 'banners')
-
   has_many :tv_shows
   has_one :tvdb_series_result
   has_one :last_watched_video, class_name: "Video", primary_key: "last_watched_video_id", foreign_key: "id"

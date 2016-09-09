@@ -1,7 +1,6 @@
 class Video < ActiveRecord::Base
   has_many :sources, dependent: :destroy
   has_many :thumbnails, dependent: :destroy
-  has_many :fanarts, dependent: :destroy
   has_many :transcodes, dependent: :destroy
 
   has_many :trailers, dependent: :destroy

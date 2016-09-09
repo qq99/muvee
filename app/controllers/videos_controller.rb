@@ -1,5 +1,5 @@
 class VideosController < ApplicationController
-  before_action :set_video, only: [:show, :show_source, :edit, :update, :destroy, :stream, :stream_source, :thumbnails, :fanart, :reanalyze_video]
+  before_action :set_video, only: [:show, :show_source, :edit, :update, :destroy, :stream, :stream_source, :thumbnails, :reanalyze_video]
   before_action :set_source, only: [:show_source, :stream_source]
 
   respond_to :json, only: [:thumbnails]
@@ -54,14 +54,6 @@ class VideosController < ApplicationController
       disposition: 'inline',
       stream: true,
       buffer_size: 4096
-  end
-
-  # GET /videos/1/fanart
-  # => [array of absolute paths to the image]
-  def fanart
-    respond_to do |format|
-      format.json { render json: @video.fanarts.map{|f| f.url} }
-    end
   end
 
   # GET /videos/1/thumbnails.json

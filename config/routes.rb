@@ -11,7 +11,6 @@ Rails.application.routes.draw do
     member do
       get 'source/(:source_id)', action: :show_source, as: :show_source
       get 'source/:source_id/stream', action: :stream_source, as: :stream_source
-      get :fanart
       get :thumbnails
       post :reanalyze, action: :reanalyze_video
     end
