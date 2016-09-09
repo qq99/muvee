@@ -39,7 +39,7 @@ class TmdbEpisodeMetadataService < TmdbService
       end
       ep.mpaa_rating = series.content_rating
       begin
-        ep.released_on = Time.parse(data.air_date) if data.air_date.present?
+        ep.released_on = Time.parse(episode.air_date) if episode.air_date.present?
       rescue => e
       end
       ep.save
