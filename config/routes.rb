@@ -47,6 +47,7 @@ Rails.application.routes.draw do
       get :genres
       get 'genres/:id', as: :by_genre, action: :genre
       get :search
+      post :perform_remote_search
       post :discover_more
     end
     member do

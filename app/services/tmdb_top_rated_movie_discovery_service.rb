@@ -7,7 +7,7 @@ class TmdbTopRatedMovieDiscoveryService < TmdbService
 
   def run
     data = get_data
-    create_movies(data)
+    quick_create_movies(data)
   end
 
   private

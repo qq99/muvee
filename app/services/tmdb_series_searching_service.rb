@@ -5,6 +5,12 @@ class TmdbSeriesSearchingService < TmdbService
   end
 
   def run
+    data = expanded_get_data
+    results = data.results || []
+    results.first.try(:id)
+  end
+
+  def expanded_get_data
     data = get_data
 
     if data.results_.blank?
@@ -15,8 +21,12 @@ class TmdbSeriesSearchingService < TmdbService
       end
     end
 
-    results = data.results || []
-    results.first.try(:id)
+    data
+  end
+
+  def search_and_create
+    data = expanded_get_data
+    quick_create_series(data)
   end
 
   private

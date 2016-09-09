@@ -13,7 +13,7 @@ class TmdbMovieSearchingService < TmdbService
 
   def search_and_create
     data = get_data
-    create_movies(data)
+    quick_create_movies(data)
   end
 
   private

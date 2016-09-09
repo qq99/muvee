@@ -21,22 +21,40 @@ class TmdbService
     data
   end
 
-  def create_movies(data)
+  def quick_create_movies(data)
     movies = data.results || []
 
-    movies.map do |movie|
-      m = Movie.find_by(tmdb_id: movie.id)
+    movies.map do |datum|
+      m = Movie.find_by(tmdb_id: datum.id)
       return if m.present?
 
       m = Movie.new
-      m.tmdb_id = movie.id
-      m.adult = movie.adult
-      m.title = movie.title
-      m.overview = movie.overview
+      m.tmdb_id = datum.id
+      m.adult = datum.adult
+      m.title = datum.title
+      m.overview = datum.overview
 
       m.save
       m.reanalyze
       m
+    end
+  end
+
+  def quick_create_series(data)
+    series = data.results || []
+
+    series.map do |datum|
+      s = Series.find_by(tmdb_id: datum.id)
+      return if s.present?
+
+      s = Series.new
+      s.tmdb_id = datum.id
+      s.title = datum.name
+      s.overview = datum.overview
+
+      s.save
+      s.reanalyze
+      s
     end
   end
 

@@ -13,7 +13,6 @@ class SeriesController < ApplicationController
   end
 
   def search
-    @section = :series
     query = "%#{params[:query]}%".downcase
     scope = Series.where('lower(title) like :q', q: query)
     scope = alpha_filter_scope(scope)
@@ -26,6 +25,19 @@ class SeriesController < ApplicationController
     end
     response.headers['X-XHR-Redirected-To'] = request.env['REQUEST_URI']
     render 'search'
+  end
+
+  def perform_remote_search
+    @query = params[:query]
+
+    if @query.blank?
+      flash[:error] = 'You must supply a title to search'
+    else
+      service = TmdbSeriesSearchingService.new(@query)
+      service.search_and_create
+    end
+
+    redirect_to search_series_index_path(query: @query)
   end
 
   def discover

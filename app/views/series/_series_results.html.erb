@@ -31,6 +31,13 @@
       <h3>
         Unfortunately, <%= app_name %> doesn't know about <span class="note"><%= params[:query] %></span>.
       </h3>
+      <%= link_to "Search the net for #{params[:query]}", perform_remote_search_series_index_path(query: params[:query]),
+        class: 'sst action-button',
+        data: {
+          tg_remote: 'POST',
+          refresh_on_success: 'results'
+        }
+      %>
     </div>
   <% elsif empty %>
     <div class="index-notice">
