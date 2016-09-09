@@ -11,19 +11,23 @@
         <div class="fr">
           <%= link_to @series.is_favorite ? unfavorite_series_path(@series) : favorite_series_path(@series),
                 id: 'fav-button',
-                refresh: 'fav-button',
                 class: 'badge linked-badge',
-                'tg-remote' => "POST",
-                'refresh-on-success' => 'fav-button' do %>
-
+                data: {
+                  tg_remote: 'POST',
+                  refresh: 'fav-button',
+                  refresh_on_success: 'fav-button',
+                  tg_remote_nopushstate: ''
+                } do %>
             <i class="fa <% if @series.is_favorite %>fa-heart<% else %>fa-heart-o<% end %>"></i>
           <% end %>
 
           <%= link_to reanalyze_series_path(@series),
                 class: 'badge linked-badge',
-                'tg-remote' => 'POST',
-                'refresh-on-success' => 'series-show' do %>
-
+                data: {
+                  tg_remote: 'POST',
+                  refresh_on_success: 'series-show',
+                  tg_remote_nopushstate: ''
+                } do %>
             <i class="fa fa-refresh"></i>
           <% end %>
         </div>
