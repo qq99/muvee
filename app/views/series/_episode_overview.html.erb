@@ -6,9 +6,12 @@
   <% end %>
 <% else %>
   <%= link_to show_episode_details_series_index_path(episode_id: video.id, query: "#{video.title} #{video.season_episode}"),
-    'tg-remote' => 'GET',
-    'refresh-on-success' => "video-#{video.id}",
-    class: 'flex-fixed icon-link' do %>
+    class: 'flex-fixed icon-link',
+    data: {
+      tg_remote: "GET",
+      tg_remote_nopushstate: '',
+      refresh_on_success: "video-#{video.id}"
+    } do %>
     <i class="fa fa-download"></i>
   <% end %>
 <% end %>

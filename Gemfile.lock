@@ -1,9 +1,9 @@
 GIT
   remote: git://github.com/Shopify/turbograft.git
-  revision: ad37b11211e9b4c400b776068fc31ad529df5f32
-  branch: fix-historystate-bug
+  revision: 3d9188ad139c1199d8c228ab2111ba797fd17194
+  branch: remote-pushstate-controls
   specs:
-    turbograft (0.2.0)
+    turbograft (0.4.1)
       coffee-rails
 
 GIT

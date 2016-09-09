@@ -30,7 +30,7 @@ gem 'figaro'
 
 gem "autoprefixer-rails"
 
-gem 'turbograft', github: 'Shopify/turbograft', branch: 'fix-historystate-bug'
+gem 'turbograft', github: 'Shopify/turbograft', branch: 'remote-pushstate-controls'
 # gem 'turbograft', path: '../turbograft'
 gem 'twine-rails', '1.0.0'
 gem 'jquery-turbolinks'

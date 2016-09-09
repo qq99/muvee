@@ -82,32 +82,42 @@
           <div class="badge-listing">
             <%= link_to "Latest", series_path(@series, season: @season, sort: :latest),
                   class: "badge linked-badge #{'active' if @sort == :latest}",
-                  'tg-remote' => 'GET',
-                  'tg-update-historystate' => true,
-                  'refresh-on-success' => 'episode-listing' %>
+                  data: {
+                    tg_remote: "GET",
+                    tg_remote_nopushstate: '',
+                    refresh_on_success: 'episode-listing'
+                  }  %>
             <%= link_to "Unwatched", series_path(@series, season: @season, sort: :unwatched),
                   class: "badge linked-badge #{'active' if @sort == :unwatched}",
-                  'tg-remote' => 'GET',
-                  'tg-update-historystate' => true,
-                  'refresh-on-success' => 'episode-listing' %>
+                  data: {
+                    tg_remote: "GET",
+                    tg_remote_nopushstate: '',
+                    refresh_on_success: 'episode-listing'
+                  } %>
             <%= link_to "In order", series_path(@series, season: @season, sort: :release_order),
                   class: "badge linked-badge #{'active' if @sort == :release_order}",
-                  'tg-remote' => 'GET',
-                  'tg-update-historystate' => true,
-                  'refresh-on-success' => 'episode-listing' %>
+                  data: {
+                    tg_remote: "GET",
+                    tg_remote_nopushstate: '',
+                    refresh_on_success: 'episode-listing'
+                  } %>
           </div>
           <div class="badge-listing">
             <%= link_to "All", series_path(@series, season: 'all', sort: @sort),
                   class: "badge #{'active' if @season.blank?}",
-                  'tg-remote' => 'GET',
-                  'tg-update-historystate' => true,
-                  'refresh-on-success' => 'episode-listing' %>
+                  data: {
+                    tg_remote: "GET",
+                    tg_remote_nopushstate: '',
+                    refresh_on_success: 'episode-listing'
+                  }  %>
             <% @seasons.each do |s| %>
               <%= link_to "S#{s}", series_path(@series, season: s, sort: @sort),
                   class: "badge linked-badge #{'active' if @season == s}",
-                  'tg-remote' => 'GET',
-                  'tg-update-historystate' => true,
-                  'refresh-on-success' => 'episode-listing' %>
+                  data: {
+                    tg_remote: "GET",
+                    tg_remote_nopushstate: '',
+                    refresh_on_success: 'episode-listing'
+                  } %>
             <% end %>
           </div>
         </div>
