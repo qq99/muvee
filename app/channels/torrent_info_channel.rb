@@ -4,7 +4,9 @@ class TorrentInfoChannel < ApplicationCable::Channel
   end
 
   def torrent_info
-    payload = Torrent.all.map(&:summary)
-    transmit(payload)
+    silence_action do
+      payload = Torrent.all.map(&:summary)
+      transmit(payload)
+    end
   end
 end
