@@ -121,6 +121,7 @@ class Transcode < ActiveRecord::Base
   end
 
   def transcode
+    self.touch
     if !origin_file_exists? || origin_file_is_actually_a_directory?
       self.destroy
       return false
