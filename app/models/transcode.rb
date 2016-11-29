@@ -36,7 +36,7 @@ class Transcode < ActiveRecord::Base
       audio_codec = if Video::SERVABLE_MP4_AUDIO_CODECS.include?(current_audio_encoding)
         'copy'
       else
-        'libvorbis'
+        'vorbis'
       end
     elsif Video::SERVABLE_WEBM_VIDEO_CODECS.include?(current_video_encoding)
       container   = '.webm'
@@ -44,7 +44,7 @@ class Transcode < ActiveRecord::Base
       audio_codec = if Video::SERVABLE_WEBM_AUDIO_CODECS.include?(current_audio_encoding)
         'copy'
       else
-        'libvorbis'
+        'vorbis'
       end
     else # default case
       container   = '.webm'
@@ -52,7 +52,7 @@ class Transcode < ActiveRecord::Base
       audio_codec = if Video::SERVABLE_WEBM_AUDIO_CODECS.include?(current_audio_encoding)
         'copy'
       else
-        'libvorbis'
+        'vorbis'
       end
     end
 
@@ -128,8 +128,8 @@ class Transcode < ActiveRecord::Base
     end
     return false if is_already_transcoded_by_muvee?
     return false if started?
-    if transcoded_file_exists? || complete? # don't convert it again!
-      move_transcoded_file! if transcoding_file_exists?
+    if transcoded_file_exists? && complete? # don't convert it again!
+      move_transcoded_file!
       note "#{eventual_path} already transcoded; please review #{raw_file_path}"
       return true
     end
@@ -188,7 +188,7 @@ class Transcode < ActiveRecord::Base
     video_params = " -qmin 0 -qmax 50 -b:v 1M" if transcode_parameters[:video_codec] != "copy"
     audio_params = " -q:a 4" if transcode_parameters[:audio_codec] != "copy"
 
-    "avconv -threads auto -i #{raw_file_path.to_s.shellescape} -loglevel quiet -c:v #{transcode_parameters[:video_codec]}#{video_params} -c:a #{transcode_parameters[:audio_codec]}#{audio_params} #{transcode_path.to_s.shellescape}"
+    "avconv -threads auto -i #{raw_file_path.to_s.shellescape} -loglevel quiet -c:v #{transcode_parameters[:video_codec]}#{video_params} -c:a #{transcode_parameters[:audio_codec]}#{audio_params} -strict experimental #{transcode_path.to_s.shellescape}"
   end
 
   def note(note)
