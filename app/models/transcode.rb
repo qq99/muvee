@@ -36,7 +36,7 @@ class Transcode < ActiveRecord::Base
       audio_codec = if Video::SERVABLE_MP4_AUDIO_CODECS.include?(current_audio_encoding)
         'copy'
       else
-        'vorbis'
+        'aac'
       end
     elsif Video::SERVABLE_WEBM_VIDEO_CODECS.include?(current_video_encoding)
       container   = '.webm'
