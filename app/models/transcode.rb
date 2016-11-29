@@ -188,7 +188,7 @@ class Transcode < ActiveRecord::Base
     video_params = " -qmin 0 -qmax 50 -b:v 1M" if transcode_parameters[:video_codec] != "copy"
     audio_params = " -q:a 4" if transcode_parameters[:audio_codec] != "copy"
 
-    "avconv -threads auto -i #{raw_file_path.to_s.shellescape} -loglevel quiet -c:v #{transcode_parameters[:video_codec]}#{video_params} -c:a #{transcode_parameters[:audio_codec]}#{audio_params} -strict experimental #{transcode_path.to_s.shellescape}"
+    "ffmpeg -threads auto -i #{raw_file_path.to_s.shellescape} -loglevel quiet -c:v #{transcode_parameters[:video_codec]}#{video_params} -c:a #{transcode_parameters[:audio_codec]}#{audio_params} -strict experimental #{transcode_path.to_s.shellescape}"
   end
 
   def note(note)

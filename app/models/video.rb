@@ -213,11 +213,11 @@ class Video < ActiveRecord::Base
   end
 
   def avconv_create_thumbnail_command(at_seconds, output_path)
-    "avconv -loglevel quiet -ss " + at_seconds.to_s.shellescape + " -i " + raw_file_path.shellescape + " -qscale 1 -vsync 1 -vframes 1 -y " + output_path.shellescape
+    "ffmpeg -loglevel quiet -ss " + at_seconds.to_s.shellescape + " -i " + raw_file_path.shellescape + " -qscale 1 -vsync 1 -vframes 1 -y " + output_path.shellescape
   end
 
   def avprobe_grab_duration_command
-    "avprobe " + raw_file_path.shellescape + " 2>&1 | grep -Eo 'Duration: [0-9:.]*' | cut -c 11-"
+    "ffprobe " + raw_file_path.shellescape + " 2>&1 | grep -Eo 'Duration: [0-9:.]*' | cut -c 11-"
   end
 
   def video_encoding
